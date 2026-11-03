@@ -14,6 +14,12 @@ def main():
     testes = sorted(glob.glob(os.path.join(AQUI, "h[0-9][0-9]*.py")))
     if filtros:
         testes = [t for t in testes if any(os.path.basename(t).startswith(f.lower()) for f in filtros)]
+    # Compila antes: testar um binário velho depois de um erro de compilação
+    # daria um resultado enganoso.
+    raiz = os.path.dirname(AQUI)
+    if subprocess.run(["make", "-s", "-C", raiz]).returncode != 0:
+        print("ERRO: o build falhou; nenhum teste rodou")
+        return 1
     falhas = []
     for t in testes:
         nome = os.path.basename(t)

@@ -11,6 +11,7 @@
 #include "cpu.h"
 #include "relogio.h"
 #include "autoteste.h"
+#include "memoria.h"
 
 #define SAGUI_VERSAO "0.2 (fase 2)"
 
@@ -140,6 +141,15 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     relogio_iniciar();
     int_liga();
     etapa("Interrupções: GDT e IDT próprias, PIC remapeado, relógio a 100 Hz");
+
+    /* H06: páginas físicas e alocador do kernel. */
+    memfisica_iniciar();
+    {
+        char linha[96];
+        snformatar(linha, sizeof linha, "Memória física: %u MB gerenciados em páginas de 4 KB, kmalloc pronto",
+                   memfisica_livres() / 256);
+        etapa(linha);
+    }
 
     conferir_ramdisk();
     klog("[SAGUI] boot ok\n");

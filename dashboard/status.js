@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:28:28",
-  "situacao": "Trabalhando na H06: Memória física",
+  "atualizado": "2026-11-03T15:32:06",
+  "situacao": "Trabalhando na H07: Teclado PS/2 com ABNT2",
   "fase_atual": 2,
-  "historia_atual": "H06",
+  "historia_atual": "H07",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -19,7 +19,7 @@ window.SAGUI_STATUS = {
       "numero": 2,
       "nome": "Kernel e terminal",
       "estado": "em andamento",
-      "progresso": 20.0
+      "progresso": 40.0
     },
     {
       "numero": 3,
@@ -124,12 +124,12 @@ window.SAGUI_STATUS = {
       "titulo": "Memória física",
       "objetivo": "Bitmap de páginas de 4 KB a partir do E820 e alocador kmalloc/kfree.",
       "aceite": "Teste aloca e libera blocos de vários tamanhos sem corromper; diagnóstico mostra memória total e livre.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T15:28:28",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T15:32:06",
+      "minutos": 4,
+      "resultado": "Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção"
     },
     {
       "id": "H07",
@@ -137,9 +137,9 @@ window.SAGUI_STATUS = {
       "titulo": "Teclado PS/2 com ABNT2",
       "objetivo": "Driver no IRQ1, buffer, Shift, Caps Lock, Ctrl, teclas mortas e o mapa ABNT2.",
       "aceite": "Teclas enviadas pelo monitor do QEMU aparecem corretas, incluindo ç.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T15:32:06",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -570,7 +570,7 @@ window.SAGUI_STATUS = {
       "conceito": "Gerenciamento de memória",
       "implementa": "Memória física, alocador do kernel, memória dos processos",
       "historias": "H06, H10, H13",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Arquivos e diretórios",
@@ -616,6 +616,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T15:32:06",
+      "texto": "Início da H07: Teclado PS/2 com ABNT2"
+    },
+    {
+      "data": "2026-11-03T15:32:06",
+      "texto": "H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção"
+    },
     {
       "data": "2026-11-03T15:28:28",
       "texto": "Início da H06: Memória física"
@@ -684,6 +692,11 @@ window.SAGUI_STATUS = {
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H06-autoteste-memoria.png",
+      "nome": "H06-autoteste-memoria.png",
+      "data": "2026-11-03T15:31:45"
+    },
+    {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
       "data": "2026-11-03T15:27:54"
@@ -736,14 +749,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 1369,
+    "kernel": 1775,
     "userland": 0,
-    "ferramentas": 1006
+    "ferramentas": 1044
   },
   "imagem": {
-    "bytes_util": 23040,
+    "bytes_util": 27648,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 14.7
+  "progresso_geral": 17.6
 };

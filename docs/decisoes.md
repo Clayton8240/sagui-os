@@ -150,3 +150,45 @@ registradores e CR0/CR2/CR3, e um pedido para fotografar: no G470 a foto é a
 `-fexec-charset=ISO-8859-1`, então as mensagens podem ter acentos. A fonte
 da placa VGA segue a página de código 437; o driver traduz o que existe nela
 (ç, é, á, ó, ...) e troca pela letra sem acento o que não existe (ã, õ).
+
+## D008. Memória física e alocador do kernel: como foi pensado (H06)
+
+**Até onde o kernel gerencia.** O kernel é de 32 bits sem PAE, então nunca
+enxerga memória acima de 4 GB (no G470, com ~8 GB, metade fica de fora; a
+tela mostra os dois números). Indo além: na fase 3, com a paginação, os
+programas vão morar a partir de 0x40000000 (PRD 4), e o kernel vai ficar
+mapeado 1:1 (endereço virtual = físico) abaixo disso em todos os espaços de
+endereço, para poder ler e escrever qualquer página física sem truques. A
+faixa 0x38000000-0x3FFFFFFF fica reservada para o kernel mapear coisas que
+estão em endereços físicos altos (framebuffer de vídeo, registradores do
+USB). Por isso o gerenciador de páginas só entrega memória abaixo de
+**0x38000000 (896 MB)**. É muito mais do que o SaguiOS precisa, e em troca
+o kernel nunca precisa de mapeamento temporário para tocar numa página.
+
+**Bitmap de páginas de 4 KB.** Um bit por página, 1 = ocupada. Começa tudo
+ocupado; liberamos só as regiões "livres" do E820 (arredondadas para dentro,
+para nunca entregar meia página de uma região reservada); depois marcamos de
+novo como ocupados o primeiro 1 MB (BIOS, tabelas, nossas estruturas de
+boot), o kernel com a BSS e o ramdisk. 896 MB / 4 KB = 229.376 bits = 28 KB
+de bitmap, que fica na BSS. A busca olha 32 páginas de uma vez (uma palavra
+inteira cheia = nada livre ali) e continua de onde parou da última vez.
+
+**`kmalloc` em duas faixas.**
+- *Pequenos (até 2 KB):* oito classes de tamanho em potência de 2 (16 a
+  2048 bytes, cabeçalho incluído). Cada classe tem uma lista de blocos
+  livres; quando esvazia, o alocador pega uma página e a corta em blocos
+  daquela classe. Liberar devolve o bloco à lista da classe, em tempo
+  constante. As páginas das classes não voltam para o bitmap: a memória de
+  estruturas pequenas do kernel tende a ser reutilizada pela mesma classe.
+- *Grandes (mais de 2 KB):* páginas contíguas direto do bitmap, devolvidas ao
+  bitmap no `kfree`.
+
+Cada bloco tem um cabeçalho de 8 bytes com uma assinatura e a classe (ou o
+número de páginas). O `kfree` confere a assinatura e troca por outra ao
+liberar: liberar duas vezes ou liberar um ponteiro que não veio do `kmalloc`
+é detectado e registrado, em vez de corromper as listas em silêncio.
+
+Outras opções pensadas: lista única de blocos com divisão e junção de
+vizinhos (gasta menos memória, mas cada `kfree` precisa percorrer a lista e
+um erro corrompe tudo) e alocador por "buddy" (mais complexo do que um
+kernel deste tamanho precisa).

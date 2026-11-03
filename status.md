@@ -1,21 +1,21 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:28:28_
+_Atualizado em 2026-11-03T15:32:06_
 
-- **Situação:** Trabalhando na H06: Memória física
+- **Situação:** Trabalhando na H07: Teclado PS/2 com ABNT2
 - **Fase atual:** 2
-- **História atual:** H06
-- **Progresso geral:** 14.7%
+- **História atual:** H07
+- **Progresso geral:** 17.6%
 - **Bloqueio:** nenhum
-- **Imagem:** 23040 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 1369, userland 0
+- **Imagem:** 27648 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 1775, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
-| 2 | Kernel e terminal | 20.0% | em andamento |
+| 2 | Kernel e terminal | 40.0% | em andamento |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
@@ -31,8 +31,8 @@ _Atualizado em 2026-11-03T15:28:28_
 | H03 | Estágio 2 e modo protegido | feito | 1 |
 | H04 | Imagem para pendrive e VirtualBox | feito | 4 |
 | H05 | Interrupções e relógio | feito | 4 |
-| H06 | Memória física | em andamento |  |
-| H07 | Teclado PS/2 com ABNT2 | a fazer |  |
+| H06 | Memória física | feito | 4 |
+| H07 | Teclado PS/2 com ABNT2 | em andamento |  |
 | H08 | Sistema de arquivos SGFS | a fazer |  |
 | H09 | Terminal provisório do kernel | a fazer |  |
 | H10 | Paginação | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T15:28:28_
 
 ## Últimas ações
 
+- 2026-11-03T15:32:06: Início da H07: Teclado PS/2 com ABNT2
+- 2026-11-03T15:32:06: H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção
 - 2026-11-03T15:28:28: Início da H06: Memória física
 - 2026-11-03T15:28:28: H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS
 - 2026-11-03T15:24:57: Início da H05: Interrupções e relógio
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T15:28:28_
 - 2026-11-03T14:22:52: H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB
 - 2026-11-03T14:22:05: Início da H03: Estágio 2 e modo protegido
 - 2026-11-03T14:22:05: H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB
-- 2026-11-03T14:14:29: Início da H02: Estágio 1 (MBR)
-- 2026-11-03T14:14:17: H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados
