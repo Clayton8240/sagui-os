@@ -262,8 +262,14 @@ static bool jogar(void)
                          b->x + BANANA_L > sagui_x + 4 && b->x < sagui_x + SAGUI_L - 4;
             if (pegou || y + BANANA_A >= CHAO_Y) {
                 b->viva = false;
-                if (pegou) { pontos++; registrar("banana: pegou! pontos %d", pontos); }
-                else { vidas--; registrar("banana: caiu no chao, vidas %d", vidas); }
+                /* Bip (B3): agudo e curto ao pegar, grave e descendo ao perder uma vida. */
+                if (pegou) { pontos++; registrar("banana: pegou! pontos %d", pontos); bip(1319, 60); }
+                else {
+                    static const nota_t perdeu[] = { {330, 120}, {220, 200} };
+                    vidas--;
+                    registrar("banana: caiu no chao, vidas %d", vidas);
+                    tocar(perdeu, 2, BIP_SUBSTITUIR);
+                }
                 barra = true;
                 desenhar_sagui();
                 jan_mostrar_area(j, b->x, y_ant, BANANA_L, y + BANANA_A - y_ant);

@@ -12,6 +12,7 @@
 #include "portas.h"
 #include "processo.h"
 #include "i8042.h"
+#include "som.h"
 
 #define PIT_FREQ   1193182u
 #define PIT_CANAL0 0x40
@@ -25,6 +26,7 @@ static volatile uint32_t tiques;
 static quadro_t *ao_tique(quadro_t *q)
 {
     tiques++;
+    som_tique();     /* bip sem travar ninguém (B3) */
     i8042_tique();   /* rede de segurança: nenhum byte fica parado na fila do teclado/touchpad */
     if (!atual)
         return q;   /* antes dos processos existirem */

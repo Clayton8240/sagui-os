@@ -735,3 +735,21 @@ G470 tem dois), um anel compartilhado é percorrido pelos dois e a mesma
 transferência sai nos dois barramentos. Cada controlador ganhou a sua página
 de estruturas; o buffer de dados segue compartilhado, porque só uma
 transferência acontece por vez.
+
+## D029. Bip sem travar ninguém (B3)
+
+O alto-falante do PC fica ligado à saída do canal 2 do PIT. O kernel
+programa esse canal como onda quadrada (modo 3) com divisor 1.193.182 / Hz e
+liga os bits 0 e 1 da porta 0x61. Para o som não travar quem pede, a chamada
+`SIS_BIP` recebe uma lista de notas (frequência e duração), copia para uma
+fila no kernel e volta na hora; quem toca é o tique do relógio (10 ms), que
+desconta a nota atual e começa a próxima. Uma lista nova substitui a que
+estiver tocando (num jogo, o efeito mais novo importa mais), a não ser que o
+programa peça para enfileirar. A duração tem a resolução do tique: 10 ms.
+
+Como saber se tocou num PC onde não dá para ouvir (testes, ou um notebook
+que não liga o sinal ao alto-falante): na primeira nota do boot o kernel lê a
+saída do canal 2 (bit 5 da porta 0x61) durante 5 ms medidos pelo contador do
+canal 0 e registra no log quantas vezes ela virou. Medir por voltas de laço
+não serve: no QEMU as leituras de porta são muito mais rápidas que no PC, e a
+primeira versão viu 0 viradas.

@@ -79,6 +79,11 @@ int  listar_discos(int indice, info_disco_t *d);   /* 1 = achou, 0 = acabou */
 int  montar(const char *nome);                     /* "usb0" -> /usb */
 int  desmontar(const char *nome);
 
+/* ---- som (bônus B3): volta na hora, o kernel toca em segundo plano ---- */
+int  tocar(const nota_t *notas, int n, int modo);  /* modo BIP_SUBSTITUIR ou BIP_ENFILEIRAR */
+int  bip(int freq, int ms);
+void silenciar(void);
+
 /* ---- memória e texto ---- */
 void  *memcpy(void *d, const void *s, size_t n);
 void  *memmove(void *d, const void *s, size_t n);

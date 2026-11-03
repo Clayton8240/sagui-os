@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T22:57:35",
+  "atualizado": "2026-11-03T23:02:23",
   "situacao": "Trabalhando na B3: Bônus: bip",
   "fase_atual": 7,
   "historia_atual": "B3",
@@ -532,12 +532,12 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: bip",
       "objetivo": "Alto-falante do PC pelo canal 2 do PIT.",
       "aceite": "Bip no jogo e comando bip.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": true,
       "inicio": "2026-11-03T22:57:35",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T23:02:23",
+      "minutos": 5,
+      "resultado": "Comando bip, sons no Sagui Pega Banana, fila de notas tocada pelo tique do relógio (D029); canal 2 conferido no QEMU"
     },
     {
       "id": "B4",
@@ -634,6 +634,10 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T23:02:23",
+      "texto": "B3 concluída: Comando bip, sons no Sagui Pega Banana, fila de notas tocada pelo tique do relógio (D029); canal 2 conferido no QEMU"
+    },
     {
       "data": "2026-11-03T22:57:35",
       "texto": "Início da B3: Bônus: bip"
@@ -869,10 +873,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T17:24:26",
       "texto": "Início da H18: Fonte própria"
-    },
-    {
-      "data": "2026-11-03T17:24:26",
-      "texto": "H17 concluída: Framebuffer VESA 1024x768x32 com buffer duplo e primitivas de desenho"
     }
   ],
   "erros": [
@@ -951,6 +951,51 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H27-banana-fim-de-jogo.png",
+      "nome": "H27-banana-fim-de-jogo.png",
+      "data": "2026-11-03T23:02:08"
+    },
+    {
+      "arquivo": "docs/capturas/H27-banana-jogando.png",
+      "nome": "H27-banana-jogando.png",
+      "data": "2026-11-03T23:01:59"
+    },
+    {
+      "arquivo": "docs/capturas/H27-banana-inicio.png",
+      "nome": "H27-banana-inicio.png",
+      "data": "2026-11-03T23:01:56"
+    },
+    {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T23:01:51"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T23:01:45"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T23:01:34"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T23:01:31"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T23:01:13"
+    },
+    {
+      "arquivo": "docs/capturas/B3-comando-bip.png",
+      "nome": "B3-comando-bip.png",
+      "data": "2026-11-03T23:00:51"
+    },
+    {
       "arquivo": "docs/capturas/H34-8-um-pendrive-so.png",
       "nome": "H34-8-um-pendrive-so.png",
       "data": "2026-11-03T21:56:16"
@@ -1024,21 +1069,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H28-programas-abertos.png",
       "nome": "H28-programas-abertos.png",
       "data": "2026-11-03T21:53:29"
-    },
-    {
-      "arquivo": "docs/capturas/H27-banana-fim-de-jogo.png",
-      "nome": "H27-banana-fim-de-jogo.png",
-      "data": "2026-11-03T21:53:12"
-    },
-    {
-      "arquivo": "docs/capturas/H27-banana-jogando.png",
-      "nome": "H27-banana-jogando.png",
-      "data": "2026-11-03T21:53:01"
-    },
-    {
-      "arquivo": "docs/capturas/H27-banana-inicio.png",
-      "nome": "H27-banana-inicio.png",
-      "data": "2026-11-03T21:52:59"
     },
     {
       "arquivo": "docs/capturas/H26-calculadora-divisao-por-zero.png",
@@ -1149,31 +1179,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H17-formas-ide.png",
       "nome": "H17-formas-ide.png",
       "data": "2026-11-03T21:49:28"
-    },
-    {
-      "arquivo": "docs/capturas/H16-tab-historico.png",
-      "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T21:49:25"
-    },
-    {
-      "arquivo": "docs/capturas/H16-falha-protecao.png",
-      "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T21:49:19"
-    },
-    {
-      "arquivo": "docs/capturas/H16-contador-e-ps.png",
-      "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T21:49:07"
-    },
-    {
-      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
-      "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T21:49:04"
-    },
-    {
-      "arquivo": "docs/capturas/H16-ajuda.png",
-      "nome": "H16-ajuda.png",
-      "data": "2026-11-03T21:48:47"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
@@ -1328,12 +1333,12 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 9365,
-    "userland": 3838,
-    "ferramentas": 3250
+    "kernel": 9517,
+    "userland": 3896,
+    "ferramentas": 3318
   },
   "imagem": {
-    "bytes_util": 499712,
+    "bytes_util": 507904,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },

@@ -58,6 +58,7 @@ static const comando_t comandos[] = {
     { "montar", NULL, false, false, "monta o pendrive", "montar [usb0]", "Monta o pendrive FAT32 em /usb." },
     { "desmontar", NULL, false, false, "libera o pendrive", "desmontar [usb0]", "Grava tudo o que falta e libera o pendrive para ser removido." },
     { "usb", NULL, false, false, "diagnóstico USB", "usb", "Mostra os controladores USB 2.0, as portas e os dispositivos." },
+    { "bip", NULL, false, false, "toca um bip", "bip [Hz [ms]] | bip escala", "Toca uma nota no alto-falante do PC (padrão: 880 Hz por 200 ms)." },
     { "arquivos", NULL, false, true, "abre o Arquivos", "arquivos [pasta]", "Abre o Arquivos numa janela." },
     { "editor", NULL, false, true, "editor de texto", "editor [arquivo]", "Abre o Editor de texto numa janela." },
     { "calculadora", NULL, false, true, "calculadora", "calculadora", "Abre a Calculadora numa janela." },

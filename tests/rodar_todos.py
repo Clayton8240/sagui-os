@@ -11,7 +11,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 
 def main():
     filtros = sys.argv[1:]
-    testes = sorted(glob.glob(os.path.join(AQUI, "h[0-9][0-9]*.py")))
+    testes = sorted(glob.glob(os.path.join(AQUI, "h[0-9][0-9]*.py"))) + sorted(glob.glob(os.path.join(AQUI, "b[0-9]_*.py")))
     if filtros:
         testes = [t for t in testes if any(os.path.basename(t).startswith(f.lower()) for f in filtros)]
     # Compila antes: testar um binário velho depois de um erro de compilação

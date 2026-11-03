@@ -15,6 +15,7 @@
 #include "paginacao.h"
 #include "processo.h"
 #include "texto.h"
+#include "som.h"
 
 static const chamada_t tabela[SIS_MAX] = {
     [SIS_EXECUTAR] = sis_executar,       [SIS_ESPERAR] = sis_esperar,
@@ -39,6 +40,7 @@ static const chamada_t tabela[SIS_MAX] = {
     [SIS_TITULO_JANELA] = sis_titulo_janela,
     [SIS_LISTAR_DISCOS] = sis_listar_discos,   [SIS_MONTAR] = sis_montar,
     [SIS_DESMONTAR] = sis_desmontar,
+    [SIS_BIP] = sis_bip,
 };
 
 bool usuario_ok(const void *p, uint32_t n, bool escrita)

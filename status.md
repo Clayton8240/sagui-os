@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T22:57:35_
+_Atualizado em 2026-11-03T23:02:23_
 
 - **Situação:** Trabalhando na B3: Bônus: bip
 - **Fase atual:** 7
 - **História atual:** B3
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 499712 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9365, userland 3838
+- **Imagem:** 507904 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9517, userland 3896
 
 ## Fases
 
@@ -62,11 +62,12 @@ _Atualizado em 2026-11-03T22:57:35_
 | H34 | Integração do pendrive | feito | 5 |
 | B1 | Bônus: enxergar o HD interno | Cancelado pelo Eli: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada ao projeto. |  |
 | B2 | Bônus: boot por UEFI | Cancelado pelo Eli: o objetivo do SaguiOS é rodar em computadores antigos, com BIOS tradicional. |  |
-| B3 | Bônus: bip | em andamento |  |
+| B3 | Bônus: bip | feito | 5 |
 | B4 | Bônus: Sagui 3D | a fazer |  |
 
 ## Últimas ações
 
+- 2026-11-03T23:02:23: B3 concluída: Comando bip, sons no Sagui Pega Banana, fila de notas tocada pelo tique do relógio (D029); canal 2 conferido no QEMU
 - 2026-11-03T22:57:35: Início da B3: Bônus: bip
 - 2026-11-03T22:57:35: Fase 6 aprovada pelo Eli. Fase bônus replanejada: B1 e B2 cancelados pelo Eli, B3 mantido, B4 (Sagui 3D) novo.
 - 2026-11-03T22:57:09: Eli confirmou: fase 6 ok
@@ -81,4 +82,3 @@ _Atualizado em 2026-11-03T22:57:35_
 - 2026-11-03T20:25:28: H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck
 - 2026-11-03T20:25:27: Erro corrigido: Acentos trocados em textos UTF-8 do pendrive
 - 2026-11-03T20:20:50: Início da H34: Integração do pendrive
-- 2026-11-03T20:20:50: H33 concluída: Gravação FAT32 conferida com mtools e fsck.vfat

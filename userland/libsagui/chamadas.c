@@ -42,6 +42,13 @@ int  registrar_texto(const char *t)   { return chamar(SIS_REGISTRAR, (unsigned)t
 int  listar_discos(int i, info_disco_t *d) { return chamar(SIS_LISTAR_DISCOS, (unsigned)i, (unsigned)d, 0); }
 int  montar(const char *nome)         { return chamar(SIS_MONTAR, (unsigned)nome, 0, 0); }
 int  desmontar(const char *nome)      { return chamar(SIS_DESMONTAR, (unsigned)nome, 0, 0); }
+int  tocar(const nota_t *notas, int n, int modo) { return chamar(SIS_BIP, (unsigned)notas, (unsigned)n, (unsigned)modo); }
+int  bip(int freq, int ms)
+{
+    nota_t n = { (uint16_t)freq, (uint16_t)ms };
+    return tocar(&n, 1, BIP_SUBSTITUIR);
+}
+void silenciar(void)                  { chamar(SIS_BIP, 0, 0, 0); }
 int  criar_janela(const char *t, int l, int a, uint32_t **px)
                                       { return chamar(SIS_CRIAR_JANELA, (unsigned)t, (unsigned)(l | (a << 16)), (unsigned)px); }
 int  fechar_janela(int id)            { return chamar(SIS_FECHAR_JANELA, (unsigned)id, 0, 0); }

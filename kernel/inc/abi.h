@@ -52,6 +52,8 @@
 #define SIS_LISTAR_DISCOS  55   /* (indice, &info_disco) -> 1 achou, 0 fim */
 #define SIS_MONTAR         56   /* (nome, ex.: "usb0") -> monta em /usb */
 #define SIS_DESMONTAR      57   /* (nome) -> grava o que falta e libera para remover */
+/* Som (bônus B3) */
+#define SIS_BIP            58   /* (&notas, quantidade, modo) -> volta na hora; o tique do relógio toca */
 #define SIS_MAX            64
 
 /* Erros (sempre negativos) */
@@ -107,6 +109,14 @@ typedef struct {
     unsigned short ano;
     unsigned char  mes, dia, hora, minuto, segundo, dia_semana;
 } data_t;
+
+/* SIS_BIP: uma nota. freq 0 = pausa. Duração arredondada para 10 ms. */
+typedef struct {
+    unsigned short freq;   /* Hz */
+    unsigned short ms;
+} nota_t;
+#define BIP_SUBSTITUIR 0   /* para o que estiver tocando e começa esta lista */
+#define BIP_ENFILEIRAR 1   /* toca depois do que já está na fila */
 
 /* SIS_INFO_SISTEMA */
 #define INFO_MEMORIA   1
