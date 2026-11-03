@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:21:08_
+_Atualizado em 2026-11-03T16:25:17_
 
-- **Situação:** Trabalhando na H14: Arquivos e pastas graváveis
+- **Situação:** Trabalhando na H15: Pipes
 - **Fase atual:** 3
-- **História atual:** H14
-- **Progresso geral:** 38.2%
+- **História atual:** H15
+- **Progresso geral:** 41.2%
 - **Bloqueio:** nenhum
-- **Imagem:** 60416 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 4103, userland 552
+- **Imagem:** 79872 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 4930, userland 658
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:21:08_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 57.1% | em andamento |
+| 3 | Processos e programas | 71.4% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -39,8 +39,8 @@ _Atualizado em 2026-11-03T16:21:08_
 | H11 | Processos e escalonador | feito | 3 |
 | H12 | Ring 3 e chamadas de sistema | feito | 4 |
 | H13 | Carregador ELF e libsagui | feito | 5 |
-| H14 | Arquivos e pastas graváveis | em andamento |  |
-| H15 | Pipes | a fazer |  |
+| H14 | Arquivos e pastas graváveis | feito | 4 |
+| H15 | Pipes | em andamento |  |
 | H16 | Shell e comandos como programas | a fazer |  |
 | H17 | Framebuffer VESA | a fazer |  |
 | H18 | Fonte própria | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:21:08_
 
 ## Últimas ações
 
+- 2026-11-03T16:25:17: Início da H15: Pipes
+- 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3
 - 2026-11-03T16:21:08: Início da H14: Arquivos e pastas graváveis
 - 2026-11-03T16:21:08: H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos
 - 2026-11-03T16:16:35: Início da H13: Carregador ELF e libsagui
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:21:08_
 - 2026-11-03T15:45:24: Fase 2 entregue. Aguardando teste do Eli.
 - 2026-11-03T15:45:16: Todos os testes passaram (H01 a H09, 9/9), IDE e USB
 - 2026-11-03T15:41:51: H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar
-- 2026-11-03T15:41:51: Erro corrigido: cd ../arte chegava como cd ..;arte
-- 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel

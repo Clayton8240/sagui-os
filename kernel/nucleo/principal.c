@@ -18,6 +18,7 @@
 #include "paginacao.h"
 #include "processo.h"
 #include "sistema.h"
+#include "vfs.h"
 
 #define SAGUI_VERSAO "0.3 (fase 3)"
 
@@ -195,7 +196,8 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     conferir_ramdisk();
     if (sgfs_iniciar((const void *)info_boot.ramdisk_inicio, info_boot.ramdisk_bytes)) {
         char linha[96];
-        snformatar(linha, sizeof linha, "Arquivos: ramdisk SGFS com %u entradas (%u KB)",
+        vfs_iniciar();
+        snformatar(linha, sizeof linha, "Arquivos: SGFS com %u entradas (%u KB) + camada gravável na RAM",
                    sgfs_quantidade(), (info_boot.ramdisk_bytes + 1023) / 1024);
         etapa(linha);
     } else {

@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:21:08",
-  "situacao": "Trabalhando na H14: Arquivos e pastas graváveis",
+  "atualizado": "2026-11-03T16:25:17",
+  "situacao": "Trabalhando na H15: Pipes",
   "fase_atual": 3,
-  "historia_atual": "H14",
+  "historia_atual": "H15",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 57.1
+      "progresso": 71.4
     },
     {
       "numero": 4,
@@ -229,12 +229,12 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos e pastas graváveis",
       "objetivo": "Camada gravável na RAM sobre o SGFS, tabela de arquivos por processo, terminal como 0 e 1.",
       "aceite": "Teste em ring 3 cria, escreve, relê e apaga tmp/teste.txt; o mesmo com uma pasta.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:21:08",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:25:17",
+      "minutos": 4,
+      "resultado": "Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3"
     },
     {
       "id": "H15",
@@ -242,9 +242,9 @@ window.SAGUI_STATUS = {
       "titulo": "Pipes",
       "objetivo": "pipe e duplicar, buffer no kernel, bloqueio de leitor e escritor, EOF.",
       "aceite": "Dois processos transferem por pipe um texto maior que o buffer sem perda nem duplicação.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:25:17",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -618,6 +618,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T16:25:17",
+      "texto": "Início da H15: Pipes"
+    },
+    {
+      "data": "2026-11-03T16:25:17",
+      "texto": "H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3"
+    },
+    {
       "data": "2026-11-03T16:21:08",
       "texto": "Início da H14: Arquivos e pastas graváveis"
     },
@@ -792,6 +800,16 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H13-ola-argumentos.png",
+      "nome": "H13-ola-argumentos.png",
+      "data": "2026-11-03T16:25:06"
+    },
+    {
+      "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
+      "nome": "H14-arquivos-gravaveis.png",
+      "data": "2026-11-03T16:24:39"
+    },
+    {
       "arquivo": "docs/capturas/H12-anel3-protecao.png",
       "nome": "H12-anel3-protecao.png",
       "data": "2026-11-03T16:21:03"
@@ -800,11 +818,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
       "nome": "H08-sgfs-lista.png",
       "data": "2026-11-03T16:20:57"
-    },
-    {
-      "arquivo": "docs/capturas/H13-ola-argumentos.png",
-      "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T16:20:25"
     },
     {
       "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
@@ -919,14 +932,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 4103,
-    "userland": 552,
-    "ferramentas": 1441
+    "kernel": 4930,
+    "userland": 658,
+    "ferramentas": 1470
   },
   "imagem": {
-    "bytes_util": 60416,
+    "bytes_util": 79872,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 38.2
+  "progresso_geral": 41.2
 };

@@ -13,6 +13,7 @@
 #include "console.h"
 #include "cpu.h"
 #include "portas.h"
+#include "processo.h"
 
 #define PORTA_DADOS  0x60
 #define PORTA_ESTADO 0x64
@@ -90,7 +91,12 @@ static void guardar(int tecla)
         return;   /* buffer cheio: a tecla é perdida em vez de sobrescrever as antigas */
     buffer[fim] = (uint16_t)tecla;
     fim = prox;
+    acordar(teclado_canal());   /* quem estava esperando uma tecla volta a ficar pronto */
 }
+
+/* Canal em que os processos esperam por teclas (ver bloquear/acordar). */
+static const char canal = 0;
+const void *teclado_canal(void) { return &canal; }
 
 static void atualizar_leds(void)
 {

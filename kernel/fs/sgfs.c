@@ -124,3 +124,8 @@ const char *sgfs_nome(const sgfs_entrada_t *e)
         if (*p == '/') nome = p + 1;
     return nome;
 }
+
+const uint8_t *sgfs_dados(const sgfs_entrada_t *e)
+{
+    return base + e->desloc;
+}

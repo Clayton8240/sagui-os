@@ -31,5 +31,6 @@ const sgfs_entrada_t *sgfs_proximo_filho(const char *pasta, uint32_t *pos);
 
 uint32_t    sgfs_ler(const sgfs_entrada_t *e, uint32_t desloc, void *destino, uint32_t n);
 const char *sgfs_nome(const sgfs_entrada_t *e);   /* último componente do caminho */
+const uint8_t *sgfs_dados(const sgfs_entrada_t *e);
 
 #endif

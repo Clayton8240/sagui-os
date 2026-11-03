@@ -25,5 +25,6 @@ void     teclado_iniciar(void);
 int      teclado_ler(void);      /* espera uma tecla */
 int      teclado_tentar(void);   /* -1 se não há tecla no buffer */
 uint32_t teclado_modificadores(void);
+const void *teclado_canal(void);
 
 #endif

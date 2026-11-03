@@ -361,3 +361,32 @@ ao próximo leitor.
 `userland/testes/X.c` vira `/testes/X`. O ramdisk é montado a partir de uma
 cópia de `rootfs/` com esses programas, então a pasta `rootfs/` do
 repositório só tem os arquivos escritos à mão.
+
+## D014. Camada gravável e arquivos abertos: como foi pensado (H14)
+
+**Árvore na RAM com cópia na escrita.** No boot, cada entrada do SGFS vira
+um nó numa árvore (pasta -> lista de filhos, em ordem alfabética, para o
+`ls` sair ordenado sem ordenar). Um arquivo aponta para seus bytes dentro do
+ramdisk; na primeira escrita ganha uma cópia própria no heap do kernel, que
+cresce dobrando de tamanho. Criar, apagar e renomear só mexem na árvore.
+Assim a "camada gravável por cima do SGFS" do PRD não precisa de duas
+estruturas (uma de leitura e uma de escrita) combinadas a cada busca: há
+uma só, e o SGFS é só o ponto de partida.
+
+**Apagar um arquivo aberto.** O nó sai da pasta na hora, mas os dados ficam
+até o último descritor fechar (o nó conta quantos arquivos abertos apontam
+para ele).
+
+**Três níveis: descritor -> arquivo aberto -> nó.** O descritor é só um
+índice na tabela do processo. O "arquivo aberto" guarda tipo (nó, terminal,
+ponta de pipe), modo e posição, e conta referências, porque `duplicar` e
+`executar` fazem dois descritores (às vezes de processos diferentes)
+compartilharem a mesma posição. É o que faz `echo a > x` seguido de outro
+comando escrever no lugar certo.
+
+**Terminal como arquivo.** Entrada 0 e saídas 1 e 2 do primeiro programa
+são um arquivo aberto do tipo terminal; todos os outros herdam. O modo linha
+edita no kernel; o modo bruto entrega tecla a tecla (D010).
+
+**Proteções.** Não se remove pasta com conteúdo, nem a raiz, nem a pasta em
+que algum processo está. Mover uma pasta para dentro dela mesma é recusado.
