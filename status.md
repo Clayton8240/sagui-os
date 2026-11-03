@@ -1,10 +1,29 @@
+```
+Eli, terminei a fase 1: Boot. Pode testar!
+
+O que foi feito: um carregador de boot próprio em duas partes. O MBR (512 bytes)
+lê o estágio 2, que liga a linha A20, pede o mapa de memória à BIOS, copia o
+kernel e o ramdisk para acima de 1 MB, confere que nada veio corrompido e entra
+no modo protegido de 32 bits. O kernel, em C, mostra a saudação, a memória
+detectada e o modo de vídeo que a placa oferece.
+Histórias concluídas: H01 a H04
+Imagem: entrega/fase1/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)
+Roteiro de teste: docs/teste-fase1.md
+O que você deve ver no G470: as linhas [1/6] a [6/6] passando rápido; a faixa
+verde com "Ola! Eu sou o SaguiOS."; "Memoria detectada: ... MB livres" perto da RAM do notebook.
+Problemas conhecidos: nenhum. (No QEMU a A20 já vem ligada; os outros métodos
+de A20 só vão ser exercitados no G470. A tela do kernel mostra qual funcionou.)
+
+Quando testar, me diga "fase 1 ok" ou descreva o que aconteceu.
+```
+
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T14:27:10_
+_Atualizado em 2026-11-03T14:27:18_
 
-- **Situação:** Trabalhando na H04: Imagem para pendrive e VirtualBox
+- **Situação:** Aguardando teste do Eli: fase 1
 - **Fase atual:** 1
-- **História atual:** H04
+- **História atual:** -
 - **Progresso geral:** 11.8%
 - **Bloqueio:** nenhum
 - **Imagem:** 14336 bytes úteis (meta 1474560 bytes = 1,44 MB)
@@ -14,7 +33,7 @@ _Atualizado em 2026-11-03T14:27:10_
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
-| 1 | Boot | 100.0% | em andamento |
+| 1 | Boot | 100.0% | aguardando teste |
 | 2 | Kernel e terminal | 0.0% | a fazer |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
@@ -26,10 +45,10 @@ _Atualizado em 2026-11-03T14:27:10_
 
 | ID | Título | Estado | Minutos |
 | --- | --- | --- | --- |
-| H01 | Preparar o ambiente | feito | 2 |
-| H02 | Estágio 1 (MBR) | feito | 8 |
-| H03 | Estágio 2 e modo protegido | feito | 1 |
-| H04 | Imagem para pendrive e VirtualBox | feito | 4 |
+| H01 | Preparar o ambiente | aguardando teste | 2 |
+| H02 | Estágio 1 (MBR) | aguardando teste | 8 |
+| H03 | Estágio 2 e modo protegido | aguardando teste | 1 |
+| H04 | Imagem para pendrive e VirtualBox | aguardando teste | 4 |
 | H05 | Interrupções e relógio | a fazer |  |
 | H06 | Memória física | a fazer |  |
 | H07 | Teclado PS/2 com ABNT2 | a fazer |  |
@@ -66,6 +85,7 @@ _Atualizado em 2026-11-03T14:27:10_
 
 ## Últimas ações
 
+- 2026-11-03T14:27:18: Fase 1 entregue. Aguardando teste do Eli.
 - 2026-11-03T14:27:10: Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)
 - 2026-11-03T14:27:10: H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md
 - 2026-11-03T14:22:52: Início da H04: Imagem para pendrive e VirtualBox
