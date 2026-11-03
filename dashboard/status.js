@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:05:16",
-  "situacao": "Fase 2 confirmada no hardware. Seguindo para a fase 3.",
-  "fase_atual": 2,
-  "historia_atual": null,
+  "atualizado": "2026-11-03T16:07:31",
+  "situacao": "Trabalhando na H10: Paginação",
+  "fase_atual": 3,
+  "historia_atual": "H10",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -25,7 +25,7 @@ window.SAGUI_STATUS = {
     {
       "numero": 3,
       "nome": "Processos e programas",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "progresso": 0.0
     },
     {
@@ -177,9 +177,9 @@ window.SAGUI_STATUS = {
       "titulo": "Paginação",
       "objetivo": "Diretório e tabelas de páginas, kernel em todos os espaços, page fault com mensagem clara.",
       "aceite": "Dois espaços de endereço com valores diferentes no mesmo endereço virtual; acesso inválido gera a tela de page fault.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:07:26",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -617,6 +617,10 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:07:26",
+      "texto": "Início da H10: Paginação"
+    },
     {
       "data": "2026-11-03T16:05:16",
       "texto": "Eli confirmou: fase 2 ok"

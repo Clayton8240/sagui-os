@@ -219,3 +219,55 @@ espaço dá o próprio acento.
 posição física (a tecla do ';' americano é o ç no ABNT2), cobrindo todas as
 linhas da tabela do PRD 4.4. Detalhe encontrado: o nome `altgr` do QEMU não
 gera o Alt da direita; o certo é `alt_r`.
+
+## D010. Plano da fase 3: espaços de endereço, processos e chamadas (H10 a H16)
+
+**Mapa de endereços virtuais (igual em todos os processos):**
+
+| Faixa | Uso |
+| --- | --- |
+| 0x00000000-0x37FFFFFF | Kernel: mapeamento 1:1 da memória física (só anel 0). A página 0 fica sem mapeamento, para pegar ponteiro nulo. |
+| 0x38000000-0x3FFFFFFF | Kernel: janelas para dispositivos em endereços físicos altos (vídeo, USB), fases 4 a 6. |
+| 0x40000000-0xBFFFFFFF | Programa do usuário: código a partir de 0x40000000 (PRD 4), dados, área que cresce com `aumentar_memoria`, e a pilha no topo. |
+
+As tabelas de páginas do kernel (0 a 0x3FFFFFFF) são criadas uma vez no boot,
+e todo diretório de processo aponta para as mesmas tabelas. Assim o kernel
+aparece igual em todo espaço de endereço sem copiar nada, e uma janela nova
+(ex.: o framebuffer) vale para todos os processos na hora.
+
+Páginas de 4 KB em tudo, inclusive no kernel. Páginas de 4 MB gastariam
+menos tabelas (1 MB de tabelas hoje), mas uma página grande que cubra regiões
+de tipos diferentes de memória é um caso que o manual da Intel deixa
+indefinido, e o mapa do G470 tem regiões reservadas no meio da RAM
+(0x20000000 e 0x40000000).
+
+**Chamadas de sistema reiniciáveis.** Como toda interrupção passa pelo
+despachante que devolve o quadro a retomar (D007), uma chamada que precisa
+esperar (ler de um pipe vazio, esperar um filho, ler do teclado) não precisa
+de uma pilha "congelada" no meio do kernel: ela marca o processo como
+bloqueado, **volta o EIP do processo 2 bytes** (o tamanho de `int 0x80`) e
+devolve o quadro de outro processo. Quando o processo for acordado, ele
+executa o `int 0x80` de novo, com os mesmos registradores, e desta vez a
+condição está satisfeita. Chamadas que não devem ser repetidas (`dormir`)
+gravam o resultado antes de bloquear e não voltam o EIP. Consequência: o
+kernel nunca é interrompido no meio de uma chamada (a porta 0x80 desliga as
+interrupções), e não existe troca de contexto dentro do kernel, só na saída
+de uma interrupção. É bem menos código e menos lugar para erro.
+
+**Herança de descritores.** Não há `fork`. `executar` cria o processo direto
+a partir do ELF, e o filho herda só os descritores 0, 1 e 2 do pai (entrada,
+saída e erro), além da pasta atual. O shell monta redirecionamentos e pipes
+assim: guarda a própria saída com `duplicar`, coloca o arquivo ou o pipe no
+lugar, chama `executar` e restaura. Herdar só 0-2 evita o problema clássico
+de um processo segurar sem querer a ponta de escrita de um pipe e o leitor
+nunca ver o fim do arquivo.
+
+**Terminal.** A entrada 0 lê o teclado em modo "linha" (o kernel edita a
+linha, ecoa, Backspace funciona, Ctrl+D no começo da linha = fim de arquivo)
+ou em modo "bruto" (cada tecla; teclas especiais viram ESC + uma letra), que
+o shell usa para ter histórico e completar com Tab.
+
+**Chamadas extras além do PRD 4.5** (registradas aqui porque o PRD lista o
+mínimo): `aumentar_memoria` (a memória dos programas, usada pelo `malloc`
+da libsagui), `pasta_atual` (para o `pwd`), `renomear` (para o `mv`),
+`modo_terminal` (linha/bruto, para o shell) e `limpar_tela`.
