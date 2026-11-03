@@ -1,6 +1,6 @@
 /* formatar.c - formatação de texto no estilo printf, escrita para o SaguiOS.
  *
- * Suporta: %s %c %d %i %u %x %X %p %%, com largura, alinhamento à esquerda
+ * Suporta: %s %c %d %i %u %x %X %p %%, com largura (número ou '*'), alinhamento à esquerda
  * ('-') e preenchimento com zeros ('0'). O modificador 'l' é aceito e
  * ignorado (long tem 32 bits aqui). Não há ponto flutuante de propósito: o
  * kernel não usa a FPU.
@@ -63,6 +63,11 @@ int formatar(char *dst, size_t max, const char *fmt, va_list ap)
             if (*fmt == '-') esquerda = true;
             else if (*fmt == '0') preenche = '0';
             else break;
+        }
+        if (*fmt == '*') {               /* largura vinda dos argumentos */
+            largura = va_arg(ap, int);
+            if (largura < 0) { esquerda = true; largura = -largura; }
+            fmt++;
         }
         while (*fmt >= '0' && *fmt <= '9')
             largura = largura * 10 + (*fmt++ - '0');

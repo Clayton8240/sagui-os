@@ -12,6 +12,8 @@
 #include "relogio.h"
 #include "texto.h"
 #include "teclado.h"
+#include "sgfs.h"
+#include "caminho.h"
 #include "memoria.h"
 
 static int falhas;
@@ -184,6 +186,61 @@ static void teste_teclado(void)
     klog("[TESTE] teclado linha=%s\n", hex);
 }
 
+/* H08: lista todas as entradas e lê o leia-me.txt inteiro, em pedaços. */
+static void listar_sgfs(const char *pasta, int nivel)
+{
+    uint32_t pos = 0;
+    const sgfs_entrada_t *e;
+    while ((e = sgfs_proximo_filho(pasta, &pos))) {
+        static const char *tipos[] = { "?", "arquivo", "pasta", "programa" };
+        klog("[SGFS] %-8s %6u /%s\n", tipos[e->tipo <= 3 ? e->tipo : 0], e->tamanho, e->caminho);
+        kprintf("%*s%s%s\n", nivel * 2 + 2, "", sgfs_nome(e), e->tipo == SGFS_PASTA ? "/" : "");
+        if (e->tipo == SGFS_PASTA)
+            listar_sgfs(e->caminho, nivel + 1);
+    }
+}
+
+static bool caminho_da(const char *atual, const char *alvo, const char *esperado)
+{
+    char saida[CAMINHO_MAX];
+    bool ok = caminho_resolver(atual, alvo, saida, sizeof saida) && txt_compara(saida, esperado) == 0;
+    if (!ok) klog("[TESTE] caminho %s + %s deu %s (esperado %s)\n", atual, alvo, saida, esperado);
+    return ok;
+}
+
+static void teste_sgfs(void)
+{
+    kprintf("Conteúdo do ramdisk:\n");
+    listar_sgfs("/", 0);
+    uint32_t n = 0;
+    for (uint32_t i = 0; i < sgfs_quantidade(); i++) n++;
+    klog("[SGFS] total %u entradas\n", n);
+
+    const sgfs_entrada_t *e = sgfs_procurar("/leia-me.txt");
+    confere(e && e->tipo == SGFS_ARQUIVO, "leia-me.txt existe e é arquivo");
+    if (!e) return;
+    char *buf = kmalloc(e->tamanho + 1);
+    uint32_t lidos = 0, r;
+    while ((r = sgfs_ler(e, lidos, buf + lidos, 100)) > 0)   /* pedaços de 100: testa o deslocamento */
+        lidos += r;
+    confere(lidos == e->tamanho, "leu o arquivo inteiro");
+    klog("[ARQ-INICIO]\n");
+    for (uint32_t i = 0; i < lidos; i++) serial_char(buf[i]);
+    klog("[ARQ-FIM]\n");
+    kfree(buf);
+
+    confere(sgfs_procurar("/nao-existe.txt") == NULL, "arquivo inexistente não é encontrado");
+    confere(sgfs_procurar("/historia") && sgfs_procurar("historia")->tipo == SGFS_PASTA, "historia é pasta");
+    confere(sgfs_procurar("/")->tipo == SGFS_PASTA, "a raiz é pasta");
+    char lixo[4];
+    confere(sgfs_ler(sgfs_procurar("/historia"), 0, lixo, 4) == 0, "ler uma pasta não devolve dados");
+    confere(sgfs_ler(e, e->tamanho, lixo, 4) == 0, "ler depois do fim devolve 0");
+    confere(caminho_da("/historia", "../arte/./sagui.txt", "/arte/sagui.txt"), "caminho com .. e .");
+    confere(caminho_da("/", "..", "/"), ".. na raiz continua na raiz");
+    confere(caminho_da("/a/b", "/c//d/", "/c/d"), "caminho absoluto com barras repetidas");
+    confere(caminho_da("/a", "b/../../..", "/"), "vários .. seguidos");
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -194,6 +251,7 @@ static const autoteste_t testes[] = {
     { "relogio", teste_relogio },
     { "memoria", teste_memoria },
     { "teclado", teste_teclado },
+    { "sgfs", teste_sgfs },
 };
 
 void autoteste_executar(const char *nome)

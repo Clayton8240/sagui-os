@@ -1,21 +1,21 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:37:48_
+_Atualizado em 2026-11-03T15:39:25_
 
-- **Situação:** Trabalhando na H08: Sistema de arquivos SGFS
+- **Situação:** Trabalhando na H09: Terminal provisório do kernel
 - **Fase atual:** 2
-- **História atual:** H08
-- **Progresso geral:** 20.6%
+- **História atual:** H09
+- **Progresso geral:** 23.5%
 - **Bloqueio:** nenhum
-- **Imagem:** 30720 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 2075, userland 0
+- **Imagem:** 34816 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 2371, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
-| 2 | Kernel e terminal | 60.0% | em andamento |
+| 2 | Kernel e terminal | 80.0% | em andamento |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
@@ -33,8 +33,8 @@ _Atualizado em 2026-11-03T15:37:48_
 | H05 | Interrupções e relógio | feito | 4 |
 | H06 | Memória física | feito | 4 |
 | H07 | Teclado PS/2 com ABNT2 | feito | 6 |
-| H08 | Sistema de arquivos SGFS | em andamento |  |
-| H09 | Terminal provisório do kernel | a fazer |  |
+| H08 | Sistema de arquivos SGFS | feito | 2 |
+| H09 | Terminal provisório do kernel | em andamento |  |
 | H10 | Paginação | a fazer |  |
 | H11 | Processos e escalonador | a fazer |  |
 | H12 | Ring 3 e chamadas de sistema | a fazer |  |
@@ -66,6 +66,10 @@ _Atualizado em 2026-11-03T15:37:48_
 
 ## Últimas ações
 
+- 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel
+- 2026-11-03T15:39:25: H08 concluída: mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico
+- 2026-11-03T15:39:25: Erro corrigido: Saudação e memória quebravam linha
+- 2026-11-03T15:39:25: Erro corrigido: Árvore do SGFS saiu como %*s na tela
 - 2026-11-03T15:37:48: Início da H08: Sistema de arquivos SGFS
 - 2026-11-03T15:37:48: H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte
 - 2026-11-03T15:32:06: Início da H07: Teclado PS/2 com ABNT2
@@ -77,7 +81,3 @@ _Atualizado em 2026-11-03T15:37:48_
 - 2026-11-03T15:23:28: Início da H04-fix: saudação some no G470 por causa do mapa E820 grande
 - 2026-11-03T15:22:25: Eli confirmou: fase 1 ok
 - 2026-11-03T14:27:18: Fase 1 entregue. Aguardando teste do Eli.
-- 2026-11-03T14:27:10: Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)
-- 2026-11-03T14:27:10: H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md
-- 2026-11-03T14:22:52: Início da H04: Imagem para pendrive e VirtualBox
-- 2026-11-03T14:22:52: H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB

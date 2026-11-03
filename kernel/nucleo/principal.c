@@ -13,6 +13,7 @@
 #include "autoteste.h"
 #include "memoria.h"
 #include "teclado.h"
+#include "sgfs.h"
 
 #define SAGUI_VERSAO "0.2 (fase 2)"
 
@@ -156,7 +157,18 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     teclado_iniciar();
     etapa("Teclado PS/2 com layout ABNT2 (acentos com teclas mortas, ç)");
 
+    /* H08: sistema de arquivos do ramdisk. */
     conferir_ramdisk();
+    if (sgfs_iniciar((const void *)info_boot.ramdisk_inicio, info_boot.ramdisk_bytes)) {
+        char linha[96];
+        snformatar(linha, sizeof linha, "Arquivos: ramdisk SGFS com %u entradas (%u KB)",
+                   sgfs_quantidade(), (info_boot.ramdisk_bytes + 1023) / 1024);
+        etapa(linha);
+    } else {
+        vga_cor(COR_VERMELHO_CLARO, COR_PRETO);
+        kprintf("[ERRO] ramdisk SGFS invalido: o sistema segue sem arquivos\n");
+        vga_cor(COR_CINZA, COR_PRETO);
+    }
     klog("[SAGUI] boot ok\n");
 
     if (info_boot.teste[0])

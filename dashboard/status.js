@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:37:48",
-  "situacao": "Trabalhando na H08: Sistema de arquivos SGFS",
+  "atualizado": "2026-11-03T15:39:25",
+  "situacao": "Trabalhando na H09: Terminal provisório do kernel",
   "fase_atual": 2,
-  "historia_atual": "H08",
+  "historia_atual": "H09",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -19,7 +19,7 @@ window.SAGUI_STATUS = {
       "numero": 2,
       "nome": "Kernel e terminal",
       "estado": "em andamento",
-      "progresso": 60.0
+      "progresso": 80.0
     },
     {
       "numero": 3,
@@ -150,12 +150,12 @@ window.SAGUI_STATUS = {
       "titulo": "Sistema de arquivos SGFS",
       "objetivo": "tools/mksgfs.py e leitor no kernel: listar pasta, abrir e ler arquivo.",
       "aceite": "Teste interno lista as entradas do rootfs/ e lê o leia-me.txt inteiro.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T15:37:48",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T15:39:25",
+      "minutos": 2,
+      "resultado": "mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico"
     },
     {
       "id": "H09",
@@ -163,9 +163,9 @@ window.SAGUI_STATUS = {
       "titulo": "Terminal provisório do kernel",
       "objetivo": "Prompt sagui:/$ com ajuda, ls, cd, cat, limpar, mem, data, reiniciar.",
       "aceite": "Roteiro digita cada comando no QEMU e confere pela captura e pela serial.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T15:39:25",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -617,6 +617,22 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T15:39:25",
+      "texto": "Início da H09: Terminal provisório do kernel"
+    },
+    {
+      "data": "2026-11-03T15:39:25",
+      "texto": "H08 concluída: mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico"
+    },
+    {
+      "data": "2026-11-03T15:39:25",
+      "texto": "Erro corrigido: Saudação e memória quebravam linha"
+    },
+    {
+      "data": "2026-11-03T15:39:25",
+      "texto": "Erro corrigido: Árvore do SGFS saiu como %*s na tela"
+    },
+    {
       "data": "2026-11-03T15:37:48",
       "texto": "Início da H08: Sistema de arquivos SGFS"
     },
@@ -697,8 +713,26 @@ window.SAGUI_STATUS = {
       "texto": "Início da H01: Preparar o ambiente"
     }
   ],
-  "erros": [],
+  "erros": [
+    {
+      "data": "2026-11-03T15:39:25",
+      "sintoma": "Saudação e memória quebravam linha",
+      "causa": "Textos com mais de 80 colunas",
+      "correcao": "Larguras fixas que somam 80"
+    },
+    {
+      "data": "2026-11-03T15:39:25",
+      "sintoma": "Árvore do SGFS saiu como %*s na tela",
+      "causa": "formatar() não aceitava largura com *",
+      "correcao": "Suporte a * no formatar()"
+    }
+  ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H08-sgfs-lista.png",
+      "nome": "H08-sgfs-lista.png",
+      "data": "2026-11-03T15:39:06"
+    },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
@@ -762,14 +796,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 2075,
+    "kernel": 2371,
     "userland": 0,
-    "ferramentas": 1117
+    "ferramentas": 1164
   },
   "imagem": {
-    "bytes_util": 30720,
+    "bytes_util": 34816,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 20.6
+  "progresso_geral": 23.5
 };
