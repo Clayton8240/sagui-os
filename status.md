@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T19:09:30_
+_Atualizado em 2026-11-03T19:11:50_
 
-- **Situação:** Trabalhando na H27: Sagui Pega Banana
+- **Situação:** Trabalhando na H28: Acabamento
 - **Fase atual:** 5
-- **História atual:** H27
-- **Progresso geral:** 76.5%
+- **História atual:** H28
+- **Progresso geral:** 79.4%
 - **Bloqueio:** nenhum
-- **Imagem:** 392704 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6740, userland 3220
+- **Imagem:** 411136 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6740, userland 3531
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T19:09:30_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 77.8% | em andamento |
+| 5 | Janelas e programas | 88.9% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -52,8 +52,8 @@ _Atualizado em 2026-11-03T19:09:30_
 | H24 | Terminal em janela | feito | 3 |
 | H25 | Editor de texto | feito | 3 |
 | H26 | Calculadora | feito | 2 |
-| H27 | Sagui Pega Banana | em andamento |  |
-| H28 | Acabamento | a fazer |  |
+| H27 | Sagui Pega Banana | feito | 2 |
+| H28 | Acabamento | em andamento |  |
 | H29 | PCI e controlador EHCI | a fazer |  |
 | H30 | Enumeração USB, hubs e conexão a quente | a fazer |  |
 | H31 | Armazenamento em massa | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T19:09:30_
 
 ## Últimas ações
 
+- 2026-11-03T19:11:50: Início da H28: Acabamento
+- 2026-11-03T19:11:50: H27 concluída: Jogo Sagui Pega Banana com pixel art, vidas, velocidade crescente e recorde
 - 2026-11-03T19:09:30: Início da H27: Sagui Pega Banana
 - 2026-11-03T19:09:30: H26 concluída: Calculadora em ponto fixo com botões e teclado; avisos de divisão por zero e número grande
 - 2026-11-03T19:07:26: Início da H26: Calculadora
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T19:09:30_
 - 2026-11-03T18:53:31: Início da H22: Kit gráfico da libsagui
 - 2026-11-03T18:53:31: H21 concluída: Gerenciador de janelas no kernel, memória compartilhada, eventos por janela; arrastar e fechar testados
 - 2026-11-03T18:53:30: Erro corrigido: Rastros ao arrastar janelas
-- 2026-11-03T18:46:46: Início da H21: Gerenciador de janelas
-- 2026-11-03T18:46:46: H20 concluída: Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones

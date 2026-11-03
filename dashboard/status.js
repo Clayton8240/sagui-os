@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:09:30",
-  "situacao": "Trabalhando na H27: Sagui Pega Banana",
+  "atualizado": "2026-11-03T19:11:50",
+  "situacao": "Trabalhando na H28: Acabamento",
   "fase_atual": 5,
-  "historia_atual": "H27",
+  "historia_atual": "H28",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 77.8
+      "progresso": 88.9
     },
     {
       "numero": 6,
@@ -400,12 +400,12 @@ window.SAGUI_STATUS = {
       "titulo": "Sagui Pega Banana",
       "objetivo": "Jogo autoral: sagui pega bananas, 3 vidas, velocidade crescente, recorde.",
       "aceite": "Teste joga com setas pelo monitor; capturas do jogo e do fim de jogo.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:09:30",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:11:50",
+      "minutos": 2,
+      "resultado": "Jogo Sagui Pega Banana com pixel art, vidas, velocidade crescente e recorde"
     },
     {
       "id": "H28",
@@ -413,9 +413,9 @@ window.SAGUI_STATUS = {
       "titulo": "Acabamento",
       "objetivo": "Ícones na área de trabalho e tela Sobre o SaguiOS.",
       "aceite": "Captura com três programas abertos; tamanho da imagem medido.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T19:11:50",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -619,6 +619,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T19:11:50",
+      "texto": "Início da H28: Acabamento"
+    },
+    {
+      "data": "2026-11-03T19:11:50",
+      "texto": "H27 concluída: Jogo Sagui Pega Banana com pixel art, vidas, velocidade crescente e recorde"
+    },
     {
       "data": "2026-11-03T19:09:30",
       "texto": "Início da H27: Sagui Pega Banana"
@@ -850,14 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:39:25",
       "texto": "Erro corrigido: Árvore do SGFS saiu como %*s na tela"
-    },
-    {
-      "data": "2026-11-03T15:37:48",
-      "texto": "Início da H08: Sistema de arquivos SGFS"
-    },
-    {
-      "data": "2026-11-03T15:37:48",
-      "texto": "H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte"
     }
   ],
   "erros": [
@@ -911,6 +911,21 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H27-banana-fim-de-jogo.png",
+      "nome": "H27-banana-fim-de-jogo.png",
+      "data": "2026-11-03T19:11:24"
+    },
+    {
+      "arquivo": "docs/capturas/H27-banana-jogando.png",
+      "nome": "H27-banana-jogando.png",
+      "data": "2026-11-03T19:11:13"
+    },
+    {
+      "arquivo": "docs/capturas/H27-banana-inicio.png",
+      "nome": "H27-banana-inicio.png",
+      "data": "2026-11-03T19:11:10"
+    },
     {
       "arquivo": "docs/capturas/H26-calculadora-divisao-por-zero.png",
       "nome": "H26-calculadora-divisao-por-zero.png",
@@ -1195,13 +1210,13 @@ window.SAGUI_STATUS = {
   "linhas": {
     "boot": 903,
     "kernel": 6740,
-    "userland": 3220,
-    "ferramentas": 2591
+    "userland": 3531,
+    "ferramentas": 2647
   },
   "imagem": {
-    "bytes_util": 392704,
+    "bytes_util": 411136,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 76.5
+  "progresso_geral": 79.4
 };
