@@ -30,4 +30,11 @@ Fase 3 - Processos e programas
   conversam por pipes. O terminal virou o sagsh, um programa comum, e cada
   comando (ls, cat, cp, ps...) é um programa separado em /bin.
 
+Fase 4 - Gráfico e mouse
+  A tela deixou o modo texto da placa de vídeo e passou a ser desenhada
+  pixel a pixel, em 1024x768, com uma fonte criada neste projeto e
+  desenhada em texto, letra por letra, com todos os acentos do português.
+  O touchpad virou um cursor em forma de seta, também desenhado aqui. A
+  pedido do Eli, o shell ganhou edição com as setas no meio da linha.
+
 (Este arquivo é atualizado ao fim de cada fase.)

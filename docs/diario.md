@@ -95,3 +95,17 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   Eli: as setas para os lados não editam a linha (não estava implementado:
   vai na H18, com o terminal gráfico) e o texto de um programa em segundo
   plano se mistura com a linha que está sendo digitada (também na H18).
+- **Fase 4 iniciada** (tag `pre-fase4`). Pedidos do Eli registrados.
+- **H17.** Console separado em camada (`console_*`) com dois motores. Vídeo
+  VESA com buffer duplo de 32 bits, cópia só do que mudou, primitivas.
+- **H18.** Fonte própria desenhada em texto (`tools/fonte/sagui8x16.txt`),
+  acentuadas compostas pelo gerador; terminal gráfico 128x48; boot
+  reordenado para a tela ficar gráfica logo após ligar a memória. O harness
+  passou a ler a tela gráfica reconhecendo as células pela própria fonte
+  (sem OCR), e todos os testes antigos seguiram valendo. Pedidos do Eli:
+  edição com setas no shell e redesenho da linha quando outro processo
+  escreve.
+- **H19.** Mouse PS/2 (IRQ 12) com cursor próprio. Corrigido um problema
+  latente: o tratador do teclado descartava bytes do mouse.
+- **Fim da fase 4.** 19/19 testes passando. Imagens em `entrega/fase4/`.
+  Parada obrigatória: aguardando o teste do Eli.

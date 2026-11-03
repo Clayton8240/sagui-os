@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T17:38:51",
-  "situacao": "Trabalhando na H19: Mouse / touchpad PS/2",
+  "atualizado": "2026-11-03T17:40:18",
+  "situacao": "Aguardando teste do Eli: fase 4",
   "fase_atual": 4,
-  "historia_atual": "H19",
+  "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "",
+  "mensagem_fase": "Eli, terminei a fase 4: Gráfico e mouse. Pode testar!\n\nO que foi feito: a tela agora é gráfica, em 1024x768, desenhada pixel a pixel\npelo SaguiOS com uma fonte própria (desenhada letra por letra neste projeto),\ncom todos os acentos do português. O touchpad move uma seta desenhada pelo\nsistema, e os cliques são detectados. Também fiz os seus pedidos da fase 3:\nas setas para os lados, Home, End e Delete editam no meio da linha do shell,\ne o texto de um programa em segundo plano não se mistura mais com o que você\nestá digitando.\nHistórias concluídas: H17 a H19\nImagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase4.md\nO que você deve ver no G470: a tela gráfica com a faixa verde e a fonte nova;\na seta mexendo com o touchpad; \"echo Ação, vovô, pão, ÇÃO\" com acentos certos.\nProblemas conhecidos: ainda não há janelas nem área de trabalho (fase 5): o\nmouse se move e os cliques são detectados, mas ainda não há onde clicar.\n\nQuando testar, me diga \"fase 4 ok\" ou descreva o que aconteceu.",
   "fases": [
     {
       "numero": 1,
@@ -32,7 +32,7 @@ window.SAGUI_STATUS = {
     {
       "numero": 4,
       "nome": "Gráfico e mouse",
-      "estado": "em andamento",
+      "estado": "aguardando teste",
       "progresso": 100.0
     },
     {
@@ -269,7 +269,7 @@ window.SAGUI_STATUS = {
       "titulo": "Framebuffer VESA",
       "objetivo": "Troca para o modo VESA, double buffer e primitivas de desenho.",
       "aceite": "Captura com fundo colorido e formas; se o VESA falhar, volta ao modo texto e avisa.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T17:22:03",
       "fim": "2026-11-03T17:24:26",
@@ -282,7 +282,7 @@ window.SAGUI_STATUS = {
       "titulo": "Fonte própria",
       "objetivo": "Fonte bitmap 8x16 própria com ASCII e acentos Latin-1; terminal gráfico.",
       "aceite": "Captura mostra `Ação, vovô, pão, ÇÃO, à é í ó ú` correto.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T17:24:26",
       "fim": "2026-11-03T17:32:50",
@@ -295,7 +295,7 @@ window.SAGUI_STATUS = {
       "titulo": "Mouse / touchpad PS/2",
       "objetivo": "Porta auxiliar do i8042, IRQ12, pacotes de 3 bytes, cursor próprio, botões.",
       "aceite": "Movimentos do monitor do QEMU movem o cursor; clique registrado na serial.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T17:32:50",
       "fim": "2026-11-03T17:38:51",
@@ -619,6 +619,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T17:40:18",
+      "texto": "Fase 4 entregue. Aguardando teste do Eli."
+    },
+    {
+      "data": "2026-11-03T17:40:18",
+      "texto": "Todos os testes passaram (H01 a H19, 19/19)"
+    },
+    {
       "data": "2026-11-03T17:38:51",
       "texto": "H19 concluída: Mouse/touchpad PS/2 com IRQ 12, cursor próprio, cliques na serial"
     },
@@ -869,6 +877,36 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T17:40:03"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T17:39:57"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T17:39:46"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T17:39:43"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T17:39:26"
+    },
+    {
+      "arquivo": "docs/capturas/H08-sgfs-lista.png",
+      "nome": "H08-sgfs-lista.png",
+      "data": "2026-11-03T17:39:20"
+    },
+    {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
       "nome": "H19-cursor-movido.png",
       "data": "2026-11-03T17:38:33"
@@ -887,31 +925,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H17-formas-ide.png",
       "nome": "H17-formas-ide.png",
       "data": "2026-11-03T17:37:49"
-    },
-    {
-      "arquivo": "docs/capturas/H16-tab-historico.png",
-      "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T17:37:46"
-    },
-    {
-      "arquivo": "docs/capturas/H16-falha-protecao.png",
-      "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T17:37:40"
-    },
-    {
-      "arquivo": "docs/capturas/H16-contador-e-ps.png",
-      "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T17:37:29"
-    },
-    {
-      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
-      "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T17:37:26"
-    },
-    {
-      "arquivo": "docs/capturas/H16-ajuda.png",
-      "nome": "H16-ajuda.png",
-      "data": "2026-11-03T17:37:09"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
@@ -977,11 +990,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
       "data": "2026-11-03T17:36:08"
-    },
-    {
-      "arquivo": "docs/capturas/H08-sgfs-lista.png",
-      "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T17:36:02"
     },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
@@ -1061,7 +1069,7 @@ window.SAGUI_STATUS = {
     "ferramentas": 2028
   },
   "imagem": {
-    "bytes_util": 238592,
+    "bytes_util": 239104,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
