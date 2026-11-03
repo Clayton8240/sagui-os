@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T20:16:48",
-  "situacao": "Trabalhando na H32: FAT32: leitura",
+  "atualizado": "2026-11-03T20:18:39",
+  "situacao": "Trabalhando na H33: FAT32: gravação",
   "fase_atual": 6,
-  "historia_atual": "H32",
+  "historia_atual": "H33",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -47,7 +47,7 @@ window.SAGUI_STATUS = {
       "numero": 6,
       "nome": "Pendrive de dados",
       "estado": "em andamento",
-      "progresso": 50.0
+      "progresso": 66.7
     },
     {
       "numero": 7,
@@ -466,12 +466,12 @@ window.SAGUI_STATUS = {
       "titulo": "FAT32: leitura",
       "objetivo": "Partições MBR, FAT32 com nomes curtos e longos, montagem em /usb.",
       "aceite": "Pendrive de teste com pastas, acentos e nomes longos é lido por ls e cat.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:16:48",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T20:18:39",
+      "minutos": 2,
+      "resultado": "FAT32 com nomes longos e acentos montado em /usb; ls e cat funcionando"
     },
     {
       "id": "H33",
@@ -479,9 +479,9 @@ window.SAGUI_STATUS = {
       "titulo": "FAT32: gravação",
       "objetivo": "Criar, sobrescrever, aumentar, apagar; pastas; duas FATs; FSInfo; desmontar grava tudo.",
       "aceite": "Após desmontar, mtools e fsck.vfat confirmam integridade e conteúdo.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T20:18:39",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -620,6 +620,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T20:18:39",
+      "texto": "Início da H33: FAT32: gravação"
+    },
+    {
+      "data": "2026-11-03T20:18:39",
+      "texto": "H32 concluída: FAT32 com nomes longos e acentos montado em /usb; ls e cat funcionando"
+    },
     {
       "data": "2026-11-03T20:16:48",
       "texto": "Início da H32: FAT32: leitura"
@@ -851,14 +859,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T16:16:35",
       "texto": "H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo"
-    },
-    {
-      "data": "2026-11-03T16:12:46",
-      "texto": "Início da H12: Ring 3 e chamadas de sistema"
-    },
-    {
-      "data": "2026-11-03T16:12:46",
-      "texto": "H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar"
     }
   ],
   "erros": [
@@ -912,6 +912,11 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H32-ls-pendrive.png",
+      "nome": "H32-ls-pendrive.png",
+      "data": "2026-11-03T20:18:16"
+    },
     {
       "arquivo": "docs/capturas/H30-conexao-a-quente.png",
       "nome": "H30-conexao-a-quente.png",
@@ -1236,13 +1241,13 @@ window.SAGUI_STATUS = {
   "linhas": {
     "boot": 903,
     "kernel": 9161,
-    "userland": 3736,
-    "ferramentas": 2891
+    "userland": 3769,
+    "ferramentas": 2965
   },
   "imagem": {
     "bytes_util": 491520,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 91.2
+  "progresso_geral": 94.1
 };

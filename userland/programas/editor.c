@@ -52,6 +52,7 @@ static bool abrir_arquivo(const char *c)
     int n = 0, r;
     while (n < 65535 && (r = ler(fd, buf + n, (unsigned)(65535 - n))) > 0) n += r;
     fechar(fd);
+    n = (int)utf8_para_latin1(buf, (size_t)n, NULL);   /* textos de fora costumam vir em UTF-8 (D027) */
     area_definir(&area, buf, n);
     libera(buf);
     copia_texto(caminho, c, sizeof caminho);

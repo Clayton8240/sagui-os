@@ -99,6 +99,28 @@ bool eh_espaco(int c)
     return c == ' ' || c == '\t' || c == '\n' || c == '\r';
 }
 
+/* Converte, no lugar, sequências UTF-8 válidas de caracteres do Latin-1
+ * (U+0080 a U+00FF, dois bytes: C2/C3 + continuação) para um byte só. O
+ * resto fica como está. Devolve o novo tamanho. Se o texto terminar no meio
+ * de uma sequência, *sobra recebe quantos bytes do fim ficaram pendentes
+ * (para juntar com o próximo bloco); com sobra = NULL, ficam como estão. */
+size_t utf8_para_latin1(char *s, size_t n, size_t *sobra)
+{
+    size_t i = 0, k = 0;
+    if (sobra) *sobra = 0;
+    while (i < n) {
+        uint8_t c = (uint8_t)s[i];
+        if ((c == 0xC2 || c == 0xC3) && i + 1 >= n && sobra) { *sobra = 1; break; }
+        if ((c == 0xC2 || c == 0xC3) && i + 1 < n && ((uint8_t)s[i + 1] & 0xC0) == 0x80) {
+            s[k++] = (char)(((c & 0x03) << 6) | ((uint8_t)s[i + 1] & 0x3F));
+            i += 2;
+            continue;
+        }
+        s[k++] = s[i++];
+    }
+    return k;
+}
+
 int texto_para_int(const char *s)
 {
     int sinal = 1, v = 0;

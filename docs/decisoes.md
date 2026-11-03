@@ -700,3 +700,17 @@ cache de 16 setores, gravada no fim de cada operação (criar, escrever,
 apagar...) e no desmontar. Os dados dos arquivos, quando cobrem setores
 inteiros, vão direto para o pendrive. Assim, mesmo se o pendrive for
 arrancado, o que foi feito até a operação anterior já está gravado.
+
+## D027. Textos em UTF-8 vindos do pendrive (H32)
+
+O SaguiOS guarda e mostra texto em Latin-1 (PRD 4.4), mas os arquivos que
+chegam num pendrive gravado no Windows atual ou no Linux costumam estar em
+UTF-8, em que "ã" ocupa dois bytes. O kernel não mexe no conteúdo (lê os
+bytes como estão). Quem mostra texto converte: a libsagui tem
+`utf8_para_latin1`, que troca cada sequência UTF-8 válida de um caractere
+que exista no Latin-1 pelo byte correspondente e deixa o resto como está
+(um texto que já seja Latin-1 quase nunca forma sequências UTF-8 válidas, então
+não é estragado). O `cat` converte enquanto copia (guardando um pedaço de
+sequência que tenha ficado no fim de um bloco) e o Editor converte ao abrir.
+O que o SaguiOS grava continua em Latin-1, que o Bloco de Notas do Windows
+abre como "ANSI".

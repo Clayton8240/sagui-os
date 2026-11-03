@@ -93,6 +93,7 @@ char  *acha_char(const char *s, int c);
 char  *acha_ultimo_char(const char *s, int c);
 bool   comeca_com(const char *s, const char *prefixo);
 int    texto_para_int(const char *s);
+size_t utf8_para_latin1(char *s, size_t n, size_t *sobra);   /* texto UTF-8 de fora -> Latin-1 */
 bool   eh_espaco(int c);
 
 void *aloca(size_t n);
