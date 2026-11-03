@@ -103,3 +103,18 @@ void cmos_ler_data(data_hora_t *d)
     uint32_t seculo = (b[6] >= 19 && b[6] <= 21) ? b[6] : 20;
     d->ano = (uint16_t)(seculo * 100 + b[5]);
 }
+
+/* Dia da semana: conta os dias desde 01/01/2000, que foi um sábado.
+ * Devolve 0 = domingo ... 6 = sábado. */
+int dia_da_semana(int ano, int mes, int dia)
+{
+    static const int dias_mes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    if (ano < 2000) return 0;
+    int total = 0;
+    for (int a = 2000; a < ano; a++)
+        total += (a % 4 == 0 && (a % 100 != 0 || a % 400 == 0)) ? 366 : 365;
+    for (int m = 1; m < mes && m <= 12; m++)
+        total += dias_mes[m - 1] + (m == 2 && ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0));
+    total += dia - 1;
+    return (total + 6) % 7;
+}

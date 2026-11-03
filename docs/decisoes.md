@@ -302,3 +302,32 @@ ficam (estado zumbi) até o pai recolher o código de saída com `esperar`. Não
 dá para liberar a pilha do kernel na hora: estamos rodando nela até o
 escalonador devolver o quadro de outro processo. Órfãos passam para o
 processo 0 e são recolhidos pelo próprio escalonador.
+
+## D012. Anel 3 e chamadas de sistema: como foi pensado (H12)
+
+**Entrar no anel 3 é só um quadro diferente.** O processo novo recebe um
+quadro com CS e SS de usuário (seletores com nível 3), a pilha do programa e
+o ponto de entrada. Quando o escalonador o escolhe, o mesmo `iret` de sempre
+troca de anel. O EFLAGS começa com IOPL=0: `cli`, `sti`, `in` e `out` no
+anel 3 geram proteção geral.
+
+**A TSS só serve para uma coisa:** dizer à CPU qual pilha do kernel usar
+quando um programa no anel 3 é interrompido. O escalonador atualiza o
+`esp0` a cada troca.
+
+**Erro de programa x erro do kernel.** O despachante olha o nível de
+privilégio do CS salvo no quadro: exceção vinda do anel 3 encerra só aquele
+processo, com uma linha explicando o motivo; vinda do anel 0, tela vermelha.
+
+**Validação de ponteiros.** Todo ponteiro vindo de um programa passa por
+`usuario_ok`: o intervalo inteiro tem que estar na área dos programas
+(0x40000000 a 0xBFFFFFFF) e cada página tem que estar mapeada com o bit de
+usuário (e de escrita, quando o kernel vai escrever). Textos são copiados
+para o kernel conferindo cada página que o texto atravessa. Só depois disso
+o kernel lê ou escreve, direto pelo endereço virtual, já que o CR3 em uso é
+o do próprio processo.
+
+**Testes sem carregador ELF.** A H12 vem antes do carregador (H13). Os
+programas de teste são três trechos de assembly independentes de posição,
+dentro do kernel, que o autoteste copia para a página 0x40000000 de um
+espaço novo.

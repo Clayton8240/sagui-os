@@ -38,6 +38,7 @@ void pic_fim(uint8_t irq);
 bool pic_espuria(uint8_t irq);
 
 SEM_RETORNO void excecao_fatal(quadro_t *q);
+quadro_t *excecao_usuario(quadro_t *q);
 const char *nome_excecao(uint32_t vetor);
 
 static inline void int_liga(void)    { __asm__ volatile("sti"); }

@@ -6,6 +6,8 @@
  * que permite achar a causa a partir de uma foto. */
 #include "cpu.h"
 #include "console.h"
+#include "processo.h"
+#include "abi.h"
 
 static const char *const nomes[32] = {
     "Divisão por zero", "Depuração", "Interrupção não mascarável", "Ponto de parada",
@@ -58,4 +60,18 @@ SEM_RETORNO void excecao_fatal(quadro_t *q)
     kprintf("\n  Fotografe esta tela para ajudar a encontrar o problema.\n");
     kprintf("  Desligue ou reinicie o computador.\n");
     parar_maquina();
+}
+
+/* Erro de um programa no anel 3: só aquele processo termina. É a proteção
+ * em ação: o kernel e os outros programas seguem normalmente. */
+quadro_t *excecao_usuario(quadro_t *q)
+{
+    char motivo[64];
+    snformatar(motivo, sizeof motivo, "%s em EIP=0x%08x", nome_excecao(q->vetor), q->eip);
+    if (q->vetor == 14)
+        snformatar(motivo, sizeof motivo, "%s (%s de 0x%08x)", nome_excecao(14),
+                   q->erro & 2 ? "escrita" : "leitura", le_cr2());
+    kprintf("\n[SaguiOS] Processo %d (%s) encerrado: %s\n", atual->pid, atual->nome, motivo);
+    processo_encerrar(atual, SAIDA_ENCERRADO_PELO_KERNEL, motivo);
+    return escalonar(q);
 }

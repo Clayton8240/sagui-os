@@ -175,19 +175,6 @@ static void cmd_mem(int argc, char **argv)
           e.heap_blocos_usados, e.heap_grandes, e.heap_paginas);
 }
 
-/* Dia da semana: conta os dias desde 01/01/2000, que foi um sábado. */
-static int dia_da_semana(int ano, int mes, int dia)
-{
-    static const int dias_mes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    int total = 0;
-    for (int a = 2000; a < ano; a++)
-        total += (a % 4 == 0 && (a % 100 != 0 || a % 400 == 0)) ? 366 : 365;
-    for (int m = 1; m < mes; m++)
-        total += dias_mes[m - 1] + (m == 2 && ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0));
-    total += dia - 1;
-    return (total + 6) % 7;   /* 0 = domingo; 01/01/2000 = 6 (sábado) */
-}
-
 static void cmd_data(int argc, char **argv)
 {
     (void)argc; (void)argv;
@@ -208,22 +195,14 @@ static void cmd_tempo(int argc, char **argv)
           s / 3600, (s / 60) % 60, s % 60, relogio_tiques());
 }
 
+SEM_RETORNO void maquina_reiniciar(void);
+
 static void cmd_reiniciar(int argc, char **argv)
 {
     (void)argc; (void)argv;
     saida("Reiniciando...\n");
-    klog("[SAGUI] reiniciando\n");
     relogio_dormir_ms(200);
-    int_desliga();
-    /* O controlador de teclado tem uma linha ligada ao reset da CPU: o
-     * comando 0xFE dá um pulso nela. */
-    for (int i = 0; i < 100000 && (porta_le8(0x64) & 2); i++) ;
-    porta_escreve8(0x64, 0xFE);
-    for (volatile int i = 0; i < 1000000; i++) ;
-    /* Se não funcionou: IDT vazia + interrupção = falta tripla, que também reinicia. */
-    struct EMPACOTADO { uint16_t limite; uint32_t base; } vazia = { 0, 0 };
-    __asm__ volatile("lidt %0; int3" : : "m"(vazia));
-    parar_maquina();
+    maquina_reiniciar();
 }
 
 static const comando_t comandos[] = {

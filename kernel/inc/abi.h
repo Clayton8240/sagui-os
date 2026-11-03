@@ -1,0 +1,138 @@
+/* abi.h - o contrato entre o kernel e os programas do SaguiOS.
+ *
+ * Este arquivo é incluído pelo kernel e pela libsagui. Convenção (PRD 4.5):
+ * "int 0x80", número da chamada em EAX, argumentos em EBX, ECX, EDX (e ESI,
+ * EDI quando precisa de mais), resultado em EAX; negativo = erro.
+ * Os números são agrupados como no livro do Tanenbaum. */
+#ifndef SAGUI_ABI_H
+#define SAGUI_ABI_H
+
+/* Processos */
+#define SIS_EXECUTAR        1   /* (caminho, argv, 0) -> pid */
+#define SIS_ESPERAR         2   /* (pid ou -1, &codigo) -> pid */
+#define SIS_SAIR            3   /* (codigo) */
+#define SIS_PID             4   /* () -> pid */
+#define SIS_MATAR           5   /* (pid) */
+/* Arquivos */
+#define SIS_ABRIR          10   /* (caminho, modo) -> fd */
+#define SIS_LER            11   /* (fd, buf, n) -> lidos (0 = fim) */
+#define SIS_ESCREVER       12   /* (fd, buf, n) -> escritos */
+#define SIS_FECHAR         13   /* (fd) */
+#define SIS_POSICIONAR     14   /* (fd, desloc, origem) -> nova posição */
+#define SIS_INFO_ARQUIVO   15   /* (caminho, &info_arquivo) */
+/* Diretórios */
+#define SIS_CRIAR_PASTA    20   /* (caminho) */
+#define SIS_REMOVER_PASTA  21   /* (caminho) */
+#define SIS_APAGAR         22   /* (caminho) */
+#define SIS_LISTAR         23   /* (caminho, indice, &entrada_pasta) -> 1 achou, 0 fim */
+#define SIS_MUDAR_PASTA    24   /* (caminho) */
+#define SIS_PASTA_ATUAL    25   /* (buf, n) */
+#define SIS_RENOMEAR       26   /* (origem, destino) */
+/* Comunicação */
+#define SIS_PIPE           30   /* (int fds[2]) */
+#define SIS_DUPLICAR       31   /* (fd_antigo, fd_novo) -> fd_novo */
+/* Diversas */
+#define SIS_DORMIR         40   /* (ms) */
+#define SIS_TEMPO          41   /* () -> milissegundos desde o boot */
+#define SIS_DATA           42   /* (&data_hora) */
+#define SIS_INFO_SISTEMA   43   /* (tipo, buf, n) */
+#define SIS_AUMENTAR_MEM   44   /* (bytes) -> fim antigo da área de dados */
+#define SIS_REINICIAR      45   /* () */
+#define SIS_MODO_TERMINAL  46   /* (TERM_LINHA ou TERM_BRUTO) */
+#define SIS_LIMPAR_TELA    47   /* () */
+#define SIS_MAX            64
+
+/* Erros (sempre negativos) */
+#define ERRO_INVALIDO      -1
+#define ERRO_NAO_EXISTE    -2
+#define ERRO_JA_EXISTE     -3
+#define ERRO_SEM_MEMORIA   -4
+#define ERRO_ENDERECO      -5   /* ponteiro inválido vindo do programa */
+#define ERRO_NAO_E_PASTA   -6
+#define ERRO_E_PASTA       -7
+#define ERRO_NAO_VAZIA     -8
+#define ERRO_LIMITE        -9   /* tabela cheia (arquivos, processos) */
+#define ERRO_DESCRITOR    -10
+#define ERRO_PIPE_QUEBRADO -11
+#define ERRO_SEM_PROCESSO -12
+#define ERRO_FORMATO      -13   /* não é um executável ELF válido */
+#define ERRO_ACESSO       -14   /* operação não permitida */
+#define ERRO_OCUPADO      -15
+
+/* Modos de abrir */
+#define ABRIR_LER       1
+#define ABRIR_ESCREVER  2
+#define ABRIR_CRIAR     4
+#define ABRIR_TRUNCAR   8
+#define ABRIR_ACRESCENTAR 16
+
+/* Origem do posicionar */
+#define POS_INICIO 0
+#define POS_ATUAL  1
+#define POS_FIM    2
+
+/* Tipos de entrada */
+#define TIPO_ARQUIVO  1
+#define TIPO_PASTA    2
+#define TIPO_PROGRAMA 3
+#define TIPO_TERMINAL 4
+#define TIPO_PIPE     5
+
+#define NOME_MAX 64
+
+typedef struct {
+    unsigned int tipo;
+    unsigned int tamanho;
+} info_arquivo_t;
+
+typedef struct {
+    char         nome[NOME_MAX];
+    unsigned int tipo;
+    unsigned int tamanho;
+} entrada_pasta_t;
+
+typedef struct {
+    unsigned short ano;
+    unsigned char  mes, dia, hora, minuto, segundo, dia_semana;
+} data_t;
+
+/* SIS_INFO_SISTEMA */
+#define INFO_MEMORIA   1
+#define INFO_PROCESSOS 2
+
+typedef struct {
+    unsigned int ram_total_kb;
+    unsigned int gerida_kb;
+    unsigned int livre_kb;
+    unsigned int usada_kb;
+} info_memoria_t;
+
+typedef struct {
+    int          pid;
+    int          pai;
+    unsigned int estado;     /* 1 pronto, 2 executando, 3 bloqueado, 4 zumbi */
+    unsigned int memoria_kb;
+    unsigned int cpu_ms;
+    unsigned int usuario;    /* 1 = programa no anel 3 */
+    char         nome[32];
+} info_processo_t;
+
+/* Modos do terminal */
+#define TERM_LINHA 0
+#define TERM_BRUTO 1
+
+/* No modo bruto, teclas sem caractere chegam como ESC (27) + uma letra: */
+#define TECLA_B_CIMA     'A'
+#define TECLA_B_BAIXO    'B'
+#define TECLA_B_DIREITA  'C'
+#define TECLA_B_ESQUERDA 'D'
+#define TECLA_B_HOME     'H'
+#define TECLA_B_END      'F'
+#define TECLA_B_DELETE   'X'
+#define TECLA_B_PGUP     'P'
+#define TECLA_B_PGDN     'N'
+
+/* Código de saída de um processo encerrado pelo kernel (erro do programa). */
+#define SAIDA_ENCERRADO_PELO_KERNEL -1000
+
+#endif

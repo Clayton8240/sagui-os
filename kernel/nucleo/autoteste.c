@@ -16,6 +16,7 @@
 #include "caminho.h"
 #include "paginacao.h"
 #include "processo.h"
+#include "abi.h"
 #include "memoria.h"
 
 static int falhas;
@@ -321,6 +322,54 @@ static void teste_tarefas(void)
             "tarefas terminadas foram recolhidas");
 }
 
+/* H12: programas no anel 3. */
+extern const uint8_t anel3_ola[], anel3_ola_fim[], anel3_cli[], anel3_cli_fim[],
+                     anel3_espiao[], anel3_espiao_fim[];
+
+static processo_t *rodar_no_anel3(const char *nome, const uint8_t *ini, const uint8_t *fim)
+{
+    processo_t *p = processo_novo(nome, -1);   /* pai -1: este autoteste recolhe */
+    if (!p) return NULL;
+    p->espaco = espaco_criar();
+    espaco_alocar(p->espaco, USUARIO_INICIO, PAGINA, PG_USUARIO | PG_ESCRITA);
+    espaco_alocar(p->espaco, USUARIO_FIM - PAGINA, PAGINA, PG_USUARIO | PG_ESCRITA);
+    /* O kernel enxerga a página física pelo mapeamento 1:1 (D008). */
+    memcpy((void *)espaco_traduzir(p->espaco, USUARIO_INICIO, NULL), ini, (uint32_t)(fim - ini));
+    processo_preparar_usuario(p, USUARIO_INICIO, USUARIO_FIM);
+    return p;
+}
+
+static int esperar_zumbi(processo_t *p)
+{
+    while (p->estado != P_ZUMBI)
+        cpu_espera();
+    int c = p->codigo_saida;
+    klog("[TESTE] %s terminou: codigo %d, motivo '%s'\n", p->nome, c, p->motivo);
+    processo_liberar(p);
+    return c;
+}
+
+static void teste_anel3(void)
+{
+    uint32_t livres0 = memfisica_livres();
+    processo_t *a = rodar_no_anel3("ola-anel3", anel3_ola, anel3_ola_fim);
+    confere(a != NULL, "processo criado");
+    if (!a) return;
+    int c = esperar_zumbi(a);
+    confere(c == 42, "escrever funcionou e recusou o ponteiro para o kernel (saída 42)");
+
+    processo_t *b = rodar_no_anel3("cli-anel3", anel3_cli, anel3_cli_fim);
+    c = esperar_zumbi(b);
+    confere(c == SAIDA_ENCERRADO_PELO_KERNEL, "cli no anel 3 encerrou só aquele processo");
+
+    processo_t *d = rodar_no_anel3("espiao-anel3", anel3_espiao, anel3_espiao_fim);
+    c = esperar_zumbi(d);
+    confere(c == SAIDA_ENCERRADO_PELO_KERNEL, "ler a memória do kernel encerrou o processo");
+
+    confere(memfisica_livres() == livres0, "a memória dos três processos foi toda devolvida");
+    kprintf("O kernel continua de pé depois dos dois programas com erro.\n");
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -335,6 +384,7 @@ static const autoteste_t testes[] = {
     { "paginacao", teste_paginacao },
     { "falta_pagina", teste_falta_pagina },
     { "tarefas", teste_tarefas },
+    { "anel3", teste_anel3 },
 };
 
 void autoteste_executar(const char *nome)

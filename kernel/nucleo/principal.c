@@ -17,8 +17,9 @@
 #include "terminal.h"
 #include "paginacao.h"
 #include "processo.h"
+#include "sistema.h"
 
-#define SAGUI_VERSAO "0.2 (fase 2)"
+#define SAGUI_VERSAO "0.3 (fase 3)"
 
 info_boot_t info_boot;
 regiao_e820_t mapa_memoria[MAPA_MAX];
@@ -158,11 +159,12 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
 
     /* H10: paginação. Daqui em diante todo acesso passa pelas tabelas. */
     paginacao_iniciar();
-    etapa("Paginação: 4 KB por página, kernel 1:1 até 896 MB, programas a partir de 1 GB");
+    etapa("Paginação: páginas de 4 KB, um espaço de endereço por processo");
 
     /* H11: a partir daqui o relógio troca de processo (round-robin). */
     processos_iniciar();
-    etapa("Processos: escalonador round-robin preemptivo, fatia de 20 ms");
+    sistema_iniciar();
+    etapa("Processos: round-robin a cada 20 ms, programas no anel 3, int 0x80");
 
     /* H07: teclado. */
     teclado_iniciar();

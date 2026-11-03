@@ -49,5 +49,10 @@ void      acordar(const void *canal);
 void      processo_encerrar(processo_t *p, int codigo, const char *motivo);
 void      processo_liberar(processo_t *p);
 const char *nome_estado(estado_t e);
+void      processo_preparar_usuario(processo_t *p, uint32_t entrada, uint32_t pilha);
+
+#define PILHA_USUARIO_TOPO  USUARIO_FIM
+#define PILHA_USUARIO_TAM   (256u * 1024u)
+#define DADOS_LIMITE        (USUARIO_FIM - PILHA_USUARIO_TAM - 4096u)
 
 #endif

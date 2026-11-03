@@ -21,7 +21,7 @@ def main():
         verificar("espaco 1 = 11111111" in s and "espaco 2 = 22222222" in s,
                   "mesmo endereço virtual, valores diferentes em cada espaço")
         verificar("[TESTE] paginacao ok" in s, "autoteste de paginação passou (inclui devolução das páginas)")
-        verificar("4 KB por p" in "\n".join(m.tela_texto()), "etapa de paginação aparece na inicialização")
+        verificar("um espa" in "\n".join(m.tela_texto()), "etapa de paginação aparece na inicialização")
         m.captura("H10-dois-espacos")
     with Maquina("h10-pf", "ide", imagem=imagem_de_teste("falta_pagina")) as m:
         m.esperar_serial("[SAGUI] EXCECAO", 60)

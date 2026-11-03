@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:12:46_
+_Atualizado em 2026-11-03T16:16:35_
 
-- **Situação:** Trabalhando na H12: Ring 3 e chamadas de sistema
+- **Situação:** Trabalhando na H13: Carregador ELF e libsagui
 - **Fase atual:** 3
-- **História atual:** H12
-- **Progresso geral:** 32.4%
+- **História atual:** H13
+- **Progresso geral:** 35.3%
 - **Bloqueio:** nenhum
-- **Imagem:** 47104 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 3252, userland 0
+- **Imagem:** 51712 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 3880, userland 0
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:12:46_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 28.6% | em andamento |
+| 3 | Processos e programas | 42.9% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -37,8 +37,8 @@ _Atualizado em 2026-11-03T16:12:46_
 | H09 | Terminal provisório do kernel | feito | 2 |
 | H10 | Paginação | feito | 3 |
 | H11 | Processos e escalonador | feito | 3 |
-| H12 | Ring 3 e chamadas de sistema | em andamento |  |
-| H13 | Carregador ELF e libsagui | a fazer |  |
+| H12 | Ring 3 e chamadas de sistema | feito | 4 |
+| H13 | Carregador ELF e libsagui | em andamento |  |
 | H14 | Arquivos e pastas graváveis | a fazer |  |
 | H15 | Pipes | a fazer |  |
 | H16 | Shell e comandos como programas | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:12:46_
 
 ## Últimas ações
 
+- 2026-11-03T16:16:35: Início da H13: Carregador ELF e libsagui
+- 2026-11-03T16:16:35: H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo
 - 2026-11-03T16:12:46: Início da H12: Ring 3 e chamadas de sistema
 - 2026-11-03T16:12:46: H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar
 - 2026-11-03T16:10:05: Início da H11: Processos e escalonador
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:12:46_
 - 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel
 - 2026-11-03T15:39:25: H08 concluída: mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico
 - 2026-11-03T15:39:25: Erro corrigido: Saudação e memória quebravam linha
-- 2026-11-03T15:39:25: Erro corrigido: Árvore do SGFS saiu como %*s na tela
-- 2026-11-03T15:37:48: Início da H08: Sistema de arquivos SGFS

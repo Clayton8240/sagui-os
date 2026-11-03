@@ -16,5 +16,6 @@ typedef struct {
 } data_hora_t;
 
 void cmos_ler_data(data_hora_t *d);
+int  dia_da_semana(int ano, int mes, int dia);   /* 0 = domingo */
 
 #endif

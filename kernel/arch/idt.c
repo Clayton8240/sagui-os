@@ -72,8 +72,11 @@ quadro_t *tratar_interrupcao(quadro_t *q)
     }
     if (manipuladores[v])
         return manipuladores[v](q);
-    if (v < 32)
-        excecao_fatal(q);
+    if (v < 32) {
+        if ((q->cs & 3) == 3)
+            return excecao_usuario(q);   /* erro de um programa: só ele termina */
+        excecao_fatal(q);                /* erro do kernel: não há como continuar */
+    }
     klog("[SAGUI] interrupcao %u sem manipulador\n", v);
     return q;
 }

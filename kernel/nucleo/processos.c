@@ -204,3 +204,22 @@ quadro_t *escalonador_tique(quadro_t *q)
         return escalonar(q);
     return q;
 }
+
+/* Quadro inicial de um programa no anel 3: segmentos de usuário, a pilha
+ * do programa e o ponto de entrada. O iret com troca de anel desempilha
+ * também ESP e SS, e a CPU passa a executar o programa sem privilégios. */
+void processo_preparar_usuario(processo_t *p, uint32_t entrada, uint32_t pilha)
+{
+    quadro_t *q = (quadro_t *)(p->pilha_kernel + PILHA_KERNEL - sizeof(quadro_t));
+    memset(q, 0, sizeof *q);
+    q->ds = q->es = q->fs = q->gs = SEL_UDADOS;
+    q->cs = SEL_UCODIGO;
+    q->ss_usuario = SEL_UDADOS;
+    q->esp_usuario = pilha;
+    q->eip = entrada;
+    q->eflags = 0x202;   /* IF=1, IOPL=0: o programa não pode usar cli/sti nem portas */
+    p->quadro = q;
+    p->usuario = true;
+    p->estado = P_PRONTO;
+    p->espera = NULL;
+}

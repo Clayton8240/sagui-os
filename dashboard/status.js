@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:12:46",
-  "situacao": "Trabalhando na H12: Ring 3 e chamadas de sistema",
+  "atualizado": "2026-11-03T16:16:35",
+  "situacao": "Trabalhando na H13: Carregador ELF e libsagui",
   "fase_atual": 3,
-  "historia_atual": "H12",
+  "historia_atual": "H13",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 28.6
+      "progresso": 42.9
     },
     {
       "numero": 4,
@@ -203,12 +203,12 @@ window.SAGUI_STATUS = {
       "titulo": "Ring 3 e chamadas de sistema",
       "objetivo": "TSS, segmentos de usuário, ring 3, int 0x80, validação de ponteiros.",
       "aceite": "Programa em ring 3 escreve `Ola do ring 3!` e sai; `cli` no ring 3 encerra só aquele processo.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:12:46",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:16:35",
+      "minutos": 4,
+      "resultado": "Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo"
     },
     {
       "id": "H13",
@@ -216,9 +216,9 @@ window.SAGUI_STATUS = {
       "titulo": "Carregador ELF e libsagui",
       "objetivo": "Leitor de ELF32 estático, pilha do usuário com argumentos, libsagui com printf.",
       "aceite": "O kernel carrega bin/ola do SGFS e ele imprime os argumentos.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:16:35",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -541,7 +541,7 @@ window.SAGUI_STATUS = {
       "conceito": "Modo kernel e modo usuário",
       "implementa": "Kernel em ring 0, programas em ring 3",
       "historias": "H03, H12",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Processos",
@@ -589,13 +589,13 @@ window.SAGUI_STATUS = {
       "conceito": "Proteção",
       "implementa": "Um processo não acessa a memória do outro nem o kernel",
       "historias": "H12, H16",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Chamadas de sistema",
       "implementa": "Processos, arquivos, diretórios e diversas",
       "historias": "H12",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "O shell",
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:16:35",
+      "texto": "Início da H13: Carregador ELF e libsagui"
+    },
+    {
+      "data": "2026-11-03T16:16:35",
+      "texto": "H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo"
+    },
     {
       "data": "2026-11-03T16:12:46",
       "texto": "Início da H12: Ring 3 e chamadas de sistema"
@@ -776,6 +784,21 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H12-anel3-protecao.png",
+      "nome": "H12-anel3-protecao.png",
+      "data": "2026-11-03T16:16:14"
+    },
+    {
+      "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
+      "nome": "H10-tela-falta-de-pagina.png",
+      "data": "2026-11-03T16:16:08"
+    },
+    {
+      "arquivo": "docs/capturas/H10-dois-espacos.png",
+      "nome": "H10-dois-espacos.png",
+      "data": "2026-11-03T16:16:03"
+    },
+    {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
       "data": "2026-11-03T16:12:40"
@@ -819,16 +842,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
       "data": "2026-11-03T16:09:18"
-    },
-    {
-      "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
-      "nome": "H10-tela-falta-de-pagina.png",
-      "data": "2026-11-03T16:09:00"
-    },
-    {
-      "arquivo": "docs/capturas/H10-dois-espacos.png",
-      "nome": "H10-dois-espacos.png",
-      "data": "2026-11-03T16:08:55"
     },
     {
       "arquivo": "docs/capturas/G470-fase2-tela-inicial.png",
@@ -893,14 +906,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 3252,
+    "kernel": 3880,
     "userland": 0,
-    "ferramentas": 1374
+    "ferramentas": 1408
   },
   "imagem": {
-    "bytes_util": 47104,
+    "bytes_util": 51712,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 32.4
+  "progresso_geral": 35.3
 };
