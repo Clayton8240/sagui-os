@@ -39,7 +39,7 @@ def main():
             tela = m.tela_texto()
             verificar("sagui:/$" in "\n".join(tela), f"[{modo}] prompt sagui:/$ na tela")
             verificar("Ola! Eu sou o SaguiOS." in tela[1], f"[{modo}] saudação continua no topo com o terminal aberto")
-            verificar(sum(1 for l in tela if "[ ok ]" in l) == 4, f"[{modo}] as 4 etapas de inicialização aparecem com [ ok ]")
+            verificar(sum(1 for l in tela if "[ ok ]" in l) >= 4, f"[{modo}] as etapas de inicialização aparecem com [ ok ]")
             m.captura(f"H09-tela-inicial-{modo}")
             if modo == "usb":
                 out = comando(m, "ls")

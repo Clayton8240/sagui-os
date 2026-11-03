@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:07:31",
-  "situacao": "Trabalhando na H10: Paginação",
+  "atualizado": "2026-11-03T16:10:05",
+  "situacao": "Trabalhando na H11: Processos e escalonador",
   "fase_atual": 3,
-  "historia_atual": "H10",
+  "historia_atual": "H11",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 0.0
+      "progresso": 14.3
     },
     {
       "numero": 4,
@@ -177,12 +177,12 @@ window.SAGUI_STATUS = {
       "titulo": "Paginação",
       "objetivo": "Diretório e tabelas de páginas, kernel em todos os espaços, page fault com mensagem clara.",
       "aceite": "Dois espaços de endereço com valores diferentes no mesmo endereço virtual; acesso inválido gera a tela de page fault.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:07:26",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:10:05",
+      "minutos": 3,
+      "resultado": "Paginação de 2 níveis, espaços por processo, tela de falta de página"
     },
     {
       "id": "H11",
@@ -190,9 +190,9 @@ window.SAGUI_STATUS = {
       "titulo": "Processos e escalonador",
       "objetivo": "PCB, troca de contexto em assembly, round-robin preemptivo no PIT, processo ocioso.",
       "aceite": "Duas tarefas imprimem A e B alternados na serial sem cooperar.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:10:05",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -565,7 +565,7 @@ window.SAGUI_STATUS = {
       "conceito": "Espaços de endereço",
       "implementa": "Paginação com um espaço por processo",
       "historias": "H10",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Gerenciamento de memória",
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:10:05",
+      "texto": "Início da H11: Processos e escalonador"
+    },
+    {
+      "data": "2026-11-03T16:10:05",
+      "texto": "H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página"
+    },
     {
       "data": "2026-11-03T16:07:26",
       "texto": "Início da H10: Paginação"
@@ -760,39 +768,54 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
-      "arquivo": "docs/capturas/G470-fase2-tela-inicial.png",
-      "nome": "G470-fase2-tela-inicial.png",
-      "data": "2026-11-03T16:05:16"
-    },
-    {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T15:44:33"
+      "data": "2026-11-03T16:10:00"
     },
     {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T15:44:31"
+      "data": "2026-11-03T16:09:58"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T15:44:28"
+      "data": "2026-11-03T16:09:55"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T15:44:25"
+      "data": "2026-11-03T16:09:52"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T15:44:24"
+      "data": "2026-11-03T16:09:50"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T15:44:23"
+      "data": "2026-11-03T16:09:50"
+    },
+    {
+      "arquivo": "docs/capturas/H06-autoteste-memoria.png",
+      "nome": "H06-autoteste-memoria.png",
+      "data": "2026-11-03T16:09:18"
+    },
+    {
+      "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
+      "nome": "H10-tela-falta-de-pagina.png",
+      "data": "2026-11-03T16:09:00"
+    },
+    {
+      "arquivo": "docs/capturas/H10-dois-espacos.png",
+      "nome": "H10-dois-espacos.png",
+      "data": "2026-11-03T16:08:55"
+    },
+    {
+      "arquivo": "docs/capturas/G470-fase2-tela-inicial.png",
+      "nome": "G470-fase2-tela-inicial.png",
+      "data": "2026-11-03T16:05:16"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
@@ -803,11 +826,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
       "data": "2026-11-03T15:43:40"
-    },
-    {
-      "arquivo": "docs/capturas/H06-autoteste-memoria.png",
-      "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T15:43:31"
     },
     {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
@@ -862,14 +880,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 2686,
+    "kernel": 2938,
     "userland": 0,
-    "ferramentas": 1302
+    "ferramentas": 1340
   },
   "imagem": {
-    "bytes_util": 41472,
+    "bytes_util": 44544,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 26.5
+  "progresso_geral": 29.4
 };

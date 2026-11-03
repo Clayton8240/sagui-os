@@ -47,8 +47,14 @@ SEM_RETORNO void excecao_fatal(quadro_t *q)
     kprintf("  ESI=%08x  EDI=%08x  EBP=%08x  ESP=%08x\n", q->esi, q->edi, q->ebp, q->esp_kernel + 20);
     kprintf("  DS=%04x  ES=%04x  FS=%04x  GS=%04x\n", q->ds, q->es, q->fs, q->gs);
     kprintf("  CR0=%08x  CR2=%08x  CR3=%08x\n", le_cr0(), cr2, le_cr3());
-    if (q->vetor == 14)
-        kprintf("\n  Endereço que causou a falta (CR2): 0x%08x\n", cr2);
+    if (q->vetor == 14) {
+        /* Bits do código de erro da falta de página (manual da Intel):
+         * 0 = página presente (violação de proteção) ou ausente,
+         * 1 = escrita ou leitura, 2 = em modo usuário ou kernel. */
+        kprintf("\n  Falta de página: %s no endereço 0x%08x,\n", q->erro & 2 ? "escrita" : "leitura", cr2);
+        kprintf("  %s, em modo %s.\n", q->erro & 1 ? "página protegida" : "página não mapeada",
+                q->erro & 4 ? "usuário" : "kernel");
+    }
     kprintf("\n  Fotografe esta tela para ajudar a encontrar o problema.\n");
     kprintf("  Desligue ou reinicie o computador.\n");
     parar_maquina();

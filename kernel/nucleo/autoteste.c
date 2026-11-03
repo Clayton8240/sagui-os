@@ -14,6 +14,7 @@
 #include "teclado.h"
 #include "sgfs.h"
 #include "caminho.h"
+#include "paginacao.h"
 #include "memoria.h"
 
 static int falhas;
@@ -241,6 +242,49 @@ static void teste_sgfs(void)
     confere(caminho_da("/a", "b/../../..", "/"), "vários .. seguidos");
 }
 
+/* H10: dois espaços de endereço, mesmo endereço virtual, valores diferentes. */
+static uint32_t valor_global = 0x5A6E1234;
+
+static void teste_paginacao(void)
+{
+    uint32_t livres0 = memfisica_livres();
+    espaco_t e1 = espaco_criar(), e2 = espaco_criar();
+    confere(e1 && e2 && e1 != e2, "dois diretórios criados");
+    const uint32_t v = USUARIO_INICIO;
+    confere(espaco_alocar(e1, v, PAGINA, PG_ESCRITA | PG_USUARIO), "página no espaço 1");
+    confere(espaco_alocar(e2, v, PAGINA, PG_ESCRITA | PG_USUARIO), "página no espaço 2");
+    confere(espaco_traduzir(espaco_kernel(), v, NULL) == 0, "o espaço do kernel não vê a área dos programas");
+
+    espaco_ativar(e1);
+    *(volatile uint32_t *)v = 0x11111111;
+    confere(valor_global == 0x5A6E1234, "o kernel continua visível dentro do espaço 1");
+    espaco_ativar(e2);
+    *(volatile uint32_t *)v = 0x22222222;
+    espaco_ativar(e1);
+    uint32_t lido1 = *(volatile uint32_t *)v;
+    espaco_ativar(e2);
+    uint32_t lido2 = *(volatile uint32_t *)v;
+    espaco_ativar(espaco_kernel());
+    klog("[TESTE] endereco virtual %x: espaco 1 = %x (fisico %x), espaco 2 = %x (fisico %x)\n",
+         v, lido1, espaco_traduzir(e1, v, NULL), lido2, espaco_traduzir(e2, v, NULL));
+    kprintf("Mesmo endereço 0x%08x: espaço 1 lê 0x%08x, espaço 2 lê 0x%08x\n", v, lido1, lido2);
+    confere(lido1 == 0x11111111 && lido2 == 0x22222222, "cada espaço lê o próprio valor");
+    confere(espaco_traduzir(e1, v, NULL) != espaco_traduzir(e2, v, NULL), "páginas físicas diferentes");
+
+    espaco_destruir(e1);
+    espaco_destruir(e2);
+    confere(memfisica_livres() == livres0, "destruir os espaços devolve todas as páginas");
+}
+
+/* H10: acesso a um endereço não mapeado tem que gerar a tela de falta de página. */
+static void teste_falta_pagina(void)
+{
+    kprintf("Autoteste: vou ler o endereço 0x90000000, que não está mapeado...\n");
+    volatile uint32_t x = *(volatile uint32_t *)0x90000000;
+    (void)x;
+    klog("[TESTE] falta_pagina FALHOU: a leitura passou\n");
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -252,6 +296,8 @@ static const autoteste_t testes[] = {
     { "memoria", teste_memoria },
     { "teclado", teste_teclado },
     { "sgfs", teste_sgfs },
+    { "paginacao", teste_paginacao },
+    { "falta_pagina", teste_falta_pagina },
 };
 
 void autoteste_executar(const char *nome)

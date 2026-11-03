@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:07:31_
+_Atualizado em 2026-11-03T16:10:05_
 
-- **Situação:** Trabalhando na H10: Paginação
+- **Situação:** Trabalhando na H11: Processos e escalonador
 - **Fase atual:** 3
-- **História atual:** H10
-- **Progresso geral:** 26.5%
+- **História atual:** H11
+- **Progresso geral:** 29.4%
 - **Bloqueio:** nenhum
-- **Imagem:** 41472 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 2686, userland 0
+- **Imagem:** 44544 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 2938, userland 0
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:07:31_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 0.0% | em andamento |
+| 3 | Processos e programas | 14.3% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -35,8 +35,8 @@ _Atualizado em 2026-11-03T16:07:31_
 | H07 | Teclado PS/2 com ABNT2 | feito | 6 |
 | H08 | Sistema de arquivos SGFS | feito | 2 |
 | H09 | Terminal provisório do kernel | feito | 2 |
-| H10 | Paginação | em andamento |  |
-| H11 | Processos e escalonador | a fazer |  |
+| H10 | Paginação | feito | 3 |
+| H11 | Processos e escalonador | em andamento |  |
 | H12 | Ring 3 e chamadas de sistema | a fazer |  |
 | H13 | Carregador ELF e libsagui | a fazer |  |
 | H14 | Arquivos e pastas graváveis | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:07:31_
 
 ## Últimas ações
 
+- 2026-11-03T16:10:05: Início da H11: Processos e escalonador
+- 2026-11-03T16:10:05: H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página
 - 2026-11-03T16:07:26: Início da H10: Paginação
 - 2026-11-03T16:05:16: Eli confirmou: fase 2 ok
 - 2026-11-03T15:45:24: Fase 2 entregue. Aguardando teste do Eli.
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:07:31_
 - 2026-11-03T15:37:48: Início da H08: Sistema de arquivos SGFS
 - 2026-11-03T15:37:48: H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte
 - 2026-11-03T15:32:06: Início da H07: Teclado PS/2 com ABNT2
-- 2026-11-03T15:32:06: H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção
-- 2026-11-03T15:28:28: Início da H06: Memória física

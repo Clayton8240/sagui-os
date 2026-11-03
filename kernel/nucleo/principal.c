@@ -15,6 +15,7 @@
 #include "teclado.h"
 #include "sgfs.h"
 #include "terminal.h"
+#include "paginacao.h"
 
 #define SAGUI_VERSAO "0.2 (fase 2)"
 
@@ -153,6 +154,10 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
                    memfisica_livres() / 256);
         etapa(linha);
     }
+
+    /* H10: paginação. Daqui em diante todo acesso passa pelas tabelas. */
+    paginacao_iniciar();
+    etapa("Paginação: 4 KB por página, kernel 1:1 até 896 MB, programas a partir de 1 GB");
 
     /* H07: teclado. */
     teclado_iniciar();
