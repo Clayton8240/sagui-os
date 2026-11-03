@@ -124,15 +124,15 @@ def main():
         out = m.comando("data")
         verificar(re.search(r"\d\d/\d\d/20\d\d \d\d:\d\d:\d\d", out), "data")
         out = m.comando("sobre")
-        verificar("SaguiOS 0.4" in out and "processos" in out, "sobre")
+        verificar("SaguiOS 0.5" in out and "processos" in out, "sobre")
 
         # Histórico (seta para cima) e completar com Tab.
         out = m.comando("", teclas_finais=("up", "ret"))
-        verificar("SaguiOS 0.4" in out, "seta para cima repete o último comando (sobre)")
+        verificar("SaguiOS 0.5" in out, "seta para cima repete o último comando (sobre)")
         out = m.comando("cat /his", teclas_finais=("tab", "l", "i", "tab", "ret"))
         verificar("cat /historia/linux.txt" in out and "Minix" in out, "Tab completa /his -> /historia/ e li -> linux.txt")
         out = m.comando("sob", teclas_finais=("tab", "ret"))
-        verificar("executar /bin/sobre" in out and "SaguiOS 0.4" in out, "Tab completa nomes de comandos (sob -> sobre)")
+        verificar("executar /bin/sobre" in out and "SaguiOS 0.5" in out, "Tab completa nomes de comandos (sob -> sobre)")
         out = m.comando("conta", teclas_finais=("d", "tab", "1", "ret"))
         verificar("1 de 1 segundos" in out, "Tab completa contad -> contador (\"con\" é ambíguo com conta)")
         m.comando("limpar")

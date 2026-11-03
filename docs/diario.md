@@ -125,3 +125,25 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   1024x768x32 ligado, fonte própria com acentos (`Ação, vovô, pão, ÇÃO`),
   touchpad respondendo (linha `[ ok ] Mouse/touchpad PS/2`) e seta na tela,
   teclado funcionando. A correção H19-fix resolveu.
+- **Fase 5 iniciada** (tag `pre-fase5`). Plano em D021.
+- **H20.** Área de trabalho: degradê verde-amarelo-azul, mascote e ícones em
+  pixel art no código, barra com relógio. Opção de build `--console` para os
+  testes das fases anteriores. Achado: tarefa do kernel sempre pronta deixava
+  o processo 0 sem CPU; criada a interrupção 0x81 para ceder a vez (erro 11).
+- **H21.** Gerenciador de janelas no kernel com pixels compartilhados com o
+  programa (páginas "emprestadas"), eventos por janela, arrastar, foco,
+  fechar. Captura revelou rastros ao arrastar (erro 12), corrigido.
+- **H22.** Kit gráfico na libsagui (botão, caixa, área de texto, lista,
+  diálogos) e programa de demonstração.
+- **H24.** Terminal em janela com o sagsh por pipes; chamada `disponivel`;
+  sequência ESC [ J; comandos que abrem programas gráficos.
+- **H25.** Editor com Ctrl+S, título com `*` e aviso ao fechar; chamada
+  `registrar` para os programas gráficos não sujarem o terminal.
+- **H23.** Arquivos com ícones; abre no Editor; cria e apaga pastas. O teste
+  também reabre pelo Arquivos a nota criada no Editor (critério da H25).
+- **H26.** Calculadora em ponto fixo com divisão longa própria (D023).
+- **H27.** Sagui Pega Banana; o teste joga de verdade, guiado pelo log.
+- **H28.** Ícones abrindo os programas e tela Sobre; imagem com 428.544 bytes
+  úteis (29% da meta).
+- **Fim da fase 5.** 28/28 testes passando. Imagens em `entrega/fase5/`.
+  Parada obrigatória: aguardando o teste do Eli.

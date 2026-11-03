@@ -37,4 +37,12 @@ Fase 4 - Gráfico e mouse
   O touchpad virou um cursor em forma de seta, também desenhado aqui. A
   pedido do Eli, o shell ganhou edição com as setas no meio da linha.
 
+Fase 5 - Janelas e programas
+  O sistema ganhou uma área de trabalho nas cores do Brasil, com o sagui
+  no canto e ícones. O kernel cuida das janelas (desenha as molduras,
+  arrasta, entrega cliques e teclas), e cada programa desenha o próprio
+  conteúdo, no anel 3: o Arquivos, o Terminal (com o shell dentro), o
+  Editor de texto, a Calculadora (em ponto fixo, sem ponto flutuante) e o
+  jogo Sagui Pega Banana. Os desenhos foram feitos em pixel art no código.
+
 (Este arquivo é atualizado ao fim de cada fase.)
