@@ -412,3 +412,36 @@ do kernel, o que combina com as chamadas reiniciáveis.
 escrever sem nenhum leitor. Os dois dependem de contar as pontas abertas,
 por isso o filho herda só 0, 1 e 2 (D010) e o shell fecha suas cópias das
 pontas logo depois de criar os processos.
+
+## D016. O shell sagsh: como foi pensado (H16)
+
+**Só é interno o que precisa mudar o próprio shell:** `cd`/`entrar`,
+`pwd`/`onde` (a pasta é do processo do shell), `clear`/`limpar`, `ajuda`,
+`reiniciar` e `sair`. Todo o resto é programa em `/bin`, um arquivo `.c`
+por comando. Os apelidos em português são resolvidos por uma tabela no
+shell, que também alimenta o `ajuda` e o completar com Tab, então um nome
+novo aparece nos três lugares de uma vez.
+
+**Pipes e redirecionamento sem fork.** Para cada etapa de um pipeline, o
+shell coloca em 0 e 1 o que aquela etapa deve usar (arquivo, ponta de pipe
+ou o terminal guardado), chama `executar` e passa para a próxima; no fim
+restaura 0 e 1 e fecha as pontas que sobraram nele. Só depois disso espera
+os filhos: se esperasse cada um logo após criá-lo, o primeiro poderia
+travar com o pipe cheio antes de o segundo existir.
+
+**Edição da linha no próprio shell**, com o terminal em modo bruto:
+histórico de 32 linhas (setas), Tab que completa comandos (com apelidos) ou
+nomes de arquivos (acrescentando `/` em pastas), Ctrl+C descarta a linha,
+Ctrl+L limpa a tela. A tela de texto apaga com `\b`, então trocar a linha
+pelo histórico é "apagar n caracteres e escrever a nova".
+
+**Segundo plano (`&`).** O shell não espera e mostra o PID. Antes de cada
+prompt recolhe, sem bloquear (`esperar` com a opção nova), os filhos que já
+terminaram, e avisa. Assim `contador 10 &` roda enquanto outros comandos
+são usados, que é a demonstração de multitarefa pedida no PRD.
+
+**O kernel reabre o shell** se ele for fechado com `sair`.
+
+**Um detalhe do compilador.** O primeiro `falha divisao` não dividia: o
+GCC troca `1 / x` por comparações (o resultado só pode ser -1, 0 ou 1) e a
+CPU nunca executa a divisão. O programa agora divide 12345 por zero.

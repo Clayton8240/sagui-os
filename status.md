@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:27:11_
+_Atualizado em 2026-11-03T16:41:25_
 
 - **Situação:** Trabalhando na H16: Shell e comandos como programas
 - **Fase atual:** 3
 - **História atual:** H16
-- **Progresso geral:** 44.1%
+- **Progresso geral:** 47.1%
 - **Bloqueio:** nenhum
-- **Imagem:** 100352 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 4936, userland 770
+- **Imagem:** 223232 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 4659, userland 1552
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:27:11_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 85.7% | em andamento |
+| 3 | Processos e programas | 100.0% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -41,7 +41,7 @@ _Atualizado em 2026-11-03T16:27:11_
 | H13 | Carregador ELF e libsagui | feito | 5 |
 | H14 | Arquivos e pastas graváveis | feito | 4 |
 | H15 | Pipes | feito | 2 |
-| H16 | Shell e comandos como programas | em andamento |  |
+| H16 | Shell e comandos como programas | feito | 14 |
 | H17 | Framebuffer VESA | a fazer |  |
 | H18 | Fonte própria | a fazer |  |
 | H19 | Mouse / touchpad PS/2 | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:27:11_
 
 ## Últimas ações
 
+- 2026-11-03T16:41:25: H16 concluída: sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido
+- 2026-11-03T16:41:24: Erro corrigido: falha divisao não dividia
 - 2026-11-03T16:27:11: Início da H16: Shell e comandos como programas
 - 2026-11-03T16:27:11: H15 concluída: Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos
 - 2026-11-03T16:25:45: Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:27:11_
 - 2026-11-03T16:12:46: H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar
 - 2026-11-03T16:10:05: Início da H11: Processos e escalonador
 - 2026-11-03T16:10:05: H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página
-- 2026-11-03T16:07:26: Início da H10: Paginação
-- 2026-11-03T16:05:16: Eli confirmou: fase 2 ok

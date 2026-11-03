@@ -31,12 +31,12 @@ int32_t sis_matar(uint32_t pid, uint32_t b, uint32_t c, uint32_t d, uint32_t e)
     return 0;
 }
 
-/* esperar(pid ou -1, &codigo): recolhe um filho que terminou. Se nenhum
- * terminou ainda, bloqueia e a chamada é repetida quando um filho terminar
- * (processo_encerrar acorda o pai). */
-int32_t sis_esperar(uint32_t pid, uint32_t ptr_codigo, uint32_t c, uint32_t d, uint32_t e)
+/* esperar(pid ou -1, &codigo, sem_bloquear): recolhe um filho que terminou.
+ * Se nenhum terminou ainda, bloqueia e a chamada é repetida quando um filho
+ * terminar (processo_encerrar acorda o pai); com sem_bloquear, devolve 0. */
+int32_t sis_esperar(uint32_t pid, uint32_t ptr_codigo, uint32_t sem_bloquear, uint32_t d, uint32_t e)
 {
-    (void)c; (void)d; (void)e;
+    (void)d; (void)e;
     int *codigo = (int *)ptr_codigo;
     if (codigo && !usuario_ok(codigo, sizeof(int), true)) return ERRO_ENDERECO;
     bool tem_filho = false;
@@ -53,6 +53,7 @@ int32_t sis_esperar(uint32_t pid, uint32_t ptr_codigo, uint32_t c, uint32_t d, u
         }
     }
     if (!tem_filho) return ERRO_SEM_PROCESSO;
+    if (sem_bloquear) return 0;   /* ninguém terminou ainda; quem chamou não quer esperar */
     bloquear(atual);
     return SIS_REPETIR;
 }

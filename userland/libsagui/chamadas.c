@@ -10,6 +10,7 @@ static inline int chamar(unsigned n, unsigned a, unsigned b, unsigned c)
 
 int  executar(const char *c, char *const argv[]) { return chamar(SIS_EXECUTAR, (unsigned)c, (unsigned)argv, 0); }
 int  esperar(int pid, int *codigo)    { return chamar(SIS_ESPERAR, (unsigned)pid, (unsigned)codigo, 0); }
+int  recolher(int *codigo)            { return chamar(SIS_ESPERAR, (unsigned)-1, (unsigned)codigo, 1); }
 void sair(int codigo)                 { chamar(SIS_SAIR, (unsigned)codigo, 0, 0); for (;;) ; }
 int  meu_pid(void)                    { return chamar(SIS_PID, 0, 0, 0); }
 int  matar(int pid)                   { return chamar(SIS_MATAR, (unsigned)pid, 0, 0); }

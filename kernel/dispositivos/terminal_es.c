@@ -75,7 +75,7 @@ static int32_t ler_bruto(char *destino, uint32_t n)
         if (t < 0) break;
         if (t < 0x100) { destino[k++] = (char)t; continue; }
         char l = letra_especial(t);
-        if (t == TECLA_ESC) { destino[k++] = 27; continue; }
+        if (t == TECLA_ESC) { destino[k++] = 27; pendente = 27; continue; }   /* Esc sozinho = 27, 27 */
         if (!l) continue;
         destino[k++] = 27;
         pendente = (uint8_t)l;

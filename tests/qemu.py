@@ -201,6 +201,24 @@ class Maquina:
         os.remove(ppm)
         return destino
 
+    # ------------------------------------------------------------ shell
+    def comando(self, texto, tempo=60, teclas_finais=("ret",)):
+        """Digita um comando no sagsh, aperta Enter e espera o próximo prompt.
+        Devolve o que saiu na serial durante o comando (sem '\r')."""
+        antes = self.serial()
+        n = antes.count("sagui:")
+        self.digitar(texto, 0.04)
+        for t in teclas_finais:
+            self.tecla(t, 0.04)
+        fim = time.time() + tempo
+        while self.serial().count("sagui:") <= n:
+            if time.time() > fim:
+                raise FalhaTeste(f"o comando {texto!r} não voltou ao prompt")
+            if self.proc.poll() is not None:
+                break
+            time.sleep(0.2)
+        return self.serial()[len(antes):].replace("\r", "")
+
     # ------------------------------------------------------------ teclado
     def tecla(self, nome, espera=0.08):
         self.monitor(f"sendkey {nome}")

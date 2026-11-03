@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:27:11",
+  "atualizado": "2026-11-03T16:41:25",
   "situacao": "Trabalhando na H16: Shell e comandos como programas",
   "fase_atual": 3,
   "historia_atual": "H16",
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 85.7
+      "progresso": 100.0
     },
     {
       "numero": 4,
@@ -255,12 +255,12 @@ window.SAGUI_STATUS = {
       "titulo": "Shell e comandos como programas",
       "objetivo": "bin/sagsh como primeiro processo, redirecionamento, pipe, histórico, Tab, comandos e apelidos.",
       "aceite": "Roteiro executa todos os comandos e apelidos; falha derruba só o processo; capturas em docs/capturas/.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:27:11",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:41:25",
+      "minutos": 14,
+      "resultado": "sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido"
     },
     {
       "id": "H17",
@@ -547,7 +547,7 @@ window.SAGUI_STATUS = {
       "conceito": "Processos",
       "implementa": "Criação, término, estados, PID, pai e filho",
       "historias": "H11, H13",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Escalonamento",
@@ -565,13 +565,13 @@ window.SAGUI_STATUS = {
       "conceito": "Espaços de endereço",
       "implementa": "Paginação com um espaço por processo",
       "historias": "H10",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Gerenciamento de memória",
       "implementa": "Memória física, alocador do kernel, memória dos processos",
       "historias": "H06, H10, H13",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Arquivos e diretórios",
@@ -589,19 +589,19 @@ window.SAGUI_STATUS = {
       "conceito": "Proteção",
       "implementa": "Um processo não acessa a memória do outro nem o kernel",
       "historias": "H12, H16",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Chamadas de sistema",
       "implementa": "Processos, arquivos, diretórios e diversas",
       "historias": "H12",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "O shell",
       "implementa": "sagsh em ring 3, com redirecionamento e pipes",
       "historias": "H16",
-      "estado": "a fazer"
+      "estado": "feito"
     },
     {
       "conceito": "Carregamento de programas",
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:41:25",
+      "texto": "H16 concluída: sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido"
+    },
+    {
+      "data": "2026-11-03T16:41:24",
+      "texto": "Erro corrigido: falha divisao não dividia"
+    },
     {
       "data": "2026-11-03T16:27:11",
       "texto": "Início da H16: Shell e comandos como programas"
@@ -792,6 +800,12 @@ window.SAGUI_STATUS = {
   ],
   "erros": [
     {
+      "data": "2026-11-03T16:41:24",
+      "sintoma": "falha divisao não dividia",
+      "causa": "GCC otimiza 1/x sem a instrução div",
+      "correcao": "Dividendo 12345"
+    },
+    {
       "data": "2026-11-03T16:25:45",
       "sintoma": "Regressão: 'Ola do ring 3!' sumiu no teste da H12",
       "causa": "Programas criados sem o carregador ficaram sem descritores após a H14",
@@ -818,134 +832,159 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T16:40:59"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T16:40:54"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T16:40:45"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T16:40:42"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T16:40:25"
+    },
+    {
       "arquivo": "docs/capturas/H15-pipes.png",
       "nome": "H15-pipes.png",
-      "data": "2026-11-03T16:26:52"
-    },
-    {
-      "arquivo": "docs/capturas/H12-anel3-protecao.png",
-      "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T16:26:07"
-    },
-    {
-      "arquivo": "docs/capturas/H13-ola-argumentos.png",
-      "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T16:25:06"
+      "data": "2026-11-03T16:40:18"
     },
     {
       "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
       "nome": "H14-arquivos-gravaveis.png",
-      "data": "2026-11-03T16:24:39"
+      "data": "2026-11-03T16:40:12"
     },
     {
-      "arquivo": "docs/capturas/H08-sgfs-lista.png",
-      "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T16:20:57"
+      "arquivo": "docs/capturas/H13-ola-argumentos.png",
+      "nome": "H13-ola-argumentos.png",
+      "data": "2026-11-03T16:40:01"
     },
     {
-      "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
-      "nome": "H10-tela-falta-de-pagina.png",
-      "data": "2026-11-03T16:16:08"
-    },
-    {
-      "arquivo": "docs/capturas/H10-dois-espacos.png",
-      "nome": "H10-dois-espacos.png",
-      "data": "2026-11-03T16:16:03"
-    },
-    {
-      "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
-      "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T16:12:40"
-    },
-    {
-      "arquivo": "docs/capturas/H09-mem-data.png",
-      "nome": "H09-mem-data.png",
-      "data": "2026-11-03T16:12:38"
-    },
-    {
-      "arquivo": "docs/capturas/H09-cat-sagui.png",
-      "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T16:12:35"
-    },
-    {
-      "arquivo": "docs/capturas/H09-ls-cd.png",
-      "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T16:12:33"
-    },
-    {
-      "arquivo": "docs/capturas/H09-ajuda.png",
-      "nome": "H09-ajuda.png",
-      "data": "2026-11-03T16:12:31"
-    },
-    {
-      "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
-      "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T16:12:30"
-    },
-    {
-      "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
-      "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T16:12:17"
+      "arquivo": "docs/capturas/H12-anel3-protecao.png",
+      "nome": "H12-anel3-protecao.png",
+      "data": "2026-11-03T16:39:54"
     },
     {
       "arquivo": "docs/capturas/H11-tarefas-A-B.png",
       "nome": "H11-tarefas-A-B.png",
-      "data": "2026-11-03T16:11:55"
+      "data": "2026-11-03T16:39:48"
+    },
+    {
+      "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
+      "nome": "H10-tela-falta-de-pagina.png",
+      "data": "2026-11-03T16:39:41"
+    },
+    {
+      "arquivo": "docs/capturas/H10-dois-espacos.png",
+      "nome": "H10-dois-espacos.png",
+      "data": "2026-11-03T16:39:35"
+    },
+    {
+      "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
+      "nome": "H09-tela-inicial-usb.png",
+      "data": "2026-11-03T16:39:29"
+    },
+    {
+      "arquivo": "docs/capturas/H09-mem-data.png",
+      "nome": "H09-mem-data.png",
+      "data": "2026-11-03T16:39:27"
+    },
+    {
+      "arquivo": "docs/capturas/H09-cat-sagui.png",
+      "nome": "H09-cat-sagui.png",
+      "data": "2026-11-03T16:39:26"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ls-cd.png",
+      "nome": "H09-ls-cd.png",
+      "data": "2026-11-03T16:39:24"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ajuda.png",
+      "nome": "H09-ajuda.png",
+      "data": "2026-11-03T16:39:22"
+    },
+    {
+      "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
+      "nome": "H09-tela-inicial-ide.png",
+      "data": "2026-11-03T16:39:22"
+    },
+    {
+      "arquivo": "docs/capturas/H08-sgfs-lista.png",
+      "nome": "H08-sgfs-lista.png",
+      "data": "2026-11-03T16:39:16"
+    },
+    {
+      "arquivo": "docs/capturas/H07-teclado-abnt2.png",
+      "nome": "H07-teclado-abnt2.png",
+      "data": "2026-11-03T16:39:10"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T16:09:18"
+      "data": "2026-11-03T16:39:01"
+    },
+    {
+      "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
+      "nome": "H05-tela-de-erro-divisao.png",
+      "data": "2026-11-03T16:38:41"
+    },
+    {
+      "arquivo": "docs/capturas/H04-boot-vdi.png",
+      "nome": "H04-boot-vdi.png",
+      "data": "2026-11-03T16:38:35"
+    },
+    {
+      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
+      "nome": "H04-fix-memoria-6g.png",
+      "data": "2026-11-03T16:38:18"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T16:38:06"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T16:37:55"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T16:37:49"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T16:37:44"
+    },
+    {
+      "arquivo": "docs/capturas/H02-mbr-usb.png",
+      "nome": "H02-mbr-usb.png",
+      "data": "2026-11-03T16:37:38"
+    },
+    {
+      "arquivo": "docs/capturas/H02-mbr-ide.png",
+      "nome": "H02-mbr-ide.png",
+      "data": "2026-11-03T16:37:32"
     },
     {
       "arquivo": "docs/capturas/G470-fase2-tela-inicial.png",
       "nome": "G470-fase2-tela-inicial.png",
       "data": "2026-11-03T16:05:16"
-    },
-    {
-      "arquivo": "docs/capturas/H07-teclado-abnt2.png",
-      "nome": "H07-teclado-abnt2.png",
-      "data": "2026-11-03T15:43:40"
-    },
-    {
-      "arquivo": "docs/capturas/H04-boot-vdi.png",
-      "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T15:43:05"
-    },
-    {
-      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
-      "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T15:42:48"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-usb.png",
-      "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T15:42:37"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-ide.png",
-      "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T15:42:26"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-usb.png",
-      "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T15:42:21"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-ide.png",
-      "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T15:42:15"
-    },
-    {
-      "arquivo": "docs/capturas/H02-mbr-usb.png",
-      "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T15:42:09"
-    },
-    {
-      "arquivo": "docs/capturas/H02-mbr-ide.png",
-      "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T15:42:04"
     },
     {
       "arquivo": "docs/capturas/G470-fase1-tela-final.png",
@@ -955,14 +994,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 4936,
-    "userland": 770,
-    "ferramentas": 1500
+    "kernel": 4659,
+    "userland": 1552,
+    "ferramentas": 1652
   },
   "imagem": {
-    "bytes_util": 100352,
+    "bytes_util": 223232,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 44.1
+  "progresso_geral": 47.1
 };

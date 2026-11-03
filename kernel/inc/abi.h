@@ -9,7 +9,7 @@
 
 /* Processos */
 #define SIS_EXECUTAR        1   /* (caminho, argv, 0) -> pid */
-#define SIS_ESPERAR         2   /* (pid ou -1, &codigo) -> pid */
+#define SIS_ESPERAR         2   /* (pid ou -1, &codigo, sem_bloquear) -> pid (0 = ninguém terminou) */
 #define SIS_SAIR            3   /* (codigo) */
 #define SIS_PID             4   /* () -> pid */
 #define SIS_MATAR           5   /* (pid) */
@@ -121,7 +121,8 @@ typedef struct {
 #define TERM_LINHA 0
 #define TERM_BRUTO 1
 
-/* No modo bruto, teclas sem caractere chegam como ESC (27) + uma letra: */
+/* No modo bruto, teclas sem caractere chegam como ESC (27) + uma letra; a
+ * própria tecla Esc chega como 27, 27. */
 #define TECLA_B_CIMA     'A'
 #define TECLA_B_BAIXO    'B'
 #define TECLA_B_DIREITA  'C'

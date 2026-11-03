@@ -14,7 +14,6 @@
 #include "memoria.h"
 #include "teclado.h"
 #include "sgfs.h"
-#include "terminal.h"
 #include "paginacao.h"
 #include "processo.h"
 #include "sistema.h"
@@ -212,6 +211,21 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     else if (info_boot.teste[0])
         autoteste_executar(info_boot.teste);
 
-    /* H09: terminal provisório (vira o programa sagsh na H16). */
-    terminal_executar();
+    /* H16: o primeiro processo é o shell, um programa comum no anel 3. O
+     * terminal provisório da H09 foi removido. Daqui em diante este código
+     * é só o processo 0 (ocioso). */
+    for (;;) {
+        char *argv[] = { "sagsh", NULL };
+        int pid = processo_executar("/bin/sagsh", 1, argv, NULL);
+        if (pid < 0) {
+            vga_cor(COR_VERMELHO_CLARO, COR_PRETO);
+            kprintf("Não consegui iniciar /bin/sagsh (erro %d).\n", pid);
+            vga_cor(COR_CINZA, COR_PRETO);
+            for (;;) cpu_espera();
+        }
+        klog("[SAGUI] shell iniciado: processo %d\n", pid);
+        while (processo_por_pid(pid))
+            cpu_espera();
+        kprintf("\n[SaguiOS] O shell foi fechado. Abrindo um novo...\n");
+    }
 }

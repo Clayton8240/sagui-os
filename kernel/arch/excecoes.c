@@ -69,7 +69,7 @@ quadro_t *excecao_usuario(quadro_t *q)
     char motivo[64];
     snformatar(motivo, sizeof motivo, "%s em EIP=0x%08x", nome_excecao(q->vetor), q->eip);
     if (q->vetor == 14)
-        snformatar(motivo, sizeof motivo, "%s (%s de 0x%08x)", nome_excecao(14),
+        snformatar(motivo, sizeof motivo, "%s: %s 0x%08x", nome_excecao(14),
                    q->erro & 2 ? "escrita" : "leitura", le_cr2());
     kprintf("\n[SaguiOS] Processo %d (%s) encerrado: %s\n", atual->pid, atual->nome, motivo);
     processo_encerrar(atual, SAIDA_ENCERRADO_PELO_KERNEL, motivo);

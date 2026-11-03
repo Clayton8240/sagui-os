@@ -34,6 +34,7 @@ typedef __builtin_va_list va_list;
 /* ---- processos ---- */
 int  executar(const char *caminho, char *const argv[]);
 int  esperar(int pid, int *codigo);
+int  recolher(int *codigo);   /* um filho que já terminou, sem esperar; 0 se nenhum */
 void sair(int codigo) __attribute__((noreturn));
 int  meu_pid(void);
 int  matar(int pid);
