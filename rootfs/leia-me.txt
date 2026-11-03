@@ -1,0 +1,31 @@
+Bem-vindo ao SaguiOS!
+=====================
+
+O SaguiOS é um sistema operacional pequeno, escrito do zero por uma IA,
+para PCs x86 de 32 bits. Ele roda inteiro na memória: o pendrive de boot
+só é lido uma vez, quando o computador liga.
+
+Como usar o terminal
+--------------------
+
+Digite um comando e aperte Enter. Alguns comandos:
+
+  ajuda          lista todos os comandos
+  ls             mostra os arquivos da pasta atual
+  cd <pasta>     entra numa pasta (cd .. volta)
+  cat <arquivo>  mostra o conteúdo de um arquivo
+  mem            mostra a memória total e livre
+  data           mostra a data e a hora
+  limpar         limpa a tela
+  reiniciar      reinicia o computador
+
+Arquivos para ler
+-----------------
+
+  sobre.txt              como o sistema foi feito
+  historia/linux.txt     um pouco da história do Minix, do Linux e do GNU
+  historia/saguios.txt   o diário deste projeto
+  arte/sagui.txt         o nosso mascote
+
+Os arquivos que você criar em /tmp ficam na memória e somem ao desligar.
+Para guardar de verdade, use um pendrive de dados (comando montar).

@@ -1,0 +1,30 @@
+Sobre o SaguiOS
+===============
+
+O SaguiOS foi escrito do zero por uma IA (Claude, da Anthropic), seguindo um
+documento de requisitos preparado pelo Eli, para um vídeo. O objetivo era
+provar que uma IA consegue escrever as partes fundamentais de um sistema
+operacional: carregador de boot, interrupções, memória com paginação,
+processos, chamadas de sistema, sistema de arquivos, drivers e uma
+interface gráfica simples.
+
+O alvo é um notebook real, um Lenovo G470 de 2011, além de máquinas virtuais.
+
+As regras do desafio
+--------------------
+
+- Nada de código de outros sistemas operacionais: nem copiar, nem ler.
+- Nada de bibliotecas prontas dentro do sistema, nem a biblioteca C.
+- Nada de carregador de boot pronto: o carregador é nosso.
+- Nada de fontes ou imagens prontas: a fonte e o desenho do sagui foram
+  criados pela IA, como dados no código.
+- Pode consultar especificações e manuais oficiais do hardware.
+
+Só os conceitos vêm de fora (o que é um processo, como funciona a
+paginação). A implementação é inteiramente deste projeto, e o raciocínio
+por trás de cada parte está em docs/decisoes.md no repositório.
+
+Por que "Sagui"?
+----------------
+
+O sagui é um macaquinho brasileiro, pequeno e esperto. Como este sistema.

@@ -1,0 +1,30 @@
+Minix, Linux e GNU: uma história curta
+======================================
+
+1983 - Richard Stallman anuncia o projeto GNU, para criar um sistema
+       parecido com o Unix, mas inteiramente livre. Nos anos seguintes o
+       projeto produz o compilador GCC, o editor Emacs, o shell Bash e
+       muitas outras ferramentas. Faltava o kernel.
+
+1987 - Andrew Tanenbaum, professor em Amsterdã, publica o livro "Operating
+       Systems: Design and Implementation" junto com o Minix, um sistema
+       pequeno feito para ensinar. Estudantes do mundo todo aprendem como um
+       sistema operacional funciona lendo e modificando o Minix.
+
+1991 - Linus Torvalds, estudante na Finlândia, começa um kernel para o seu
+       PC com processador 386, como projeto pessoal. Em agosto ele avisa num
+       grupo de discussão do Minix que está fazendo "só um hobby". Em
+       setembro sai a versão 0.01.
+
+1992 - O Linux passa a usar a licença GPL, do projeto GNU. O kernel Linux
+       com as ferramentas GNU forma um sistema completo e livre.
+       Tanenbaum e Torvalds discutem em público se um kernel monolítico,
+       como o Linux, é uma boa ideia frente a um micronúcleo, como o Minix.
+
+Hoje   - O Linux roda em celulares, servidores, supercomputadores e
+       roteadores. O Minix 3 virou um sistema confiável de micronúcleo. E o
+       livro do Tanenbaum, "Modern Operating Systems", continua sendo a
+       referência dos cursos de computação.
+
+O SaguiOS segue as ideias do livro (processos, memória, arquivos, entrada e
+saída), mas o código é todo escrito do zero neste projeto.

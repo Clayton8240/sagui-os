@@ -1,0 +1,10 @@
+Diário resumido do SaguiOS
+==========================
+
+Fase 1 - Boot
+  Carregador de boot próprio em dois estágios (MBR de 512 bytes e um
+  estágio 2 em modo real), que liga a linha A20, pede o mapa de memória à
+  BIOS, copia o kernel e o ramdisk para acima de 1 MB usando "unreal mode",
+  confere a integridade de tudo e entra no modo protegido de 32 bits.
+
+(Este arquivo é atualizado ao fim de cada fase.)

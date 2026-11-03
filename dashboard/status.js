@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T14:14:17",
-  "situacao": "Trabalhando na H01: Preparar o ambiente",
+  "atualizado": "2026-11-03T14:22:05",
+  "situacao": "Trabalhando na H03: Estágio 2 e modo protegido",
   "fase_atual": 1,
-  "historia_atual": "H01",
+  "historia_atual": "H03",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -12,7 +12,7 @@ window.SAGUI_STATUS = {
       "numero": 1,
       "nome": "Boot",
       "estado": "em andamento",
-      "progresso": 25.0
+      "progresso": 50.0
     },
     {
       "numero": 2,
@@ -71,12 +71,12 @@ window.SAGUI_STATUS = {
       "titulo": "Estágio 1 (MBR)",
       "objetivo": "Código de 512 bytes com assinatura 0x55AA, tabela de partição válida com partição ativa e área de BPB reservada.",
       "aceite": "No QEMU (IDE e USB), aparece a mensagem `SaguiOS: carregando...`.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T14:14:29",
+      "fim": "2026-11-03T14:22:05",
+      "minutos": 8,
+      "resultado": "MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB"
     },
     {
       "id": "H03",
@@ -84,9 +84,9 @@ window.SAGUI_STATUS = {
       "titulo": "Estágio 2 e modo protegido",
       "objetivo": "A20, mapa E820, leitura do kernel e do ramdisk, GDT, modo protegido, salto para o kernel com boot_info.",
       "aceite": "O kernel em C escreve em modo texto VGA `Ola! Eu sou o SaguiOS.` e a memória detectada.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T14:22:05",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -616,6 +616,18 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T14:22:05",
+      "texto": "Início da H03: Estágio 2 e modo protegido"
+    },
+    {
+      "data": "2026-11-03T14:22:05",
+      "texto": "H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB"
+    },
+    {
+      "data": "2026-11-03T14:14:29",
+      "texto": "Início da H02: Estágio 1 (MBR)"
+    },
+    {
       "data": "2026-11-03T14:14:17",
       "texto": "H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados"
     },
@@ -625,17 +637,28 @@ window.SAGUI_STATUS = {
     }
   ],
   "erros": [],
-  "capturas": [],
+  "capturas": [
+    {
+      "arquivo": "docs/capturas/H02-mbr-usb.png",
+      "nome": "H02-mbr-usb.png",
+      "data": "2026-11-03T14:21:34"
+    },
+    {
+      "arquivo": "docs/capturas/H02-mbr-ide.png",
+      "nome": "H02-mbr-ide.png",
+      "data": "2026-11-03T14:21:28"
+    }
+  ],
   "linhas": {
-    "boot": 0,
-    "kernel": 0,
+    "boot": 893,
+    "kernel": 714,
     "userland": 0,
-    "ferramentas": 246
+    "ferramentas": 754
   },
   "imagem": {
-    "bytes_util": 0,
-    "bytes_arquivo": 0,
+    "bytes_util": 14336,
+    "bytes_arquivo": 32768,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 2.9
+  "progresso_geral": 5.9
 };

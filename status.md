@@ -1,20 +1,20 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T14:14:17_
+_Atualizado em 2026-11-03T14:22:05_
 
-- **Situação:** Trabalhando na H01: Preparar o ambiente
+- **Situação:** Trabalhando na H03: Estágio 2 e modo protegido
 - **Fase atual:** 1
-- **História atual:** H01
-- **Progresso geral:** 2.9%
+- **História atual:** H03
+- **Progresso geral:** 5.9%
 - **Bloqueio:** nenhum
-- **Imagem:** 0 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 0, kernel 0, userland 0
+- **Imagem:** 14336 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 893, kernel 714, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
-| 1 | Boot | 25.0% | em andamento |
+| 1 | Boot | 50.0% | em andamento |
 | 2 | Kernel e terminal | 0.0% | a fazer |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
@@ -27,8 +27,8 @@ _Atualizado em 2026-11-03T14:14:17_
 | ID | Título | Estado | Minutos |
 | --- | --- | --- | --- |
 | H01 | Preparar o ambiente | feito | 2 |
-| H02 | Estágio 1 (MBR) | a fazer |  |
-| H03 | Estágio 2 e modo protegido | a fazer |  |
+| H02 | Estágio 1 (MBR) | feito | 8 |
+| H03 | Estágio 2 e modo protegido | em andamento |  |
 | H04 | Imagem para pendrive e VirtualBox | a fazer |  |
 | H05 | Interrupções e relógio | a fazer |  |
 | H06 | Memória física | a fazer |  |
@@ -66,5 +66,8 @@ _Atualizado em 2026-11-03T14:14:17_
 
 ## Últimas ações
 
+- 2026-11-03T14:22:05: Início da H03: Estágio 2 e modo protegido
+- 2026-11-03T14:22:05: H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB
+- 2026-11-03T14:14:29: Início da H02: Estágio 1 (MBR)
 - 2026-11-03T14:14:17: H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados
 - 2026-11-03T14:12:34: Início da H01: Preparar o ambiente
