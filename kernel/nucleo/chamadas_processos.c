@@ -145,4 +145,17 @@ int32_t sis_reiniciar(uint32_t a, uint32_t b, uint32_t c, uint32_t d, uint32_t e
     maquina_reiniciar();
 }
 
+/* registrar(texto): uma linha no log do sistema (a serial), com o nome e o
+ * PID do programa. Os programas gráficos registram o que fazem por aqui,
+ * sem sujar o terminal de quem os abriu. */
+int32_t sis_registrar(uint32_t ptr, uint32_t b, uint32_t c, uint32_t d, uint32_t e)
+{
+    (void)b; (void)c; (void)d; (void)e;
+    char t[256];
+    int r = usuario_texto((const char *)ptr, t, sizeof t);
+    if (r < 0) return r;
+    klog("[%s %d] %s\n", atual->nome, atual->pid, t);
+    return 0;
+}
+
 /* sis_executar fica em kernel/nucleo/carregador.c (H13). */

@@ -125,6 +125,19 @@ int imprimir_em(int fd, const char *fmt, ...)
     return n;
 }
 
+/* Uma linha no log do sistema (serial), sem aparecer na tela. */
+void registrar(const char *fmt, ...)
+{
+    char buf[256];
+    va_list ap;
+    va_start(ap, fmt);
+    formatar_lista(buf, sizeof buf, fmt, ap);
+    va_end(ap);
+    size_t n = tam_texto(buf);
+    if (n && buf[n - 1] == '\n') buf[n - 1] = 0;
+    registrar_texto(buf);
+}
+
 const char *nome_erro(int e)
 {
     switch (e) {

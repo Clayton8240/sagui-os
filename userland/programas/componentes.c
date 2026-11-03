@@ -40,7 +40,7 @@ int principal(int argc, char **argv)
     area_desenhar(j, &area);
     lista_desenhar(j, &lista);
     jan_mostrar(j);
-    imprimir("componentes: pronto\n");
+    registrar("componentes: pronto\n");
 
     evento_t e;
     for (;;) {
@@ -51,27 +51,27 @@ int principal(int argc, char **argv)
             g_retangulo(j, 170, 46, 200, 16, COR_FUNDO);
             rotulo(j, 170, 46, buf, COR_TEXTO);
             jan_mostrar_area(j, 170, 46, 200, 16);
-            imprimir("componentes: botao clicado %d\n", cliques);
+            registrar("componentes: botao clicado %d\n", cliques);
         }
         if (botao_tratar(j, &apagar, &e)) {
             bool sim = confirmar("Confirmar", "Tem certeza?\nIsto apaga o texto da área.");
-            imprimir("componentes: confirmar -> %s\n", sim ? "sim" : "nao");
+            registrar("componentes: confirmar -> %s\n", sim ? "sim" : "nao");
             if (sim) { area_definir(&area, "", 0); area_desenhar(j, &area); }
         }
         if (botao_tratar(j, &aviso, &e)) {
             mensagem("Mensagem", "Olá! Esta é uma caixa de mensagem\ndo SaguiOS.");
-            imprimir("componentes: mensagem fechada\n");
+            registrar("componentes: mensagem fechada\n");
         }
         if (caixa_tratar(j, &caixa, &e))
-            imprimir("componentes: caixa enter: %s\n", caixa.texto);
+            registrar("componentes: caixa enter: %s\n", caixa.texto);
         if (area_tratar(j, &area, &e))
-            imprimir("componentes: area mudou (%d letras)\n", area.tam);
+            registrar("componentes: area mudou (%d letras)\n", area.tam);
         else if (e.tipo == EV_TECLA && area.foco)
-            imprimir("componentes: area topo %d\n", area.topo);
+            registrar("componentes: area topo %d\n", area.topo);
         if (e.tipo == EV_TECLA && (caixa.foco || area.foco)) continue;   /* teclas: só para quem tem o foco */
         int r = lista_tratar(j, &lista, &e);
-        if (r == LISTA_SELECIONOU) imprimir("componentes: lista selecionou %s\n", itens[lista.sel]);
-        if (r == LISTA_ATIVOU) imprimir("componentes: lista ativou %s\n", itens[lista.sel]);
+        if (r == LISTA_SELECIONOU) registrar("componentes: lista selecionou %s\n", itens[lista.sel]);
+        if (r == LISTA_ATIVOU) registrar("componentes: lista ativou %s\n", itens[lista.sel]);
     }
     jan_fechar(j);
     return 0;

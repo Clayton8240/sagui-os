@@ -103,6 +103,8 @@ int  imprimir_em(int fd, const char *fmt, ...);
 int  escrever_tudo(int fd, const void *buf, unsigned n);
 int  escrever_texto(int fd, const char *s);
 const char *nome_erro(int erro);
+void registrar(const char *fmt, ...);   /* log do sistema (serial), não aparece na tela */
+int  registrar_texto(const char *t);
 
 /* ---- entrada ---- */
 int  ler_linha(int fd, char *buf, unsigned max);   /* tamanho, ou -1 no fim do arquivo */

@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:00:05",
-  "situacao": "Trabalhando na H25: Editor de texto",
+  "atualizado": "2026-11-03T19:03:23",
+  "situacao": "Trabalhando na H23: Arquivos",
   "fase_atual": 5,
-  "historia_atual": "H25",
+  "historia_atual": "H23",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 44.4
+      "progresso": 55.6
     },
     {
       "numero": 6,
@@ -348,9 +348,9 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos",
       "objetivo": "Gerenciador de arquivos em ring 3 com ícones, duplo clique, voltar, criar e apagar pasta.",
       "aceite": "Navega até historia/, abre linux.txt no Editor, cria e apaga pasta em tmp/.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T19:03:23",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -374,12 +374,12 @@ window.SAGUI_STATUS = {
       "titulo": "Editor de texto",
       "objetivo": "Novo, abrir, salvar, salvar como, acentos, setas, Ctrl+S, asterisco, aviso ao fechar.",
       "aceite": "Cria tmp/nota.txt com `Olá, SaguiOS! Ação e coração.`, reabre pelo Arquivos e confere.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:00:05",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:03:23",
+      "minutos": 3,
+      "resultado": "Editor com Novo/Abrir/Salvar, Ctrl+S, título com *, aviso ao fechar"
     },
     {
       "id": "H26",
@@ -620,6 +620,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T19:03:23",
+      "texto": "Início da H23: Arquivos"
+    },
+    {
+      "data": "2026-11-03T19:03:23",
+      "texto": "H25 concluída: Editor com Novo/Abrir/Salvar, Ctrl+S, título com *, aviso ao fechar"
+    },
+    {
       "data": "2026-11-03T19:00:05",
       "texto": "Início da H25: Editor de texto"
     },
@@ -850,14 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:28:28",
       "texto": "H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS"
-    },
-    {
-      "data": "2026-11-03T15:24:57",
-      "texto": "Início da H05: Interrupções e relógio"
-    },
-    {
-      "data": "2026-11-03T15:24:42",
-      "texto": "H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte"
     }
   ],
   "erros": [
@@ -912,6 +912,51 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H25-aviso-ao-fechar.png",
+      "nome": "H25-aviso-ao-fechar.png",
+      "data": "2026-11-03T19:03:04"
+    },
+    {
+      "arquivo": "docs/capturas/H25-editor-reaberto.png",
+      "nome": "H25-editor-reaberto.png",
+      "data": "2026-11-03T19:03:01"
+    },
+    {
+      "arquivo": "docs/capturas/H25-editor-digitando.png",
+      "nome": "H25-editor-digitando.png",
+      "data": "2026-11-03T19:02:55"
+    },
+    {
+      "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
+      "nome": "H22-dialogo-confirmar.png",
+      "data": "2026-11-03T19:02:42"
+    },
+    {
+      "arquivo": "docs/capturas/H22-componentes-em-uso.png",
+      "nome": "H22-componentes-em-uso.png",
+      "data": "2026-11-03T19:02:39"
+    },
+    {
+      "arquivo": "docs/capturas/H22-componentes.png",
+      "nome": "H22-componentes.png",
+      "data": "2026-11-03T19:02:29"
+    },
+    {
+      "arquivo": "docs/capturas/H21-janela-fechada.png",
+      "nome": "H21-janela-fechada.png",
+      "data": "2026-11-03T19:02:23"
+    },
+    {
+      "arquivo": "docs/capturas/H21-janela-arrastada.png",
+      "nome": "H21-janela-arrastada.png",
+      "data": "2026-11-03T19:02:18"
+    },
+    {
+      "arquivo": "docs/capturas/H21-duas-janelas.png",
+      "nome": "H21-duas-janelas.png",
+      "data": "2026-11-03T19:02:16"
+    },
+    {
       "arquivo": "docs/capturas/H24-terminal-ps-conta.png",
       "nome": "H24-terminal-ps-conta.png",
       "data": "2026-11-03T18:59:57"
@@ -940,21 +985,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H16-ajuda.png",
       "nome": "H16-ajuda.png",
       "data": "2026-11-03T18:59:15"
-    },
-    {
-      "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
-      "nome": "H22-dialogo-confirmar.png",
-      "data": "2026-11-03T18:56:23"
-    },
-    {
-      "arquivo": "docs/capturas/H22-componentes-em-uso.png",
-      "nome": "H22-componentes-em-uso.png",
-      "data": "2026-11-03T18:56:20"
-    },
-    {
-      "arquivo": "docs/capturas/H22-componentes.png",
-      "nome": "H22-componentes.png",
-      "data": "2026-11-03T18:56:11"
     },
     {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
@@ -1057,21 +1087,6 @@ window.SAGUI_STATUS = {
       "data": "2026-11-03T18:49:46"
     },
     {
-      "arquivo": "docs/capturas/H21-janela-fechada.png",
-      "nome": "H21-janela-fechada.png",
-      "data": "2026-11-03T18:49:32"
-    },
-    {
-      "arquivo": "docs/capturas/H21-janela-arrastada.png",
-      "nome": "H21-janela-arrastada.png",
-      "data": "2026-11-03T18:49:28"
-    },
-    {
-      "arquivo": "docs/capturas/H21-duas-janelas.png",
-      "nome": "H21-duas-janelas.png",
-      "data": "2026-11-03T18:49:26"
-    },
-    {
       "arquivo": "docs/capturas/H20-area-de-trabalho.png",
       "nome": "H20-area-de-trabalho.png",
       "data": "2026-11-03T18:46:22"
@@ -1144,14 +1159,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 6724,
-    "userland": 2547,
-    "ferramentas": 2322
+    "kernel": 6740,
+    "userland": 2715,
+    "ferramentas": 2401
   },
   "imagem": {
-    "bytes_util": 318464,
+    "bytes_util": 347648,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 67.6
+  "progresso_geral": 70.6
 };
