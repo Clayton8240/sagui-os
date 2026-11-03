@@ -530,3 +530,26 @@ desenho da seta é feito na cópia para a tela (D017), por cima de tudo.
 **Fila de eventos.** Cada pacote vira um evento (posição, deslocamento,
 botões e quais mudaram) numa fila, com um canal para quem quiser dormir
 esperando por ele. Na fase 5 o gerenciador de janelas consome essa fila.
+
+## D020. Um dono só para o controlador do teclado e do touchpad (H19-fix)
+
+**O que aprendemos no G470.** O controlador i8042 tem uma fila de saída de
+um único byte, compartilhada pelo teclado e pelo touchpad. Se um byte não
+for lido, nada mais passa. Na H19, o teclado e o mouse liam o controlador
+cada um por conta própria, e o teclado passou a deixar na fila os bytes do
+mouse para o driver do mouse. No G470 a interrupção do mouse não chegou, e
+o byte parado travou o teclado.
+
+**Decisão.** Um só módulo (`i8042.c`) lê a fila e entrega cada byte a quem
+é de direito. Ele esvazia a fila na IRQ 1, na IRQ 12 e a cada tique do
+relógio. A terceira é a rede de segurança: mesmo que uma interrupção não
+chegue no hardware real, nenhum byte fica parado mais de 10 ms. Custa uma
+leitura de porta a cada tique.
+
+**Configuração defensiva.** A fila é esvaziada antes de pedir o byte de
+configuração; o valor lido é conferido (bits reservados), com um valor
+seguro se falhar; a interrupção e a tradução do teclado ficam **sempre**
+ligadas; a IRQ 12 só é ligada se o touchpad responder; se ele não responder
+(nem depois de um reset), a porta do mouse é desligada. O aviso na tela
+mostra os números (configuração lida e gravada, respostas do touchpad) para
+que uma foto diga o que o hardware respondeu.

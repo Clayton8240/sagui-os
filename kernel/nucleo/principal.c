@@ -19,6 +19,7 @@
 #include "sistema.h"
 #include "vfs.h"
 #include "mouse.h"
+#include "i8042.h"
 
 #define SAGUI_VERSAO "0.4 (fase 4)"
 
@@ -211,8 +212,13 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     if (mouse_iniciar())
         etapa("Mouse/touchpad PS/2: cursor desenhado pelo SaguiOS, IRQ 12");
     else {
+        /* Os números ajudam a entender o hardware a partir de uma foto:
+         * configuração do controlador e respostas do touchpad (FA = ok). */
+        const i8042_diag_t *d = i8042_diagnostico();
         console_cor(COR_AMARELO, COR_PRETO);
-        kprintf("[aviso] Mouse/touchpad PS/2 não respondeu.\n");
+        kprintf("[aviso] Mouse/touchpad PS/2 não respondeu (cfg %x->%x, F6=%x FF=%x F4=%x). Teclado segue normal.\n",
+                (uint32_t)d->config_lida & 0xFFF, (uint32_t)d->config_final, (uint32_t)d->resposta_padrao & 0xFFF,
+                (uint32_t)d->resposta_reset & 0xFFF, (uint32_t)d->resposta_ligar & 0xFFF);
         console_cor(COR_CINZA, COR_PRETO);
     }
 

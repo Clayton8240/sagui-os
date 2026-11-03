@@ -7,6 +7,13 @@ Teste primeiro na máquina virtual. Se der erro, mande o print antes de ir para 
 
 ---
 
+## Correção depois do primeiro teste no G470 (H19-fix)
+
+No primeiro teste desta fase, o touchpad "não respondeu" e **o teclado parou de funcionar**. A causa foi minha: a inicialização do touchpad mexia no mesmo chip do teclado e podia deixar o teclado desligado ou com a fila travada (detalhes no erro 9 de `docs/erros.md`). Agora:
+
+- o teclado **não depende mais** do touchpad: mesmo que o touchpad não responda, o teclado tem que funcionar;
+- se o touchpad não responder, aparece um aviso com **números de diagnóstico**, por exemplo `(cfg 47->45, F6=fff FF=fff F4=fff)`. **Fotografe essa linha**: ela me diz o que o chip e o touchpad responderam.
+
 ## O que mudou desde a fase 3
 
 - A tela agora é **gráfica (1024x768)**, desenhada pixel a pixel pelo SaguiOS, com uma **fonte própria** que tem todos os acentos (`ã`, `õ`, `Ç`, `É`... aparecem certos).
@@ -57,6 +64,8 @@ Esta fase ainda não tem janelas nem área de trabalho: isso é a fase 5. O mous
 4. **Fotografe** a tela inicial com a seta visível e a tela depois do `echo` com acentos.
 
 **Se der errado**, fotografe a tela e me diga:
+
+- **O teclado não funciona:** fotografe a tela inicial inteira (as linhas `[ ok ]` e qualquer `[aviso]`) e me diga se a luz do Caps Lock acende ao apertar.
 
 - **Tela preta** depois do `[6/6]`: o modo gráfico não ligou ou o kernel travou antes de desenhar. Me diga se a luz do Caps Lock acende ao apertar a tecla (isso mostra se o sistema está vivo).
 - **Voltou para o modo texto com o aviso** `Modo gráfico indisponível`: o estágio 2 não conseguiu ligar o VESA; o resto do sistema deve funcionar normalmente.

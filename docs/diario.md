@@ -109,3 +109,10 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   latente: o tratador do teclado descartava bytes do mouse.
 - **Fim da fase 4.** 19/19 testes passando. Imagens em `entrega/fase4/`.
   Parada obrigatória: aguardando o teste do Eli.
+- **Teste do Eli no G470 (fase 4):** o touchpad não respondeu e o teclado
+  parou. **H19-fix:** módulo `i8042.c` único, fila esvaziada também pelo
+  relógio, configuração conferida, porta do mouse desligada se ele não
+  responder, diagnóstico na tela (erro 9, D020). Um teste novo com a IRQ 12
+  bloqueada reproduz o defeito no QEMU com o código antigo e passa com o
+  novo. Na regressão apareceram duas disputas de tempo em testes (erro 10),
+  corrigidas. 19/19 passando. Nova imagem em `entrega/fase4/`.

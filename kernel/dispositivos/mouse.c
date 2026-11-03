@@ -18,9 +18,8 @@
 #include "portas.h"
 #include "processo.h"
 #include "video.h"
+#include "i8042.h"
 
-#define DADOS  0x60
-#define ESTADO 0x64
 #define FILA   64
 
 static uint8_t pacote[3];
@@ -32,36 +31,6 @@ static uint32_t ini, fim;
 static const char canal = 0;
 
 const void *mouse_canal(void) { return &canal; }
-
-static bool esperar_escrita(void)
-{
-    for (int i = 0; i < 100000; i++)
-        if (!(porta_le8(ESTADO) & 2)) return true;
-    return false;
-}
-
-static bool esperar_leitura(void)
-{
-    for (int i = 0; i < 100000; i++)
-        if (porta_le8(ESTADO) & 1) return true;
-    return false;
-}
-
-static void comando_controlador(uint8_t c)
-{
-    esperar_escrita();
-    porta_escreve8(ESTADO, c);
-}
-
-/* Manda um comando ao mouse e espera a confirmação (0xFA). */
-static bool comando_mouse(uint8_t c)
-{
-    comando_controlador(0xD4);
-    esperar_escrita();
-    porta_escreve8(DADOS, c);
-    if (!esperar_leitura()) return false;
-    return porta_le8(DADOS) == 0xFA;
-}
 
 static void guardar(int16_t dx, int16_t dy, uint8_t mudaram)
 {
@@ -97,36 +66,20 @@ static void tratar_pacote(void)
     }
 }
 
-static quadro_t *ao_mover(quadro_t *q)
+/* Cada byte do mouse chega aqui pelo i8042.c, venha da IRQ 12, da IRQ 1 ou
+ * da verificação do relógio. */
+void mouse_byte(uint8_t b)
 {
-    for (int i = 0; i < 16; i++) {
-        uint8_t estado = porta_le8(ESTADO);
-        if ((estado & 0x21) != 0x21) break;       /* só bytes do mouse */
-        uint8_t b = porta_le8(DADOS);
-        if (pos_pacote == 0 && !(b & 0x08)) continue;   /* fora de sincronia: espera um byte 0 válido */
-        pacote[pos_pacote++] = b;
-        if (pos_pacote == 3) {
-            pos_pacote = 0;
-            tratar_pacote();
-        }
+    if (pos_pacote == 0 && !(b & 0x08)) return;   /* fora de sincronia: espera um byte 0 válido */
+    pacote[pos_pacote++] = b;
+    if (pos_pacote == 3) {
+        pos_pacote = 0;
+        tratar_pacote();
     }
-    return q;
 }
 
 bool mouse_iniciar(void)
 {
-    bool i = int_salva_desliga();
-    comando_controlador(0xA8);                     /* habilita a porta auxiliar */
-    comando_controlador(0x20);                     /* lê a configuração */
-    uint8_t cfg = esperar_leitura() ? porta_le8(DADOS) : 0;
-    cfg |= 0x02;                                   /* IRQ 12 ligada */
-    cfg &= (uint8_t)~0x20;                         /* relógio da porta auxiliar ligado */
-    comando_controlador(0x60);
-    esperar_escrita();
-    porta_escreve8(DADOS, cfg);
-    bool ok = comando_mouse(0xF6) && comando_mouse(0xF4);
-    /* Descarta o que sobrou (ex.: a identificação que alguns touchpads mandam). */
-    for (int k = 0; k < 16 && (porta_le8(ESTADO) & 1); k++) porta_le8(DADOS);
     if (video_ativo()) {
         larg = (int)video_largura();
         alt = (int)video_altura();
@@ -134,8 +87,7 @@ bool mouse_iniciar(void)
     mx = larg / 2;
     my = alt / 2;
     pos_pacote = 0;
-    irq_registrar(12, ao_mover);
-    int_restaura(i);
+    bool ok = i8042_iniciar(true);
     if (ok && video_ativo()) {
         video_cursor(mx, my, true);
         video_mostrar();

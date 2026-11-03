@@ -19,7 +19,11 @@ def main():
         s = m.serial()
         falhas = [l for l in s.splitlines() if "[TESTE] falha" in l]
         verificar(not falhas, f"nenhuma falha interna {falhas}")
-        saida = re.match(r"[AB]*", s.split("[TESTE] saida=")[1]).group(0)
+        # As letras vão do "saida=" até o fim do teste; no meio pode cair a
+        # mensagem de término da tarefa que acabou primeiro, que é descartada.
+        trecho = s.split("[TESTE] saida=")[1].split("[TESTE]")[0]
+        trecho = re.sub(r"\[SAGUI\][^\n]*\n", "", trecho)
+        saida = "".join(c for c in trecho if c in "AB")
         verificar(saida.count("A") == 60 and saida.count("B") == 60, "cada tarefa escreveu suas 60 letras")
         trechos = re.findall(r"A+|B+", saida)
         print("   sequência:", saida[:70], "...")

@@ -1,35 +1,36 @@
 ```
-Eli, terminei a fase 4: Gráfico e mouse. Pode testar!
+Eli, corrigi o problema do teclado e do touchpad no G470. Pode testar de novo a fase 4!
 
-O que foi feito: a tela agora é gráfica, em 1024x768, desenhada pixel a pixel
-pelo SaguiOS com uma fonte própria (desenhada letra por letra neste projeto),
-com todos os acentos do português. O touchpad move uma seta desenhada pelo
-sistema, e os cliques são detectados. Também fiz os seus pedidos da fase 3:
-as setas para os lados, Home, End e Delete editam no meio da linha do shell,
-e o texto de um programa em segundo plano não se mistura mais com o que você
-está digitando.
-Histórias concluídas: H17 a H19
+O que foi corrigido (H19-fix): a inicialização do touchpad mexia no mesmo chip
+do teclado. Ela podia gravar uma configuração errada (que desliga o teclado) e
+deixar um byte do touchpad parado na fila do chip, travando todas as teclas.
+Agora um módulo único cuida do chip, a fila é esvaziada também pelo relógio
+(nada fica parado mais de 10 ms), o teclado fica sempre ligado e, se o
+touchpad não responder, a porta dele é desligada e aparece um aviso com
+números de diagnóstico. Fiz um teste que reproduz o defeito no QEMU: com o
+código antigo o teclado fica mudo, com o novo funciona.
+Histórias concluídas: H17 a H19 (e H19-fix)
 Imagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)
 Roteiro de teste: docs/teste-fase4.md
-O que você deve ver no G470: a tela gráfica com a faixa verde e a fonte nova;
-a seta mexendo com o touchpad; "echo Ação, vovô, pão, ÇÃO" com acentos certos.
-Problemas conhecidos: ainda não há janelas nem área de trabalho (fase 5): o
-mouse se move e os cliques são detectados, mas ainda não há onde clicar.
+O que você deve ver no G470: o teclado funcionando no sagui:/$; a seta mexendo
+com o touchpad (ou, se ele ainda não responder, o aviso com os números entre
+parênteses: fotografe essa linha); "echo Ação, vovô, pão, ÇÃO" com acentos.
+Problemas conhecidos: ainda não há janelas nem área de trabalho (fase 5).
 
 Quando testar, me diga "fase 4 ok" ou descreva o que aconteceu.
 ```
 
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T17:40:18_
+_Atualizado em 2026-11-03T18:27:00_
 
 - **Situação:** Aguardando teste do Eli: fase 4
 - **Fase atual:** 4
 - **História atual:** -
 - **Progresso geral:** 55.9%
 - **Bloqueio:** nenhum
-- **Imagem:** 239104 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 5399, userland 1591
+- **Imagem:** 240128 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 5539, userland 1591
 
 ## Fases
 
@@ -65,7 +66,7 @@ _Atualizado em 2026-11-03T17:40:18_
 | H16 | Shell e comandos como programas | feito | 14 |
 | H17 | Framebuffer VESA | aguardando teste | 2 |
 | H18 | Fonte própria | aguardando teste | 8 |
-| H19 | Mouse / touchpad PS/2 | aguardando teste | 6 |
+| H19 | Mouse / touchpad PS/2 | aguardando teste | 54 |
 | H20 | Área de trabalho | a fazer |  |
 | H21 | Gerenciador de janelas | a fazer |  |
 | H22 | Kit gráfico da libsagui | a fazer |  |
@@ -87,6 +88,10 @@ _Atualizado em 2026-11-03T17:40:18_
 
 ## Últimas ações
 
+- 2026-11-03T18:27:00: Fase 4 entregue. Aguardando teste do Eli.
+- 2026-11-03T18:27:00: H19 concluída: Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad
+- 2026-11-03T18:12:39: Erro corrigido: G470: teclado parou e o touchpad não respondeu (fase 4)
+- 2026-11-03T18:08:12: Bloqueio: G470: teclado não responde na fase 4 e o touchpad não respondeu (correção em andamento: H19-fix)
 - 2026-11-03T17:40:18: Fase 4 entregue. Aguardando teste do Eli.
 - 2026-11-03T17:40:18: Todos os testes passaram (H01 a H19, 19/19)
 - 2026-11-03T17:38:51: H19 concluída: Mouse/touchpad PS/2 com IRQ 12, cursor próprio, cliques na serial
@@ -98,7 +103,3 @@ _Atualizado em 2026-11-03T17:40:18_
 - 2026-11-03T17:21:51: Eli confirmou: fase 3 ok
 - 2026-11-03T16:45:51: Fase 3 entregue. Aguardando teste do Eli.
 - 2026-11-03T16:45:51: Todos os testes passaram (H01 a H16, 16/16)
-- 2026-11-03T16:41:25: H16 concluída: sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido
-- 2026-11-03T16:41:24: Erro corrigido: falha divisao não dividia
-- 2026-11-03T16:27:11: Início da H16: Shell e comandos como programas
-- 2026-11-03T16:27:11: H15 concluída: Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos

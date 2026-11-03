@@ -397,6 +397,15 @@ static void teste_grafico(void)
     video_mostrar_tudo();
 }
 
+/* H19-fix: simula no QEMU o que aconteceu no G470 - a interrupção do mouse
+ * não chega. Os bytes do mouse ficam na fila do controlador; o sistema tem
+ * que seguir com o teclado funcionando (e o mouse andando pelo relógio). */
+static void teste_sem_irq12(void)
+{
+    pic_desabilitar(12);
+    kprintf("Autoteste: IRQ 12 (mouse) bloqueada de propósito.\n");
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -413,6 +422,7 @@ static const autoteste_t testes[] = {
     { "tarefas", teste_tarefas },
     { "anel3", teste_anel3 },
     { "grafico", teste_grafico },
+    { "sem_irq12", teste_sem_irq12 },
 };
 
 void autoteste_executar(const char *nome)

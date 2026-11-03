@@ -1,11 +1,11 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T17:40:18",
+  "atualizado": "2026-11-03T18:27:00",
   "situacao": "Aguardando teste do Eli: fase 4",
   "fase_atual": 4,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Eli, terminei a fase 4: Gráfico e mouse. Pode testar!\n\nO que foi feito: a tela agora é gráfica, em 1024x768, desenhada pixel a pixel\npelo SaguiOS com uma fonte própria (desenhada letra por letra neste projeto),\ncom todos os acentos do português. O touchpad move uma seta desenhada pelo\nsistema, e os cliques são detectados. Também fiz os seus pedidos da fase 3:\nas setas para os lados, Home, End e Delete editam no meio da linha do shell,\ne o texto de um programa em segundo plano não se mistura mais com o que você\nestá digitando.\nHistórias concluídas: H17 a H19\nImagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase4.md\nO que você deve ver no G470: a tela gráfica com a faixa verde e a fonte nova;\na seta mexendo com o touchpad; \"echo Ação, vovô, pão, ÇÃO\" com acentos certos.\nProblemas conhecidos: ainda não há janelas nem área de trabalho (fase 5): o\nmouse se move e os cliques são detectados, mas ainda não há onde clicar.\n\nQuando testar, me diga \"fase 4 ok\" ou descreva o que aconteceu.",
+  "mensagem_fase": "Eli, corrigi o problema do teclado e do touchpad no G470. Pode testar de novo a fase 4!\n\nO que foi corrigido (H19-fix): a inicialização do touchpad mexia no mesmo chip\ndo teclado. Ela podia gravar uma configuração errada (que desliga o teclado) e\ndeixar um byte do touchpad parado na fila do chip, travando todas as teclas.\nAgora um módulo único cuida do chip, a fila é esvaziada também pelo relógio\n(nada fica parado mais de 10 ms), o teclado fica sempre ligado e, se o\ntouchpad não responder, a porta dele é desligada e aparece um aviso com\nnúmeros de diagnóstico. Fiz um teste que reproduz o defeito no QEMU: com o\ncódigo antigo o teclado fica mudo, com o novo funciona.\nHistórias concluídas: H17 a H19 (e H19-fix)\nImagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase4.md\nO que você deve ver no G470: o teclado funcionando no sagui:/$; a seta mexendo\ncom o touchpad (ou, se ele ainda não responder, o aviso com os números entre\nparênteses: fotografe essa linha); \"echo Ação, vovô, pão, ÇÃO\" com acentos.\nProblemas conhecidos: ainda não há janelas nem área de trabalho (fase 5).\n\nQuando testar, me diga \"fase 4 ok\" ou descreva o que aconteceu.",
   "fases": [
     {
       "numero": 1,
@@ -297,9 +297,9 @@
       "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T17:32:50",
-      "fim": "2026-11-03T17:38:51",
-      "minutos": 6,
-      "resultado": "Mouse/touchpad PS/2 com IRQ 12, cursor próprio, cliques na serial"
+      "fim": "2026-11-03T18:27:00",
+      "minutos": 54,
+      "resultado": "Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad"
     },
     {
       "id": "H20",
@@ -618,6 +618,22 @@
   ],
   "acoes": [
     {
+      "data": "2026-11-03T18:27:00",
+      "texto": "Fase 4 entregue. Aguardando teste do Eli."
+    },
+    {
+      "data": "2026-11-03T18:27:00",
+      "texto": "H19 concluída: Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad"
+    },
+    {
+      "data": "2026-11-03T18:12:39",
+      "texto": "Erro corrigido: G470: teclado parou e o touchpad não respondeu (fase 4)"
+    },
+    {
+      "data": "2026-11-03T18:08:12",
+      "texto": "Bloqueio: G470: teclado não responde na fase 4 e o touchpad não respondeu (correção em andamento: H19-fix)"
+    },
+    {
       "data": "2026-11-03T17:40:18",
       "texto": "Fase 4 entregue. Aguardando teste do Eli."
     },
@@ -844,6 +860,12 @@
   ],
   "erros": [
     {
+      "data": "2026-11-03T18:12:39",
+      "sintoma": "G470: teclado parou e o touchpad não respondeu (fase 4)",
+      "causa": "Inicialização do mouse podia gravar configuração errada no controlador e deixar um byte do touchpad travando a fila do teclado",
+      "correcao": "Módulo i8042 único, fila esvaziada também pelo relógio, configuração conferida, porta do mouse desligada se ele não responder"
+    },
+    {
       "data": "2026-11-03T16:41:24",
       "sintoma": "falha divisao não dividia",
       "causa": "GCC otimiza 1/x sem a instrução div",
@@ -876,174 +898,174 @@
   ],
   "capturas": [
     {
-      "arquivo": "docs/capturas/H16-tab-historico.png",
-      "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T17:40:03"
-    },
-    {
-      "arquivo": "docs/capturas/H16-falha-protecao.png",
-      "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T17:39:57"
-    },
-    {
-      "arquivo": "docs/capturas/H16-contador-e-ps.png",
-      "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T17:39:46"
-    },
-    {
-      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
-      "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T17:39:43"
-    },
-    {
-      "arquivo": "docs/capturas/H16-ajuda.png",
-      "nome": "H16-ajuda.png",
-      "data": "2026-11-03T17:39:26"
-    },
-    {
-      "arquivo": "docs/capturas/H08-sgfs-lista.png",
-      "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T17:39:20"
-    },
-    {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
       "nome": "H19-cursor-movido.png",
-      "data": "2026-11-03T17:38:33"
+      "data": "2026-11-03T18:26:22"
     },
     {
       "arquivo": "docs/capturas/H18-edicao-e-segundo-plano.png",
       "nome": "H18-edicao-e-segundo-plano.png",
-      "data": "2026-11-03T17:38:18"
+      "data": "2026-11-03T18:26:06"
     },
     {
       "arquivo": "docs/capturas/H18-fonte-acentos.png",
       "nome": "H18-fonte-acentos.png",
-      "data": "2026-11-03T17:38:13"
+      "data": "2026-11-03T18:26:00"
     },
     {
       "arquivo": "docs/capturas/H17-formas-ide.png",
       "nome": "H17-formas-ide.png",
-      "data": "2026-11-03T17:37:49"
+      "data": "2026-11-03T18:25:38"
+    },
+    {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T18:25:35"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T18:25:29"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T18:25:18"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T18:25:15"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T18:24:57"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
       "nome": "H15-pipes.png",
-      "data": "2026-11-03T17:37:03"
+      "data": "2026-11-03T18:24:51"
     },
     {
       "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
       "nome": "H14-arquivos-gravaveis.png",
-      "data": "2026-11-03T17:36:57"
+      "data": "2026-11-03T18:24:45"
     },
     {
       "arquivo": "docs/capturas/H13-ola-argumentos.png",
       "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T17:36:50"
+      "data": "2026-11-03T18:24:33"
     },
     {
       "arquivo": "docs/capturas/H12-anel3-protecao.png",
       "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T17:36:44"
+      "data": "2026-11-03T18:24:27"
     },
     {
       "arquivo": "docs/capturas/H11-tarefas-A-B.png",
       "nome": "H11-tarefas-A-B.png",
-      "data": "2026-11-03T17:36:38"
+      "data": "2026-11-03T18:24:20"
     },
     {
       "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
       "nome": "H10-tela-falta-de-pagina.png",
-      "data": "2026-11-03T17:36:30"
+      "data": "2026-11-03T18:24:13"
     },
     {
       "arquivo": "docs/capturas/H10-dois-espacos.png",
       "nome": "H10-dois-espacos.png",
-      "data": "2026-11-03T17:36:24"
+      "data": "2026-11-03T18:24:07"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T17:36:18"
+      "data": "2026-11-03T18:24:01"
     },
     {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T17:36:15"
+      "data": "2026-11-03T18:23:58"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T17:36:13"
+      "data": "2026-11-03T18:23:56"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T17:36:11"
+      "data": "2026-11-03T18:23:54"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T17:36:09"
+      "data": "2026-11-03T18:23:52"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T17:36:08"
+      "data": "2026-11-03T18:23:52"
+    },
+    {
+      "arquivo": "docs/capturas/H08-sgfs-lista.png",
+      "nome": "H08-sgfs-lista.png",
+      "data": "2026-11-03T18:23:46"
     },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
-      "data": "2026-11-03T17:35:56"
+      "data": "2026-11-03T18:23:39"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T17:35:46"
+      "data": "2026-11-03T18:23:30"
     },
     {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T17:35:31"
+      "data": "2026-11-03T18:23:10"
     },
     {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
       "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T17:35:25"
+      "data": "2026-11-03T18:23:04"
     },
     {
       "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
       "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T17:35:08"
+      "data": "2026-11-03T18:22:47"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-usb.png",
       "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T17:34:55"
+      "data": "2026-11-03T18:22:35"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-ide.png",
       "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T17:34:43"
+      "data": "2026-11-03T18:22:23"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-usb.png",
       "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T17:34:37"
+      "data": "2026-11-03T18:22:17"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-ide.png",
       "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T17:34:31"
+      "data": "2026-11-03T18:22:11"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
       "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T17:34:25"
+      "data": "2026-11-03T18:22:04"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-ide.png",
       "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T17:34:19"
+      "data": "2026-11-03T18:21:58"
     },
     {
       "arquivo": "docs/capturas/G470-fase3-contador-ps.png",
@@ -1063,12 +1085,12 @@
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 5399,
+    "kernel": 5539,
     "userland": 1591,
-    "ferramentas": 2028
+    "ferramentas": 2048
   },
   "imagem": {
-    "bytes_util": 239104,
+    "bytes_util": 240128,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },

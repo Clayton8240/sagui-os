@@ -94,6 +94,7 @@ def main():
         out = m.comando("processos")
         verificar("contador" in out, "processos (apelido de ps)")
         m.esperar_serial(f"[contador {pid}] 4 de 4 segundos", 30)
+        time.sleep(1)   # deixa o shell redesenhar o prompt (D018) antes de digitar
         out = m.comando("ola de novo")
         verificar(f"[{pid}] terminou" in out, "o shell avisa quando o contador termina")
         verificar('argv[1] = "de"' in out, "ola recebe os argumentos")

@@ -127,7 +127,7 @@ static void caractere(int c)
     guardar(c);
 }
 
-static void tratar_byte(uint8_t b)
+void teclado_byte(uint8_t b)
 {
     if (b == 0xFA || b == 0xFE || b == 0x00 || b == 0xFF)
         return;   /* respostas do teclado (ACK, reenviar, erro) */
@@ -200,28 +200,13 @@ static void tratar_byte(uint8_t b)
     caractere(v);
 }
 
-static quadro_t *ao_teclar(quadro_t *q)
-{
-    /* Lê tudo o que o controlador tiver, mas só bytes do teclado: o bit 5
-     * do estado indica byte do mouse, que é do driver do mouse (H19). */
-    for (int i = 0; i < 16; i++) {
-        uint8_t estado = porta_le8(PORTA_ESTADO);
-        if (!(estado & 1)) break;
-        if (estado & 0x20) break;   /* byte do mouse: fica para a IRQ 12 (não pode ser lido aqui) */
-        tratar_byte(porta_le8(PORTA_DADOS));
-    }
-    return q;
-}
-
 void teclado_iniciar(void)
 {
-    /* Descarta o que sobrou no controlador desde a BIOS. */
-    for (int i = 0; i < 64 && (porta_le8(PORTA_ESTADO) & 1); i++)
-        porta_le8(PORTA_DADOS);
+    /* A leitura do controlador (portas 0x60/0x64) é feita pelo i8042.c, que
+     * entrega cada byte do teclado a teclado_byte(). Ver D020. */
     ini = fim = 0;
     mods = 0;
     num_lock = false;
-    irq_registrar(1, ao_teclar);
     atualizar_leds();
 }
 

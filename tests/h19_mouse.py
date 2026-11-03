@@ -10,7 +10,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, cor_do_pixel  # noqa: E402
+from qemu import Maquina, verificar, cor_do_pixel, imagem_de_teste  # noqa: E402
 
 
 def cliques(serial, botao):
@@ -61,6 +61,21 @@ def main():
         # O teclado continua funcionando com o mouse ligado (mesmo controlador).
         out = m.comando("echo teclado ok")
         verificar("teclado ok" in out, "o teclado continua funcionando junto com o mouse")
+        verificar("[I8042] config lida" in m.serial(), "diagnóstico do controlador registrado na serial")
+
+    # H19-fix: no G470 a fila do controlador travou o teclado. Aqui a IRQ 12
+    # fica bloqueada, os bytes do mouse ficam parados na fila, e o teclado
+    # tem que continuar funcionando.
+    with Maquina("h19-sem-irq12", "ide", imagem=imagem_de_teste("sem_irq12", ["--vesa"])) as m:
+        m.esperar_serial("sagui:/$", 120)
+        for _ in range(20):
+            m.monitor("mouse_move 10 5")
+        time.sleep(1)
+        out = m.comando("echo teclado vivo", tempo=30)
+        verificar("teclado vivo" in out, "com a IRQ 12 bloqueada e bytes do mouse na fila, o teclado funciona")
+        m.monitor("mouse_button 1"); time.sleep(0.5); m.monitor("mouse_button 0"); time.sleep(0.5)
+        c = cliques(m.serial(), "esquerdo")
+        verificar(c and c[-1][0] > 512, f"o mouse continua andando, recolhido pelo relógio: {c[-1] if c else None}")
     return 0
 
 
