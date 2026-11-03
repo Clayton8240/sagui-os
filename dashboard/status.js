@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:45:16",
-  "situacao": "Trabalhando na H09: Terminal provisório do kernel",
+  "atualizado": "2026-11-03T15:45:24",
+  "situacao": "Aguardando teste do Eli: fase 2",
   "fase_atual": 2,
-  "historia_atual": "H09",
+  "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "",
+  "mensagem_fase": "Eli, terminei a fase 2: Kernel e terminal. Pode testar!\n\nO que foi feito: corrigi a saudação que sumia no G470 (o mapa de memória agora\nvai para o log). O kernel passou a tratar interrupções e erros da CPU (com uma\ntela vermelha que mostra o erro), conta o tempo, controla a memória página a\npágina, lê o teclado ABNT2 com ç e acentos, lê os arquivos do ramdisk e abre um\nterminal provisório com os comandos ajuda, ls, cd, cat, limpar, mem, data,\ntempo e reiniciar.\nHistórias concluídas: H04-fix e H05 a H09\nImagem: entrega/fase2/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase2.md\nO que você deve ver no G470: a saudação no topo; o prompt sagui:/$ respondendo\nao teclado do notebook (com ç e acentos); ls, cat e data funcionando.\nProblemas conhecidos: no modo texto, ã, õ e maiúsculas acentuadas aparecem sem\nacento (a fonte da placa de vídeo não tem essas letras; a fonte própria da fase\n4 resolve). O kernel usa só os primeiros 896 MB de RAM, de propósito (D008).\n\nQuando testar, me diga \"fase 2 ok\" ou descreva o que aconteceu.",
   "fases": [
     {
       "numero": 1,
@@ -18,7 +18,7 @@ window.SAGUI_STATUS = {
     {
       "numero": 2,
       "nome": "Kernel e terminal",
-      "estado": "em andamento",
+      "estado": "aguardando teste",
       "progresso": 100.0
     },
     {
@@ -111,7 +111,7 @@ window.SAGUI_STATUS = {
       "titulo": "Interrupções e relógio",
       "objetivo": "IDT, exceções da CPU com nome e registradores, remapeamento do PIC, PIT a 100 Hz, contador de tempo.",
       "aceite": "Divisão por zero mostra a tela de erro do SaguiOS; o contador de segundos avança.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T15:24:57",
       "fim": "2026-11-03T15:28:28",
@@ -124,7 +124,7 @@ window.SAGUI_STATUS = {
       "titulo": "Memória física",
       "objetivo": "Bitmap de páginas de 4 KB a partir do E820 e alocador kmalloc/kfree.",
       "aceite": "Teste aloca e libera blocos de vários tamanhos sem corromper; diagnóstico mostra memória total e livre.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T15:28:28",
       "fim": "2026-11-03T15:32:06",
@@ -137,7 +137,7 @@ window.SAGUI_STATUS = {
       "titulo": "Teclado PS/2 com ABNT2",
       "objetivo": "Driver no IRQ1, buffer, Shift, Caps Lock, Ctrl, teclas mortas e o mapa ABNT2.",
       "aceite": "Teclas enviadas pelo monitor do QEMU aparecem corretas, incluindo ç.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T15:32:06",
       "fim": "2026-11-03T15:37:48",
@@ -150,7 +150,7 @@ window.SAGUI_STATUS = {
       "titulo": "Sistema de arquivos SGFS",
       "objetivo": "tools/mksgfs.py e leitor no kernel: listar pasta, abrir e ler arquivo.",
       "aceite": "Teste interno lista as entradas do rootfs/ e lê o leia-me.txt inteiro.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T15:37:48",
       "fim": "2026-11-03T15:39:25",
@@ -163,7 +163,7 @@ window.SAGUI_STATUS = {
       "titulo": "Terminal provisório do kernel",
       "objetivo": "Prompt sagui:/$ com ajuda, ls, cd, cat, limpar, mem, data, reiniciar.",
       "aceite": "Roteiro digita cada comando no QEMU e confere pela captura e pela serial.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T15:39:25",
       "fim": "2026-11-03T15:41:51",
@@ -616,6 +616,10 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T15:45:24",
+      "texto": "Fase 2 entregue. Aguardando teste do Eli."
+    },
     {
       "data": "2026-11-03T15:45:16",
       "texto": "Todos os testes passaram (H01 a H09, 9/9), IDE e USB"
