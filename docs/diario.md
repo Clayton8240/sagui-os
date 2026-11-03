@@ -191,3 +191,7 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   leitor de cartão), mas o primeiro falhava no hub. Causa: os dois
   controladores compartilhavam o mesmo anel de transferências. Reproduzido no
   QEMU com dois EHCI (`h29_dois_controladores`) e corrigido.
+
+## 2026-11-03 22:57
+
+- **Confirmação do Eli no hardware:** "fase 6 ok". Fase 6 validada no VirtualBox e no G470.

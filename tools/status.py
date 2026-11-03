@@ -122,7 +122,10 @@ def gerar_md(estado):
         linhas.append(f"| {f['numero']} | {f['nome']} | {f['progresso']}% | {f['estado']} |")
     linhas += ["", "## Histórias", "", "| ID | Título | Estado | Minutos |", "| --- | --- | --- | --- |"]
     for h in estado["historias"]:
-        linhas.append(f"| {h['id']} | {h['titulo']} | {h['estado']} | {h.get('minutos') or ''} |")
+        estado_h = h['estado']
+        if estado_h == "cancelado":
+            estado_h = "Cancelado pelo Eli: " + h.get("resultado", "").replace("Cancelado pelo Eli: ", "")
+        linhas.append(f"| {h['id']} | {h['titulo']} | {estado_h} | {h.get('minutos') or ''} |")
     linhas += ["", "## Últimas ações", ""]
     for a in estado["acoes"][:15]:
         linhas.append(f"- {a['data']}: {a['texto']}")

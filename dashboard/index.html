@@ -46,6 +46,7 @@
   .s-andamento { background: color-mix(in srgb, var(--azul) 18%, transparent); color: var(--azul); }
   .s-aguardando { background: color-mix(in srgb, var(--amarelo) 30%, transparent); color: var(--texto); }
   .s-afazer { background: var(--trilho); color: var(--suave); }
+  .s-cancelado { background: var(--trilho); color: var(--suave); text-decoration: line-through; }
   .s-parcial { background: color-mix(in srgb, var(--laranja) 20%, transparent); color: var(--laranja); }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--linha); vertical-align: top; }
@@ -148,7 +149,7 @@
 const ESTADOS = {
   "feito": ["Feito", "s-feito"], "em andamento": ["Em andamento", "s-andamento"],
   "aguardando teste": ["Aguardando teste", "s-aguardando"], "a fazer": ["A fazer", "s-afazer"],
-  "parcial": ["Parcial", "s-parcial"]
+  "parcial": ["Parcial", "s-parcial"], "cancelado": ["Cancelado pelo Eli", "s-cancelado"]
 };
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));

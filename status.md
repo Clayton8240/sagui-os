@@ -1,14 +1,10 @@
-```
-Segunda correção da fase 6 (erro 19): um anel de transferências por controlador EHCI. Aguardando novo teste no G470.
-```
-
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T21:56:30_
+_Atualizado em 2026-11-03T22:57:35_
 
-- **Situação:** Aguardando teste do Eli: fase 6
-- **Fase atual:** 6
-- **História atual:** -
+- **Situação:** Trabalhando na B3: Bônus: bip
+- **Fase atual:** 7
+- **História atual:** B3
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
 - **Imagem:** 499712 bytes úteis (meta 1474560 bytes = 1,44 MB)
@@ -23,8 +19,8 @@ _Atualizado em 2026-11-03T21:56:30_
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
-| 6 | Pendrive de dados | 100.0% | aguardando teste |
-| 7 | Bônus | 0% | a fazer |
+| 6 | Pendrive de dados | 100.0% | feito |
+| 7 | Bônus (B3 bip, B4 Sagui 3D) | 0% | em andamento |
 
 ## Histórias
 
@@ -58,18 +54,22 @@ _Atualizado em 2026-11-03T21:56:30_
 | H26 | Calculadora | feito | 2 |
 | H27 | Sagui Pega Banana | feito | 2 |
 | H28 | Acabamento | feito | 2 |
-| H29 | PCI e controlador EHCI | aguardando teste | 1 |
-| H30 | Enumeração USB, hubs e conexão a quente | aguardando teste | 1 |
-| H31 | Armazenamento em massa | aguardando teste | 1 |
-| H32 | FAT32: leitura | aguardando teste | 2 |
-| H33 | FAT32: gravação | aguardando teste | 2 |
-| H34 | Integração do pendrive | aguardando teste | 5 |
-| B1 | Bônus: enxergar o HD interno | a fazer |  |
-| B2 | Bônus: boot por UEFI | a fazer |  |
-| B3 | Bônus: bip | a fazer |  |
+| H29 | PCI e controlador EHCI | feito | 1 |
+| H30 | Enumeração USB, hubs e conexão a quente | feito | 1 |
+| H31 | Armazenamento em massa | feito | 1 |
+| H32 | FAT32: leitura | feito | 2 |
+| H33 | FAT32: gravação | feito | 2 |
+| H34 | Integração do pendrive | feito | 5 |
+| B1 | Bônus: enxergar o HD interno | Cancelado pelo Eli: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada ao projeto. |  |
+| B2 | Bônus: boot por UEFI | Cancelado pelo Eli: o objetivo do SaguiOS é rodar em computadores antigos, com BIOS tradicional. |  |
+| B3 | Bônus: bip | em andamento |  |
+| B4 | Bônus: Sagui 3D | a fazer |  |
 
 ## Últimas ações
 
+- 2026-11-03T22:57:35: Início da B3: Bônus: bip
+- 2026-11-03T22:57:35: Fase 6 aprovada pelo Eli. Fase bônus replanejada: B1 e B2 cancelados pelo Eli, B3 mantido, B4 (Sagui 3D) novo.
+- 2026-11-03T22:57:09: Eli confirmou: fase 6 ok
 - 2026-11-03T21:56:30: Fase 6 entregue. Aguardando teste do Eli.
 - 2026-11-03T21:55:57: Erro corrigido: G470: com dois pendrives, o de dados não aparece; usb mostra hub do EHCI 0 parado na configuração
 - 2026-11-03T21:36:41: Fase 6 entregue. Aguardando teste do Eli.
@@ -82,6 +82,3 @@ _Atualizado em 2026-11-03T21:56:30_
 - 2026-11-03T20:25:27: Erro corrigido: Acentos trocados em textos UTF-8 do pendrive
 - 2026-11-03T20:20:50: Início da H34: Integração do pendrive
 - 2026-11-03T20:20:50: H33 concluída: Gravação FAT32 conferida com mtools e fsck.vfat
-- 2026-11-03T20:18:39: Início da H33: FAT32: gravação
-- 2026-11-03T20:18:39: H32 concluída: FAT32 com nomes longos e acentos montado em /usb; ls e cat funcionando
-- 2026-11-03T20:16:48: Início da H32: FAT32: leitura

@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T21:56:30",
-  "situacao": "Aguardando teste do Eli: fase 6",
-  "fase_atual": 6,
-  "historia_atual": null,
+  "atualizado": "2026-11-03T22:57:35",
+  "situacao": "Trabalhando na B3: Bônus: bip",
+  "fase_atual": 7,
+  "historia_atual": "B3",
   "bloqueio": "",
-  "mensagem_fase": "Segunda correção da fase 6 (erro 19): um anel de transferências por controlador EHCI. Aguardando novo teste no G470.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
@@ -46,13 +46,14 @@ window.SAGUI_STATUS = {
     {
       "numero": 6,
       "nome": "Pendrive de dados",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-03T22:57:09"
     },
     {
       "numero": 7,
-      "nome": "Bônus",
-      "estado": "a fazer",
+      "nome": "Bônus (B3 bip, B4 Sagui 3D)",
+      "estado": "em andamento",
       "progresso": 0
     }
   ],
@@ -427,7 +428,7 @@ window.SAGUI_STATUS = {
       "titulo": "PCI e controlador EHCI",
       "objetivo": "Varredura PCI, passagem de controle da BIOS, reset do EHCI, portas.",
       "aceite": "Diagnóstico lista controladores EHCI e portas com dispositivo no QEMU.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:16:48",
       "fim": "2026-11-03T20:16:48",
@@ -440,7 +441,7 @@ window.SAGUI_STATUS = {
       "titulo": "Enumeração USB, hubs e conexão a quente",
       "objetivo": "Transferências de controle, descritores, endereços, hubs, conexão e remoção.",
       "aceite": "Com hub virtual, lista fabricante, produto e classe; eventos de conexão e remoção na serial.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:16:48",
       "fim": "2026-11-03T20:16:48",
@@ -453,7 +454,7 @@ window.SAGUI_STATUS = {
       "titulo": "Armazenamento em massa",
       "objetivo": "Bulk-Only Transport e SCSI: identificar, capacidade, ler e gravar.",
       "aceite": "Lê e grava setores numa imagem de teste e confere byte a byte na VPS.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:16:48",
       "fim": "2026-11-03T20:16:48",
@@ -466,7 +467,7 @@ window.SAGUI_STATUS = {
       "titulo": "FAT32: leitura",
       "objetivo": "Partições MBR, FAT32 com nomes curtos e longos, montagem em /usb.",
       "aceite": "Pendrive de teste com pastas, acentos e nomes longos é lido por ls e cat.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:16:48",
       "fim": "2026-11-03T20:18:39",
@@ -479,7 +480,7 @@ window.SAGUI_STATUS = {
       "titulo": "FAT32: gravação",
       "objetivo": "Criar, sobrescrever, aumentar, apagar; pastas; duas FATs; FSInfo; desmontar grava tudo.",
       "aceite": "Após desmontar, mtools e fsck.vfat confirmam integridade e conteúdo.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:18:39",
       "fim": "2026-11-03T20:20:50",
@@ -492,7 +493,7 @@ window.SAGUI_STATUS = {
       "titulo": "Integração do pendrive",
       "objetivo": "Notificação, ícone Pendrive, montar e remover com segurança, fluxo pelo terminal.",
       "aceite": "Roteiro completo pela interface e pelo terminal; VPS confere com mtools; capturas.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:20:50",
       "fim": "2026-11-03T20:25:28",
@@ -505,12 +506,12 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: enxergar o HD interno",
       "objetivo": "Driver SATA somente leitura para listar o HD e partições.",
       "aceite": "discos mostra o HD e partições sem montar nem gravar.",
-      "estado": "a fazer",
+      "estado": "cancelado",
       "bonus": true,
       "inicio": null,
       "fim": null,
       "minutos": null,
-      "resultado": ""
+      "resultado": "Cancelado pelo Eli: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada ao projeto."
     },
     {
       "id": "B2",
@@ -518,12 +519,12 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: boot por UEFI",
       "objetivo": "Carregador UEFI com GOP.",
       "aceite": "Boot em máquina UEFI.",
-      "estado": "a fazer",
+      "estado": "cancelado",
       "bonus": true,
       "inicio": null,
       "fim": null,
       "minutos": null,
-      "resultado": ""
+      "resultado": "Cancelado pelo Eli: o objetivo do SaguiOS é rodar em computadores antigos, com BIOS tradicional."
     },
     {
       "id": "B3",
@@ -531,6 +532,19 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: bip",
       "objetivo": "Alto-falante do PC pelo canal 2 do PIT.",
       "aceite": "Bip no jogo e comando bip.",
+      "estado": "em andamento",
+      "bonus": true,
+      "inicio": "2026-11-03T22:57:35",
+      "fim": null,
+      "minutos": null,
+      "resultado": ""
+    },
+    {
+      "id": "B4",
+      "fase": 7,
+      "titulo": "Bônus: Sagui 3D",
+      "objetivo": "Jogo autoral em primeira pessoa, visual 2,5D (salas com alturas próprias de chão e teto, paredes em qualquer ângulo), macacos-prego guardas, estilingue de jabuticaba, bananas, cascas, porteira da banana e cacho dourado, sons com o bip.",
+      "aceite": "O jogo abre, o mapa carrega, o sagui anda, a semente atinge o inimigo, o macaco escorrega na casca, a saída só abre com o mínimo de bananas, a fase termina na saída; capturas; três fases em arquivos de texto.",
       "estado": "a fazer",
       "bonus": true,
       "inicio": null,
@@ -620,6 +634,18 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T22:57:35",
+      "texto": "Início da B3: Bônus: bip"
+    },
+    {
+      "data": "2026-11-03T22:57:35",
+      "texto": "Fase 6 aprovada pelo Eli. Fase bônus replanejada: B1 e B2 cancelados pelo Eli, B3 mantido, B4 (Sagui 3D) novo."
+    },
+    {
+      "data": "2026-11-03T22:57:09",
+      "texto": "Eli confirmou: fase 6 ok"
+    },
     {
       "data": "2026-11-03T21:56:30",
       "texto": "Fase 6 entregue. Aguardando teste do Eli."
@@ -847,18 +873,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T17:24:26",
       "texto": "H17 concluída: Framebuffer VESA 1024x768x32 com buffer duplo e primitivas de desenho"
-    },
-    {
-      "data": "2026-11-03T17:22:03",
-      "texto": "Início da H17: Framebuffer VESA"
-    },
-    {
-      "data": "2026-11-03T17:21:51",
-      "texto": "Eli confirmou: fase 3 ok"
-    },
-    {
-      "data": "2026-11-03T16:45:51",
-      "texto": "Fase 3 entregue. Aguardando teste do Eli."
     }
   ],
   "erros": [
@@ -1316,7 +1330,7 @@ window.SAGUI_STATUS = {
     "boot": 903,
     "kernel": 9365,
     "userland": 3838,
-    "ferramentas": 3247
+    "ferramentas": 3250
   },
   "imagem": {
     "bytes_util": 499712,
