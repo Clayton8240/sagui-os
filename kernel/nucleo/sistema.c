@@ -28,6 +28,7 @@ static const chamada_t tabela[SIS_MAX] = {
     [SIS_MUDAR_PASTA] = sis_mudar_pasta, [SIS_PASTA_ATUAL] = sis_pasta_atual,
     [SIS_RENOMEAR] = sis_renomear,
     [SIS_PIPE] = sis_pipe,               [SIS_DUPLICAR] = sis_duplicar,
+    [SIS_DISPONIVEL] = sis_disponivel,
     [SIS_DORMIR] = sis_dormir,           [SIS_TEMPO] = sis_tempo,
     [SIS_DATA] = sis_data,               [SIS_INFO_SISTEMA] = sis_info_sistema,
     [SIS_AUMENTAR_MEM] = sis_aumentar_memoria, [SIS_REINICIAR] = sis_reiniciar,

@@ -79,6 +79,7 @@ void textovga_char(char c)
         estado_esc = 0;
         if (c == 'D' && col > 0) col--;
         else if (c == 'C' && col < COLUNAS - 1) col++;
+        else if (c == 'J') { textovga_limpar(); return; }
         else if (c == 'K')
             for (int i = col; i < COLUNAS; i++) tela[lin * COLUNAS + i] = (uint16_t)(atributo << 8) | ' ';
         mover_cursor();

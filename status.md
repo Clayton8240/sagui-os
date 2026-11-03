@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T18:56:46_
+_Atualizado em 2026-11-03T19:00:05_
 
-- **Situação:** Trabalhando na H24: Terminal em janela
+- **Situação:** Trabalhando na H25: Editor de texto
 - **Fase atual:** 5
-- **História atual:** H24
-- **Progresso geral:** 64.7%
+- **História atual:** H25
+- **Progresso geral:** 67.6%
 - **Bloqueio:** nenhum
-- **Imagem:** 301568 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6706, userland 2362
+- **Imagem:** 318464 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6724, userland 2547
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T18:56:46_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 33.3% | em andamento |
+| 5 | Janelas e programas | 44.4% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -49,8 +49,8 @@ _Atualizado em 2026-11-03T18:56:46_
 | H21 | Gerenciador de janelas | feito | 7 |
 | H22 | Kit gráfico da libsagui | feito | 3 |
 | H23 | Arquivos | a fazer |  |
-| H24 | Terminal em janela | em andamento |  |
-| H25 | Editor de texto | a fazer |  |
+| H24 | Terminal em janela | feito | 3 |
+| H25 | Editor de texto | em andamento |  |
 | H26 | Calculadora | a fazer |  |
 | H27 | Sagui Pega Banana | a fazer |  |
 | H28 | Acabamento | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T18:56:46_
 
 ## Últimas ações
 
+- 2026-11-03T19:00:05: Início da H25: Editor de texto
+- 2026-11-03T19:00:05: H24 concluída: Terminal em janela rodando o sagsh por pipes; comandos que abrem os programas gráficos
 - 2026-11-03T18:56:46: Início da H24: Terminal em janela
 - 2026-11-03T18:56:46: H22 concluída: Kit gráfico na libsagui: botão, caixa, área de texto com rolagem, lista, diálogos
 - 2026-11-03T18:53:31: Início da H22: Kit gráfico da libsagui
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T18:56:46_
 - 2026-11-03T18:27:00: Fase 4 entregue. Aguardando teste do Eli.
 - 2026-11-03T18:27:00: H19 concluída: Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad
 - 2026-11-03T18:12:39: Erro corrigido: G470: teclado parou e o touchpad não respondeu (fase 4)
-- 2026-11-03T18:08:12: Bloqueio: G470: teclado não responde na fase 4 e o touchpad não respondeu (correção em andamento: H19-fix)
-- 2026-11-03T17:40:18: Fase 4 entregue. Aguardando teste do Eli.

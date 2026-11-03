@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T18:56:46",
-  "situacao": "Trabalhando na H24: Terminal em janela",
+  "atualizado": "2026-11-03T19:00:05",
+  "situacao": "Trabalhando na H25: Editor de texto",
   "fase_atual": 5,
-  "historia_atual": "H24",
+  "historia_atual": "H25",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 33.3
+      "progresso": 44.4
     },
     {
       "numero": 6,
@@ -361,12 +361,12 @@ window.SAGUI_STATUS = {
       "titulo": "Terminal em janela",
       "objetivo": "Janela que roda o sagsh ligado por pipes; comandos que abrem os programas gráficos.",
       "aceite": "Captura do terminal em janela rodando ps e ls bin | conta.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:56:46",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:00:05",
+      "minutos": 3,
+      "resultado": "Terminal em janela rodando o sagsh por pipes; comandos que abrem os programas gráficos"
     },
     {
       "id": "H25",
@@ -374,9 +374,9 @@ window.SAGUI_STATUS = {
       "titulo": "Editor de texto",
       "objetivo": "Novo, abrir, salvar, salvar como, acentos, setas, Ctrl+S, asterisco, aviso ao fechar.",
       "aceite": "Cria tmp/nota.txt com `Olá, SaguiOS! Ação e coração.`, reabre pelo Arquivos e confere.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T19:00:05",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -620,6 +620,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T19:00:05",
+      "texto": "Início da H25: Editor de texto"
+    },
+    {
+      "data": "2026-11-03T19:00:05",
+      "texto": "H24 concluída: Terminal em janela rodando o sagsh por pipes; comandos que abrem os programas gráficos"
+    },
+    {
       "data": "2026-11-03T18:56:46",
       "texto": "Início da H24: Terminal em janela"
     },
@@ -850,14 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:24:42",
       "texto": "H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte"
-    },
-    {
-      "data": "2026-11-03T15:23:28",
-      "texto": "Início da H04-fix: saudação some no G470 por causa do mapa E820 grande"
-    },
-    {
-      "data": "2026-11-03T15:22:25",
-      "texto": "Eli confirmou: fase 1 ok"
     }
   ],
   "erros": [
@@ -912,6 +912,36 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H24-terminal-ps-conta.png",
+      "nome": "H24-terminal-ps-conta.png",
+      "data": "2026-11-03T18:59:57"
+    },
+    {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T18:59:53"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T18:59:47"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T18:59:35"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T18:59:32"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T18:59:15"
+    },
+    {
       "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
       "nome": "H22-dialogo-confirmar.png",
       "data": "2026-11-03T18:56:23"
@@ -945,31 +975,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H17-formas-ide.png",
       "nome": "H17-formas-ide.png",
       "data": "2026-11-03T18:52:14"
-    },
-    {
-      "arquivo": "docs/capturas/H16-tab-historico.png",
-      "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T18:52:11"
-    },
-    {
-      "arquivo": "docs/capturas/H16-falha-protecao.png",
-      "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T18:52:05"
-    },
-    {
-      "arquivo": "docs/capturas/H16-contador-e-ps.png",
-      "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T18:51:52"
-    },
-    {
-      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
-      "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T18:51:49"
-    },
-    {
-      "arquivo": "docs/capturas/H16-ajuda.png",
-      "nome": "H16-ajuda.png",
-      "data": "2026-11-03T18:51:32"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
@@ -1139,14 +1144,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 6706,
-    "userland": 2362,
-    "ferramentas": 2275
+    "kernel": 6724,
+    "userland": 2547,
+    "ferramentas": 2322
   },
   "imagem": {
-    "bytes_util": 301568,
+    "bytes_util": 318464,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 64.7
+  "progresso_geral": 67.6
 };

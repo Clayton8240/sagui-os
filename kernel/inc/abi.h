@@ -31,6 +31,7 @@
 /* Comunicação */
 #define SIS_PIPE           30   /* (int fds[2]) */
 #define SIS_DUPLICAR       31   /* (fd_antigo, fd_novo) -> fd_novo */
+#define SIS_DISPONIVEL     32   /* (fd) -> bytes num pipe sem bloquear; ERRO_PIPE_QUEBRADO = acabou */
 /* Diversas */
 #define SIS_DORMIR         40   /* (ms) */
 #define SIS_TEMPO          41   /* () -> milissegundos desde o boot */
@@ -141,7 +142,7 @@ typedef struct {
 #define TECLA_B_REDESENHAR 'R'   /* não é tecla: outro processo escreveu na tela */
 
 /* Sequências que o terminal entende na saída: ESC [ D (cursor à esquerda),
- * ESC [ C (à direita), ESC [ K (apaga até o fim da linha). */
+ * ESC [ C (à direita), ESC [ K (apaga até o fim da linha), ESC [ J (limpa a tela). */
 
 /* Eventos de janela */
 #define EV_CLIQUE    1   /* botão apertado; "cliques" = 2 no duplo clique */

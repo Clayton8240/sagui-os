@@ -118,6 +118,7 @@ void termgraf_char(char ch)
         estado_esc = 0;
         if (c == 'D' && col > 0) col--;
         else if (c == 'C' && col < colunas - 1) col++;
+        else if (c == 'J') { termgraf_limpar(); return; }
         else if (c == 'K')
             for (int i = col; i < colunas; i++) {
                 grade[lin * colunas + i].c = ' ';

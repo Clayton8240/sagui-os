@@ -29,6 +29,7 @@ int  pasta_atual(char *b, unsigned n) { return chamar(SIS_PASTA_ATUAL, (unsigned
 int  renomear(const char *o, const char *d) { return chamar(SIS_RENOMEAR, (unsigned)o, (unsigned)d, 0); }
 int  criar_pipe(int fds[2])           { return chamar(SIS_PIPE, (unsigned)fds, 0, 0); }
 int  duplicar(int a, int n)           { return chamar(SIS_DUPLICAR, (unsigned)a, (unsigned)n, 0); }
+int  disponivel(int fd)               { return chamar(SIS_DISPONIVEL, (unsigned)fd, 0, 0); }
 int  dormir(unsigned ms)              { return chamar(SIS_DORMIR, ms, 0, 0); }
 unsigned tempo_ms(void)               { return (unsigned)chamar(SIS_TEMPO, 0, 0, 0); }
 int  ler_data(data_t *d)              { return chamar(SIS_DATA, (unsigned)d, 0, 0); }

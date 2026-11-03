@@ -24,35 +24,40 @@
 typedef struct {
     const char *nome, *apelido;
     bool        interno;
+    bool        grafico;   /* abre uma janela: roda em segundo plano, sem prender o shell */
     const char *curta;     /* até 17 caracteres, para a lista do "ajuda" */
     const char *uso;
     const char *explicacao;
 } comando_t;
 
 static const comando_t comandos[] = {
-    { "ls", "listar", false, "lista arquivos", "ls [pasta]", "Mostra os arquivos e pastas (pastas terminam com /)." },
-    { "cd", "entrar", true, "entra numa pasta", "cd <pasta>", "Muda a pasta atual. \"cd ..\" volta uma; \"cd\" sozinho vai para a raiz." },
-    { "pwd", "onde", true, "mostra a pasta", "pwd", "Mostra em que pasta você está." },
-    { "cat", "ver", false, "mostra um arquivo", "cat <arquivo...>", "Mostra o conteúdo dos arquivos. Sem arquivo, mostra o que chegar pela entrada." },
-    { "echo", "eco", false, "escreve um texto", "echo <texto>", "Escreve o texto. Com \"> arquivo\" grava num arquivo." },
-    { "cp", "copiar", false, "copia arquivo", "cp <origem> <destino>", "Copia um arquivo. Se o destino for uma pasta, copia para dentro dela." },
-    { "mv", "mover", false, "move ou renomeia", "mv <origem> <destino>", "Move ou renomeia um arquivo ou pasta." },
-    { "rm", "apagar", false, "apaga arquivo", "rm <arquivo...>", "Apaga arquivos (pastas: use rmdir)." },
-    { "mkdir", "criar-pasta", false, "cria pasta", "mkdir <pasta>", "Cria uma pasta nova." },
-    { "rmdir", "remover-pasta", false, "apaga pasta vazia", "rmdir <pasta>", "Remove uma pasta, se estiver vazia." },
-    { "wc", "conta", false, "conta linhas", "wc [arquivo]", "Conta linhas, palavras e letras de um arquivo ou da entrada (ex.: ls bin | conta)." },
-    { "ps", "processos", false, "lista processos", "ps", "Mostra os processos em execução: PID, pai, estado, memória e tempo de CPU." },
-    { "kill", "matar", false, "encerra processo", "kill <pid>", "Encerra um processo pelo número (veja os números com ps)." },
-    { "clear", "limpar", true, "limpa a tela", "clear", "Limpa a tela." },
-    { "ajuda", NULL, true, "esta ajuda", "ajuda [comando]", "Lista os comandos, ou explica um comando." },
-    { "mem", NULL, false, "memória", "mem", "Mostra a memória total, usada e livre." },
-    { "data", NULL, false, "data e hora", "data", "Mostra a data e a hora do relógio da placa-mãe." },
-    { "sobre", NULL, false, "sobre o SaguiOS", "sobre", "Versão e créditos do SaguiOS." },
-    { "ola", NULL, false, "mostra argumentos", "ola [argumentos]", "Imprime os argumentos recebidos (teste do carregador de programas)." },
-    { "contador", NULL, false, "conta segundos", "contador [segundos]", "Conta segundos (padrão: 10). Rode com & para ver a multitarefa." },
-    { "falha", NULL, false, "provoca um erro", "falha [memoria|kernel|divisao|instrucao]", "Faz um erro de propósito: só este programa é encerrado, o sistema continua." },
-    { "reiniciar", NULL, true, "reinicia o PC", "reiniciar", "Reinicia o computador." },
-    { "sair", NULL, true, "fecha o shell", "sair", "Fecha o shell (o sistema abre outro)." },
+    { "ls", "listar", false, false, "lista arquivos", "ls [pasta]", "Mostra os arquivos e pastas (pastas terminam com /)." },
+    { "cd", "entrar", true, false, "entra numa pasta", "cd <pasta>", "Muda a pasta atual. \"cd ..\" volta uma; \"cd\" sozinho vai para a raiz." },
+    { "pwd", "onde", true, false, "mostra a pasta", "pwd", "Mostra em que pasta você está." },
+    { "cat", "ver", false, false, "mostra um arquivo", "cat <arquivo...>", "Mostra o conteúdo dos arquivos. Sem arquivo, mostra o que chegar pela entrada." },
+    { "echo", "eco", false, false, "escreve um texto", "echo <texto>", "Escreve o texto. Com \"> arquivo\" grava num arquivo." },
+    { "cp", "copiar", false, false, "copia arquivo", "cp <origem> <destino>", "Copia um arquivo. Se o destino for uma pasta, copia para dentro dela." },
+    { "mv", "mover", false, false, "move ou renomeia", "mv <origem> <destino>", "Move ou renomeia um arquivo ou pasta." },
+    { "rm", "apagar", false, false, "apaga arquivo", "rm <arquivo...>", "Apaga arquivos (pastas: use rmdir)." },
+    { "mkdir", "criar-pasta", false, false, "cria pasta", "mkdir <pasta>", "Cria uma pasta nova." },
+    { "rmdir", "remover-pasta", false, false, "apaga pasta vazia", "rmdir <pasta>", "Remove uma pasta, se estiver vazia." },
+    { "wc", "conta", false, false, "conta linhas", "wc [arquivo]", "Conta linhas, palavras e letras de um arquivo ou da entrada (ex.: ls bin | conta)." },
+    { "ps", "processos", false, false, "lista processos", "ps", "Mostra os processos em execução: PID, pai, estado, memória e tempo de CPU." },
+    { "kill", "matar", false, false, "encerra processo", "kill <pid>", "Encerra um processo pelo número (veja os números com ps)." },
+    { "clear", "limpar", true, false, "limpa a tela", "clear", "Limpa a tela." },
+    { "ajuda", NULL, true, false, "esta ajuda", "ajuda [comando]", "Lista os comandos, ou explica um comando." },
+    { "mem", NULL, false, false, "memória", "mem", "Mostra a memória total, usada e livre." },
+    { "data", NULL, false, false, "data e hora", "data", "Mostra a data e a hora do relógio da placa-mãe." },
+    { "sobre", NULL, false, false, "sobre o SaguiOS", "sobre", "Versão e créditos do SaguiOS." },
+    { "ola", NULL, false, false, "mostra argumentos", "ola [argumentos]", "Imprime os argumentos recebidos (teste do carregador de programas)." },
+    { "contador", NULL, false, false, "conta segundos", "contador [segundos]", "Conta segundos (padrão: 10). Rode com & para ver a multitarefa." },
+    { "falha", NULL, false, false, "provoca um erro", "falha [memoria|kernel|divisao|instrucao]", "Faz um erro de propósito: só este programa é encerrado, o sistema continua." },
+    { "reiniciar", NULL, true, false, "reinicia o PC", "reiniciar", "Reinicia o computador." },
+    { "sair", NULL, true, false, "fecha o shell", "sair", "Fecha o shell." },
+    { "arquivos", NULL, false, true, "abre o Arquivos", "arquivos [pasta]", "Abre o Arquivos numa janela." },
+    { "editor", NULL, false, true, "editor de texto", "editor [arquivo]", "Abre o Editor de texto numa janela." },
+    { "calculadora", NULL, false, true, "calculadora", "calculadora", "Abre a Calculadora numa janela." },
+    { "banana", NULL, false, true, "jogo do sagui", "banana", "Abre o jogo Sagui Pega Banana." },
 };
 #define QTD_COMANDOS (int)(sizeof comandos / sizeof comandos[0])
 
@@ -245,7 +250,7 @@ static int ler_comando(char *linha)
             linha[0] = 0;
             prompt();
         } else if (t == 12) {                             /* Ctrl+L: limpa a tela */
-            limpar_tela();
+            mostrar("\x1b[J");
             prompt();
             reescrever_de(linha, n, 0, cur);
         } else if (t == (0x100 | TECLA_B_CIMA)) {
@@ -365,7 +370,7 @@ static bool executar_interno(const comando_t *c, int argc, char **argv)
         pasta_atual(p, sizeof p);
         imprimir("%s\n", p);
     } else if (compara_texto(n, "clear") == 0) {
-        limpar_tela();
+        mostrar("\x1b[J");   /* funciona no terminal de tela cheia e no Terminal em janela */
     } else if (compara_texto(n, "ajuda") == 0) {
         interno_ajuda(argc, argv);
     } else if (compara_texto(n, "reiniciar") == 0) {
@@ -457,7 +462,12 @@ static void rodar(etapa_t *et, int qtd, bool fundo)
     (void)ok;
     for (int i = 0; i < qtd; i++) {
         if (pids[i] <= 0) continue;
-        if (fundo) { imprimir("[%d] %s em segundo plano\n", pids[i], et[i].argv[0]); continue; }
+        if (fundo) {
+            const comando_t *cg = achar_comando(et[i].argv[0]);
+            if (cg && cg->grafico) imprimir("Abrindo %s (processo %d)...\n", et[i].argv[0], pids[i]);
+            else imprimir("[%d] %s em segundo plano\n", pids[i], et[i].argv[0]);
+            continue;
+        }
         int codigo;
         esperar(pids[i], &codigo);
     }
@@ -502,6 +512,7 @@ static bool executar_linha(char *linha)
         const comando_t *ci = achar_comando(et[i].argv[0]);
         if (ci && ci->interno) { mostrar("sagsh: comandos internos não funcionam num pipe\n"); return true; }
     }
+    if (qtd == 1 && c && c->grafico) fundo = true;   /* programa gráfico não prende o shell */
     rodar(et, qtd, fundo);
     return true;
 }

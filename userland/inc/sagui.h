@@ -56,6 +56,7 @@ int  renomear(const char *origem, const char *destino);
 /* ---- comunicação ---- */
 int  criar_pipe(int fds[2]);
 int  duplicar(int antigo, int novo);
+int  disponivel(int fd);   /* bytes para ler num pipe sem bloquear; ERRO_PIPE_QUEBRADO = acabou */
 /* ---- diversas ---- */
 int      dormir(unsigned ms);
 unsigned tempo_ms(void);

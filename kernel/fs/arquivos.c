@@ -321,6 +321,19 @@ int32_t sis_duplicar(uint32_t antigo, uint32_t novo, uint32_t c, uint32_t d, uin
     return (int32_t)novo;
 }
 
+/* disponivel(fd): quanto dá para ler de um pipe sem bloquear. O Terminal em
+ * janela usa isto para olhar a saída do shell e os eventos da janela no
+ * mesmo laço, sem ficar preso em nenhum dos dois. */
+int32_t sis_disponivel(uint32_t fd, uint32_t b, uint32_t c, uint32_t d, uint32_t e)
+{
+    (void)b; (void)c; (void)d; (void)e;
+    arquivo_t *a = pegar(fd);
+    if (!a) return ERRO_DESCRITOR;
+    if (a->tipo != A_PIPE_LER) return ERRO_INVALIDO;
+    if (a->pipe->qtd) return (int32_t)a->pipe->qtd;
+    return a->pipe->escritores ? 0 : ERRO_PIPE_QUEBRADO;
+}
+
 int32_t sis_modo_terminal(uint32_t modo, uint32_t b, uint32_t c, uint32_t d, uint32_t e)
 {
     (void)b; (void)c; (void)d; (void)e;

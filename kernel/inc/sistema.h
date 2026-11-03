@@ -45,6 +45,7 @@ int32_t sis_pasta_atual(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_renomear(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_pipe(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_duplicar(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_disponivel(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_modo_terminal(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_limpar_tela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_criar_janela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
