@@ -17,6 +17,7 @@
 #include "paginacao.h"
 #include "processo.h"
 #include "abi.h"
+#include "vfs.h"
 #include "memoria.h"
 
 static int falhas;
@@ -335,6 +336,7 @@ static processo_t *rodar_no_anel3(const char *nome, const uint8_t *ini, const ui
     espaco_alocar(p->espaco, USUARIO_FIM - PAGINA, PAGINA, PG_USUARIO | PG_ESCRITA);
     /* O kernel enxerga a página física pelo mapeamento 1:1 (D008). */
     memcpy((void *)espaco_traduzir(p->espaco, USUARIO_INICIO, NULL), ini, (uint32_t)(fim - ini));
+    arquivos_herdar(p, NULL);   /* terminal como entrada 0 e saídas 1 e 2 */
     processo_preparar_usuario(p, USUARIO_INICIO, USUARIO_FIM);
     return p;
 }

@@ -1,6 +1,6 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:25:17_
+_Atualizado em 2026-11-03T16:25:45_
 
 - **Situação:** Trabalhando na H15: Pipes
 - **Fase atual:** 3
@@ -8,7 +8,7 @@ _Atualizado em 2026-11-03T16:25:17_
 - **Progresso geral:** 41.2%
 - **Bloqueio:** nenhum
 - **Imagem:** 79872 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 4930, userland 658
+- **Linhas de código:** boot 899, kernel 4932, userland 658
 
 ## Fases
 
@@ -66,6 +66,7 @@ _Atualizado em 2026-11-03T16:25:17_
 
 ## Últimas ações
 
+- 2026-11-03T16:25:45: Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12
 - 2026-11-03T16:25:17: Início da H15: Pipes
 - 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3
 - 2026-11-03T16:21:08: Início da H14: Arquivos e pastas graváveis
@@ -80,4 +81,3 @@ _Atualizado em 2026-11-03T16:25:17_
 - 2026-11-03T16:05:16: Eli confirmou: fase 2 ok
 - 2026-11-03T15:45:24: Fase 2 entregue. Aguardando teste do Eli.
 - 2026-11-03T15:45:16: Todos os testes passaram (H01 a H09, 9/9), IDE e USB
-- 2026-11-03T15:41:51: H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar

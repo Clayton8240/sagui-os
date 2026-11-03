@@ -1,6 +1,6 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:25:17",
+  "atualizado": "2026-11-03T16:25:45",
   "situacao": "Trabalhando na H15: Pipes",
   "fase_atual": 3,
   "historia_atual": "H15",
@@ -617,6 +617,10 @@
   ],
   "acoes": [
     {
+      "data": "2026-11-03T16:25:45",
+      "texto": "Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12"
+    },
+    {
       "data": "2026-11-03T16:25:17",
       "texto": "Início da H15: Pipes"
     },
@@ -779,6 +783,12 @@
   ],
   "erros": [
     {
+      "data": "2026-11-03T16:25:45",
+      "sintoma": "Regressão: 'Ola do ring 3!' sumiu no teste da H12",
+      "causa": "Programas criados sem o carregador ficaram sem descritores após a H14",
+      "correcao": "Autoteste dá o terminal como 0, 1 e 2"
+    },
+    {
       "data": "2026-11-03T15:41:51",
       "sintoma": "cd ../arte chegava como cd ..;arte",
       "causa": "Harness digitava / pela tecla americana (no ABNT2 é ;)",
@@ -931,7 +941,7 @@
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 4930,
+    "kernel": 4932,
     "userland": 658,
     "ferramentas": 1470
   },
