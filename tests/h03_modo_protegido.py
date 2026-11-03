@@ -49,7 +49,7 @@ def main():
                 m.esperar_serial("[SAGUI] boot ok", 120)
                 tela = m.tela_texto()
                 texto = "\n".join(tela)
-                verificar("Ola! Eu sou o SaguiOS." in texto, f"[{modo} {mem_mb}M] saudação na tela VGA")
+                verificar("Ola! Eu sou o SaguiOS." in tela[1], f"[{modo} {mem_mb}M] saudação na tela VGA, no topo (erro 1)")
                 achou = re.search(r"Memoria detectada: (\d+) MB", texto)
                 verificar(achou is not None, f"[{modo} {mem_mb}M] memória detectada na tela")
                 mb = int(achou.group(1))
@@ -59,6 +59,18 @@ def main():
                 verificar("Fase 1 concluida" in texto, f"[{modo} {mem_mb}M] kernel chegou ao fim da inicialização")
                 if mem_mb == 512:
                     m.captura(f"H03-kernel-{modo}")
+    # H04-fix: com memória acima de 4 GB, a tela separa o total do que um
+    # kernel de 32 bits consegue usar, e a saudação continua no topo.
+    with Maquina("h03-6g", "ide", memoria="6G") as m:
+        m.esperar_serial("[SAGUI] boot ok", 120)
+        tela = m.tela_texto()
+        texto = "\n".join(tela)
+        verificar("Ola! Eu sou o SaguiOS." in tela[1], "[6G] saudação continua no topo")
+        total = int(re.search(r"Memoria detectada: (\d+) MB", texto).group(1))
+        usavel = int(re.search(r"abaixo de 4 GB\): (\d+) MB", texto).group(1))
+        verificar(total > 6000 and 2900 < usavel < 4096, f"[6G] total {total} MB, utilizável abaixo de 4 GB {usavel} MB")
+        verificar("  livre" in m.serial(), "[6G] mapa E820 completo está no log serial")
+        m.captura("H04-fix-memoria-6g", guardar=True)
     return 0
 
 

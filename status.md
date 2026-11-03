@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:22:25_
+_Atualizado em 2026-11-03T15:24:42_
 
 - **Situação:** Fase 1 confirmada no hardware. Seguindo para a fase 2.
 - **Fase atual:** 1
 - **História atual:** -
 - **Progresso geral:** 11.8%
 - **Bloqueio:** nenhum
-- **Imagem:** 14336 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 893, kernel 714, userland 0
+- **Imagem:** 14848 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 893, kernel 728, userland 0
 
 ## Fases
 
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T15:22:25_
 
 ## Últimas ações
 
+- 2026-11-03T15:24:42: H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte
+- 2026-11-03T15:23:28: Início da H04-fix: saudação some no G470 por causa do mapa E820 grande
 - 2026-11-03T15:22:25: Eli confirmou: fase 1 ok
 - 2026-11-03T14:27:18: Fase 1 entregue. Aguardando teste do Eli.
 - 2026-11-03T14:27:10: Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)

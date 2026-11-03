@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:22:25",
+  "atualizado": "2026-11-03T15:24:42",
   "situacao": "Fase 1 confirmada no hardware. Seguindo para a fase 2.",
   "fase_atual": 1,
   "historia_atual": null,
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T15:24:42",
+      "texto": "H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte"
+    },
+    {
+      "data": "2026-11-03T15:23:28",
+      "texto": "Início da H04-fix: saudação some no G470 por causa do mapa E820 grande"
+    },
+    {
       "data": "2026-11-03T15:22:25",
       "texto": "Eli confirmou: fase 1 ok"
     },
@@ -664,6 +672,31 @@ window.SAGUI_STATUS = {
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
+      "nome": "H04-fix-memoria-6g.png",
+      "data": "2026-11-03T15:24:29"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T15:24:18"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T15:24:07"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T15:24:01"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T15:23:55"
+    },
+    {
       "arquivo": "docs/capturas/G470-fase1-tela-final.png",
       "nome": "G470-fase1-tela-final.png",
       "data": "2026-11-03T15:22:25"
@@ -672,26 +705,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
       "nome": "H04-boot-vdi.png",
       "data": "2026-11-03T14:26:38"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-usb.png",
-      "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T14:26:16"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-ide.png",
-      "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T14:26:05"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-usb.png",
-      "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T14:26:00"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-ide.png",
-      "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T14:25:54"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
@@ -706,12 +719,12 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 893,
-    "kernel": 714,
+    "kernel": 728,
     "userland": 0,
-    "ferramentas": 939
+    "ferramentas": 951
   },
   "imagem": {
-    "bytes_util": 14336,
+    "bytes_util": 14848,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },

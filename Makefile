@@ -22,7 +22,7 @@ CFLAGS  := -m32 -march=i686 -std=gnu11 -O2 -g \
            -mgeneral-regs-only -fno-omit-frame-pointer \
            -Wall -Wextra -Werror=implicit-function-declaration \
            -Ikernel/inc
-LDFLAGS := -m elf_i386 -nostdlib --no-dynamic-linker -z noexecstack
+LDFLAGS := -m elf_i386 -nostdlib --no-dynamic-linker -z noexecstack --no-warn-rwx-segments
 
 B       := build
 
