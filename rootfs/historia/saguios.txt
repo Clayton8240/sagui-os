@@ -45,4 +45,13 @@ Fase 5 - Janelas e programas
   Editor de texto, a Calculadora (em ponto fixo, sem ponto flutuante) e o
   jogo Sagui Pega Banana. Os desenhos foram feitos em pixel art no código.
 
-(Este arquivo é atualizado ao fim de cada fase.)
+Fase 6 - Pendrive de dados
+  O SaguiOS ganhou um driver USB 2.0 escrito do zero (controlador EHCI,
+  hubs, pendrives pelo protocolo Bulk-Only com comandos SCSI) e o sistema
+  de arquivos FAT32, com nomes longos e acentos. O pendrive pode ser
+  espetado com o sistema ligado: aparece uma notificação e um ícone, o
+  Arquivos e o Editor abrem e salvam nele, e o "remover com segurança"
+  grava tudo antes de liberar. Os arquivos sobrevivem ao desligar.
+
+Ao todo foram 34 histórias em 6 fases, testadas no QEMU a cada passo e no
+Lenovo G470 do Eli ao fim de cada fase.

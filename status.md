@@ -1,14 +1,36 @@
+```
+Eli, terminei a fase 6: Pendrive de dados (a última). Pode testar!
+
+O que foi feito: um driver USB 2.0 escrito do zero (controlador EHCI tomado
+da BIOS, hubs, conexão a quente, pendrives pelo Bulk-Only com SCSI) e o FAT32
+com nomes longos e acentos, lendo e gravando. Espetou o pendrive com o
+sistema ligado: notificação e ícone; duplo clique monta em /usb e abre o
+Arquivos; o Editor salva lá; "Remover com segurança" grava tudo antes de
+liberar. Pelo Terminal: discos, montar, desmontar.
+Histórias concluídas: H29 a H34 (34 de 34 no projeto, todos os testes passando)
+Imagem: entrega/fase6/ (e entrega/final/): saguios.vdi (VirtualBox) e saguios.img (pendrive, G470)
+Roteiro de teste: docs/teste-fase6.md (dá para usar o mesmo pendrive do boot)
+O que você deve ver no G470: depois de tirar, formatar em FAT32 e espetar de
+novo o pendrive, a notificação e o ícone; a nota do Editor salva em /usb
+aparecendo depois no PC.
+Problemas conhecidos: o hub interno do chipset do G470 só pode ser testado
+no notebook (o QEMU não tem hub USB 2.0); se o pendrive não aparecer, rode
+"usb" no Terminal e fotografe.
+
+Quando testar, me diga "fase 6 ok" ou descreva o que aconteceu.
+```
+
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T20:25:28_
+_Atualizado em 2026-11-03T20:50:19_
 
-- **Situação:** Trabalhando na H34: Integração do pendrive
+- **Situação:** Aguardando teste do Eli: fase 6
 - **Fase atual:** 6
-- **História atual:** H34
+- **História atual:** -
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 497664 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9279, userland 3838
+- **Imagem:** 498688 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9281, userland 3838
 
 ## Fases
 
@@ -19,7 +41,7 @@ _Atualizado em 2026-11-03T20:25:28_
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
-| 6 | Pendrive de dados | 100.0% | em andamento |
+| 6 | Pendrive de dados | 100.0% | aguardando teste |
 | 7 | Bônus | 0% | a fazer |
 
 ## Histórias
@@ -54,18 +76,20 @@ _Atualizado em 2026-11-03T20:25:28_
 | H26 | Calculadora | feito | 2 |
 | H27 | Sagui Pega Banana | feito | 2 |
 | H28 | Acabamento | feito | 2 |
-| H29 | PCI e controlador EHCI | feito | 1 |
-| H30 | Enumeração USB, hubs e conexão a quente | feito | 1 |
-| H31 | Armazenamento em massa | feito | 1 |
-| H32 | FAT32: leitura | feito | 2 |
-| H33 | FAT32: gravação | feito | 2 |
-| H34 | Integração do pendrive | feito | 5 |
+| H29 | PCI e controlador EHCI | aguardando teste | 1 |
+| H30 | Enumeração USB, hubs e conexão a quente | aguardando teste | 1 |
+| H31 | Armazenamento em massa | aguardando teste | 1 |
+| H32 | FAT32: leitura | aguardando teste | 2 |
+| H33 | FAT32: gravação | aguardando teste | 2 |
+| H34 | Integração do pendrive | aguardando teste | 5 |
 | B1 | Bônus: enxergar o HD interno | a fazer |  |
 | B2 | Bônus: boot por UEFI | a fazer |  |
 | B3 | Bônus: bip | a fazer |  |
 
 ## Últimas ações
 
+- 2026-11-03T20:50:19: Fase 6 entregue. Aguardando teste do Eli.
+- 2026-11-03T20:50:19: Regressão final: 34/34 testes passaram
 - 2026-11-03T20:25:28: H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck
 - 2026-11-03T20:25:27: Erro corrigido: Acentos trocados em textos UTF-8 do pendrive
 - 2026-11-03T20:20:50: Início da H34: Integração do pendrive
@@ -79,5 +103,3 @@ _Atualizado em 2026-11-03T20:25:28_
 - 2026-11-03T20:16:48: Início da H31: Armazenamento em massa
 - 2026-11-03T20:16:48: Início da H30: Enumeração USB, hubs e conexão a quente
 - 2026-11-03T20:16:48: Início da H29: PCI e controlador EHCI
-- 2026-11-03T20:04:57: Início da H29: PCI e controlador EHCI
-- 2026-11-03T20:00:46: Eli confirmou: fase 5 ok

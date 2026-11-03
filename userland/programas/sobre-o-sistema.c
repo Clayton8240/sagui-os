@@ -73,9 +73,9 @@ int principal(int argc, char **argv)
     g_texto(j, 200, 70, "escrito do zero por IA", 0xFFFFFF);
     g_texto(j, 20, 256, "Créditos", COR_DESTAQUE);
     g_texto(j, 20, 276, "Escrito por Claude (Anthropic) para o projeto", COR_TEXTO);
-    g_texto(j, 20, 294, "do Eli, sem código de outros sistemas e sem", COR_TEXTO);
-    g_texto(j, 20, 312, "bibliotecas prontas. Fonte, desenhos e o sagui", COR_TEXTO);
-    g_texto(j, 20, 330, "também foram feitos aqui.", COR_TEXTO);
+    g_texto(j, 20, 294, "do Eli Rigobeli, sem código de outros sistemas", COR_TEXTO);
+    g_texto(j, 20, 312, "e sem bibliotecas prontas. Fonte, desenhos e o", COR_TEXTO);
+    g_texto(j, 20, 330, "sagui também foram feitos aqui.", COR_TEXTO);
     botao_t fechar = { 440 - 110, 360, 90, 26, "Fechar", false };
     botao_desenhar(j, &fechar);
     informacoes(j);

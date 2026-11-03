@@ -169,7 +169,7 @@ static disco_t *primeiro_disco(void)
 {
     for (int i = 0; i < MAX_DISCOS; i++) {
         disco_t *d = disco_indice(i);
-        if (d && d->presente) return d;
+        if (d && d->presente && !d->de_boot) return d;
     }
     return NULL;
 }

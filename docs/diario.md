@@ -157,3 +157,21 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   Sobre mostra 419,0 KB de imagem, 8 processos e 879 MB livres de 892 MB.
   Detalhe visto na foto: na tela de início do jogo os corações das vidas
   não aparecem (corrigido no começo da fase 6).
+- **Fase 6 iniciada** (tag `pre-fase6`). Investigação: o hub do QEMU 8.2 é
+  USB 1.1 e não liga no EHCI; o caminho do hub fica para o G470 (D024).
+  Corrigidos os corações das vidas na tela de início do jogo (erro 13).
+- **H29-H31.** PCI, EHCI tomado da BIOS, transferências síncronas medidas pelo
+  FRINDEX, enumeração, hubs, conexão a quente por consulta, Bulk-Only/SCSI.
+  O primeiro boot com o driver já enumerou o pendrive e leu o rótulo do FAT32.
+  Setores conferidos byte a byte na VPS.
+- **H32.** FAT32 com nomes longos e acentos montado em `/usb` pela camada de
+  arquivos virtual. Achado: textos de fora vêm em UTF-8; conversão para
+  Latin-1 no `cat` e no Editor (D027, erro 14).
+- **H33.** Gravação conferida com `mtools` e `fsck.vfat` (íntegro).
+- **H34.** Notificação, ícone do pendrive, Arquivos com lateral e "Remover
+  com segurança", aviso de remoção sem desmontar (erro 15: notificação
+  cortada). A regressão mostrou que o próprio pendrive de boot gerava
+  notificação e ícone: agora é ignorado nesses dois lugares.
+- A pedido do Eli, o Sobre diz "para o projeto do Eli Rigobeli". Versão 1.0.
+- **Fim da fase 6 (final).** Resumo em `docs/resumo-final.md`. Imagens em
+  `entrega/fase6/` e `entrega/final/`. Aguardando o teste do Eli.

@@ -1,0 +1,522 @@
+== h01_ambiente.py
+  ok: make vazio roda sem erro
+  ok: dashboard/index.html existe
+  ok: dashboard/status.json existe
+  ok: dashboard/status.js existe
+  ok: painel sem dependências externas
+  ok: JavaScript do painel desenha todas as seções sem erro
+   PASSOU (0.5s)
+== h02_mbr.py
+  ok: assinatura 0x55AA no fim do setor 0
+  ok: salto curto + NOP no início (formato com BPB)
+  ok: área do BPB falso (0x03-0x59) reservada e zerada
+  ok: partição 1 marcada como ativa (0x80)
+  ok: partição válida: tipo 0xDA, LBA 1, 2047 setores
+  ok: demais entradas da tabela vazias
+  ok: [ide] mensagem 'SaguiOS: carregando...' na tela
+  ok: [usb] mensagem 'SaguiOS: carregando...' na tela
+   PASSOU (12.3s)
+== h03_modo_protegido.py
+  ok: [ide] estágio 2 mostrou '[1/6] A20 ok'
+  ok: [ide] estágio 2 mostrou '[2/6] memoria ok'
+  ok: [ide] estágio 2 mostrou '[3/6] kernel'
+  ok: [ide] estágio 2 mostrou '[4/6] ramdisk'
+  ok: [ide] estágio 2 mostrou '[5/6] video'
+  ok: [ide] kernel e ramdisk conferidos pela soma de verificação
+  ok: [usb] estágio 2 mostrou '[1/6] A20 ok'
+  ok: [usb] estágio 2 mostrou '[2/6] memoria ok'
+  ok: [usb] estágio 2 mostrou '[3/6] kernel'
+  ok: [usb] estágio 2 mostrou '[4/6] ramdisk'
+  ok: [usb] estágio 2 mostrou '[5/6] video'
+  ok: [usb] kernel e ramdisk conferidos pela soma de verificação
+  ok: [ide 512M] saudação na tela VGA, no topo (erro 1)
+  ok: [ide 512M] memória detectada na tela
+  ok: [ide 512M] 511 MB livres, coerente com 512 MB
+  ok: [ide 512M] ramdisk encontrado depois do kernel
+  ok: [ide 512M] kernel chegou ao fim da inicialização
+  ok: [ide 128M] saudação na tela VGA, no topo (erro 1)
+  ok: [ide 128M] memória detectada na tela
+  ok: [ide 128M] 127 MB livres, coerente com 128 MB
+  ok: [ide 128M] ramdisk encontrado depois do kernel
+  ok: [ide 128M] kernel chegou ao fim da inicialização
+  ok: [usb 512M] saudação na tela VGA, no topo (erro 1)
+  ok: [usb 512M] memória detectada na tela
+  ok: [usb 512M] 511 MB livres, coerente com 512 MB
+  ok: [usb 512M] ramdisk encontrado depois do kernel
+  ok: [usb 512M] kernel chegou ao fim da inicialização
+  ok: [usb 128M] saudação na tela VGA, no topo (erro 1)
+  ok: [usb 128M] memória detectada na tela
+  ok: [usb 128M] 127 MB livres, coerente com 128 MB
+  ok: [usb 128M] ramdisk encontrado depois do kernel
+  ok: [usb 128M] kernel chegou ao fim da inicialização
+  ok: [6G] saudação continua no topo
+  ok: [6G] total 6143 MB, utilizável abaixo de 4 GB 3071 MB
+  ok: [6G] mapa E820 completo está no log serial
+   PASSOU (45.1s)
+== h04_imagens.py
+  ok: .vdi gerado
+  ok: qemu-img reconhece o arquivo como VDI
+  ok: SHA-256 de saguios.img confere (6cdefc319c5590bd...)
+  ok: SHA-256 de saguios.vdi confere (564923378131e62d...)
+  ok: conteúdo do .vdi é idêntico ao .img
+  ok: sobra do .vdi está zerada
+  ok: tamanho útil 498688 bytes, dentro da meta de 1,44 MB
+  ok: [ide] boot da imagem .img até o kernel
+  ok: [usb] boot da imagem .img até o kernel
+  ok: [vdi] boot do arquivo .vdi até o kernel
+   PASSOU (13.0s)
+== h05_interrupcoes.py
+  ok: serial registra a exceção 0, divisão por zero
+  ok: tela de erro mostra o nome da exceção
+  ok: tela de erro mostra os registradores
+  ok: a CPU gerou a exceção (não passou direto)
+  ok: contador de segundos avança: [1, 2, 3]
+  ok: 100 tiques por segundo, conferido contra o relógio CMOS
+   PASSOU (15.3s)
+== h06_memoria.py
+  ok: [128M] nenhuma falha no autoteste de memória []
+  ok: [128M] autoteste de memória passou
+  ok: [128M] liberação dupla detectada e registrada
+  ok: [1G] nenhuma falha no autoteste de memória []
+  ok: [1G] autoteste de memória passou
+  ok: [1G] liberação dupla detectada e registrada
+   PASSOU (11.6s)
+== h07_teclado.py
+  ok: letras: 'ola' (obtido 'ola')
+  ok: Shift: 'A' (obtido 'A')
+  ok: ç (0x27): 'ç' (obtido 'ç')
+  ok: Ç: 'Ç' (obtido 'Ç')
+  ok: ´ + a: 'á' (obtido 'á')
+  ok: ´ + e: 'é' (obtido 'é')
+  ok: ´ + i o u: 'íóú' (obtido 'íóú')
+  ok: ` + a: 'à' (obtido 'à')
+  ok: ^ + a e o: 'âêô' (obtido 'âêô')
+  ok: ~ + a o: 'ãõ' (obtido 'ãõ')
+  ok: ¨ + u: 'ü' (obtido 'ü')
+  ok: combinação inválida mostra acento e letra: '´x' (obtido '´x')
+  ok: morta + espaço = o próprio acento: '~' (obtido '~')
+  ok: ` + A: 'À' (obtido 'À')
+  ok: ' e " (0x29): '\'"' (obtido '\'"')
+  ok: [ { (0x1B): '[{' (obtido '[{')
+  ok: ] } (0x2B): ']}' (obtido ']}')
+  ok: \ | (0x56): '\\|' (obtido '\\|')
+  ok: , < . > (0x33, 0x34): ',<.>' (obtido ',<.>')
+  ok: ; : (0x35): ';:' (obtido ';:')
+  ok: / ? (0x73): '/?' (obtido '/?')
+  ok: símbolos com Shift: '!@&-+' (obtido '!@&-+')
+  ok: Caps Lock (letras e ç; Shift inverte): 'BÇcd' (obtido 'BÇcd')
+  ok: AltGr (/ e °) = Alt da direita: '/°' (obtido '/°')
+  ok: Ctrl+C vira o código 3: '\x03' (obtido '\x03')
+  ok: linha completa idêntica à esperada
+   PASSOU (9.8s)
+== h08_sgfs.py
+  ok: nenhuma falha interna []
+  ok: autoteste do SGFS passou
+  ok: lista do kernel = conteúdo do rootfs montado (45 entradas)
+  ok: leia-me.txt lido inteiro e idêntico (1718 caracteres, acentos em Latin-1)
+   PASSOU (6.2s)
+== h09_terminal.py
+  ok: [ide] prompt sagui:/$ na tela
+  ok: [ide] saudação continua no topo com o shell aberto
+  ok: [ide] as etapas de inicialização aparecem com [ ok ]
+  ok: ajuda lista o comando ajuda
+  ok: ajuda lista o comando ls
+  ok: ajuda lista o comando cd
+  ok: ajuda lista o comando cat
+  ok: ajuda lista o comando limpar
+  ok: ajuda lista o comando mem
+  ok: ajuda lista o comando data
+  ok: ajuda lista o comando reiniciar
+  ok: ls mostra arte/
+  ok: ls mostra bin/
+  ok: ls mostra historia/
+  ok: ls mostra leia-me.txt
+  ok: ls mostra sobre.txt
+  ok: ls mostra tmp/
+  ok: cd historia; ls
+  ok: cd muda o prompt
+  ok: cat mostra todas as linhas do linux.txt
+  ok: cd ../arte e cat sagui.txt (caminho relativo com ..)
+  ok: cat numa pasta avisa
+  ok: limpar deixa só o prompt na tela
+  ok: mem: total 511 MB, livre 506 MB
+  ok: data mostra a data de hoje (03/11/2026)
+  ok: data mostra o dia da semana (terça-feira)
+  ok: acentos digitados chegam ao shell (cat ação)
+  ok: reiniciar reinicia a máquina (QEMU encerrou no reset)
+  ok: [usb] prompt sagui:/$ na tela
+  ok: [usb] saudação continua no topo com o shell aberto
+  ok: [usb] as etapas de inicialização aparecem com [ ok ]
+  ok: [usb] comandos funcionam com boot pelo pendrive
+   PASSOU (16.9s)
+== h10_paginacao.py
+  ok: nenhuma falha interna []
+  ok: mesmo endereço virtual, valores diferentes em cada espaço
+  ok: autoteste de paginação passou (inclui devolução das páginas)
+  ok: etapa de paginação aparece na inicialização
+  ok: serial registra a exceção 14 (falta de página)
+  ok: tela explica: leitura, endereço 0x90000000, página não mapeada, modo kernel
+   PASSOU (12.9s)
+== h11_escalonador.py
+  ok: nenhuma falha interna []
+  ok: cada tarefa escreveu suas 60 letras
+   sequência: AABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAA ...
+  ok: A e B se alternaram 60 vezes (preempção pelo relógio)
+  ok: nenhuma tarefa ficou com a CPU mais que uma fatia (2 tiques)
+  ok: tarefas terminaram e foram recolhidas
+   PASSOU (7.6s)
+== h12_anel3.py
+  ok: nenhuma falha interna []
+  ok: programa no anel 3 escreveu 'Ola do ring 3!' pela chamada escrever
+  ok: saiu pela chamada sair; ponteiro do kernel recusado
+  ok: cli no anel 3: proteção geral, só aquele processo encerrado
+  ok: ler memória do kernel: falta de página, processo encerrado
+  ok: o kernel continuou funcionando (sem tela de erro)
+  ok: mensagens aparecem na tela
+   PASSOU (6.6s)
+== h13_elf.py
+  ok: kernel carregou /bin/ola do SGFS
+  ok: o programa rodou (libsagui + imprimir)
+  ok: argc = 4
+  ok: argv[0] = '/bin/ola'
+  ok: argv[1] = 'um'
+  ok: argv[2] = 'dois'
+  ok: argv[3] = 'três'
+  ok: saiu com código 0 (valor de principal)
+  ok: um texto não é aceito como programa (ERRO_FORMATO)
+   PASSOU (12.1s)
+== h14_arquivos.py
+    [ok] a saída 1 (terminal) aceita escrita
+    [ok] cria /tmp/teste.txt (descritor >= 3)
+    [ok] escreve o texto
+    [ok] fecha
+    [ok] info_arquivo mostra o tamanho certo
+    [ok] reabre e lê o mesmo conteúdo
+    [ok] depois do fim, ler devolve 0
+    [ok] posicionar e ler do meio
+    [ok] descritor fechado não serve mais
+    [ok] sobrescrever (truncar) e acrescentar
+    [ok] apaga o arquivo
+    [ok] o arquivo sumiu
+    [ok] cria /tmp/pasta
+    [ok] criar de novo avisa que já existe
+    [ok] listar mostra o arquivo dentro da pasta
+    [ok] e só ele
+    [ok] não remove pasta com arquivos
+    [ok] mudar_pasta e pasta_atual
+    [ok] abre com caminho relativo à pasta atual
+    [ok] não remove a pasta em que o processo está
+    [ok] renomear move o arquivo para outra pasta
+    [ok] remove a pasta vazia
+    [ok] a pasta sumiu
+    [ok] arquivo do ramdisk alterado na camada da RAM
+    [ok] criar dentro de pasta inexistente falha
+    [ok] abrir uma pasta como arquivo falha
+    [ok] ler para a memória do kernel é recusado
+    [ok] caminho na memória do kernel é recusado
+  ok: 28 verificações rodaram no anel 3
+  ok: teste de arquivos e pastas passou
+  ok: programa saiu com código 0
+   PASSOU (6.1s)
+== h15_pipes.py
+    [ok] cria o pipe
+    [ok] executa o gerador com a saída no pipe
+    [ok] o gerador terminou bem
+    recebidos 20000 bytes em 157 leituras, 0 diferentes
+    [ok] todos os bytes chegaram, sem perda nem duplicação
+    [ok] fim do arquivo quando o escritor fechou
+    [ok] cria outro pipe
+    consumidor: recebi 20000 bytes (esperava 20000), 0 diferentes
+    [ok] o consumidor recebeu tudo certo
+    levou 20 ms
+    [ok] escrever sem ninguém lendo dá 'pipe quebrado'
+  ok: 20000 bytes atravessaram um pipe de 512 bytes
+  ok: no outro sentido também (escritor bloqueando com o pipe cheio)
+  ok: teste de pipes passou
+   PASSOU (6.3s)
+== h16_shell.py
+  ok: o kernel inicia /bin/sagsh como primeiro processo (PID 1)
+  ok: o terminal provisório do kernel foi removido
+  ok: ajuda lista ls/listar
+  ok: ajuda lista cd/entrar
+  ok: ajuda lista pwd/onde
+  ok: ajuda lista cat/ver
+  ok: ajuda lista echo/eco
+  ok: ajuda lista cp/copiar
+  ok: ajuda lista mv/mover
+  ok: ajuda lista rm/apagar
+  ok: ajuda lista mkdir/criar-pasta
+  ok: ajuda lista rmdir/remover-pasta
+  ok: ajuda lista wc/conta
+  ok: ajuda lista ps/processos
+  ok: ajuda lista kill/matar
+  ok: ajuda lista clear/limpar
+  ok: ajuda lista ajuda
+  ok: ajuda lista mem
+  ok: ajuda lista data
+  ok: ajuda lista sobre
+  ok: ajuda lista ola
+  ok: ajuda lista contador
+  ok: ajuda lista falha
+  ok: ajuda lista reiniciar
+  ok: ajuda lista sair
+  ok: ajuda <comando> explica o comando
+  ok: ls
+  ok: listar (apelido de ls) /bin
+  ok: ls bin | conta = 29 linhas (um por programa)
+  ok: pipe colado nas palavras (listar bin|wc)
+  ok: echo ola > tmp/a.txt; cat tmp/a.txt
+  ok: cp tmp/a.txt tmp/b.txt; ver (apelido de cat) tmp/b.txt
+  ok: eco com aspas e >>; conta < arquivo (redirecionar a entrada)
+  ok: copiar, mv e mover
+  ok: rm, apagar, mkdir, criar-pasta
+  ok: rmdir, remover-pasta
+  ok: cd historia; pwd
+  ok: entrar .. (apelido de cd); onde (apelido de pwd)
+  ok: cd para pasta inexistente avisa
+  ok: comando desconhecido avisa
+  ok: ps mostra o contador (PID 26) rodando junto
+  ok: ps mostra sagsh, ocioso e o próprio ps
+  ok: processos (apelido de ps)
+  ok: o shell avisa quando o contador termina
+  ok: ola recebe os argumentos
+  ok: kill encerra o contador
+  ok: matar (apelido de kill)
+  ok: nenhum contador sobrou
+  ok: falha (ponteiro nulo): só o processo foi encerrado
+  ok: falha kernel: só o processo foi encerrado
+  ok: falha instrucao: só o processo foi encerrado
+  ok: falha divisao: só o processo foi encerrado
+  ok: o shell continua funcionando depois das falhas
+  ok: mem
+  ok: data
+  ok: sobre
+  ok: seta para cima repete o último comando (sobre)
+  ok: Tab completa /his -> /historia/ e li -> linux.txt
+  ok: Tab completa nomes de comandos (sob -> sobre)
+  ok: Tab completa contad -> contador ("con" é ambíguo com conta)
+  ok: sair fecha o shell e o sistema abre outro
+  ok: reiniciar reinicia a máquina
+   PASSOU (42.7s)
+== h17_video.py
+  ok: [ide] autoteste gráfico passou
+  ok: [ide] modo 1024x768x32 escolhido e ligado
+  ok: [ide] a tela tem 1024x768
+  ok: [ide] retângulo amarelo onde foi desenhado
+  ok: [ide] caixa branca com borda vermelha
+  ok: [ide] fundo em degradê de verde (topo) para azul (base)
+  ok: [ide] linhas desenhadas
+  ok: [usb] autoteste gráfico passou
+  ok: [usb] modo 1024x768x32 escolhido e ligado
+  ok: [usb] a tela tem 1024x768
+  ok: [usb] retângulo amarelo onde foi desenhado
+  ok: [usb] caixa branca com borda vermelha
+  ok: [usb] fundo em degradê de verde (topo) para azul (base)
+  ok: [usb] linhas desenhadas
+  ok: sem VESA, o kernel percebe e não tenta desenhar (fica em modo texto)
+   PASSOU (18.7s)
+== h18_fonte.py
+  ok: terminal gráfico de 128x48 caracteres (1024x768)
+  ok: etapa do vídeo aparece com acentos na tela
+  ok: a tela mostra exatamente: Ação, vovô, pão, ÇÃO, à é í ó ú
+  ok: maiúsculas acentuadas, circunflexo, til, trema e crase
+  ok: setas, Delete e End editam no meio da linha (echo aXc!)
+  ok: Home leva ao começo da linha
+  ok: a linha digitada continua inteira depois do contador escrever
+  ok: o texto do contador não se mistura com a linha digitada
+  ok: o shell redesenhou o prompt com o que já estava digitado
+  ok: sem VESA: aviso na tela e o sistema continua em modo texto
+  ok: o shell funciona no modo texto
+   PASSOU (23.8s)
+== h19_mouse.py
+  ok: mouse PS/2 respondeu e foi ligado (IRQ 12)
+  ok: etapa do mouse na tela de inicialização
+  ok: clique esquerdo detectado no centro da tela: [(512, 384)]
+  ok: o cursor andou para a direita e para baixo: (712, 534)
+  ok: a seta do cursor está desenhada na nova posição
+  ok: clique direito detectado mais acima e à esquerda: [(472, 374)]
+  ok: soltar o botão também é registrado
+  ok: o cursor para no canto da tela (0,0)
+  ok: o teclado continua funcionando junto com o mouse
+  ok: diagnóstico do controlador registrado na serial
+  ok: com a IRQ 12 bloqueada e bytes do mouse na fila, o teclado funciona
+  ok: o mouse continua andando, recolhido pelo relógio: (712, 484)
+   PASSOU (22.5s)
+== h20_area_trabalho.py
+  ok: [ide] topo verde (33, 128, 60)
+  ok: [ide] meio amarelo (224, 185, 42)
+  ok: [ide] base azul (25, 54, 124)
+  ok: [ide] barra superior escura
+  ok: [ide] tufo branco do sagui no canto
+  ok: [ide] ícone da pasta (Arquivos)
+  ok: [ide] relógio da barra com a data do CMOS: ter 03/11/2026 20 44
+  ok: [ide] sem terminal de tela cheia
+  ok: [usb] topo verde (33, 128, 60)
+  ok: [usb] meio amarelo (224, 185, 42)
+  ok: [usb] base azul (25, 54, 124)
+  ok: [usb] barra superior escura
+  ok: [usb] tufo branco do sagui no canto
+  ok: [usb] ícone da pasta (Arquivos)
+  ok: [usb] relógio da barra com a data do CMOS: ter 03/11/2026 20 44
+  ok: [usb] sem terminal de tela cheia
+   PASSOU (12.8s)
+== h21_janelas.py
+  ok: duas janelas, de dois processos: A em (184,82), B em (218,110)
+  ok: conteúdo azul da janela A desenhado pelo programa
+  ok: conteúdo vermelho da janela B, por cima
+  ok: janela A arrastada para ('484', '362')
+  ok: A aparece na posição nova
+  ok: e não ficou rastro na posição antiga
+  ok: nenhum rastro do contorno escuro pelo caminho
+  ok: A recebeu o clique em coordenadas da sua área
+  ok: a tecla foi só para a janela com foco
+  ok: B não recebeu eventos de A
+  ok: B recebeu o evento fechar e terminou sozinho
+  ok: a janela B sumiu da tela
+  ok: A continua lá
+   PASSOU (13.6s)
+== h22_componentes.py
+  ok: botão: dois cliques contados
+  ok: caixa de texto: apagou, digitou com acento e Enter
+  ok: área de texto rola com PgDn (primeira linha visível: 13)
+  ok: área de texto aceita digitação
+  ok: lista: seleção com um clique e ativação com duplo clique
+  ok: diálogo 'Tem certeza?' respondido com Sim
+  ok: caixa de mensagem fecha com Enter
+   PASSOU (22.5s)
+== h23_arquivos.py
+  ok: Arquivos abre na raiz: 5 pastas e 2 arquivos
+  ok: duplo clique na pasta historia entra nela
+  ok: duplo clique em linux.txt abre no Editor
+  ok: H25: a nota do Editor reabre pelo Arquivos com o mesmo tamanho (29 bytes)
+  ok: pasta /tmp/teste criada e aparece na lista
+  ok: pasta apagada (com confirmação) e some da lista
+  ok: ls /tmp no Terminal confere
+   PASSOU (38.7s)
+== h24_terminal_janela.py
+  ok: ao ligar, o sistema abre o Terminal com o sagsh dentro
+  ok: ps mostra o terminal, o sagsh e a tarefa das janelas
+  ok: ls bin | conta = 29
+  ok: edição com setas dentro do Terminal em janela
+  ok: ajuda lista o comando gráfico arquivos
+  ok: ajuda lista o comando gráfico editor
+  ok: ajuda lista o comando gráfico calculadora
+  ok: ajuda lista o comando gráfico banana
+  ok: limpar funciona na janela
+  ok: sair fecha o shell e o Terminal termina
+   PASSOU (10.6s)
+== h25_editor.py
+  ok: o título ganha * ao digitar
+  ok: Ctrl+S sem nome pede o caminho e salva /tmp/nota.txt (29 bytes)
+  ok: o título mostra o nome do arquivo, sem *
+  ok: sem alterações, o Editor fecha direto
+  ok: cat /tmp/nota.txt mostra o texto com acentos
+  ok: editor /tmp/nota.txt reabre o arquivo
+  ok: fechar com alteração pergunta se quer salvar; 'Não' fecha sem salvar
+  ok: o arquivo continua como foi salvo
+   PASSOU (22.7s)
+== h26_calculadora.py
+  ok: 12,5 × 4 = 50 (pelos botões)
+  ok: 7 ÷ 2 = 3,5 (pelo teclado)
+  ok: 1 ÷ 0 mostra aviso: Não dá para dividir por zero
+  ok: número grande demais avisa: Número grande demais
+  ok: apagar o último dígito e negativos: 123 - 200 = -77
+  ok: ponto fixo sem erro de arredondamento: 0,1 + 0,2 = 0,3
+   PASSOU (29.5s)
+== h27_banana.py
+  ok: as setas movem o sagui até embaixo da banana (banana em x=254, sagui em x=232)
+  ok: pegou a banana: 1 ponto
+  ok: banana que cai no chão tira uma vida
+  ok: fim de jogo com 1 ponto(s); recorde da sessão 1
+  ok: Enter na tela de fim começa outra partida
+   PASSOU (21.3s)
+== h28_acabamento.py
+  ok: imagem com 498688 bytes úteis (33.8% da meta de 1,44 MB)
+  ok: duplo clique no ícone Arquivos abre o programa
+  ok: duplo clique no ícone Calculadora abre o programa
+  ok: duplo clique no ícone Banana abre o programa
+  ok: Sobre mostra a versão 1.0 e o tamanho da imagem (498688 bytes)
+  ok: Sobre mostra 8 processos ativos (ocioso, janelas, terminal, sagsh e os programas abertos)
+  ok: 5 janelas abertas ao mesmo tempo (Terminal + 4 programas)
+  ok: captura com Arquivos, Calculadora e Sagui Pega Banana lado a lado
+   PASSOU (22.7s)
+== h29_ehci.py
+  ok: controlador EHCI achado no PCI, reiniciado e rodando
+  ok: o comando usb lista o controlador
+  ok: e a porta com o pendrive
+  ok: com boot pelo pendrive e um segundo controlador: os dois aparecem
+  ok: o pendrive de boot e o de dados aparecem nas portas
+   PASSOU (13.2s)
+== h30_conexao.py
+  ok: sem pendrive no boot
+  ok: conectado com o sistema ligado: fabricante, produto e classe (QEMU QEMU USB HARDDRIVE (46f4:0001) classe 8 (armazenamento), endereco 1, raiz 0 porta 0)
+  ok: o formato e o rótulo são reconhecidos
+  ok: discos mostra o pendrive conectado a quente
+  ok: a remoção gera o evento na serial
+  ok: depois de remover, discos não mostra mais nada
+  ok: conectar de novo funciona (vira usb1)
+   PASSOU (9.1s)
+== h31_setores.py
+  ok: nenhuma falha no kernel []
+  ok: a leitura dos setores 0-63 bate com o arquivo da VPS
+  ok: os 40 setores gravados estão no arquivo, byte a byte
+  ok: o último setor do pendrive foi gravado
+  ok: nenhum outro setor foi alterado
+   PASSOU (7.0s)
+== h32_fat32_leitura.py
+  ok: discos: usb0, FAT32, rótulo MEUPEN, não montado
+  ok: montar usb0
+  ok: ls /usb mostra 'LEIAME.TXT'
+  ok: ls /usb mostra 'Relatório de viagem.txt'
+  ok: ls /usb mostra 'um nome de arquivo bem comprido para testar os nomes longos.txt'
+  ok: ls /usb mostra 'fotos/'
+  ok: ls /usb mostra 'documentos/'
+  ok: ls /usb mostra 'grande.txt'
+  ok: cat de nome longo com acentos, conteúdo com acentos
+  ok: cd em pastas do pendrive e ls relativo
+  ok: cat com caminho relativo dentro do pendrive
+  ok: nomes sem diferença de maiúsculas (leiame.txt = LEIAME.TXT)
+  ok: arquivo grande (126000 bytes, vários clusters) lido inteiro
+  ok: pipe com arquivos do pendrive
+  ok: FAT32 sem tabela de partições é reconhecido
+  ok: pendrive com outro formato aparece como não suportado
+  ok: e não monta
+   PASSOU (26.7s)
+== h33_fat32_gravacao.py
+  ok: rm no pendrive pede confirmação; com 's' apaga
+  ok: mv entre a RAM e o pendrive copia e apaga a origem
+  ok: o SaguiOS relê o que gravou
+  ok: desmontar grava tudo e libera
+  ok: depois de desmontar, /usb some
+  ok: mtools: /fotos/novo.txt criado, aumentado e movido
+  ok: mtools: LEIAME.TXT sobrescrito
+  ok: mtools: leia-me.txt copiado da RAM, idêntico (em Latin-1)
+  ok: mtools: cópia de 126000 bytes idêntica
+  ok: mtools: pasta e arquivo com nome longo e acento
+  ok: mtools: arquivo movido da RAM
+  ok: mtools: pasta removida e arquivo apagado não existem mais
+   Checking for unused clusters.
+   Checking free cluster summary.
+   /home/erigobeli/sagui-os/build/testes/h33-particao.img: 10 files, 506/127006 clusters
+  ok: fsck.vfat: sistema de arquivos íntegro (código 0)
+  ok: fsck.vfat: FATs iguais, contagem de livres certa, nada órfão
+   PASSOU (43.5s)
+== h34_integracao.py
+  ok: ao espetar: notificação 'Pendrive conectado: MEUPEN (64 MB)'
+  ok: ícone do pendrive apareceu na área de trabalho
+  ok: duplo clique no ícone monta o pendrive e abre o Arquivos em /usb
+  ok: o Editor salva a nota em /usb
+  ok: 'Remover com segurança' no Arquivos grava tudo e desmonta
+  ok: removido: o ícone some
+  ok: arrancado sem desmontar: o sistema avisa que dados podem ter se perdido
+  ok: mtools: a nota do Editor está no pendrive, com acento
+  ok: mtools: o que já estava no pendrive continua lá
+  ok: discos: usb0  QEMU QEMU USB HARDDRIVE  64 MB  FAT32  "MEUPEN"  (não montado)
+  ok: montar usb0 -> Pendrive montado em /usb
+  ok: ls /usb mostra a nota gravada pela interface
+  ok: desmontar usb0 -> Pode remover o pendrive.
+  ok: mtools: leia-me.txt copiado pelo terminal está no pendrive
+  ok: fsck.vfat: íntegro depois de tudo (o arrancar sem desmontar aconteceu sem gravação pendente)
+   PASSOU (41.2s)
+
+34/34 testes passaram

@@ -110,3 +110,20 @@ Se travar ou aparecer erro, **fotografe a tela inteira**. As mensagens `[1/6]` a
 | `ERRO: dados lidos estao corrompidos` | Leu, mas o conteúdo não bate com a soma do build. Grave de novo; se repetir, tente outro pendrive. |
 | `ERRO: nao consegui ligar a linha A20` | Nenhum dos três métodos de A20 funcionou nesse hardware. |
 | `ERRO: BIOS nao deu o mapa de memoria` | A BIOS não respondeu ao E820. |
+
+---
+
+## 5. Pendrive de dados (fase 6)
+
+O SaguiOS lê e grava pendrives **FAT32** em `/usb`. Dá para usar o **mesmo pendrive** do boot, porque o sistema roda inteiro na RAM:
+
+1. Dê boot pelo pendrive com o `saguios.img`.
+2. Com a área de trabalho no ar, tire o pendrive (o sistema continua rodando).
+3. Num PC, formate o pendrive em **FAT32**:
+   - **Windows, até 32 GB:** clique com o botão direito no pendrive > **Formatar** > Sistema de arquivos **FAT32**.
+   - **Mais de 32 GB:** o Windows não oferece FAT32. Use o **Rufus**: em "Seleção de boot" escolha **Não inicializável** e em "Sistema de arquivos" escolha **FAT32**.
+   - **Linux:** `sudo mkfs.vfat -F 32 -n MEUPEN /dev/sdX1` (a partição).
+4. Espete o pendrive de volta com o SaguiOS ligado: ele aparece na área de trabalho.
+
+> Formatar apaga o SaguiOS do pendrive: para o próximo boot, grave o `saguios.img` de novo.
+> Antes de tirar o pendrive, use **Remover com segurança** (ou `desmontar` no Terminal).

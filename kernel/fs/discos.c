@@ -122,7 +122,7 @@ static void reconhecer(disco_t *d)
                 break;
             }
             case 0x83: txt_copia_n(d->formato, "ext (Linux): formato não suportado", sizeof d->formato); break;
-            case 0xDA: txt_copia_n(d->formato, "pendrive de boot do SaguiOS", sizeof d->formato); break;
+            case 0xDA: txt_copia_n(d->formato, "pendrive de boot do SaguiOS", sizeof d->formato); d->de_boot = true; break;
             case 0xEE: txt_copia_n(d->formato, "GPT: formato não suportado", sizeof d->formato); break;
             default:   snformatar(d->formato, sizeof d->formato, "partição tipo %x: não suportado", tipo);
             }
@@ -159,7 +159,8 @@ disco_t *disco_registrar(const char *fabricante, const char *produto, uint32_t s
         char tam[24];
         tamanho_legivel(setores, tam, sizeof tam);
         klog("[DISCO] %s: %s %s, %s, %s, rotulo \"%s\"\n", d->nome, fabricante, produto, tam, d->formato, d->rotulo);
-        if (d->fat32) avisar(AVISO_CONECTADO, "Pendrive conectado: %s (%s)", d->rotulo[0] ? d->rotulo : d->produto, tam);
+        if (d->de_boot) ;   /* o pendrive de onde o sistema acabou de ligar: nada a avisar */
+        else if (d->fat32) avisar(AVISO_CONECTADO, "Pendrive conectado: %s (%s)", d->rotulo[0] ? d->rotulo : d->produto, tam);
         else avisar(AVISO_CONECTADO, "Pendrive conectado: %s (%s), %s", d->produto, tam, d->formato);
         return d;
     }
@@ -174,7 +175,7 @@ void disco_removido(disco_t *d)
         d->montado = false;
         vfs_ponto_montagem(false);
         avisar(AVISO_REMOVIDO, "O pendrive foi removido sem desmontar: dados podem ter se perdido.");
-    } else {
+    } else if (!d->de_boot) {
         avisar(AVISO_REMOVIDO, "Pendrive removido.");
     }
     klog("[DISCO] %s removido\n", d->nome);

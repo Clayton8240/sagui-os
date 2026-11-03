@@ -1,7 +1,15 @@
 # SaguiOS
 
-**Um sistema operacional escrito do zero por IA**, para PCs x86 de 32 bits.
+**Um sistema operacional escrito do zero por IA**, para PCs x86 de 32 bits,
+feito por Claude (Anthropic) para o projeto do Eli Rigobeli.
 Alvo real: um notebook **Lenovo G470** (2011), além de VirtualBox e QEMU.
+
+![Área de trabalho do SaguiOS](docs/capturas/H28-tres-programas.png)
+
+O sistema inteiro (carregador de boot, kernel, drivers de teclado, touchpad,
+vídeo e USB, sistema de arquivos FAT32, gerenciador de janelas, shell, editor,
+calculadora e um jogo) ocupa **487 KB**. O resumo do projeto está em
+[`docs/resumo-final.md`](docs/resumo-final.md).
 
 Tudo dentro da imagem é escrito neste projeto: carregador de boot, kernel,
 drivers, biblioteca dos programas (`libsagui`), shell, fonte e desenhos. Sem
@@ -49,3 +57,4 @@ make rodar      # abre no QEMU com janela
 ```
 
 Para gravar num pendrive e dar boot num PC real, veja [`docs/como-gravar.md`](docs/como-gravar.md).
+As imagens prontas estão em [`entrega/final/`](entrega/final/).

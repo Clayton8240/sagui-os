@@ -23,7 +23,7 @@
 #include "gui.h"
 #include "usb.h"
 
-#define SAGUI_VERSAO "0.5 (fase 5)"
+#define SAGUI_VERSAO "1.0"
 
 info_boot_t info_boot;
 const char *sagui_versao = SAGUI_VERSAO;

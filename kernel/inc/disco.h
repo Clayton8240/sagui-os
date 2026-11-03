@@ -19,6 +19,7 @@ typedef struct disco {
     char     rotulo[12];
     uint32_t part_inicio;         /* primeiro setor do volume FAT32 */
     bool     fat32;
+    bool     de_boot;             /* o próprio pendrive de boot do SaguiOS: sem aviso nem ícone */
     bool     montado;
 } disco_t;
 
