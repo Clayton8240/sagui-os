@@ -41,6 +41,7 @@ static const chamada_t tabela[SIS_MAX] = {
     [SIS_LISTAR_DISCOS] = sis_listar_discos,   [SIS_MONTAR] = sis_montar,
     [SIS_DESMONTAR] = sis_desmontar,
     [SIS_BIP] = sis_bip,
+    [SIS_TECLAS_SEGURADAS] = sis_teclas_seguradas,
 };
 
 bool usuario_ok(const void *p, uint32_t n, bool escrita)

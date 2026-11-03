@@ -753,3 +753,154 @@ saída do canal 2 (bit 5 da porta 0x61) durante 5 ms medidos pelo contador do
 canal 0 e registra no log quantas vezes ela virou. Medir por voltas de laço
 não serve: no QEMU as leituras de porta são muito mais rápidas que no PC, e a
 primeira versão viu 0 viradas.
+
+## D030. Teclas seguradas para jogos (B4)
+
+Os eventos de janela só avisam quando uma tecla é apertada (com a repetição
+automática do teclado depois de meio segundo). Um jogo em primeira pessoa
+precisa saber se a seta *continua* apertada, e andar e girar ao mesmo tempo.
+O driver de teclado passou a manter um mapa de 256 bits, um por código de
+varredura (128 a 255 para as teclas estendidas, como as setas), ligado ao
+apertar e desligado ao soltar. A chamada `SIS_TECLAS_SEGURADAS` copia esse
+mapa, mas só para o processo dono da janela em foco; os outros recebem tudo
+zerado, para um programa em segundo plano não ler o que se digita em outra
+janela. Ctrl e espaço sozinhos (que não geram caractere) também aparecem no
+mapa, o que permite atirar com eles.
+
+## Sagui 3D (B4)
+
+Um jogo em primeira pessoa com visual 2,5D, escrito para este projeto em
+`userland/sagui3d/` (seis arquivos, ~2.400 linhas, binário de 57 KB). As
+fases são arquivos de texto em `/jogos/sagui3d/`. Abaixo, como cada parte
+foi pensada.
+
+### Projeção, ordem de desenho, recorte e o "olho de peixe"
+
+Parti de semelhança de triângulos. Com o olho na origem olhando para a
+frente, um ponto a uma distância `f` à frente e `l` para o lado aparece na
+tela a `l * FOCO / f` pixels do centro; uma altura `h` (acima do olho)
+aparece `h * FOCO / f` pixels acima do horizonte. `FOCO` = 176 pixels numa
+vista de 320 dá uns 85 graus de visão.
+
+O efeito "olho de peixe" aparece quando se usa a distância em linha reta até
+a parede: nas bordas da tela essa distância é maior que no centro e uma
+parede reta encolhe dos lados. Aqui `f` é sempre a distância medida *ao
+longo da direção do olhar* (a coordenada "fundo" depois de girar o mundo
+para a câmera), que é exatamente o que a semelhança de triângulos pede. Com
+ela, os pontos de uma parede reta caem numa reta na tela.
+
+A ordem de desenho saiu da escolha de só ter salas **convexas**. De dentro
+de uma sala convexa, cada direção bate em exatamente um lado dela; então os
+lados de uma sala nunca se cobrem na tela e podem ser desenhados em qualquer
+ordem. Para o que está além, cada coluna da tela guarda uma "fresta": a
+faixa de linhas ainda não pintada. Começando pela sala do sagui, cada lado
+virado para ele pinta, nas colunas que ocupa, o teto acima e o chão abaixo;
+se for parede, pinta a parede e fecha a coluna; se for passagem, pinta só os
+degraus (o pedaço entre os dois tetos e entre os dois chãos) e estreita a
+fresta para o vão. A sala vizinha é então desenhada só naquelas colunas e
+só dentro da fresta. Com isso, não existe ordenação de paredes por
+distância: o que está na frente é desenhado primeiro e o que está atrás só
+aparece pelo buraco que ficou. O desenho para quando todas as frestas fecham
+(ou depois de 32 salas em cadeia, como proteção).
+
+Recorte: um lado com uma ponta atrás do olho é cortado no plano a meio palmo
+à frente, só para achar as colunas que ele ocupa. Dentro dessas colunas, a
+posição exata da parede em cada coluna vem do cruzamento do raio daquela
+coluna com o segmento (reta contra reta), que dá o "fundo" e a posição ao
+longo da parede para escolher a coluna da textura. As distâncias na tela são
+limitadas a ±4096 pixels antes de somar ao centro (a primeira versão deixava
+uma faixa da tela sem desenho quando uma parede quase encostava no olho,
+porque o número não cabia em 32 bits).
+
+Chão e teto: numa linha da tela a `d` pixels do horizonte, o plano de altura
+`h` está a `fundo = (h - olho) * FOCO / d`. `FOCO / d` é calculado uma vez
+por linha; com o fundo e a direção de cada coluna sai o ponto do mapa e o
+pixel da textura. **Decisão: chão e teto continuam texturizados**, porque o
+QEMU, que é bem mais lento que o G470, desenhou entre 80 e 110 quadros por
+segundo; não foi preciso trocar por cor sólida.
+
+Tudo é inteiro com 16 bits de fração (os programas não usam a FPU, que o
+kernel não salva na troca de processos). Multiplicações passam por 64 bits;
+a divisão de 64 por 32 bits usa a própria instrução `idiv`, conferindo antes
+se o resultado cabe. O seno sai de uma tabela de um quarto de volta montada
+na abertura do jogo girando um vetor de um passo pequeno 1024 vezes.
+
+### Salas com alturas diferentes
+
+Cada sala tem a altura do chão, a do teto, a luz (0 a 15) e as texturas de
+piso, forro e paredes; o forro pode ser "céu" (salas a céu aberto, com o
+contorno das árvores da mata no horizonte, que gira com o sagui). Dois
+lados que usam os mesmos dois pontos, um em cada sala, formam uma passagem.
+A diferença de chão vira um degrau desenhado; uma escada é uma fileira de
+salas estreitas com o chão 16 palmos mais alto a cada uma; uma plataforma é
+uma sala mais alta. O sagui sobe até 24 palmos de uma vez e o olho
+acompanha o chão subindo devagar (e descendo um pouco mais rápido). Formas
+côncavas, como uma galeria com um pilar no meio ou um pátio com um tablado,
+são feitas juntando salas convexas em volta. A luz de cada sala escurece
+com a distância na direção de um verde quase preto, como a sombra dentro da
+mata.
+
+O arquivo de fase é texto: `ponto`, `sala` (propriedades e a lista de
+pontos), `lado` (textura própria de uma parede), `secreta` (passagem que
+parece parede de cipó), e uma linha para cada coisa (`sagui`, `banana`,
+`cacho`, `pote`, `porteira`, `macaco`). O jogo confere cada sala (convexa,
+pontos definidos) e diz a linha do erro. `tools/sagui3d_mapa.py` faz as
+mesmas verificações e desenha a planta vista de cima, para desenhar fases.
+
+### Texturas e personagens
+
+Os personagens e objetos são pixel art escrita como texto no código, uma
+letra por pixel com uma paleta própria: o macaco-prego (24x32, com o boné
+escuro que dá nome à espécie, rosto creme e rabo enrolado; tonto, os olhos
+viram espirais e três estrelinhas giram na cabeça), a banana, o cacho
+dourado, a casca, a jabuticaba, o pote de jabuticabas, o coração e o sagui
+do SaguiOS. O estilingue é desenhado pela metade e espelhado, com as
+mãozinhas cinzentas do sagui; o elástico é traçado em linha reta, solto ou
+puxado com a semente no meio. A porteira é montada em código: mourões,
+placa com a banana e, fechada, três tábuas com uma trava em diagonal.
+
+As texturas de 32x32 são geradas por regras na abertura do jogo, o que
+economiza espaço e deixa cada regra explicada: pedra em fiadas de 8 pixels
+com três pedras de larguras sorteadas por fiada (somando 32 para emendar
+sem costura) e juntas desencontradas, borda clara em cima e escura embaixo
+e musgo em algumas; cipó como a pedra com duas ramas em onda (pela tabela
+de seno) e folhas alternadas; madeira em quatro tábuas com veios e pregos;
+grama com florzinhas amarelas e brancas; terra com pedrinhas; lajota em
+placas com rejunte; folhas (teto de mata fechada) e rocha.
+
+### Como os macacos-prego decidem para onde andar
+
+A cada 4 tiques (30 ms cada), cada macaco que está quieto ou caçando olha
+para o sagui: se ele está a menos de 640 palmos e a linha reta entre os dois
+passa só por passagens com vão na altura dos olhos (o mesmo passeio de sala
+em sala que o desenho usa, saindo de cada sala convexa pelo primeiro lado
+que a linha cruza), o macaco o vê e guarda onde o viu. Caçando, anda em
+linha reta até o último lugar onde o viu, um pouco mais devagar que o sagui
+andando. Se bate numa parede, desvia 45 graus para um lado sorteado por meio
+segundo e tenta de novo, o que basta para contornar quinas e pilares sem um
+mapa de caminhos. Chegando lá sem ver o sagui, fica de guarda.
+
+Encostar no sagui tira uma vida: o macaco "pega uma banana do bolso" e sai
+correndo com ela por uns segundos, e o sagui fica um tempo sem poder ser
+pego de novo. Cada semente faz o macaco parar um instante; a terceira o
+deixa tonto (estrelinhas) e depois ele foge para longe do sagui até voltar
+para a mata (some do mapa e conta como "espantado"). Pisar numa casca de
+banana faz o macaco deslizar um pouco, girar e ficar tonto uns segundos,
+e depois ele volta a caçar. Ninguém se machuca.
+
+### O que foi feito diferente de propósito
+
+- O tema e as regras são do SaguiOS: bananas como mecânica central (pontos,
+  vidas a cada cinco, cascas como armadilha, porteira que pede um mínimo de
+  bananas, um cacho dourado escondido por fase), estilingue de jabuticaba,
+  macacos que roubam bananas em vez de atacar.
+- A barra de status não tem retrato do personagem: só ícones (banana com
+  "atuais/mínimo da porteira", cascas, sementes, corações, fase e pontos).
+- Os inimigos não morrem: ficam tontos e fogem.
+- Os mapas são polígonos convexos com passagens descobertas pelos pontos em
+  comum, num arquivo de texto próprio; as fases são áreas da Mata Atlântica
+  (uma clareira, um rio seco, um templo) com céu e árvores.
+- O motor desenha coluna por coluna com frestas, sem nenhuma ordenação de
+  paredes; o escurecimento vai para o verde da mata, não para o preto.
+- Nenhum código, tutorial ou repositório de jogo foi consultado: as contas
+  partiram da geometria descrita acima.

@@ -1,0 +1,89 @@
+# Sagui 3D - fase 2: O rio seco
+nome O rio seco
+minimo 7
+
+# Sala de entrada
+ponto 1 0 0
+ponto 2 192 0
+ponto 3 192 192
+ponto 4 0 192
+sala chao 0 teto 128 luz 11 piso lajota forro rocha parede pedra : 1 2 3 4
+
+# Galeria com um pilar no meio (quatro salas em volta do pilar)
+ponto 5 320 0
+ponto 6 320 192
+ponto 7 448 0
+ponto 8 448 192
+ponto 9 576 0
+ponto 10 576 192
+ponto 41 320 64
+ponto 42 448 64
+ponto 43 448 128
+ponto 44 320 128
+sala chao 0 teto 160 luz 10 piso lajota forro rocha parede pedra : 2 5 41 44 6 3
+sala chao 0 teto 160 luz 10 piso lajota forro rocha parede pedra : 5 7 42 41
+sala chao 0 teto 160 luz 10 piso lajota forro rocha parede pedra : 44 43 8 6
+sala chao 0 teto 160 luz 10 piso lajota forro rocha parede pedra : 7 9 10 8 43 42
+lado 41 44 madeira
+lado 42 41 madeira
+lado 44 43 madeira
+lado 43 42 madeira
+
+# Depósito escuro ao norte da galeria
+ponto 28 448 320
+ponto 29 320 320
+sala chao 0 teto 96 luz 3 piso madeira forro rocha parede madeira : 6 8 28 29
+
+# Degraus descendo para o leito do rio
+ponto 11 608 0
+ponto 12 608 192
+ponto 13 640 0
+ponto 14 640 192
+ponto 15 672 0
+ponto 16 672 192
+sala chao -16 teto 160 luz 11 piso terra forro rocha parede pedra : 9 11 12 10
+sala chao -32 teto 160 luz 12 piso terra forro rocha parede pedra : 11 13 14 12
+sala chao -48 teto 160 luz 13 piso terra forro ceu parede pedra : 13 15 16 14
+
+# Leito do rio seco, ao ar livre, com paredes tortas
+ponto 17 864 -64
+ponto 18 960 96
+ponto 19 864 256
+sala chao -48 teto 160 luz 15 piso terra forro ceu parede pedra : 15 17 18 19 16
+
+# Margem baixa e margem alta (degraus de 24)
+ponto 20 1088 160
+ponto 21 992 320
+ponto 22 1216 224
+ponto 23 1120 384
+sala chao -24 teto 160 luz 15 piso grama forro ceu parede pedra : 19 18 20 21
+sala chao 0 teto 176 luz 15 piso grama forro ceu parede cipo : 21 20 22 23
+
+# Saída
+ponto 24 1344 288
+ponto 25 1248 448
+sala chao 0 teto 128 luz 9 piso lajota forro rocha parede pedra : 23 22 24 25
+
+# Gruta secreta atrás do cipó, no leito do rio
+ponto 26 960 -128
+ponto 27 1056 32
+sala chao -48 teto 96 luz 4 piso terra forro folhas parede cipo : 18 17 26 27
+secreta 17 18
+
+sagui 64 96 0
+banana 150 150
+banana 512 96
+banana 360 280
+banana 420 260
+banana 760 40
+banana 800 160
+banana 880 100
+banana 1010 220
+banana 1140 280
+pote 390 290
+cacho 960 0
+macaco 520 160
+macaco 840 0
+macaco 900 180
+macaco 1180 330
+porteira 1300 360

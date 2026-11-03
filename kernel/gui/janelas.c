@@ -489,6 +489,22 @@ int32_t sis_proximo_evento(uint32_t id, uint32_t pev, uint32_t esperar, uint32_t
     return SIS_REPETIR;
 }
 
+/* SIS_TECLAS_SEGURADAS (&mapa[32]): quais teclas estão apertadas agora.
+ * Só quem tem a janela em foco recebe o mapa; os outros recebem tudo zerado,
+ * para um programa em segundo plano não espiar o que se digita. */
+int32_t sis_teclas_seguradas(uint32_t pmapa, uint32_t b, uint32_t c, uint32_t d, uint32_t e)
+{
+    (void)b; (void)c; (void)d; (void)e;
+    if (!usuario_ok((void *)pmapa, 32, true)) return ERRO_INVALIDO;
+    uint8_t mapa[32];
+    memset(mapa, 0, sizeof mapa);
+    janela_t *j = focada();
+    bool foco = j && j->pid == atual->pid;
+    if (foco) teclado_seguradas(mapa);
+    memcpy((void *)pmapa, mapa, 32);
+    return foco ? 1 : 0;
+}
+
 int32_t sis_titulo_janela(uint32_t id, uint32_t ptitulo, uint32_t c, uint32_t d, uint32_t e)
 {
     (void)c; (void)d; (void)e;

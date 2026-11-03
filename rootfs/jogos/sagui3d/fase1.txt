@@ -1,0 +1,83 @@
+# Sagui 3D - fase 1: A clareira de pedra
+# Formato: ver userland/sagui3d/mapa.c. Coordenadas em palmos; y cresce para o norte.
+nome A clareira de pedra
+minimo 5
+
+# Clareira (octógono) onde o sagui acorda
+ponto 1 0 0
+ponto 2 256 0
+ponto 3 320 64
+ponto 4 320 192
+ponto 5 256 256
+ponto 6 0 256
+ponto 7 -64 192
+ponto 8 -64 64
+sala chao 0 teto 160 luz 15 piso grama forro ceu parede pedra : 1 2 3 4 5 6 7 8
+
+# Corredor de cipó para o leste
+ponto 9 512 64
+ponto 10 512 192
+sala chao 0 teto 112 luz 10 piso terra forro folhas parede cipo : 3 9 10 4
+
+# Salão octogonal alto
+ponto 11 576 0
+ponto 12 704 0
+ponto 13 768 64
+ponto 14 768 192
+ponto 15 704 256
+ponto 16 576 256
+sala chao 0 teto 192 luz 12 piso lajota forro rocha parede pedra : 9 11 12 13 14 15 16 10
+lado 12 13 madeira
+lado 16 10 madeira
+
+# Escada para o norte (quatro degraus de 16)
+ponto 17 704 288
+ponto 18 576 288
+ponto 19 704 320
+ponto 20 576 320
+ponto 21 704 352
+ponto 22 576 352
+ponto 23 704 384
+ponto 24 576 384
+sala chao 16 teto 192 luz 12 piso madeira forro rocha parede pedra : 16 15 17 18
+sala chao 32 teto 192 luz 12 piso madeira forro rocha parede pedra : 18 17 19 20
+sala chao 48 teto 192 luz 13 piso madeira forro rocha parede pedra : 20 19 21 22
+sala chao 64 teto 200 luz 13 piso madeira forro rocha parede pedra : 22 21 23 24
+
+# Plataforma ao ar livre
+ponto 25 768 448
+ponto 26 768 576
+ponto 27 512 576
+ponto 28 512 448
+sala chao 64 teto 224 luz 15 piso madeira forro ceu parede pedra : 24 23 25 26 27 28
+
+# Sala secreta atrás do cipó (oeste da plataforma)
+ponto 29 448 448
+ponto 30 448 576
+sala chao 64 teto 128 luz 5 piso terra forro folhas parede cipo : 29 28 27 30
+secreta 27 28
+
+# Caverna escura (leste da plataforma)
+ponto 31 896 448
+ponto 32 896 576
+sala chao 64 teto 160 luz 4 piso terra forro rocha parede rocha : 25 31 32 26
+
+# Saída
+ponto 33 1024 448
+ponto 34 1024 576
+sala chao 64 teto 192 luz 14 piso grama forro ceu parede pedra : 31 33 34 32
+
+sagui 64 128 0
+banana 200 200
+banana 420 128
+banana 640 64
+banana 700 200
+banana 620 520
+banana 720 500
+banana 860 512
+pote 640 160
+cacho 470 512
+macaco 716 232
+macaco 560 540
+macaco 860 470
+porteira 990 512

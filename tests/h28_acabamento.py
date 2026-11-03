@@ -14,12 +14,12 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qemu import Maquina, verificar, RAIZ  # noqa: E402
 
-ICONES = ["Arquivos", "Terminal", "Editor", "Calculadora", "Banana", "Sobre"]
+ICONES = ["Arquivos", "Terminal", "Editor", "Calculadora", "Banana", "Sagui 3D", "Sobre"]
 
 
 def abrir_icone(m, nome):
     i = ICONES.index(nome)
-    m.clique(20 + 48, 24 + 16 + i * 92 + 32, duplo=True)
+    m.clique(20 + 48, 24 + 16 + i * 84 + 32, duplo=True)
 
 
 def main():

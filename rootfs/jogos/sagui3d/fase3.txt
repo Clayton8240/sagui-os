@@ -1,0 +1,89 @@
+# Sagui 3D - fase 3: O templo do sagui
+nome O templo do sagui
+minimo 8
+
+# Pátio central (octógono) com um tablado no meio: quatro salas em volta do tablado
+ponto 1 -96 -256
+ponto 2 96 -256
+ponto 3 256 -96
+ponto 4 256 96
+ponto 5 96 256
+ponto 6 -96 256
+ponto 7 -256 96
+ponto 8 -256 -96
+ponto 9 -64 -64
+ponto 10 64 -64
+ponto 11 64 64
+ponto 12 -64 64
+sala chao 0 teto 256 luz 15 piso grama forro ceu parede pedra : 1 2 3 10 9 8
+sala chao 0 teto 256 luz 15 piso grama forro ceu parede pedra : 3 4 11 10
+sala chao 0 teto 256 luz 15 piso grama forro ceu parede pedra : 4 5 6 7 12 11
+sala chao 0 teto 256 luz 15 piso grama forro ceu parede pedra : 7 8 9 12
+sala chao 20 teto 256 luz 15 piso lajota forro ceu parede pedra : 9 10 11 12
+
+# Entrada ao sul (o sagui começa aqui)
+ponto 13 -96 -448
+ponto 14 96 -448
+sala chao 0 teto 128 luz 10 piso lajota forro rocha parede pedra : 13 14 2 1
+
+# Ala leste: corredor de madeira e salão escuro, um pouco mais baixo
+ponto 15 384 -96
+ponto 16 384 96
+ponto 17 512 -224
+ponto 18 640 -96
+ponto 19 640 96
+ponto 20 512 224
+sala chao 0 teto 112 luz 8 piso madeira forro rocha parede madeira : 3 15 16 4
+sala chao -24 teto 192 luz 4 piso terra forro rocha parede rocha : 15 17 18 19 20 16
+
+# Esconderijo atrás do cipó, a leste do salão escuro
+ponto 21 736 -96
+ponto 22 736 96
+sala chao -24 teto 96 luz 3 piso terra forro folhas parede cipo : 18 21 22 19
+secreta 18 19
+
+# Ala oeste: escada subindo para uma galeria alta
+ponto 25 -288 96
+ponto 26 -288 -96
+ponto 27 -320 96
+ponto 28 -320 -96
+ponto 29 -352 96
+ponto 30 -352 -96
+ponto 31 -448 192
+ponto 32 -576 96
+ponto 33 -576 -96
+ponto 34 -448 -192
+sala chao 16 teto 160 luz 11 piso madeira forro rocha parede pedra : 8 7 25 26
+sala chao 32 teto 160 luz 11 piso madeira forro rocha parede pedra : 26 25 27 28
+sala chao 48 teto 176 luz 12 piso madeira forro rocha parede pedra : 28 27 29 30
+sala chao 64 teto 192 luz 13 piso madeira forro ceu parede cipo : 30 29 31 32 33 34
+
+# Saída ao norte
+ponto 35 96 448
+ponto 36 -96 448
+ponto 37 160 512
+ponto 38 160 640
+ponto 39 -160 640
+ponto 40 -160 512
+sala chao 0 teto 144 luz 9 piso lajota forro rocha parede pedra : 6 5 35 36
+sala chao 0 teto 160 luz 14 piso grama forro ceu parede pedra : 36 35 37 38 39 40
+
+sagui 0 -400 90
+banana 0 -320
+banana 160 -160
+banana -40 0
+banana 40 20
+banana 450 0
+banana 560 120
+banana 300 40
+banana -470 60
+banana -500 -60
+banana 0 360
+pote 520 -100
+cacho 690 0
+macaco 0 160
+macaco 540 60
+macaco 600 -40
+macaco -460 120
+macaco 80 590
+porteira 0 600

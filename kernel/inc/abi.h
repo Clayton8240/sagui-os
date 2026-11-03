@@ -54,6 +54,8 @@
 #define SIS_DESMONTAR      57   /* (nome) -> grava o que falta e libera para remover */
 /* Som (bônus B3) */
 #define SIS_BIP            58   /* (&notas, quantidade, modo) -> volta na hora; o tique do relógio toca */
+/* Jogos (bônus B4) */
+#define SIS_TECLAS_SEGURADAS 59 /* (&mapa[32]) -> 1 se a janela do processo está em foco */
 #define SIS_MAX            64
 
 /* Erros (sempre negativos) */
@@ -158,6 +160,20 @@ typedef struct {
     unsigned int montado;
     unsigned int suportado;
 } info_disco_t;
+
+/* SIS_TECLAS_SEGURADAS: posição de algumas teclas no mapa (código de
+ * varredura do conjunto 1; 128 + código para as teclas estendidas E0). */
+#define CV_ESC        0x01
+#define CV_CTRL       0x1D
+#define CV_SHIFT      0x2A
+#define CV_ALT        0x38
+#define CV_ESPACO     0x39
+#define CV_B          0x30
+#define CV_CTRL_DIR   (0x80 | 0x1D)
+#define CV_CIMA       (0x80 | 0x48)
+#define CV_BAIXO      (0x80 | 0x50)
+#define CV_ESQUERDA   (0x80 | 0x4B)
+#define CV_DIREITA    (0x80 | 0x4D)
 
 /* Modos do terminal */
 #define TERM_LINHA 0

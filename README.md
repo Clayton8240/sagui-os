@@ -30,13 +30,14 @@ no navegador (funciona direto do disco, sem servidor).
 | 4. Gráfico e mouse | VESA, fonte própria com acentos, touchpad PS/2 |
 | 5. Janelas e programas | Área de trabalho, janelas, Arquivos, Terminal, Editor, Calculadora, Sagui Pega Banana |
 | 6. Pendrive de dados | Driver USB EHCI próprio e FAT32 com leitura e gravação |
+| Bônus | B3: bip pelo alto-falante do PC. B4: **Sagui 3D**, jogo autoral em primeira pessoa (2,5D). B1 e B2 cancelados pelo Eli. |
 
 ## Estrutura
 
 ```
 boot/        estágio 1 (MBR) e estágio 2 do carregador, em NASM
 kernel/      kernel em C freestanding + NASM
-userland/    libsagui e programas de usuário (a partir da fase 3)
+userland/    libsagui e programas de usuário (a partir da fase 3); sagui3d/ é o jogo do B4
 rootfs/      arquivos que vão para o ramdisk SGFS
 tools/       scripts de build (mksgfs.py, mkimagem.py), status.py
 tests/       testes automáticos no QEMU, um por história

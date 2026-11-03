@@ -98,6 +98,8 @@ def progresso(estado):
     estado["progresso_geral"] = round(100.0 * feitas / len(hs), 1) if hs else 0
     for fase in estado["fases"]:
         dela = [h for h in hs if h["fase"] == fase["numero"]]
+        if not dela:   # fase bônus: conta as histórias bônus que não foram canceladas
+            dela = [h for h in estado["historias"] if h["fase"] == fase["numero"] and h["estado"] != "cancelado"]
         f = sum(1 for h in dela if h["estado"] in ("feito", "aguardando teste"))
         fase["progresso"] = round(100.0 * f / len(dela), 1) if dela else 0
 

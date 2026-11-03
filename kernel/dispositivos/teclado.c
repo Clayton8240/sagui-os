@@ -14,6 +14,7 @@
 #include "cpu.h"
 #include "portas.h"
 #include "processo.h"
+#include "texto.h"
 
 #define PORTA_DADOS  0x60
 #define PORTA_ESTADO 0x64
@@ -127,6 +128,19 @@ static void caractere(int c)
     guardar(c);
 }
 
+/* Teclas seguradas agora (B4): um bit por código de varredura, 0-127 para
+ * as comuns e 128-255 para as estendidas (E0 xx). Os jogos precisam saber
+ * que a seta continua apertada, e não só que foi apertada uma vez; o
+ * caminho normal de caracteres não diz quando a tecla é solta. */
+static volatile uint8_t seguradas[32];
+
+void teclado_seguradas(uint8_t mapa[32])
+{
+    bool i = int_salva_desliga();
+    memcpy(mapa, (const void *)seguradas, 32);
+    int_restaura(i);
+}
+
 void teclado_byte(uint8_t b)
 {
     if (b == 0xFA || b == 0xFE || b == 0x00 || b == 0xFF)
@@ -138,6 +152,11 @@ void teclado_byte(uint8_t b)
     uint8_t sc = b & 0x7F;
     bool ext = estendida;
     estendida = false;
+    if (!(ext && sc == 0x2A)) {   /* o "shift falso" das setas não conta */
+        uint8_t k = (uint8_t)(sc | (ext ? 0x80 : 0));
+        if (solta) seguradas[k >> 3] &= (uint8_t)~(1u << (k & 7));
+        else seguradas[k >> 3] |= (uint8_t)(1u << (k & 7));
+    }
 
     /* Modificadores. */
     uint32_t m = 0;

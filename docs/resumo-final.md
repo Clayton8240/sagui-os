@@ -12,6 +12,7 @@ Um sistema operacional para PCs x86 de 32 bits, escrito do zero por uma IA (Clau
 | 4. Gráfico e mouse | VESA 1024x768x32 com buffer duplo, fonte 8x16 própria com acentos, terminal gráfico, touchpad PS/2 | H17 a H19 |
 | 5. Janelas e programas | Área de trabalho, gerenciador de janelas no kernel, kit gráfico, Arquivos, Terminal, Editor, Calculadora, Sagui Pega Banana, Sobre | H20 a H28 |
 | 6. Pendrive de dados | PCI, driver EHCI, enumeração USB com hubs e conexão a quente, Bulk-Only/SCSI, FAT32 com leitura e gravação, notificação e ícone do pendrive | H29 a H34 |
+| Bônus | Bip pelo alto-falante do PC (fila de notas tocada pelo relógio); **Sagui 3D**, jogo em primeira pessoa 2,5D com três fases (B1 e B2 cancelados pelo Eli) | B3, B4 |
 
 ## Números
 
@@ -37,7 +38,7 @@ Do início da fase até a entrega para teste, pelos horários dos commits em 03/
 | 3. Processos e programas | ~40 min | 0 (dois pedidos do Eli, as setas para os lados e o texto em segundo plano, entraram na fase 4) |
 | 4. Gráfico e mouse | ~20 min + ~45 min da correção | 1: a inicialização do touchpad travava o teclado (H19-fix) |
 | 5. Janelas e programas | ~47 min | 0 (um detalhe visual no jogo, corrigido no começo da fase 6) |
-| 6. Pendrive de dados | ~40 min | 2 (em teste): o EHCI do G470 é de 64 bits e pede estruturas maiores; a FAT32 depois da partição do SaguiOS não era vista; os dois controladores do G470 compartilhavam o mesmo anel de transferências (erros 17 a 19) |
+| 6. Pendrive de dados | ~40 min | 2: o EHCI do G470 é de 64 bits e pede estruturas maiores; a FAT32 depois da partição do SaguiOS não era vista; os dois controladores do G470 compartilhavam o mesmo anel de transferências (erros 17 a 19) |
 
 ## O que funcionou no G470
 
@@ -48,11 +49,11 @@ Confirmado pelo Eli, com fotos em `testes_eli/`:
 - **Fase 3:** shell no anel 3, multitarefa (`contador &` com `ps`), histórico, acentos com teclas mortas.
 - **Fase 4:** modo gráfico, fonte própria com acentos, touchpad, depois da correção H19-fix.
 - **Fase 5:** área de trabalho com cinco programas abertos ao mesmo tempo.
-- **Fase 6:** os dois primeiros testes: o pendrive não aparecia (erros 17 a 19, corrigidos). Aguardando o novo teste. Pontos que só o hardware real exercita: o EHCI de 64 bits, o hub interno do chipset (D024) e a passagem do controlador USB da BIOS para o sistema.
+- **Fase 6:** os dois primeiros testes: o pendrive não aparecia (erros 17 a 19, corrigidos). Aprovada no terceiro teste. Pontos que só o hardware real exercita: o EHCI de 64 bits, o hub interno do chipset (D024) e a passagem do controlador USB da BIOS para o sistema.
 
 ## O que ficou de fora
 
-- **Bônus B1, B2, B3** (HD interno só leitura, boot UEFI, bip): não feitos. O PRD os deixa para depois dos 100%.
+- **Bônus B1 e B2** (HD interno só leitura, boot UEFI): cancelados pelo Eli. B1: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada. B2: o objetivo é rodar em computadores antigos, com BIOS tradicional.
 - **Hub USB testado no QEMU:** impossível no QEMU 8.2, que não tem hub de alta velocidade e recusa ligar o hub USB 1.1 no EHCI. O código segue a especificação, mas só é validado no G470 (D024).
 - **Dispositivos USB de velocidade plena ou baixa** (que precisariam de *split transactions* atrás do hub): não suportados. Pendrives são de alta velocidade.
 - **Teclado e mouse USB:** fora do escopo do PRD (o G470 usa PS/2 internamente).
@@ -76,3 +77,10 @@ Confirmado pelo Eli, com fotos em `testes_eli/`:
 | O shell | `sagsh` no anel 3: redirecionamento, pipes, segundo plano, histórico, Tab, edição com setas | H16 | Feito | Terminal |
 | Carregamento de programas | Carregador ELF32 próprio | H13 | Feito | todos os programas em `/bin` |
 | Interface gráfica (extra) | Gerenciador de janelas no kernel, programas gráficos no anel 3 com memória compartilhada | H20 a H28 | Feito | a área de trabalho |
+
+## Fase bônus
+
+| Item | O que é | Onde ver |
+| --- | --- | --- |
+| B3 | Comando `bip`, sons no Sagui Pega Banana e no Sagui 3D, sem travar quem toca | D029, `tests/b3_bip.py` |
+| B4 | Sagui 3D: motor 2,5D próprio (salas convexas com alturas, frestas por coluna, ponto fixo), três fases em texto, macacos-prego, estilingue de jabuticaba, bananas, cascas, porteira e cacho dourado | seção "Sagui 3D" em `docs/decisoes.md`, `tests/b4_sagui3d.py` |

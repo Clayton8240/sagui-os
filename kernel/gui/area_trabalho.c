@@ -31,6 +31,7 @@ static const icone_t icones[] = {
     { "Editor",      "/bin/editor",      &arte_icone_editor },
     { "Calculadora", "/bin/calculadora", &arte_icone_calculadora },
     { "Banana",      "/bin/banana",      &arte_icone_banana },
+    { "Sagui 3D",    "/bin/sagui3d",     &arte_icone_sagui3d },   /* bônus B4 */
     { "Sobre",       "/bin/sobre-o-sistema",   &arte_icone_sobre },
     { "Pendrive",    "/bin/arquivos",    &arte_icone_pendrive },   /* só aparece com um pendrive conectado (H34) */
 };
@@ -42,7 +43,7 @@ static char nome_pendrive[24] = "Pendrive";
 static bool icone_visivel(int i) { return i != ICONE_PENDRIVE || pendrive_visivel; }
 #define ICONE_X 20
 #define ICONE_Y0 (BARRA_SUPERIOR + 16)
-#define ICONE_PASSO 92
+#define ICONE_PASSO 84   /* 8 ícones cabem em 768 linhas */
 #define ICONE_L 96
 #define ICONE_A 88
 

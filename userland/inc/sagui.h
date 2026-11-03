@@ -84,6 +84,10 @@ int  tocar(const nota_t *notas, int n, int modo);  /* modo BIP_SUBSTITUIR ou BIP
 int  bip(int freq, int ms);
 void silenciar(void);
 
+/* ---- jogos (bônus B4) ---- */
+int  teclas_seguradas(unsigned char mapa[32]);   /* 1 = em foco; CV_* em abi.h */
+#define SEGURADA(mapa, cv) (((mapa)[(cv) >> 3] >> ((cv) & 7)) & 1)
+
 /* ---- memória e texto ---- */
 void  *memcpy(void *d, const void *s, size_t n);
 void  *memmove(void *d, const void *s, size_t n);

@@ -183,6 +183,43 @@ static const char *const icone_calculadora[] = {
     "................................",
 };
 
+/* Sagui 3D (B4): corredor de pedra em perspectiva, céu em cima, grama
+ * embaixo e uma banana no fundo. */
+static const char *const icone_sagui3d[] = {
+    "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+    "PPssssssssssssssssssssssssssssPP",
+    "PCPssssssssssssssssssssssssssPCP",
+    "PCCPssssssssssssssssssssssssPCCP",
+    "PCCkPssssssssssssssssssssssPkCCP",
+    "PLCkCPssssssssssssssssssssPCkCLP",
+    "PLLkCCPssssssssssssssssssPCCkLLP",
+    "PLLLLCkPssssssssssssssssPkCLLLLP",
+    "PLLLLLkCPssssssssssssssPCkLLLLLP",
+    "PCCLLLLCCPssssssssssssPCCLLLLCCP",
+    "PCCkCLLLLkPssssssssssPkLLLLCkCCP",
+    "PCCkCCkLLLCPLkLLLkLLPCLLLkCCkCCP",
+    "PLCkCCkCCLLCkkkkkkkkCLLCCkCCkCLP",
+    "PLLLLLkCCkCLkLLLkLLLLCkCCkLLLLLP",
+    "PLLLLLLLLLCCkLLLkLLLCCLLLLLLLLLP",
+    "PLLLLLLLLLLLkkkkkkkkLLLLLLLLLLLP",
+    "PCCkCCkCCkCCLLLkPLLkCCkCCkCCkCCP",
+    "PCCkCCkCCkLLLLLPYLLkLLkCCkCCkCCP",
+    "PCCkCCLLLLLCkkPYPkkkCLLLLLCCkCCP",
+    "PCLLLLLLLkCLLPYPLLkLLCkLLLLLLLCP",
+    "PLLLLLLCCkLPLPPLLLkLPLkCCLLLLLLP",
+    "PLLLLCkCCLPggGgggggggPLCCkCLLLLP",
+    "PLLkCCkLLPgGggggggggggPLLkCCkLLP",
+    "PCCkCCLLPGggggggggggGggPLLCCkCCP",
+    "PCCkCLLPggggggggggGgggggPLLCkCCP",
+    "PCCLLLPgggggggggGggggggggPLLLCCP",
+    "PCLLLPggggggggGggggggggggGPLLLCP",
+    "PLLLPgggggggGggggggggggGgggPLLLP",
+    "PLLPggggggGggggggggggGggggggPLLP",
+    "PLPgggggGggggggggggGgggggggggPLP",
+    "PPggggGggggggggggGggggggggggGgPP",
+    "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+};
+
 static const char *const icone_banana[] = {
     "................................",
     "................................",
@@ -294,6 +331,7 @@ const desenho_t arte_icone_terminal   = { icone_terminal, 32, 32 };
 const desenho_t arte_icone_editor     = { icone_editor, 32, 32 };
 const desenho_t arte_icone_calculadora = { icone_calculadora, 32, 32 };
 const desenho_t arte_icone_banana     = { icone_banana, 32, 32 };
+const desenho_t arte_icone_sagui3d    = { icone_sagui3d, 32, 32 };
 const desenho_t arte_icone_sobre      = { icone_sobre, 32, 32 };
 const desenho_t arte_icone_pendrive   = { icone_pendrive, 32, 32 };
 
@@ -313,6 +351,10 @@ bool arte_cor(char letra, uint32_t *cor)
     case 'A': *cor = 0xD9A400; return true;   /* amarelo-escuro */
     case 'G': *cor = 0x3CDC6E; return true;   /* verde */
     case 'V': *cor = 0x2A6FD8; return true;   /* azul */
+    case 'k': *cor = 0x5A564E; return true;   /* pedra escura (Sagui 3D) */
+    case 'L': *cor = 0x8F8A7C; return true;   /* pedra clara */
+    case 's': *cor = 0x7EC8E3; return true;   /* céu */
+    case 'g': *cor = 0x0B7A3E; return true;   /* verde do SaguiOS */
     default: return false;
     }
 }

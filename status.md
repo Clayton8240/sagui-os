@@ -1,14 +1,18 @@
+```
+Fase bônus pronta para teste: B3 (bip) e B4 (Sagui 3D). Imagens em entrega/bonus/ (e entrega/final/). Roteiro: docs/teste-bonus.md. B1 e B2 cancelados pelo Eli.
+```
+
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T23:02:23_
+_Atualizado em 2026-11-03T23:46:02_
 
-- **Situação:** Trabalhando na B3: Bônus: bip
+- **Situação:** Aguardando teste do Eli: fase 7
 - **Fase atual:** 7
-- **História atual:** B3
+- **História atual:** -
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 507904 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9517, userland 3896
+- **Imagem:** 575488 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9614, userland 6317
 
 ## Fases
 
@@ -20,7 +24,7 @@ _Atualizado em 2026-11-03T23:02:23_
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
 | 6 | Pendrive de dados | 100.0% | feito |
-| 7 | Bônus (B3 bip, B4 Sagui 3D) | 0% | em andamento |
+| 7 | Bônus (B3 bip, B4 Sagui 3D) | 100.0% | aguardando teste |
 
 ## Histórias
 
@@ -62,11 +66,15 @@ _Atualizado em 2026-11-03T23:02:23_
 | H34 | Integração do pendrive | feito | 5 |
 | B1 | Bônus: enxergar o HD interno | Cancelado pelo Eli: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada ao projeto. |  |
 | B2 | Bônus: boot por UEFI | Cancelado pelo Eli: o objetivo do SaguiOS é rodar em computadores antigos, com BIOS tradicional. |  |
-| B3 | Bônus: bip | feito | 5 |
-| B4 | Bônus: Sagui 3D | a fazer |  |
+| B3 | Bônus: bip | aguardando teste | 5 |
+| B4 | Bônus: Sagui 3D | aguardando teste | 43 |
 
 ## Últimas ações
 
+- 2026-11-03T23:45:56: Fase 7 entregue. Aguardando teste do Eli.
+- 2026-11-03T23:45:56: B4 concluída: Sagui 3D: motor 2,5D próprio, três fases em texto, macacos-prego, sementes, cascas, porteira da banana, cacho dourado, sons com o bip; teste automático e capturas
+- 2026-11-03T23:32:48: B4 Sagui 3D: motor 2,5D, três fases, macacos-prego, bananas, cascas, porteira e cacho dourado; teste automático passando
+- 2026-11-03T23:02:29: Início da B4: Bônus: Sagui 3D
 - 2026-11-03T23:02:23: B3 concluída: Comando bip, sons no Sagui Pega Banana, fila de notas tocada pelo tique do relógio (D029); canal 2 conferido no QEMU
 - 2026-11-03T22:57:35: Início da B3: Bônus: bip
 - 2026-11-03T22:57:35: Fase 6 aprovada pelo Eli. Fase bônus replanejada: B1 e B2 cancelados pelo Eli, B3 mantido, B4 (Sagui 3D) novo.
@@ -78,7 +86,3 @@ _Atualizado em 2026-11-03T23:02:23_
 - 2026-11-03T21:26:31: Erro corrigido: G470: pendrive não aparece; usb mostra porta ocupada sem pendrive
 - 2026-11-03T21:21:11: Bloqueio: G470: o pendrive não aparece (fase 6). Correção em andamento: H30-fix
 - 2026-11-03T20:50:19: Fase 6 entregue. Aguardando teste do Eli.
-- 2026-11-03T20:50:19: Regressão final: 34/34 testes passaram
-- 2026-11-03T20:25:28: H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck
-- 2026-11-03T20:25:27: Erro corrigido: Acentos trocados em textos UTF-8 do pendrive
-- 2026-11-03T20:20:50: Início da H34: Integração do pendrive

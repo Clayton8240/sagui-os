@@ -195,3 +195,18 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
 ## 2026-11-03 22:57
 
 - **Confirmação do Eli no hardware:** "fase 6 ok". Fase 6 validada no VirtualBox e no G470.
+
+### Fase bônus (replanejada pelo Eli)
+
+- Fase 6 aprovada no G470 depois da terceira imagem (erro 19).
+- O Eli cancelou o B1 (HD interno) e o B2 (UEFI), manteve o B3 (bip) e criou
+  o B4 (Sagui 3D).
+- **B3.** Fila de notas tocada pelo tique do relógio (D029). A primeira
+  conferência do canal 2 viu 0 viradas no QEMU porque media o tempo por
+  número de voltas; passou a medir pelo canal 0.
+- **B4.** Primeiro motor do jogo funcionou de cara para as paredes e o céu;
+  dois ajustes vistos nas capturas: uma faixa da direita sem desenho (conta
+  que estourava 32 bits com uma parede encostada no olho) e o macaco que
+  escorregava deslizava para trás do sagui. Na jogabilidade, o macaco que
+  pegava uma banana voltava na hora e tirava as três vidas em segundos: agora
+  ele sai correndo com a banana.
