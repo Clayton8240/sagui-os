@@ -55,19 +55,36 @@
 #define P_PO   (1u << 13)
 #define P_MUDANCAS (P_CSC | P_PEC | P_OCC)   /* bits "escreva 1 para limpar" */
 
-/* qTD: 32 bytes, alinhado em 32 */
+/* Formatos de 64 bits (apêndice B da especificação EHCI). Um controlador
+ * que se declara capaz de endereços de 64 bits (HCCPARAMS bit 0, caso dos
+ * EHCI da Intel do G470) lê SEMPRE a versão longa das estruturas: depois
+ * dos 5 ponteiros de página vêm mais 5 palavras com a parte alta de cada
+ * um. A primeira versão deste driver usava o formato curto, colado: no
+ * G470 o controlador lia como "parte alta" os bytes da estrutura seguinte e
+ * mandava os dados para endereços absurdos (erro 17). O QEMU se declara só
+ * de 32 bits e não mostrava o problema. Agora as estruturas têm sempre o
+ * tamanho longo, com a parte alta zerada; um controlador de 32 bits
+ * simplesmente não lê o final. */
+
+/* qTD: 13 palavras (52 bytes), ocupando 64, alinhado em 32 */
 typedef struct {
     volatile uint32_t proximo, alternativo, ficha;
     volatile uint32_t buffer[5];
+    volatile uint32_t buffer_alto[5];
+    uint32_t preenchimento[3];
 } __attribute__((aligned(32))) qtd_t;
 
-/* QH: 48 bytes (com a área de trabalho do controlador), alinhado em 32 */
+/* QH: 17 palavras (68 bytes), ocupando 96, alinhado em 32 */
 typedef struct {
     volatile uint32_t ligacao, caracteristicas, capacidades, atual;
     volatile uint32_t prox_qtd, alt_qtd, ficha;
     volatile uint32_t buffer[5];
-    uint32_t preenchimento[4];
+    volatile uint32_t buffer_alto[5];
+    uint32_t preenchimento[7];
 } __attribute__((aligned(32))) qh_t;
+
+_Static_assert(sizeof(qtd_t) == 64, "qTD no formato de 64 bits ocupa 64 bytes");
+_Static_assert(sizeof(qh_t) == 96, "QH no formato de 64 bits ocupa 96 bytes");
 
 #define T_TERMINA    1u
 #define T_QH         (1u << 1)
@@ -128,7 +145,8 @@ static void tomar_da_bios(ehci_t *c)
                 pci_escreve32(&c->pci, eecp, v | (1u << 24));
                 for (int i = 0; i < 1000 && (pci_le32(&c->pci, eecp) & (1u << 16)); i++)
                     esperar_bruto_us(1000);
-                klog("[EHCI] BIOS %s o controlador\n", (pci_le32(&c->pci, eecp) & (1u << 16)) ? "NAO soltou" : "soltou");
+                c->bios = (pci_le32(&c->pci, eecp) & (1u << 16)) ? -1 : 1;
+                klog("[EHCI] BIOS %s o controlador\n", c->bios < 0 ? "NAO soltou" : "soltou");
             }
             pci_escreve32(&c->pci, (uint8_t)(eecp + 4), 0);   /* USBLEGCTLSTS: sem SMI */
             return;
@@ -144,10 +162,12 @@ static bool alocar_memoria(void)
     uint32_t b = memfisica_alocar_seguidas(BUFFER_BYTES / PAGINA);
     if (!p || !b) return false;
     memset((void *)p, 0, PAGINA);
+    /* Uma página: cabeça (96), fila de trabalho (96), pacote de setup e 8
+     * qTDs de 64 bytes, sem nenhuma estrutura encostada em outra. */
     cabeca = (qh_t *)p;
-    fila = (qh_t *)(p + 64);
-    setup_pacote = (uint8_t *)(p + 128);
-    qtds = (qtd_t *)(p + 256);
+    fila = (qh_t *)(p + 128);
+    setup_pacote = (uint8_t *)(p + 256);
+    qtds = (qtd_t *)(p + 512);
     buffer = (uint8_t *)b;
     /* A cabeça do anel assíncrono: aponta para si mesma, marcada como "H". */
     cabeca->ligacao = (uint32_t)cabeca | T_QH;
@@ -170,6 +190,9 @@ static bool iniciar(ehci_t *c)
     c->op = (volatile uint32_t *)(c->cap + c->cap[0]);
     uint32_t hcs = *(volatile uint32_t *)(c->cap + 4);
     c->portas = (int)(hcs & 0xF);
+    c->companheiros = (int)((hcs >> 12) & 0xF);
+    for (int p = 0; p < USB_MAX_PORTAS; p++) c->resultado[p] = -1;   /* ainda não tentado */
+    c->enderecos64 = *(volatile uint32_t *)(c->cap + 8) & 1;
     if (c->portas > USB_MAX_PORTAS) c->portas = USB_MAX_PORTAS;
     tomar_da_bios(c);
 
@@ -233,7 +256,7 @@ int ehci_porta_resetar(ehci_t *c, int p)
     uint32_t v = c->op[PORTSC + p];
     if (!(v & P_CCS)) return USB_ERRO;
     if ((v & P_LS) == (1u << 10)) {                /* estado K: baixa velocidade -> companheiro */
-        c->op[PORTSC + p] = (v & ~P_MUDANCAS) | P_PO;
+        if (c->companheiros) c->op[PORTSC + p] = (v & ~P_MUDANCAS) | P_PO;
         return USB_ERRO;
     }
     c->op[PORTSC + p] = ((v & ~P_MUDANCAS) & ~P_PE) | P_PR;
@@ -243,7 +266,9 @@ int ehci_porta_resetar(ehci_t *c, int p)
     ehci_esperar_ms(c, 10);
     v = c->op[PORTSC + p];
     if (!(v & P_PE)) {                             /* não habilitou: velocidade plena -> companheiro */
-        c->op[PORTSC + p] = (v & ~P_MUDANCAS) | P_PO;
+        /* Sem companheiros (G470: os chipsets série 6 só têm o hub interno),
+         * entregar a porta a ninguém a deixaria inútil: só desiste. */
+        if (c->companheiros) c->op[PORTSC + p] = (v & ~P_MUDANCAS) | P_PO;
         return USB_ERRO;
     }
     return 0;
@@ -259,6 +284,7 @@ static void preparar_qtd(qtd_t *t, uint32_t pid, uint32_t alterna, uint32_t ende
     t->buffer[0] = endereco;
     uint32_t pagina = endereco & ~0xFFFu;
     for (int i = 1; i < 5; i++) t->buffer[i] = pagina + (uint32_t)i * PAGINA;
+    for (int i = 0; i < 5; i++) t->buffer_alto[i] = 0;   /* tudo abaixo de 4 GB */
 }
 
 /* Pendura a QH no anel, espera o último qTD e tira a QH. Devolve 0 ou erro. */

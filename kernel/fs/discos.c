@@ -96,22 +96,34 @@ static void reconhecer(disco_t *d)
         d->fat32 = true;
         copiar_rotulo(d, s + 71);
     } else if (s[510] == 0x55 && s[511] == 0xAA) {
-        for (int p = 0; p < 4; p++) {
+        /* Olha as quatro partições e fica com a primeira FAT32. Um pendrive
+         * gravado com o saguios.img e depois formatado só no espaço livre
+         * tem a partição do SaguiOS (0xDA) primeiro e a FAT32 depois: foi o
+         * caso no G470 (erro 18). Sem FAT32, o formato mostrado é o da
+         * primeira partição usada. */
+        bool achou_outro = false;
+        for (int p = 0; p < 4 && !d->fat32; p++) {
             const uint8_t *e = s + 446 + p * 16;
             uint8_t tipo = e[4];
             uint32_t ini = (uint32_t)e[8] | (uint32_t)e[9] << 8 | (uint32_t)e[10] << 16 | (uint32_t)e[11] << 24;
             if (!tipo || (e[0] != 0 && e[0] != 0x80)) continue;
-            switch (tipo) {
-            case 0x0B: case 0x0C: {
+            if (tipo == 0x0B || tipo == 0x0C) {
                 uint8_t *v = kmalloc(512);
                 if (v && d->ler(d, ini, 1, v) == 0 && eh_fat32(v)) {
                     d->part_inicio = ini;
                     d->fat32 = true;
                     copiar_rotulo(d, v + 71);
-                } else txt_copia_n(d->formato, "FAT32 danificado: não suportado", sizeof d->formato);
+                } else if (!achou_outro) {
+                    txt_copia_n(d->formato, "FAT32 danificado: não suportado", sizeof d->formato);
+                    achou_outro = true;
+                }
                 if (v) kfree(v);
-                break;
+                continue;
             }
+            if (tipo == 0xDA) d->de_boot = true;
+            if (achou_outro) continue;
+            achou_outro = true;
+            switch (tipo) {
             case 0x01: case 0x04: case 0x06: case 0x0E:
                 txt_copia_n(d->formato, "FAT12/16: formato não suportado", sizeof d->formato); break;
             case 0x07: {
@@ -122,12 +134,12 @@ static void reconhecer(disco_t *d)
                 break;
             }
             case 0x83: txt_copia_n(d->formato, "ext (Linux): formato não suportado", sizeof d->formato); break;
-            case 0xDA: txt_copia_n(d->formato, "pendrive de boot do SaguiOS", sizeof d->formato); d->de_boot = true; break;
+            case 0xDA: txt_copia_n(d->formato, "pendrive de boot do SaguiOS", sizeof d->formato); break;
             case 0xEE: txt_copia_n(d->formato, "GPT: formato não suportado", sizeof d->formato); break;
             default:   snformatar(d->formato, sizeof d->formato, "partição tipo %x: não suportado", tipo);
             }
-            break;   /* só a primeira partição usada */
         }
+        if (d->fat32) d->de_boot = false;   /* tem uma FAT32: é um pendrive de dados (e talvez de boot também) */
     }
     if (d->fat32) {
         txt_copia_n(d->formato, "FAT32", sizeof d->formato);

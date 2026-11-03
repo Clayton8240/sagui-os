@@ -122,6 +122,26 @@ def main():
         m.esperar_serial("Pendrive removido.", 15)
     original = open(os.path.join(RAIZ, "rootfs", "leia-me.txt"), encoding="utf-8").read()
     verificar(mtype(pen, "/leia-me.txt") == original.encode("latin-1"), "mtools: leia-me.txt copiado pelo terminal está no pendrive")
+
+    # ---------------- um pendrive só: o do boot, com uma FAT32 depois ----------------
+    # Como ficou o pendrive do Eli no G470 (erro 18): o saguios.img gravado no
+    # começo (partição 0xDA) e uma partição FAT32 criada no espaço livre.
+    unico = os.path.join(os.path.dirname(pen), "h34-unico.img")
+    subprocess.run(["cp", os.path.join(RAIZ, "build", "saguios.img"), unico], check=True)
+    with open(unico, "r+b") as f:
+        f.truncate(64 * 1024 * 1024)
+    subprocess.run(["sfdisk", "-q", "--append", unico], input="start=4096, type=c\n", text=True, check=True)
+    subprocess.run(["mkfs.vfat", "-F", "32", "-n", "DADOS", "--offset", "4096", unico], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(["mcopy", "-i", unico + "@@2M", os.path.join(RAIZ, "rootfs", "sobre.txt"), "::/do-pc.txt"], check=True)
+    with Maquina("h34-unico", "usb", imagem=unico) as m:
+        m.esperar_serial("sagui:/$", 120)
+        m.esperar_serial("notificacao: Pendrive conectado: DADOS", 20)
+        verificar(True, "boot e dados no mesmo pendrive: a FAT32 na segunda partição é achada e notificada")
+        time.sleep(1)
+        m.clique(*icone(6), duplo=True)
+        m.esperar_serial("arquivos: pasta /usb (1 itens)", 15)
+        verificar(True, "o ícone abre o Arquivos com o arquivo que veio do PC")
+        m.captura("H34-8-um-pendrive-so")
     particao = pen + ".part"
     subprocess.run(["dd", f"if={pen}", f"of={particao}", "bs=512", "skip=2048", "status=none"], check=True)
     r = subprocess.run(["fsck.vfat", "-n", particao], capture_output=True, text=True)

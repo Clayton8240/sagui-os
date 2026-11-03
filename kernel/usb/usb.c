@@ -84,8 +84,11 @@ static const char *nome_classe(uint8_t c)
     }
 }
 
+static int ultimo_passo;   /* em que passo a última enumeração parou (diagnóstico) */
+
 static usb_disp_t *enumerar(ehci_t *c, usb_disp_t *hub, uint8_t porta)
 {
+    ultimo_passo = 1;
     usb_disp_t *d = novo();
     if (!d) return NULL;
     d->ctl = c;
@@ -95,13 +98,16 @@ static usb_disp_t *enumerar(ehci_t *c, usb_disp_t *hub, uint8_t porta)
     d->mps0 = 64;
     uint8_t b[256];
     if (descritor(d, 1, 0, 0, b, 8) < 8) goto falhou;
+    ultimo_passo = 2;
     d->mps0 = b[7] ? b[7] : 64;
     uint8_t endereco = c->proximo_endereco++;
     if (c->proximo_endereco > 127) c->proximo_endereco = 1;
     if (usb_controle(d, 0x00, 5, endereco, 0, NULL, 0) < 0) goto falhou;
     d->endereco = endereco;
     ehci_esperar_ms(c, 10);
+    ultimo_passo = 3;
     if (descritor(d, 1, 0, 0, b, 18) < 18) goto falhou;
+    ultimo_passo = 4;
     d->id_fabricante = (uint16_t)(b[8] | (b[9] << 8));
     d->id_produto = (uint16_t)(b[10] | (b[11] << 8));
     d->classe = b[4]; d->subclasse = b[5]; d->protocolo = b[6];
@@ -133,7 +139,10 @@ static usb_disp_t *enumerar(ehci_t *c, usb_disp_t *hub, uint8_t porta)
             else if (!d->ep_saida) { d->ep_saida = b[i + 2] & 0x0F; d->mps_saida = mps; }
         }
     }
+    ultimo_passo = 5;
     if (usb_controle(d, 0x00, 9, d->config, 0, NULL, 0) < 0) goto falhou;
+    ultimo_passo = 0;
+    if (!hub) c->resultado[porta] = 0;
     klog("[USB] conectado: %s %s (%04x:%04x) classe %x (%s), endereco %u, %s %u porta %u\n",
          d->fabricante, d->produto, d->id_fabricante, d->id_produto, d->classe, nome_classe(d->classe),
          d->endereco, hub ? "hub" : "raiz", hub ? hub->endereco : 0, porta);
@@ -142,7 +151,8 @@ static usb_disp_t *enumerar(ehci_t *c, usb_disp_t *hub, uint8_t porta)
     else if (d->classe == 0x08) klog("[USB] armazenamento com protocolo nao suportado (%x/%x)\n", d->subclasse, d->protocolo);
     return d;
 falhou:
-    klog("[USB] falha ao enumerar o dispositivo da porta %u (%s)\n", porta, hub ? "hub" : "raiz");
+    klog("[USB] falha ao enumerar o dispositivo da porta %u (%s), passo %d\n", porta, hub ? "hub" : "raiz", ultimo_passo);
+    if (!hub) c->resultado[porta] = ultimo_passo;
     d->usado = false;
     return NULL;
 }
@@ -238,6 +248,7 @@ void usb_verificar_conexoes(void)
             if (ehci_porta_estado(c, p) & 1) {
                 ehci_esperar_ms(c, 100);   /* deixa o contato estabilizar */
                 if (ehci_porta_resetar(c, p) == 0) enumerar(c, NULL, (uint8_t)p);
+                else c->resultado[p] = 9;
             }
         }
     }
@@ -281,8 +292,10 @@ void usb_iniciar(void)
         ehci_t *c = ehci_controlador(k);
         for (int p = 0; p < c->portas; p++) {
             ehci_porta_mudou(c, p);   /* o que já está ligado entra agora, não como "mudou" */
-            if ((ehci_porta_estado(c, p) & 1) && ehci_porta_resetar(c, p) == 0)
-                enumerar(c, NULL, (uint8_t)p);
+            if (ehci_porta_estado(c, p) & 1) {
+                if (ehci_porta_resetar(c, p) == 0) enumerar(c, NULL, (uint8_t)p);
+                else c->resultado[p] = 9;   /* não habilitou depois do reset */
+            }
         }
     }
     int_restaura(i0);
@@ -296,13 +309,19 @@ int usb_relatorio(char *s, int max)
     k += snformatar(s + k, (size_t)(max - k), "Controladores USB 2.0 (EHCI): %d\n", ehci_quantidade());
     for (int c = 0; c < ehci_quantidade() && k < max; c++) {
         ehci_t *e = ehci_controlador(c);
-        k += snformatar(s + k, (size_t)(max - k), "EHCI %d: PCI %02x:%02x.%x, %04x:%04x, %d portas\n", c,
-                        e->pci.barramento, e->pci.dispositivo, e->pci.funcao, e->pci.fabricante, e->pci.modelo, e->portas);
+        static const char *bios[] = { "não soltou", "não usava", "soltou" };
+        k += snformatar(s + k, (size_t)(max - k), "EHCI %d: PCI %02x:%02x.%x, %04x:%04x, %d portas, %s, BIOS %s, %d companheiros\n", c,
+                        e->pci.barramento, e->pci.dispositivo, e->pci.funcao, e->pci.fabricante, e->pci.modelo, e->portas,
+                        e->enderecos64 ? "64 bits" : "32 bits", bios[e->bios + 1], e->companheiros);
         for (int p = 0; p < e->portas && k < max; p++) {
             uint32_t v = ehci_porta_estado(e, p);
             if (!(v & 1)) continue;
-            k += snformatar(s + k, (size_t)(max - k), "  porta %d: dispositivo conectado%s\n", p,
-                            (v & (1u << 13)) ? " (entregue ao controlador companheiro)" : "");
+            static const char *passo[] = { "reconhecido", "não respondeu ao primeiro descritor", "não aceitou o endereço",
+                                           "não deu o descritor completo", "não deu a configuração",
+                                           "não aceitou a configuração", "?", "?", "?", "não habilitou depois do reset" };
+            int r = e->resultado[p];
+            k += snformatar(s + k, (size_t)(max - k), "  porta %d: dispositivo conectado, %s (PORTSC %x)\n", p,
+                            r < 0 ? "ainda não enumerado" : r <= 9 ? passo[r] : "?", v);
         }
     }
     for (int i = 0; i < USB_MAX_DISP && k < max; i++) {

@@ -42,6 +42,10 @@ struct ehci {
     int       portas;
     uint8_t   proximo_endereco;
     bool      ok;
+    int       companheiros;            /* controladores USB 1.1 associados (0 no G470) */
+    bool      enderecos64;             /* usa as estruturas no formato de 64 bits */
+    int       bios;                    /* 0 = não usava, 1 = soltou, -1 = não soltou */
+    int       resultado[USB_MAX_PORTAS];   /* da última tentativa de enumerar a porta (0 = ok) */
 };
 
 int  ehci_iniciar_todos(void);                 /* devolve quantos controladores ligou */

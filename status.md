@@ -1,36 +1,18 @@
 ```
-Eli, terminei a fase 6: Pendrive de dados (a última). Pode testar!
-
-O que foi feito: um driver USB 2.0 escrito do zero (controlador EHCI tomado
-da BIOS, hubs, conexão a quente, pendrives pelo Bulk-Only com SCSI) e o FAT32
-com nomes longos e acentos, lendo e gravando. Espetou o pendrive com o
-sistema ligado: notificação e ícone; duplo clique monta em /usb e abre o
-Arquivos; o Editor salva lá; "Remover com segurança" grava tudo antes de
-liberar. Pelo Terminal: discos, montar, desmontar.
-Histórias concluídas: H29 a H34 (34 de 34 no projeto, todos os testes passando)
-Imagem: entrega/fase6/ (e entrega/final/): saguios.vdi (VirtualBox) e saguios.img (pendrive, G470)
-Roteiro de teste: docs/teste-fase6.md (dá para usar o mesmo pendrive do boot)
-O que você deve ver no G470: depois de tirar, formatar em FAT32 e espetar de
-novo o pendrive, a notificação e o ícone; a nota do Editor salva em /usb
-aparecendo depois no PC.
-Problemas conhecidos: o hub interno do chipset do G470 só pode ser testado
-no notebook (o QEMU não tem hub USB 2.0); se o pendrive não aparecer, rode
-"usb" no Terminal e fotografe.
-
-Quando testar, me diga "fase 6 ok" ou descreva o que aconteceu.
+Correção da fase 6 entregue (erros 17 e 18): EHCI de 64 bits do G470 e FAT32 em qualquer partição. Aguardando novo teste no G470.
 ```
 
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T20:50:19_
+_Atualizado em 2026-11-03T21:36:41_
 
 - **Situação:** Aguardando teste do Eli: fase 6
 - **Fase atual:** 6
 - **História atual:** -
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 498688 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9281, userland 3838
+- **Imagem:** 499712 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9342, userland 3838
 
 ## Fases
 
@@ -88,6 +70,10 @@ _Atualizado em 2026-11-03T20:50:19_
 
 ## Últimas ações
 
+- 2026-11-03T21:36:41: Fase 6 entregue. Aguardando teste do Eli.
+- 2026-11-03T21:26:31: Erro corrigido: FAT32 criada depois da partição do SaguiOS não é vista
+- 2026-11-03T21:26:31: Erro corrigido: G470: pendrive não aparece; usb mostra porta ocupada sem pendrive
+- 2026-11-03T21:21:11: Bloqueio: G470: o pendrive não aparece (fase 6). Correção em andamento: H30-fix
 - 2026-11-03T20:50:19: Fase 6 entregue. Aguardando teste do Eli.
 - 2026-11-03T20:50:19: Regressão final: 34/34 testes passaram
 - 2026-11-03T20:25:28: H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck
@@ -99,7 +85,3 @@ _Atualizado em 2026-11-03T20:50:19_
 - 2026-11-03T20:16:48: Início da H32: FAT32: leitura
 - 2026-11-03T20:16:48: H31 concluída: Bulk-Only + SCSI; setores lidos e gravados conferidos byte a byte na VPS
 - 2026-11-03T20:16:48: H30 concluída: Enumeração, hubs (validação no G470), conexão e remoção a quente
-- 2026-11-03T20:16:48: H29 concluída: PCI, EHCI assumido da BIOS, transferências; comando usb
-- 2026-11-03T20:16:48: Início da H31: Armazenamento em massa
-- 2026-11-03T20:16:48: Início da H30: Enumeração USB, hubs e conexão a quente
-- 2026-11-03T20:16:48: Início da H29: PCI e controlador EHCI

@@ -126,4 +126,6 @@ O SaguiOS lê e grava pendrives **FAT32** em `/usb`. Dá para usar o **mesmo pen
 4. Espete o pendrive de volta com o SaguiOS ligado: ele aparece na área de trabalho.
 
 > Formatar apaga o SaguiOS do pendrive: para o próximo boot, grave o `saguios.img` de novo.
+>
+> **Alternativa sem apagar o boot:** depois de gravar o `saguios.img`, crie uma partição **FAT32** no espaço livre do pendrive (no Windows, **Gerenciamento de Disco** > botão direito no espaço não alocado > **Novo Volume Simples** > FAT32; no Linux, `gparted`). O SaguiOS dá boot pela primeira partição e monta a FAT32 em `/usb`.
 > Antes de tirar o pendrive, use **Remover com segurança** (ou `desmontar` no Terminal).

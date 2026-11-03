@@ -714,3 +714,18 @@ não é estragado). O `cat` converte enquanto copia (guardando um pedaço de
 sequência que tenha ficado no fim de um bloco) e o Editor converte ao abrir.
 O que o SaguiOS grava continua em Latin-1, que o Bloco de Notas do Windows
 abre como "ANSI".
+
+## D028. Estruturas EHCI no formato de 64 bits e todas as partições (correção da fase 6)
+
+O EHCI tem dois formatos de qTD/QH: o de 32 bits e o de 64 bits (apêndice B
+da especificação), e quem escolhe é o controlador (bit 0 do HCCPARAMS), não o
+sistema. Em vez de dois formatos no código, o SaguiOS usa sempre o tamanho
+maior (qTD de 64 bytes, QH de 96) com as palavras altas zeradas: num
+controlador de 32 bits as palavras a mais são simplesmente ignoradas, e num de
+64 bits o endereço alto 0 está certo porque toda a memória usada fica abaixo de
+896 MB (D008). Custa poucos bytes por fila e elimina um caminho que só o
+hardware real exercitaria.
+
+Partições: um pendrive pode ter o SaguiOS no começo (0xDA) e uma FAT32 depois,
+que foi o que o Eli fez. As quatro entradas do MBR são examinadas; vale a
+primeira FAT32 com BPB válido.

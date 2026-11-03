@@ -175,3 +175,14 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
 - A pedido do Eli, o Sobre diz "para o projeto do Eli Rigobeli". Versão 1.0.
 - **Fim da fase 6 (final).** Resumo em `docs/resumo-final.md`. Imagens em
   `entrega/fase6/` e `entrega/final/`. Aguardando o teste do Eli.
+
+### Correção da fase 6 (G470)
+
+- **Relato do Eli:** pendrive espetado não aparecia; `usb` mostrava a porta
+  ocupada mesmo sem o pendrive; `montar` não achava FAT32. O pendrive tinha a
+  partição do SaguiOS e uma FAT32 de ~3 GB criada depois.
+- **Causa 1 (erro 17):** o EHCI do G470 é de 64 bits e exige qTD/QH maiores;
+  o QEMU é de 32 bits e não mostra o defeito. Corrigido (D028), sem como
+  validar no QEMU: o teste real é no G470. O `usb` ganhou diagnóstico por porta.
+- **Causa 2 (erro 18):** só a primeira partição era examinada. Corrigido e
+  testado no QEMU com o mesmo arranjo do pendrive do Eli.
