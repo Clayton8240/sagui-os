@@ -1,11 +1,11 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:24:19",
-  "situacao": "Aguardando teste do Eli: fase 5",
+  "atualizado": "2026-11-03T20:00:46",
+  "situacao": "Fase 5 confirmada no hardware. Seguindo para a fase 6.",
   "fase_atual": 5,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Eli, terminei a fase 5: Janelas e programas. Pode testar!\n\nO que foi feito: o SaguiOS liga direto numa área de trabalho nas cores do\nBrasil, com o sagui em pixel art, relógio na barra e ícones. O kernel cuida\ndas janelas (molduras, arrastar, foco, fechar, cliques e teclas) e cada\nprograma desenha o próprio conteúdo no anel 3: Arquivos, Terminal (com o\nsagsh dentro, abre sozinho ao ligar), Editor de texto, Calculadora (ponto\nfixo) e o jogo Sagui Pega Banana, além da tela Sobre. Duplo clique nos\nícones abre os programas.\nHistórias concluídas: H20 a H28\nImagem: entrega/fase5/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase5.md\nO que você deve ver no G470: a área de trabalho com o Terminal aberto; o\ntouchpad arrastando janelas e o duplo clique abrindo os programas; o Sagui\nPega Banana jogável com as setas.\nProblemas conhecidos: o botão direito ainda não tem função (fase 6, pendrive).\nOs arquivos criados somem ao desligar (o pendrive de dados é a fase 6).\n\nQuando testar, me diga \"fase 5 ok\" ou descreva o que aconteceu.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
@@ -38,8 +38,9 @@
     {
       "numero": 5,
       "nome": "Janelas e programas",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-03T20:00:46"
     },
     {
       "numero": 6,
@@ -308,7 +309,7 @@
       "titulo": "Área de trabalho",
       "objetivo": "Degradê nas cores do Brasil, mascote sagui em pixel art, barra superior com relógio.",
       "aceite": "Captura da área de trabalho em docs/capturas/.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:38:00",
       "fim": "2026-11-03T18:46:46",
@@ -321,7 +322,7 @@
       "titulo": "Gerenciador de janelas",
       "objetivo": "Janelas com moldura, arrastar, foco; chamadas de janela para programas em ring 3.",
       "aceite": "Dois programas abrem janelas; o teste arrasta uma, fecha a outra e o programa termina.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:46:46",
       "fim": "2026-11-03T18:53:31",
@@ -334,7 +335,7 @@
       "titulo": "Kit gráfico da libsagui",
       "objetivo": "Texto, botão, rótulo, caixa de texto, área de texto, lista, confirmação.",
       "aceite": "Demonstração com todos os componentes funcionando; captura.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:53:31",
       "fim": "2026-11-03T18:56:46",
@@ -347,7 +348,7 @@
       "titulo": "Arquivos",
       "objetivo": "Gerenciador de arquivos em ring 3 com ícones, duplo clique, voltar, criar e apagar pasta.",
       "aceite": "Navega até historia/, abre linux.txt no Editor, cria e apaga pasta em tmp/.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:03:23",
       "fim": "2026-11-03T19:07:26",
@@ -360,7 +361,7 @@
       "titulo": "Terminal em janela",
       "objetivo": "Janela que roda o sagsh ligado por pipes; comandos que abrem os programas gráficos.",
       "aceite": "Captura do terminal em janela rodando ps e ls bin | conta.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:56:46",
       "fim": "2026-11-03T19:00:05",
@@ -373,7 +374,7 @@
       "titulo": "Editor de texto",
       "objetivo": "Novo, abrir, salvar, salvar como, acentos, setas, Ctrl+S, asterisco, aviso ao fechar.",
       "aceite": "Cria tmp/nota.txt com `Olá, SaguiOS! Ação e coração.`, reabre pelo Arquivos e confere.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:00:05",
       "fim": "2026-11-03T19:03:23",
@@ -386,7 +387,7 @@
       "titulo": "Calculadora",
       "objetivo": "Botões e teclado, ponto fixo, avisos de divisão por zero e número grande.",
       "aceite": "12,5 × 4 = 50; 7 ÷ 2 = 3,5; 1 ÷ 0 mostra aviso; captura.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:07:26",
       "fim": "2026-11-03T19:09:30",
@@ -399,7 +400,7 @@
       "titulo": "Sagui Pega Banana",
       "objetivo": "Jogo autoral: sagui pega bananas, 3 vidas, velocidade crescente, recorde.",
       "aceite": "Teste joga com setas pelo monitor; capturas do jogo e do fim de jogo.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:09:30",
       "fim": "2026-11-03T19:11:50",
@@ -412,7 +413,7 @@
       "titulo": "Acabamento",
       "objetivo": "Ícones na área de trabalho e tela Sobre o SaguiOS.",
       "aceite": "Captura com três programas abertos; tamanho da imagem medido.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:11:50",
       "fim": "2026-11-03T19:14:10",
@@ -618,6 +619,10 @@
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T20:00:46",
+      "texto": "Eli confirmou: fase 5 ok"
+    },
     {
       "data": "2026-11-03T19:24:19",
       "texto": "Fase 5 entregue. Aguardando teste do Eli."
@@ -853,10 +858,6 @@
     {
       "data": "2026-11-03T15:41:51",
       "texto": "Erro corrigido: cd ../arte chegava como cd ..;arte"
-    },
-    {
-      "data": "2026-11-03T15:39:25",
-      "texto": "Início da H09: Terminal provisório do kernel"
     }
   ],
   "erros": [
@@ -910,6 +911,11 @@
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/G470-fase5-janelas.png",
+      "nome": "G470-fase5-janelas.png",
+      "data": "2026-11-03T20:00:46"
+    },
     {
       "arquivo": "docs/capturas/H28-tres-programas.png",
       "nome": "H28-tres-programas.png",

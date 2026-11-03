@@ -147,3 +147,13 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   úteis (29% da meta).
 - **Fim da fase 5.** 28/28 testes passando. Imagens em `entrega/fase5/`.
   Parada obrigatória: aguardando o teste do Eli.
+
+## 2026-11-03 20:00
+
+- **Confirmação do Eli no hardware:** "fase 5 ok". Fase 5 validada no VirtualBox e no G470.
+- Foto do Eli no G470: `testes_eli/fase_5_no_notebook.jpg` (cópia em
+  `docs/capturas/G470-fase5-janelas.png`). Área de trabalho com Calculadora,
+  Terminal, Editor, Sagui Pega Banana e Sobre abertos ao mesmo tempo;
+  Sobre mostra 419,0 KB de imagem, 8 processos e 879 MB livres de 892 MB.
+  Detalhe visto na foto: na tela de início do jogo os corações das vidas
+  não aparecem (corrigido no começo da fase 6).
