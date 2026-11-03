@@ -36,7 +36,11 @@ def main():
     for modo in ("ide", "usb"):
         with Maquina("h09", modo) as m:
             m.esperar_serial("[SAGUI] terminal pronto", 120)
-            verificar("sagui:/$" in "\n".join(m.tela_texto()), f"[{modo}] prompt sagui:/$ na tela")
+            tela = m.tela_texto()
+            verificar("sagui:/$" in "\n".join(tela), f"[{modo}] prompt sagui:/$ na tela")
+            verificar("Ola! Eu sou o SaguiOS." in tela[1], f"[{modo}] saudação continua no topo com o terminal aberto")
+            verificar(sum(1 for l in tela if "[ ok ]" in l) == 4, f"[{modo}] as 4 etapas de inicialização aparecem com [ ok ]")
+            m.captura(f"H09-tela-inicial-{modo}")
             if modo == "usb":
                 out = comando(m, "ls")
                 verificar("leia-me.txt" in out, "[usb] terminal funciona com boot pelo pendrive")

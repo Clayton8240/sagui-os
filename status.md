@@ -1,13 +1,13 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:41:51_
+_Atualizado em 2026-11-03T15:45:16_
 
 - **Situação:** Trabalhando na H09: Terminal provisório do kernel
 - **Fase atual:** 2
 - **História atual:** H09
 - **Progresso geral:** 26.5%
 - **Bloqueio:** nenhum
-- **Imagem:** 40448 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Imagem:** 41472 bytes úteis (meta 1474560 bytes = 1,44 MB)
 - **Linhas de código:** boot 899, kernel 2686, userland 0
 
 ## Fases
@@ -66,6 +66,7 @@ _Atualizado em 2026-11-03T15:41:51_
 
 ## Últimas ações
 
+- 2026-11-03T15:45:16: Todos os testes passaram (H01 a H09, 9/9), IDE e USB
 - 2026-11-03T15:41:51: H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar
 - 2026-11-03T15:41:51: Erro corrigido: cd ../arte chegava como cd ..;arte
 - 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel
@@ -80,4 +81,3 @@ _Atualizado em 2026-11-03T15:41:51_
 - 2026-11-03T15:28:28: H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS
 - 2026-11-03T15:24:57: Início da H05: Interrupções e relógio
 - 2026-11-03T15:24:42: H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte
-- 2026-11-03T15:23:28: Início da H04-fix: saudação some no G470 por causa do mapa E820 grande

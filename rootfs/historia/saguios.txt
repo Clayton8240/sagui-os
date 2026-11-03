@@ -7,4 +7,17 @@ Fase 1 - Boot
   BIOS, copia o kernel e o ramdisk para acima de 1 MB usando "unreal mode",
   confere a integridade de tudo e entra no modo protegido de 32 bits.
 
+
+Fase 2 - Kernel e terminal
+  O kernel ganhou as próprias tabelas de segmentos e de interrupções, uma
+  tela de erro que mostra o nome da exceção e os registradores, o relógio
+  a 100 batidas por segundo e a leitura da data na placa-mãe. A memória
+  física é controlada página a página por um mapa de bits, com um alocador
+  para o próprio kernel. O teclado entende o layout ABNT2, com cedilha e
+  acentos. O sistema de arquivos do ramdisk (SGFS) é lido pelo kernel, e
+  um terminal provisório permite navegar nas pastas e ler arquivos.
+  No primeiro teste no Lenovo G470 a saudação sumiu da tela: o notebook
+  tem 8 GB e um mapa de memória com 20 regiões, que empurrou o texto para
+  cima. Agora o mapa vai para o log e a tela mostra só o resumo.
+
 (Este arquivo é atualizado ao fim de cada fase.)

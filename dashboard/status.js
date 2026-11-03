@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:41:51",
+  "atualizado": "2026-11-03T15:45:16",
   "situacao": "Trabalhando na H09: Terminal provisório do kernel",
   "fase_atual": 2,
   "historia_atual": "H09",
@@ -617,6 +617,10 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T15:45:16",
+      "texto": "Todos os testes passaram (H01 a H09, 9/9), IDE e USB"
+    },
+    {
       "data": "2026-11-03T15:41:51",
       "texto": "H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar"
     },
@@ -743,99 +747,109 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
+      "nome": "H09-tela-inicial-usb.png",
+      "data": "2026-11-03T15:44:33"
+    },
+    {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T15:41:27"
+      "data": "2026-11-03T15:44:31"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T15:41:24"
+      "data": "2026-11-03T15:44:28"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T15:41:21"
+      "data": "2026-11-03T15:44:25"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T15:41:20"
+      "data": "2026-11-03T15:44:24"
+    },
+    {
+      "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
+      "nome": "H09-tela-inicial-ide.png",
+      "data": "2026-11-03T15:44:23"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
       "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T15:39:06"
+      "data": "2026-11-03T15:43:46"
     },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
-      "data": "2026-11-03T15:37:28"
-    },
-    {
-      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
-      "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T15:37:19"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-usb.png",
-      "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T15:37:07"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-ide.png",
-      "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T15:36:56"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-usb.png",
-      "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T15:36:51"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-ide.png",
-      "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T15:36:45"
+      "data": "2026-11-03T15:43:40"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T15:31:45"
+      "data": "2026-11-03T15:43:31"
     },
     {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T15:27:54"
+      "data": "2026-11-03T15:43:11"
+    },
+    {
+      "arquivo": "docs/capturas/H04-boot-vdi.png",
+      "nome": "H04-boot-vdi.png",
+      "data": "2026-11-03T15:43:05"
+    },
+    {
+      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
+      "nome": "H04-fix-memoria-6g.png",
+      "data": "2026-11-03T15:42:48"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T15:42:37"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T15:42:26"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T15:42:21"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T15:42:15"
+    },
+    {
+      "arquivo": "docs/capturas/H02-mbr-usb.png",
+      "nome": "H02-mbr-usb.png",
+      "data": "2026-11-03T15:42:09"
+    },
+    {
+      "arquivo": "docs/capturas/H02-mbr-ide.png",
+      "nome": "H02-mbr-ide.png",
+      "data": "2026-11-03T15:42:04"
     },
     {
       "arquivo": "docs/capturas/G470-fase1-tela-final.png",
       "nome": "G470-fase1-tela-final.png",
       "data": "2026-11-03T15:22:25"
-    },
-    {
-      "arquivo": "docs/capturas/H04-boot-vdi.png",
-      "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T14:26:38"
-    },
-    {
-      "arquivo": "docs/capturas/H02-mbr-usb.png",
-      "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T14:25:48"
-    },
-    {
-      "arquivo": "docs/capturas/H02-mbr-ide.png",
-      "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T14:25:42"
     }
   ],
   "linhas": {
     "boot": 899,
     "kernel": 2686,
     "userland": 0,
-    "ferramentas": 1298
+    "ferramentas": 1302
   },
   "imagem": {
-    "bytes_util": 40448,
+    "bytes_util": 41472,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },

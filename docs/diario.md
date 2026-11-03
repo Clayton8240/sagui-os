@@ -33,3 +33,24 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
 - **Problema visto na foto:** o mapa E820 do G470 é grande e rolou a tela, e a
   saudação e a linha de memória saíram do topo. Correção combinada com o Eli:
   fazer no começo da fase 2 (H04-fix).
+- **H04-fix.** Mapa E820 completo só na serial; a tela mostra o resumo e,
+  separada, a memória que um kernel de 32 bits consegue usar. Testado com
+  6 GB no QEMU (6143 MB no total, 3071 MB abaixo de 4 GB).
+- **Fase 2 iniciada.** Mecanismo de autotestes pelo cabeçalho de boot (D006).
+- **H05.** GDT e TSS próprias, 256 vetores gerados por `%rep`, despachante que
+  devolve o quadro a retomar (D007), tela de erro em português, PIC
+  remapeado, PIT a 100 Hz conferido contra o relógio CMOS. Kernel passou a ser
+  compilado com strings em Latin-1, traduzidas para a fonte da placa VGA.
+- **H06.** Bitmap de páginas até 896 MB e `kmalloc` por classes de tamanho
+  (D008). Bug achado na revisão antes do primeiro teste: o elo da lista livre
+  sobrescrevia a assinatura do bloco; corrigido usando o campo do cabeçalho.
+  Autoteste com 450 blocos passou de primeira com 128 MB e 1 GB.
+- **H07.** Teclado ABNT2 completo (D009). O teste digita 25 grupos de teclas e
+  compara byte a byte. Descoberta: no QEMU o AltGr é `alt_r`, não `altgr`.
+  Captura revelou a faixa da saudação passando de 80 colunas (erro 2).
+- **H08.** Leitor do SGFS e resolução de caminhos. Captura revelou que o
+  `formatar()` não aceitava largura `*` (erro 3).
+- **H09.** Terminal provisório com paginação. O harness digitava `/` com a
+  tecla americana (erro 4, do teste, não do kernel).
+- **Fim da fase 2.** 9/9 testes passando (H01 a H09). Imagens em
+  `entrega/fase2/`. Parada obrigatória: aguardando o teste do Eli.
