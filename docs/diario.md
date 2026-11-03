@@ -116,3 +116,12 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   bloqueada reproduz o defeito no QEMU com o código antigo e passa com o
   novo. Na regressão apareceram duas disputas de tempo em testes (erro 10),
   corrigidas. 19/19 passando. Nova imagem em `entrega/fase4/`.
+
+## 2026-11-03 18:37
+
+- **Confirmação do Eli no hardware:** "fase 4 ok". Fase 4 validada no VirtualBox e no G470.
+- Foto do Eli no G470 depois da correção: `testes_eli/fase_4_no_notebook.jpg`
+  (cópia em `docs/capturas/G470-fase4-grafico-touchpad.png`). Modo gráfico
+  1024x768x32 ligado, fonte própria com acentos (`Ação, vovô, pão, ÇÃO`),
+  touchpad respondendo (linha `[ ok ] Mouse/touchpad PS/2`) e seta na tela,
+  teclado funcionando. A correção H19-fix resolveu.

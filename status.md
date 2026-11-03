@@ -1,30 +1,8 @@
-```
-Eli, corrigi o problema do teclado e do touchpad no G470. Pode testar de novo a fase 4!
-
-O que foi corrigido (H19-fix): a inicialização do touchpad mexia no mesmo chip
-do teclado. Ela podia gravar uma configuração errada (que desliga o teclado) e
-deixar um byte do touchpad parado na fila do chip, travando todas as teclas.
-Agora um módulo único cuida do chip, a fila é esvaziada também pelo relógio
-(nada fica parado mais de 10 ms), o teclado fica sempre ligado e, se o
-touchpad não responder, a porta dele é desligada e aparece um aviso com
-números de diagnóstico. Fiz um teste que reproduz o defeito no QEMU: com o
-código antigo o teclado fica mudo, com o novo funciona.
-Histórias concluídas: H17 a H19 (e H19-fix)
-Imagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)
-Roteiro de teste: docs/teste-fase4.md
-O que você deve ver no G470: o teclado funcionando no sagui:/$; a seta mexendo
-com o touchpad (ou, se ele ainda não responder, o aviso com os números entre
-parênteses: fotografe essa linha); "echo Ação, vovô, pão, ÇÃO" com acentos.
-Problemas conhecidos: ainda não há janelas nem área de trabalho (fase 5).
-
-Quando testar, me diga "fase 4 ok" ou descreva o que aconteceu.
-```
-
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T18:27:00_
+_Atualizado em 2026-11-03T18:37:28_
 
-- **Situação:** Aguardando teste do Eli: fase 4
+- **Situação:** Fase 4 confirmada no hardware. Seguindo para a fase 5.
 - **Fase atual:** 4
 - **História atual:** -
 - **Progresso geral:** 55.9%
@@ -39,7 +17,7 @@ _Atualizado em 2026-11-03T18:27:00_
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
-| 4 | Gráfico e mouse | 100.0% | aguardando teste |
+| 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
@@ -64,9 +42,9 @@ _Atualizado em 2026-11-03T18:27:00_
 | H14 | Arquivos e pastas graváveis | feito | 4 |
 | H15 | Pipes | feito | 2 |
 | H16 | Shell e comandos como programas | feito | 14 |
-| H17 | Framebuffer VESA | aguardando teste | 2 |
-| H18 | Fonte própria | aguardando teste | 8 |
-| H19 | Mouse / touchpad PS/2 | aguardando teste | 54 |
+| H17 | Framebuffer VESA | feito | 2 |
+| H18 | Fonte própria | feito | 8 |
+| H19 | Mouse / touchpad PS/2 | feito | 54 |
 | H20 | Área de trabalho | a fazer |  |
 | H21 | Gerenciador de janelas | a fazer |  |
 | H22 | Kit gráfico da libsagui | a fazer |  |
@@ -88,6 +66,7 @@ _Atualizado em 2026-11-03T18:27:00_
 
 ## Últimas ações
 
+- 2026-11-03T18:37:28: Eli confirmou: fase 4 ok
 - 2026-11-03T18:27:00: Fase 4 entregue. Aguardando teste do Eli.
 - 2026-11-03T18:27:00: H19 concluída: Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad
 - 2026-11-03T18:12:39: Erro corrigido: G470: teclado parou e o touchpad não respondeu (fase 4)
@@ -102,4 +81,3 @@ _Atualizado em 2026-11-03T18:27:00_
 - 2026-11-03T17:22:03: Início da H17: Framebuffer VESA
 - 2026-11-03T17:21:51: Eli confirmou: fase 3 ok
 - 2026-11-03T16:45:51: Fase 3 entregue. Aguardando teste do Eli.
-- 2026-11-03T16:45:51: Todos os testes passaram (H01 a H16, 16/16)

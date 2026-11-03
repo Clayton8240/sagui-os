@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T18:27:00",
-  "situacao": "Aguardando teste do Eli: fase 4",
+  "atualizado": "2026-11-03T18:37:28",
+  "situacao": "Fase 4 confirmada no hardware. Seguindo para a fase 5.",
   "fase_atual": 4,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Eli, corrigi o problema do teclado e do touchpad no G470. Pode testar de novo a fase 4!\n\nO que foi corrigido (H19-fix): a inicialização do touchpad mexia no mesmo chip\ndo teclado. Ela podia gravar uma configuração errada (que desliga o teclado) e\ndeixar um byte do touchpad parado na fila do chip, travando todas as teclas.\nAgora um módulo único cuida do chip, a fila é esvaziada também pelo relógio\n(nada fica parado mais de 10 ms), o teclado fica sempre ligado e, se o\ntouchpad não responder, a porta dele é desligada e aparece um aviso com\nnúmeros de diagnóstico. Fiz um teste que reproduz o defeito no QEMU: com o\ncódigo antigo o teclado fica mudo, com o novo funciona.\nHistórias concluídas: H17 a H19 (e H19-fix)\nImagem: entrega/fase4/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase4.md\nO que você deve ver no G470: o teclado funcionando no sagui:/$; a seta mexendo\ncom o touchpad (ou, se ele ainda não responder, o aviso com os números entre\nparênteses: fotografe essa linha); \"echo Ação, vovô, pão, ÇÃO\" com acentos.\nProblemas conhecidos: ainda não há janelas nem área de trabalho (fase 5).\n\nQuando testar, me diga \"fase 4 ok\" ou descreva o que aconteceu.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
@@ -32,8 +32,9 @@ window.SAGUI_STATUS = {
     {
       "numero": 4,
       "nome": "Gráfico e mouse",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-03T18:37:28"
     },
     {
       "numero": 5,
@@ -269,7 +270,7 @@ window.SAGUI_STATUS = {
       "titulo": "Framebuffer VESA",
       "objetivo": "Troca para o modo VESA, double buffer e primitivas de desenho.",
       "aceite": "Captura com fundo colorido e formas; se o VESA falhar, volta ao modo texto e avisa.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T17:22:03",
       "fim": "2026-11-03T17:24:26",
@@ -282,7 +283,7 @@ window.SAGUI_STATUS = {
       "titulo": "Fonte própria",
       "objetivo": "Fonte bitmap 8x16 própria com ASCII e acentos Latin-1; terminal gráfico.",
       "aceite": "Captura mostra `Ação, vovô, pão, ÇÃO, à é í ó ú` correto.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T17:24:26",
       "fim": "2026-11-03T17:32:50",
@@ -295,7 +296,7 @@ window.SAGUI_STATUS = {
       "titulo": "Mouse / touchpad PS/2",
       "objetivo": "Porta auxiliar do i8042, IRQ12, pacotes de 3 bytes, cursor próprio, botões.",
       "aceite": "Movimentos do monitor do QEMU movem o cursor; clique registrado na serial.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T17:32:50",
       "fim": "2026-11-03T18:27:00",
@@ -619,6 +620,10 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T18:37:28",
+      "texto": "Eli confirmou: fase 4 ok"
+    },
+    {
       "data": "2026-11-03T18:27:00",
       "texto": "Fase 4 entregue. Aguardando teste do Eli."
     },
@@ -853,10 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T14:14:17",
       "texto": "H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados"
-    },
-    {
-      "data": "2026-11-03T14:12:34",
-      "texto": "Início da H01: Preparar o ambiente"
     }
   ],
   "erros": [
@@ -898,6 +899,11 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/G470-fase4-grafico-touchpad.png",
+      "nome": "G470-fase4-grafico-touchpad.png",
+      "data": "2026-11-03T18:37:28"
+    },
     {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
       "nome": "H19-cursor-movido.png",
