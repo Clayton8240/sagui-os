@@ -84,3 +84,14 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   adaptado ao shell. Achado: o GCC não divide em `1 / x` (erro 6).
 - **Fim da fase 3.** 16/16 testes passando. Imagem com 223 KB úteis. Imagens
   em `entrega/fase3/`. Parada obrigatória: aguardando o teste do Eli.
+
+## 2026-11-03 17:21
+
+- **Confirmação do Eli no hardware:** "fase 3 ok". Fase 3 validada no VirtualBox e no G470.
+- Foto do Eli no G470: `testes_eli/fase_3_no_notebook.jpg` (cópia em
+  `docs/capturas/G470-fase3-contador-ps.png`): `contador 10 &` contando
+  enquanto `ps` roda, quatro processos, shell no anel 3. Setas para cima e
+  para baixo (histórico) e acentos com teclas mortas conferidos. Pedidos do
+  Eli: as setas para os lados não editam a linha (não estava implementado:
+  vai na H18, com o terminal gráfico) e o texto de um programa em segundo
+  plano se mistura com a linha que está sendo digitada (também na H18).

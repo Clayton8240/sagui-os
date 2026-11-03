@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:45:51",
-  "situacao": "Aguardando teste do Eli: fase 3",
+  "atualizado": "2026-11-03T17:21:51",
+  "situacao": "Fase 3 confirmada no hardware. Seguindo para a fase 4.",
   "fase_atual": 3,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Eli, terminei a fase 3: Processos e programas. Pode testar!\n\nO que foi feito: o SaguiOS virou um sistema operacional no sentido do\nTanenbaum. Cada programa tem a própria memória (paginação) e roda sem\nprivilégios (anel 3), pedindo tudo ao kernel por chamadas de sistema. Vários\nprogramas rodam ao mesmo tempo, trocados pelo relógio. O terminal agora é o\nshell sagsh, um programa comum, e cada comando (ls, cat, cp, ps...) é um\nprograma ELF separado em /bin. Dá para gravar arquivos e pastas na memória,\nredirecionar (> >> <) e ligar programas com pipes (ls bin | conta).\nHistórias concluídas: H10 a H16\nImagem: entrega/fase3/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase3.md\nO que você deve ver no G470: seis linhas [ ok ] e o prompt do sagsh; \"contador\n10 &\" contando enquanto você usa ps e outros comandos; \"falha\" encerrando só\no programa, sem tela vermelha.\nProblemas conhecidos: no modo texto, ã e õ continuam sem til (fonte própria na\nfase 4). Os arquivos criados somem ao desligar (o pendrive de dados é a fase 6).\n\nQuando testar, me diga \"fase 3 ok\" ou descreva o que aconteceu.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
@@ -25,8 +25,9 @@ window.SAGUI_STATUS = {
     {
       "numero": 3,
       "nome": "Processos e programas",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-03T17:21:51"
     },
     {
       "numero": 4,
@@ -177,7 +178,7 @@ window.SAGUI_STATUS = {
       "titulo": "Paginação",
       "objetivo": "Diretório e tabelas de páginas, kernel em todos os espaços, page fault com mensagem clara.",
       "aceite": "Dois espaços de endereço com valores diferentes no mesmo endereço virtual; acesso inválido gera a tela de page fault.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:07:26",
       "fim": "2026-11-03T16:10:05",
@@ -190,7 +191,7 @@ window.SAGUI_STATUS = {
       "titulo": "Processos e escalonador",
       "objetivo": "PCB, troca de contexto em assembly, round-robin preemptivo no PIT, processo ocioso.",
       "aceite": "Duas tarefas imprimem A e B alternados na serial sem cooperar.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:10:05",
       "fim": "2026-11-03T16:12:46",
@@ -203,7 +204,7 @@ window.SAGUI_STATUS = {
       "titulo": "Ring 3 e chamadas de sistema",
       "objetivo": "TSS, segmentos de usuário, ring 3, int 0x80, validação de ponteiros.",
       "aceite": "Programa em ring 3 escreve `Ola do ring 3!` e sai; `cli` no ring 3 encerra só aquele processo.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:12:46",
       "fim": "2026-11-03T16:16:35",
@@ -216,7 +217,7 @@ window.SAGUI_STATUS = {
       "titulo": "Carregador ELF e libsagui",
       "objetivo": "Leitor de ELF32 estático, pilha do usuário com argumentos, libsagui com printf.",
       "aceite": "O kernel carrega bin/ola do SGFS e ele imprime os argumentos.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:16:35",
       "fim": "2026-11-03T16:21:08",
@@ -229,7 +230,7 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos e pastas graváveis",
       "objetivo": "Camada gravável na RAM sobre o SGFS, tabela de arquivos por processo, terminal como 0 e 1.",
       "aceite": "Teste em ring 3 cria, escreve, relê e apaga tmp/teste.txt; o mesmo com uma pasta.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:21:08",
       "fim": "2026-11-03T16:25:17",
@@ -242,7 +243,7 @@ window.SAGUI_STATUS = {
       "titulo": "Pipes",
       "objetivo": "pipe e duplicar, buffer no kernel, bloqueio de leitor e escritor, EOF.",
       "aceite": "Dois processos transferem por pipe um texto maior que o buffer sem perda nem duplicação.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:25:17",
       "fim": "2026-11-03T16:27:11",
@@ -255,7 +256,7 @@ window.SAGUI_STATUS = {
       "titulo": "Shell e comandos como programas",
       "objetivo": "bin/sagsh como primeiro processo, redirecionamento, pipe, histórico, Tab, comandos e apelidos.",
       "aceite": "Roteiro executa todos os comandos e apelidos; falha derruba só o processo; capturas em docs/capturas/.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:27:11",
       "fim": "2026-11-03T16:41:25",
@@ -618,6 +619,10 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T17:21:51",
+      "texto": "Eli confirmou: fase 3 ok"
+    },
+    {
       "data": "2026-11-03T16:45:51",
       "texto": "Fase 3 entregue. Aguardando teste do Eli."
     },
@@ -839,6 +844,11 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/G470-fase3-contador-ps.png",
+      "nome": "G470-fase3-contador-ps.png",
+      "data": "2026-11-03T17:21:50"
+    },
     {
       "arquivo": "docs/capturas/H16-tab-historico.png",
       "nome": "H16-tab-historico.png",
