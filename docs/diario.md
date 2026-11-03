@@ -22,3 +22,14 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   testes passaram na primeira rodada completa (ver `docs/erros.md`).
 - **Fim da fase 1.** Todos os testes (H01 a H04) passando. Imagens em
   `entrega/fase1/`. Parada obrigatória: aguardando o teste do Eli.
+
+## 2026-11-03 15:22
+
+- **Confirmação do Eli no hardware:** "fase 1 ok". Fase 1 validada no VirtualBox e no G470.
+- Foto do Eli no G470: `testes_eli/fase_1_no_notebook.jpg` (cópia em
+  `docs/capturas/G470-fase1-tela-final.png`). Boot pelo pendrive (disco 0x80),
+  22 setores lidos, A20 já ligada pela BIOS, VESA 1024x768x32 (modo 0x118),
+  ramdisk íntegro. Mapa E820 com ~20 regiões e ~8 GB de RAM.
+- **Problema visto na foto:** o mapa E820 do G470 é grande e rolou a tela, e a
+  saudação e a linha de memória saíram do topo. Correção combinada com o Eli:
+  fazer no começo da fase 2 (H04-fix).

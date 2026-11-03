@@ -1,18 +1,19 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T14:27:18",
-  "situacao": "Aguardando teste do Eli: fase 1",
+  "atualizado": "2026-11-03T15:22:25",
+  "situacao": "Fase 1 confirmada no hardware. Seguindo para a fase 2.",
   "fase_atual": 1,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Eli, terminei a fase 1: Boot. Pode testar!\n\nO que foi feito: um carregador de boot próprio em duas partes. O MBR (512 bytes)\nlê o estágio 2, que liga a linha A20, pede o mapa de memória à BIOS, copia o\nkernel e o ramdisk para acima de 1 MB, confere que nada veio corrompido e entra\nno modo protegido de 32 bits. O kernel, em C, mostra a saudação, a memória\ndetectada e o modo de vídeo que a placa oferece.\nHistórias concluídas: H01 a H04\nImagem: entrega/fase1/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase1.md\nO que você deve ver no G470: as linhas [1/6] a [6/6] passando rápido; a faixa\nverde com \"Ola! Eu sou o SaguiOS.\"; \"Memoria detectada: ... MB livres\" perto da RAM do notebook.\nProblemas conhecidos: nenhum. (No QEMU a A20 já vem ligada; os outros métodos\nde A20 só vão ser exercitados no G470. A tela do kernel mostra qual funcionou.)\n\nQuando testar, me diga \"fase 1 ok\" ou descreva o que aconteceu.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
       "nome": "Boot",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-03T15:22:25"
     },
     {
       "numero": 2,
@@ -58,7 +59,7 @@ window.SAGUI_STATUS = {
       "titulo": "Preparar o ambiente",
       "objetivo": "Instalar NASM, QEMU, ImageMagick, Python; validar o GCC freestanding; criar pastas, git, status.md e dashboard.",
       "aceite": "`make` roda sem erro com um alvo vazio; dashboard abre no navegador.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:12:34",
       "fim": "2026-11-03T14:14:17",
@@ -71,7 +72,7 @@ window.SAGUI_STATUS = {
       "titulo": "Estágio 1 (MBR)",
       "objetivo": "Código de 512 bytes com assinatura 0x55AA, tabela de partição válida com partição ativa e área de BPB reservada.",
       "aceite": "No QEMU (IDE e USB), aparece a mensagem `SaguiOS: carregando...`.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:14:29",
       "fim": "2026-11-03T14:22:05",
@@ -84,7 +85,7 @@ window.SAGUI_STATUS = {
       "titulo": "Estágio 2 e modo protegido",
       "objetivo": "A20, mapa E820, leitura do kernel e do ramdisk, GDT, modo protegido, salto para o kernel com boot_info.",
       "aceite": "O kernel em C escreve em modo texto VGA `Ola! Eu sou o SaguiOS.` e a memória detectada.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:22:05",
       "fim": "2026-11-03T14:22:52",
@@ -97,7 +98,7 @@ window.SAGUI_STATUS = {
       "titulo": "Imagem para pendrive e VirtualBox",
       "objetivo": "Build gera build/saguios.img com SHA-256 e build/saguios.vdi; docs/como-gravar.md.",
       "aceite": "Boot nos dois modos do QEMU; .vdi gerado; arquivos em entrega/fase1/; como-gravar.md com Rufus (DD) e balenaEtcher.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:22:52",
       "fim": "2026-11-03T14:27:10",
@@ -616,6 +617,10 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T15:22:25",
+      "texto": "Eli confirmou: fase 1 ok"
+    },
+    {
       "data": "2026-11-03T14:27:18",
       "texto": "Fase 1 entregue. Aguardando teste do Eli."
     },
@@ -658,6 +663,11 @@ window.SAGUI_STATUS = {
   ],
   "erros": [],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/G470-fase1-tela-final.png",
+      "nome": "G470-fase1-tela-final.png",
+      "data": "2026-11-03T15:22:25"
+    },
     {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
       "nome": "H04-boot-vdi.png",
