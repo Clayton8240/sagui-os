@@ -1,0 +1,259 @@
+/* discos.c - pendrives: formato, montagem em /usb e avisos (H32, H34).
+ *
+ * Quando um pendrive aparece, este módulo descobre o que há nele:
+ *   - setor 0 com tabela de partições MBR: olha a primeira partição usada;
+ *   - setor 0 que já é um setor de boot FAT32 ("superfloppy", sem tabela);
+ *   - outros formatos (NTFS, exFAT, ext, o próprio SaguiOS...) aparecem com
+ *     o nome e "formato não suportado", e não montam.
+ * Só um pendrive fica montado por vez, em /usb (PRD 4.3). Desmontar grava
+ * tudo o que estiver pendente. Cada conexão, remoção e montagem vira um
+ * aviso, que a área de trabalho mostra num canto da tela. */
+#include "disco.h"
+#include "abi.h"
+#include "console.h"
+#include "fat32.h"
+#include "memoria.h"
+#include "processo.h"
+#include "sistema.h"
+#include "texto.h"
+#include "vfs.h"
+
+static disco_t discos[MAX_DISCOS];
+static int contador;
+
+#define MAX_AVISOS 8
+static struct { int tipo; char texto[96]; } avisos[MAX_AVISOS];
+static int av_ini, av_fim;
+
+static void avisar(int tipo, const char *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    formatar(avisos[av_fim].texto, sizeof avisos[av_fim].texto, fmt, ap);
+    va_end(ap);
+    avisos[av_fim].tipo = tipo;
+    av_fim = (av_fim + 1) % MAX_AVISOS;
+    if (av_fim == av_ini) av_ini = (av_ini + 1) % MAX_AVISOS;
+    klog("[DISCO] aviso: %s\n", avisos[(av_fim + MAX_AVISOS - 1) % MAX_AVISOS].texto);
+}
+
+bool disco_proximo_aviso(int *tipo, char *texto, int max)
+{
+    if (av_ini == av_fim) return false;
+    *tipo = avisos[av_ini].tipo;
+    txt_copia_n(texto, avisos[av_ini].texto, (size_t)max);
+    av_ini = (av_ini + 1) % MAX_AVISOS;
+    return true;
+}
+
+disco_t *disco_indice(int i) { return (i >= 0 && i < MAX_DISCOS && discos[i].usado) ? &discos[i] : NULL; }
+
+disco_t *disco_por_nome(const char *nome)
+{
+    for (int i = 0; i < MAX_DISCOS; i++)
+        if (discos[i].usado && txt_compara(discos[i].nome, nome) == 0) return &discos[i];
+    return NULL;
+}
+
+disco_t *disco_montado(void)
+{
+    for (int i = 0; i < MAX_DISCOS; i++)
+        if (discos[i].usado && discos[i].montado) return &discos[i];
+    return NULL;
+}
+
+static void tamanho_legivel(uint32_t setores, char *s, size_t max)
+{
+    uint32_t mb = setores / 2048;
+    if (mb >= 1024) snformatar(s, max, "%u,%u GB", mb / 1024, (mb % 1024) * 10 / 1024);
+    else snformatar(s, max, "%u MB", mb);
+}
+
+static void copiar_rotulo(disco_t *d, const uint8_t *r)
+{
+    int n = 11;
+    while (n > 0 && (r[n - 1] == ' ' || r[n - 1] == 0)) n--;
+    memcpy(d->rotulo, r, (size_t)n);
+    d->rotulo[n] = 0;
+    if (txt_compara(d->rotulo, "NO NAME") == 0) d->rotulo[0] = 0;
+}
+
+static bool eh_fat32(const uint8_t *s)
+{
+    return s[510] == 0x55 && s[511] == 0xAA && memcmp(s + 82, "FAT32   ", 8) == 0 &&
+           (s[11] | (s[12] << 8)) == 512 && s[13] != 0 && (s[22] | (s[23] << 8)) == 0;
+}
+
+/* Descobre o formato a partir do setor 0 e, se houver, da primeira partição. */
+static void reconhecer(disco_t *d)
+{
+    uint8_t *s = kmalloc(512);
+    if (!s) return;
+    txt_copia_n(d->formato, "desconhecido: formato não suportado", sizeof d->formato);
+    if (d->ler(d, 0, 1, s) < 0) { txt_copia_n(d->formato, "erro de leitura", sizeof d->formato); kfree(s); return; }
+    if (eh_fat32(s)) {                                   /* sem tabela de partições */
+        d->part_inicio = 0;
+        d->fat32 = true;
+        copiar_rotulo(d, s + 71);
+    } else if (s[510] == 0x55 && s[511] == 0xAA) {
+        for (int p = 0; p < 4; p++) {
+            const uint8_t *e = s + 446 + p * 16;
+            uint8_t tipo = e[4];
+            uint32_t ini = (uint32_t)e[8] | (uint32_t)e[9] << 8 | (uint32_t)e[10] << 16 | (uint32_t)e[11] << 24;
+            if (!tipo || (e[0] != 0 && e[0] != 0x80)) continue;
+            switch (tipo) {
+            case 0x0B: case 0x0C: {
+                uint8_t *v = kmalloc(512);
+                if (v && d->ler(d, ini, 1, v) == 0 && eh_fat32(v)) {
+                    d->part_inicio = ini;
+                    d->fat32 = true;
+                    copiar_rotulo(d, v + 71);
+                } else txt_copia_n(d->formato, "FAT32 danificado: não suportado", sizeof d->formato);
+                if (v) kfree(v);
+                break;
+            }
+            case 0x01: case 0x04: case 0x06: case 0x0E:
+                txt_copia_n(d->formato, "FAT12/16: formato não suportado", sizeof d->formato); break;
+            case 0x07: {
+                uint8_t *v = kmalloc(512);
+                bool exfat = v && d->ler(d, ini, 1, v) == 0 && memcmp(v + 3, "EXFAT   ", 8) == 0;
+                txt_copia_n(d->formato, exfat ? "exFAT: formato não suportado" : "NTFS: formato não suportado", sizeof d->formato);
+                if (v) kfree(v);
+                break;
+            }
+            case 0x83: txt_copia_n(d->formato, "ext (Linux): formato não suportado", sizeof d->formato); break;
+            case 0xDA: txt_copia_n(d->formato, "pendrive de boot do SaguiOS", sizeof d->formato); break;
+            case 0xEE: txt_copia_n(d->formato, "GPT: formato não suportado", sizeof d->formato); break;
+            default:   snformatar(d->formato, sizeof d->formato, "partição tipo %x: não suportado", tipo);
+            }
+            break;   /* só a primeira partição usada */
+        }
+    }
+    if (d->fat32) {
+        txt_copia_n(d->formato, "FAT32", sizeof d->formato);
+        /* O rótulo de verdade fica numa entrada especial na pasta raiz. */
+        char r[12];
+        if (fat_rotulo_raiz(d, r)) txt_copia_n(d->rotulo, r, sizeof d->rotulo);
+    }
+    kfree(s);
+}
+
+disco_t *disco_registrar(const char *fabricante, const char *produto, uint32_t setores, uint32_t tam_setor, void *dono,
+                         int (*ler)(disco_t *, uint32_t, uint32_t, void *),
+                         int (*escrever)(disco_t *, uint32_t, uint32_t, const void *))
+{
+    for (int i = 0; i < MAX_DISCOS; i++) {
+        disco_t *d = &discos[i];
+        if (d->usado) continue;
+        memset(d, 0, sizeof *d);
+        d->usado = d->presente = true;
+        snformatar(d->nome, sizeof d->nome, "usb%d", contador++);
+        txt_copia_n(d->fabricante, fabricante, sizeof d->fabricante);
+        txt_copia_n(d->produto, produto, sizeof d->produto);
+        d->setores = setores;
+        d->tam_setor = tam_setor;
+        d->dono = dono;
+        d->ler = ler;
+        d->escrever = escrever;
+        reconhecer(d);
+        char tam[24];
+        tamanho_legivel(setores, tam, sizeof tam);
+        klog("[DISCO] %s: %s %s, %s, %s, rotulo \"%s\"\n", d->nome, fabricante, produto, tam, d->formato, d->rotulo);
+        if (d->fat32) avisar(AVISO_CONECTADO, "Pendrive conectado: %s (%s)", d->rotulo[0] ? d->rotulo : d->produto, tam);
+        else avisar(AVISO_CONECTADO, "Pendrive conectado: %s (%s), %s", d->produto, tam, d->formato);
+        return d;
+    }
+    return NULL;
+}
+
+void disco_removido(disco_t *d)
+{
+    d->presente = false;
+    if (d->montado) {
+        fat_desmontar(false);   /* não dá para gravar: o pendrive já saiu */
+        d->montado = false;
+        vfs_ponto_montagem(false);
+        avisar(AVISO_REMOVIDO, "O pendrive foi removido sem desmontar: dados podem ter se perdido.");
+    } else {
+        avisar(AVISO_REMOVIDO, "Pendrive removido.");
+    }
+    klog("[DISCO] %s removido\n", d->nome);
+    d->usado = false;
+}
+
+int disco_montar(disco_t *d)
+{
+    if (!d->presente) return ERRO_NAO_EXISTE;
+    if (d->montado) return 0;
+    if (!d->fat32) return ERRO_FORMATO;
+    if (disco_montado()) return ERRO_OCUPADO;      /* um por vez em /usb */
+    int r = fat_montar(d);
+    if (r < 0) return r;
+    d->montado = true;
+    vfs_ponto_montagem(true);
+    avisar(AVISO_MONTADO, "Pendrive montado em /usb");
+    return 0;
+}
+
+int disco_desmontar(disco_t *d)
+{
+    if (!d->montado) return 0;
+    /* Ninguém pode estar com a pasta atual dentro do pendrive. */
+    for (int i = 0; i < MAX_PROCESSOS; i++) {
+        processo_t *p = processo_indice(i);
+        if (p->estado != P_LIVRE && p->estado != P_ZUMBI && txt_comeca_com(p->pasta, "/usb") &&
+            (p->pasta[4] == 0 || p->pasta[4] == '/'))
+            txt_copia_n(p->pasta, "/", sizeof p->pasta);
+    }
+    int r = fat_desmontar(true);
+    d->montado = false;
+    vfs_ponto_montagem(false);
+    avisar(AVISO_DESMONTADO, "Pode remover o pendrive.");
+    return r;
+}
+
+/* ------------------------------------------------------------ chamadas */
+
+int32_t sis_listar_discos(uint32_t indice, uint32_t pinfo, uint32_t c, uint32_t dd, uint32_t e)
+{
+    (void)c; (void)dd; (void)e;
+    info_disco_t *inf = (info_disco_t *)pinfo;
+    if (!usuario_ok(inf, sizeof *inf, true)) return ERRO_ENDERECO;
+    int k = 0;
+    for (int i = 0; i < MAX_DISCOS; i++) {
+        disco_t *d = &discos[i];
+        if (!d->usado || !d->presente) continue;
+        if (k++ != (int)indice) continue;
+        txt_copia_n(inf->nome, d->nome, sizeof inf->nome);
+        txt_copia_n(inf->fabricante, d->fabricante, sizeof inf->fabricante);
+        txt_copia_n(inf->produto, d->produto, sizeof inf->produto);
+        txt_copia_n(inf->formato, d->formato, sizeof inf->formato);
+        txt_copia_n(inf->rotulo, d->rotulo, sizeof inf->rotulo);
+        inf->setores = d->setores;
+        inf->montado = d->montado;
+        inf->suportado = d->fat32;
+        return 1;
+    }
+    return 0;
+}
+
+int32_t sis_montar(uint32_t pnome, uint32_t b, uint32_t c, uint32_t dd, uint32_t e)
+{
+    (void)b; (void)c; (void)dd; (void)e;
+    char nome[16];
+    int r = usuario_texto((const char *)pnome, nome, sizeof nome);
+    if (r < 0) return r;
+    disco_t *d = disco_por_nome(nome);
+    return d ? disco_montar(d) : ERRO_NAO_EXISTE;
+}
+
+int32_t sis_desmontar(uint32_t pnome, uint32_t b, uint32_t c, uint32_t dd, uint32_t e)
+{
+    (void)b; (void)c; (void)dd; (void)e;
+    char nome[16];
+    int r = usuario_texto((const char *)pnome, nome, sizeof nome);
+    if (r < 0) return r;
+    disco_t *d = disco_por_nome(nome);
+    if (!d) return ERRO_NAO_EXISTE;
+    return disco_desmontar(d);
+}

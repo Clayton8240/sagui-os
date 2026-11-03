@@ -21,6 +21,7 @@
 #include "mouse.h"
 #include "i8042.h"
 #include "gui.h"
+#include "usb.h"
 
 #define SAGUI_VERSAO "0.5 (fase 5)"
 
@@ -238,6 +239,20 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         console_cor(COR_VERMELHO_CLARO, COR_PRETO);
         kprintf("[ERRO] ramdisk SGFS invalido: o sistema segue sem arquivos\n");
         console_cor(COR_CINZA, COR_PRETO);
+    }
+    /* H29-H31: USB 2.0 (EHCI), hubs e pendrives de dados. */
+    usb_iniciar();
+    {
+        char linha[96];
+        int n = ehci_quantidade();
+        if (n) {
+            snformatar(linha, sizeof linha, "USB: %d controlador(es) EHCI, pendrives em /usb (comandos discos, montar)", n);
+            etapa(linha);
+        } else {
+            console_cor(COR_AMARELO, COR_PRETO);
+            kprintf("[aviso] Nenhum controlador USB 2.0 (EHCI) encontrado.\n");
+            console_cor(COR_CINZA, COR_PRETO);
+        }
     }
     klog("[SAGUI] boot ok\n");
 

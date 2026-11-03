@@ -48,6 +48,10 @@
 #define SIS_ATUALIZAR_JANELA 52 /* (id, &retangulo ou 0 = tudo) */
 #define SIS_PROXIMO_EVENTO 53   /* (id ou 0 = qualquer janela minha, &evento, esperar) -> 1 se houve */
 #define SIS_TITULO_JANELA  54   /* (id, titulo) */
+/* Dispositivos (fase 6) */
+#define SIS_LISTAR_DISCOS  55   /* (indice, &info_disco) -> 1 achou, 0 fim */
+#define SIS_MONTAR         56   /* (nome, ex.: "usb0") -> monta em /usb */
+#define SIS_DESMONTAR      57   /* (nome) -> grava o que falta e libera para remover */
 #define SIS_MAX            64
 
 /* Erros (sempre negativos) */
@@ -108,6 +112,7 @@ typedef struct {
 #define INFO_MEMORIA   1
 #define INFO_PROCESSOS 2
 #define INFO_VERSAO    3
+#define INFO_USB       4   /* relatório em texto: controladores, portas e dispositivos */
 
 typedef struct {
     unsigned int ram_total_kb;
@@ -132,6 +137,17 @@ typedef struct {
     unsigned int segundos_ligado;
     unsigned int largura, altura;
 } info_versao_t;
+
+typedef struct {
+    char         nome[8];          /* "usb0" */
+    char         fabricante[32];
+    char         produto[48];
+    char         formato[40];      /* "FAT32" ou "...: formato não suportado" */
+    char         rotulo[12];
+    unsigned int setores;          /* de 512 bytes */
+    unsigned int montado;
+    unsigned int suportado;
+} info_disco_t;
 
 /* Modos do terminal */
 #define TERM_LINHA 0

@@ -37,6 +37,8 @@ static const chamada_t tabela[SIS_MAX] = {
     [SIS_CRIAR_JANELA] = sis_criar_janela,     [SIS_FECHAR_JANELA] = sis_fechar_janela,
     [SIS_ATUALIZAR_JANELA] = sis_atualizar_janela, [SIS_PROXIMO_EVENTO] = sis_proximo_evento,
     [SIS_TITULO_JANELA] = sis_titulo_janela,
+    [SIS_LISTAR_DISCOS] = sis_listar_discos,   [SIS_MONTAR] = sis_montar,
+    [SIS_DESMONTAR] = sis_desmontar,
 };
 
 bool usuario_ok(const void *p, uint32_t n, bool escrita)

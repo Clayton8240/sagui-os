@@ -19,6 +19,7 @@
 #include "abi.h"
 #include "vfs.h"
 #include "video.h"
+#include "disco.h"
 #include "memoria.h"
 
 static int falhas;
@@ -406,6 +407,31 @@ static void teste_sem_irq12(void)
     kprintf("Autoteste: IRQ 12 (mouse) bloqueada de propósito.\n");
 }
 
+/* H31: lê e grava setores do pendrive pelo Bulk-Only/SCSI. A VPS confere
+ * o arquivo da imagem depois, byte a byte. */
+static void teste_usb_setores(void)
+{
+    disco_t *d = disco_indice(0);
+    confere(d != NULL, "um pendrive foi reconhecido");
+    if (!d) return;
+    uint8_t *buf = kmalloc(64 * 512), *volta = kmalloc(64 * 512);
+    /* Leitura: os 64 primeiros setores; a soma vai para a serial. */
+    confere(d->ler(d, 0, 64, buf) == 0, "leitura de 64 setores");
+    uint32_t soma = 0;
+    for (int i = 0; i < 64 * 512; i++) soma = soma * 31 + buf[i];
+    klog("[TESTE] soma setores 0-63: %x\n", soma);
+    /* Gravação: um padrão em 40 setores a partir do 100000 (área livre do FAT32). */
+    for (int i = 0; i < 40 * 512; i++) buf[i] = (uint8_t)(i * 7 + i / 512);
+    confere(d->escrever(d, 100000, 40, buf) == 0, "gravação de 40 setores");
+    memset(volta, 0, 40 * 512);
+    confere(d->ler(d, 100000, 40, volta) == 0, "releitura");
+    confere(memcmp(buf, volta, 40 * 512) == 0, "o que foi lido é igual ao que foi gravado");
+    /* Um setor só, no fim do disco. */
+    memset(buf, 0xA5, 512);
+    confere(d->escrever(d, d->setores - 1, 1, buf) == 0, "gravação do último setor");
+    kfree(buf); kfree(volta);
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -423,6 +449,7 @@ static const autoteste_t testes[] = {
     { "anel3", teste_anel3 },
     { "grafico", teste_grafico },
     { "sem_irq12", teste_sem_irq12 },
+    { "usb_setores", teste_usb_setores },
 };
 
 void autoteste_executar(const char *nome)

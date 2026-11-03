@@ -124,6 +124,11 @@ int32_t sis_info_sistema(uint32_t tipo, uint32_t ptr, uint32_t n, uint32_t d, ui
         }
         return (int32_t)k;
     }
+    if (tipo == INFO_USB) {
+        if (!usuario_ok((void *)ptr, n, true) || n < 2) return ERRO_ENDERECO;
+        int usb_relatorio(char *s, int max);
+        return usb_relatorio((char *)ptr, (int)n);
+    }
     if (tipo == INFO_VERSAO) {
         info_versao_t *v = (info_versao_t *)ptr;
         if (!usuario_ok(v, sizeof *v, true)) return ERRO_ENDERECO;

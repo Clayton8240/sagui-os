@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T20:00:46_
+_Atualizado em 2026-11-03T20:16:48_
 
-- **Situação:** Fase 5 confirmada no hardware. Seguindo para a fase 6.
-- **Fase atual:** 5
-- **História atual:** -
-- **Progresso geral:** 82.4%
+- **Situação:** Trabalhando na H32: FAT32: leitura
+- **Fase atual:** 6
+- **História atual:** H32
+- **Progresso geral:** 91.2%
 - **Bloqueio:** nenhum
-- **Imagem:** 429056 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6764, userland 3628
+- **Imagem:** 491520 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9161, userland 3736
 
 ## Fases
 
@@ -19,7 +19,7 @@ _Atualizado em 2026-11-03T20:00:46_
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
-| 6 | Pendrive de dados | 0.0% | a fazer |
+| 6 | Pendrive de dados | 50.0% | em andamento |
 | 7 | Bônus | 0% | a fazer |
 
 ## Histórias
@@ -54,10 +54,10 @@ _Atualizado em 2026-11-03T20:00:46_
 | H26 | Calculadora | feito | 2 |
 | H27 | Sagui Pega Banana | feito | 2 |
 | H28 | Acabamento | feito | 2 |
-| H29 | PCI e controlador EHCI | a fazer |  |
-| H30 | Enumeração USB, hubs e conexão a quente | a fazer |  |
-| H31 | Armazenamento em massa | a fazer |  |
-| H32 | FAT32: leitura | a fazer |  |
+| H29 | PCI e controlador EHCI | feito | 1 |
+| H30 | Enumeração USB, hubs e conexão a quente | feito | 1 |
+| H31 | Armazenamento em massa | feito | 1 |
+| H32 | FAT32: leitura | em andamento |  |
 | H33 | FAT32: gravação | a fazer |  |
 | H34 | Integração do pendrive | a fazer |  |
 | B1 | Bônus: enxergar o HD interno | a fazer |  |
@@ -66,6 +66,14 @@ _Atualizado em 2026-11-03T20:00:46_
 
 ## Últimas ações
 
+- 2026-11-03T20:16:48: Início da H32: FAT32: leitura
+- 2026-11-03T20:16:48: H31 concluída: Bulk-Only + SCSI; setores lidos e gravados conferidos byte a byte na VPS
+- 2026-11-03T20:16:48: H30 concluída: Enumeração, hubs (validação no G470), conexão e remoção a quente
+- 2026-11-03T20:16:48: H29 concluída: PCI, EHCI assumido da BIOS, transferências; comando usb
+- 2026-11-03T20:16:48: Início da H31: Armazenamento em massa
+- 2026-11-03T20:16:48: Início da H30: Enumeração USB, hubs e conexão a quente
+- 2026-11-03T20:16:48: Início da H29: PCI e controlador EHCI
+- 2026-11-03T20:04:57: Início da H29: PCI e controlador EHCI
 - 2026-11-03T20:00:46: Eli confirmou: fase 5 ok
 - 2026-11-03T19:24:19: Fase 5 entregue. Aguardando teste do Eli.
 - 2026-11-03T19:24:19: Todos os testes passaram (H01 a H28, 28/28)
@@ -73,11 +81,3 @@ _Atualizado em 2026-11-03T20:00:46_
 - 2026-11-03T19:11:50: Início da H28: Acabamento
 - 2026-11-03T19:11:50: H27 concluída: Jogo Sagui Pega Banana com pixel art, vidas, velocidade crescente e recorde
 - 2026-11-03T19:09:30: Início da H27: Sagui Pega Banana
-- 2026-11-03T19:09:30: H26 concluída: Calculadora em ponto fixo com botões e teclado; avisos de divisão por zero e número grande
-- 2026-11-03T19:07:26: Início da H26: Calculadora
-- 2026-11-03T19:07:26: H23 concluída: Gerenciador de arquivos com ícones; abre no Editor, cria e apaga pastas
-- 2026-11-03T19:03:23: Início da H23: Arquivos
-- 2026-11-03T19:03:23: H25 concluída: Editor com Novo/Abrir/Salvar, Ctrl+S, título com *, aviso ao fechar
-- 2026-11-03T19:00:05: Início da H25: Editor de texto
-- 2026-11-03T19:00:05: H24 concluída: Terminal em janela rodando o sagsh por pipes; comandos que abrem os programas gráficos
-- 2026-11-03T18:56:46: Início da H24: Terminal em janela

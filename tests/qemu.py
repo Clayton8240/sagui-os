@@ -131,6 +131,50 @@ for _letra, _mortas in (("aeiou", [("´", "bracket_left"), ("`", "shift-bracket_
             ACENTOS_ABNT2[_ud.normalize("NFC", _l.upper() + _comb)] = [_tecla, "shift-" + _l]
 
 
+def criar_pendrive(nome, mb=64, rotulo="MEUPEN", arquivos=None, pastas=(), particionado=True, formato="fat32"):
+    """Cria build/testes/<nome>.img: um pendrive de teste, como o Windows
+    faria (tabela MBR com uma partição FAT32 a partir de 1 MB), e copia
+    arquivos e pastas para ele com o mtools. Devolve o caminho."""
+    os.makedirs(SAIDA, exist_ok=True)
+    img = os.path.join(SAIDA, nome + ".img")
+    if os.path.exists(img):
+        os.remove(img)
+    with open(img, "wb") as f:
+        f.truncate(mb * 1024 * 1024)
+    desloc = 0
+    if particionado:
+        tipo = {"fat32": "c", "ntfs": "7", "ext": "83"}[formato]
+        subprocess.run(["sfdisk", "-q", img], input=f"start=2048, type={tipo}\n", text=True, check=True)
+        desloc = 2048
+    if formato == "fat32":
+        subprocess.run(["mkfs.vfat", "-F", "32", "-n", rotulo, "--offset", str(desloc), img],
+                       check=True, stdout=subprocess.DEVNULL)
+        for p in pastas:
+            mtools(img, "mmd", f"p:/{p}", particionado=particionado)
+        for destino, conteudo in (arquivos or {}).items():
+            origem = os.path.join(SAIDA, "_conteudo.tmp")
+            with open(origem, "wb") as f:
+                f.write(conteudo.encode("utf-8") if isinstance(conteudo, str) else conteudo)
+            mtools(img, "mcopy", "-o", origem, f"p:/{destino}", particionado=particionado)
+    return img
+
+
+def mtools(img, comando, *args, particionado=True):
+    """Roda um comando do mtools no pendrive de teste (letra p:)."""
+    rc = os.path.join(SAIDA, "mtoolsrc")
+    with open(rc, "w") as f:
+        f.write(f'drive p: file="{img}"' + (" offset=1048576" if particionado else "") + "\nmtools_skip_check=1\n")
+    env = dict(os.environ, MTOOLSRC=rc, LC_ALL="C.UTF-8")
+    r = subprocess.run([comando, *args], env=env, capture_output=True)
+    return r.stdout.decode("utf-8", "replace"), r.returncode
+
+
+def pendrive_qemu(img, ident="pen"):
+    """Argumentos do QEMU para um pendrive de dados no controlador EHCI."""
+    return ["-drive", f"if=none,id={ident},format=raw,file={img}",
+            "-device", f"usb-storage,bus=ehci.0,drive={ident},removable=on,id=dev-{ident}"]
+
+
 def imagem_console():
     """A imagem normal, mas com o terminal de tela cheia em vez da área de
     trabalho (opção --console). Usada pelos testes das fases 2 a 4."""

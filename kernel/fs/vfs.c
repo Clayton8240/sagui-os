@@ -15,6 +15,7 @@
 #include "memoria.h"
 #include "sgfs.h"
 #include "texto.h"
+#include "fat32.h"
 
 static no_t raiz;
 static uint32_t total_nos;
@@ -275,8 +276,39 @@ void vfs_soltar(no_t *x)
     if (!x->refs && x->removido) destruir_no(x);
 }
 
+static bool usb_montado;
+
+void vfs_ponto_montagem(bool existe)
+{
+    usb_montado = existe;
+    no_t *u = vfs_achar("/usb");
+    if (existe && !u) vfs_criar("/usb", TIPO_PASTA, NULL);
+    if (!existe && u && !u->filho) vfs_remover_pasta("/usb");
+}
+
+bool vfs_na_usb(const char *caminho, const char **rel)
+{
+    if (!usb_montado || !txt_comeca_com(caminho, "/usb")) return false;
+    if (caminho[4] != 0 && caminho[4] != '/') return false;   /* "/usbx" não é /usb */
+    *rel = caminho[4] ? caminho + 5 : caminho + 4;
+    return true;
+}
+
 int vfs_ler_inteiro(const char *caminho, uint8_t **dados, uint32_t *tam)
 {
+    const char *rel;
+    if (vfs_na_usb(caminho, &rel)) {   /* programas também podem rodar do pendrive */
+        fat_arq_t f;
+        int r = fat_abrir(rel, ABRIR_LER, &f);
+        if (r < 0) return r;
+        uint8_t *buf = kmalloc(f.tamanho ? f.tamanho : 1);
+        if (!buf) return ERRO_SEM_MEMORIA;
+        int n = fat_ler(&f, 0, buf, f.tamanho);
+        if (n < 0) { kfree(buf); return n; }
+        *tam = (uint32_t)n;
+        *dados = buf;
+        return 0;
+    }
     no_t *x = vfs_achar(caminho);
     if (!x) return ERRO_NAO_EXISTE;
     if (x->tipo == TIPO_PASTA) return ERRO_E_PASTA;

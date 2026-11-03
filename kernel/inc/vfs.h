@@ -36,6 +36,12 @@ void     vfs_soltar(no_t *x);
 /* Lê um arquivo inteiro para um buffer novo do kernel (liberar com kfree). */
 int      vfs_ler_inteiro(const char *caminho, uint8_t **dados, uint32_t *tam);
 
+/* /usb: existe enquanto há um pendrive montado (fase 6). */
+void vfs_ponto_montagem(bool existe);
+/* Se o caminho (absoluto) está dentro de /usb montado, devolve o resto
+ * ("" para a própria /usb) em *rel. */
+bool vfs_na_usb(const char *caminho, const char **rel);
+
 void arquivos_herdar(struct processo *filho, struct processo *pai);
 void arquivos_fechar_todos(struct processo *p);
 

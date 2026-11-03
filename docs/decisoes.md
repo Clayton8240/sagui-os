@@ -619,3 +619,84 @@ de 32 bits, `/` e `%` entre inteiros de 64 bits viram chamadas a rotinas da
 biblioteca do compilador, que não usamos; a calculadora faz a divisão longa
 bit a bit, como no papel. Efeito colateral bom: `0,1 + 0,2` dá exatamente
 `0,3`, sem o erro de arredondamento do ponto flutuante.
+
+## D024. Hub USB no QEMU (fase 6)
+
+**O que o PRD pede:** testar no QEMU com um hub virtual entre o controlador
+EHCI e o pendrive, porque no G470 (chipset Intel série 6) cada controlador
+EHCI tem um hub interno de alta velocidade ("rate matching hub") e todo
+dispositivo fica atrás dele.
+
+**O que o QEMU 8.2 permite:** o `usb-hub` do QEMU é um hub de velocidade
+plena (USB 1.1) e o QEMU recusa ligá-lo numa porta de alta velocidade do EHCI
+("speed mismatch"); a opção de controladores companheiros (UHCI) levaria o
+hub e o pendrive para o controlador UHCI, que o G470 nem tem. Não existe hub
+de alta velocidade no QEMU.
+
+**Decisão:** o suporte a hub é escrito pela especificação USB 2.0
+(capítulo 11: descritor de hub, energia, estado e reset das portas,
+mudanças de conexão) e é usado sempre que um dispositivo de classe hub
+aparecer, inclusive para a detecção de conexão e remoção. No QEMU os testes
+ligam o pendrive direto na porta do EHCI; o caminho do hub só é exercitado
+no G470, e o roteiro da fase 6 pede atenção a ele. Dispositivos de
+velocidade plena ou baixa atrás de um hub (que exigiriam "split
+transactions") não são suportados: pendrives são de alta velocidade.
+
+## D025. USB: como foi pensado (H29 a H31)
+
+**Síncrono e sem interrupções do controlador.** Cada transferência monta os
+descritores (qTD), pendura uma cabeça de fila (QH) no anel assíncrono, espera
+o controlador terminar e tira a QH (confirmando com o "doorbell" da
+especificação). Só uma transferência por vez, com as interrupções da CPU
+desligadas durante a espera. É mais lento que um driver com filas e
+interrupções, mas para um pendrive de dados é suficiente, e não existe
+nenhuma corrida entre o kernel e o controlador para depurar sem serial no
+G470.
+
+**O tempo vem do próprio controlador.** Com as interrupções desligadas o
+relógio do sistema para; os atrasos exigidos pela especificação USB (50 ms
+de reset de porta, por exemplo) e os limites de espera usam o contador de
+microquadros do EHCI (FRINDEX, 8 por milissegundo).
+
+**Memória para o controlador.** O EHCI lê e escreve a memória por endereço
+físico. O driver separa uma página para a QH-cabeça, a QH de trabalho, o
+pacote de setup e até 8 qTDs, e 64 KB contíguos de buffer. Como o kernel
+enxerga a memória física 1:1 (D008), o mesmo número serve para a CPU e para
+o controlador.
+
+**Alternância de dados (data toggle).** Cada endpoint bulk alterna 0/1 a cada
+pacote. Como a QH é recriada a cada transferência, o driver guarda a
+alternância de cada endpoint e a calcula para cada qTD (cada qTD, menos o
+último, leva um múltiplo do tamanho de pacote). Depois de um STALL e do
+CLEAR_FEATURE, a alternância volta a 0, como manda a especificação.
+
+**Pedindo o controlador à BIOS.** A BIOS do G470 usa o EHCI para ler o
+pendrive de boot e emular teclado USB. Antes de reiniciar o controlador, o
+driver segue o procedimento de passagem de controle da especificação EHCI
+(semáforos da capacidade USBLEGSUP) e desliga as interrupções SMI. Como o
+SaguiOS já está todo na RAM, não há nada a perder.
+
+**Conexão a quente por consulta.** Uma tarefa do kernel olha, duas vezes por
+segundo, o bit "conexão mudou" das portas do controlador e de cada hub.
+
+## D026. FAT32: como foi pensado (H32, H33)
+
+**Caminhos com nomes longos de verdade.** Cada nome é procurado na pasta
+juntando as entradas de nome longo (LFN, em UTF-16) que antecedem a entrada
+curta 8.3, conferidas pela soma de verificação da especificação. Sem nome
+longo válido, vale o nome curto (respeitando as marcas de minúsculas que o
+Windows grava). O texto do SaguiOS é Latin-1, que é exatamente o começo do
+Unicode: a conversão é direta; o que não couber vira '_'. A comparação de
+nomes ignora maiúsculas e minúsculas, inclusive acentuadas.
+
+**Gravação.** Todo arquivo ou pasta criado ganha nome longo e um nome curto
+único gerado (NOME~1.EXT). Clusters novos são procurados a partir da dica de
+"próximo livre" do setor FSInfo; as duas cópias da FAT são sempre gravadas
+juntas; o número de clusters livres no FSInfo é atualizado ao desmontar.
+Datas e horas vêm do relógio CMOS.
+
+**Cache pequena e explícita.** Os setores da FAT e das pastas passam por uma
+cache de 16 setores, gravada no fim de cada operação (criar, escrever,
+apagar...) e no desmontar. Os dados dos arquivos, quando cobrem setores
+inteiros, vão direto para o pendrive. Assim, mesmo se o pendrive for
+arrancado, o que foi feito até a operação anterior já está gravado.

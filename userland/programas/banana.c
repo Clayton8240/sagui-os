@@ -302,6 +302,7 @@ int principal(int argc, char **argv)
     semente = argc > 1 ? (uint32_t)texto_para_int(argv[1]) : tempo_ms() | 1;
     desenhar_fundo();
     ler_recorde();
+    vidas = 3;   /* a barra da tela de início já mostra os três corações (visto no G470) */
     tela_inicio();
     registrar("banana: tela de inicio");
     while (esperar_enter() && jogar())

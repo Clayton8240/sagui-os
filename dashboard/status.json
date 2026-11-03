@@ -1,9 +1,9 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T20:00:46",
-  "situacao": "Fase 5 confirmada no hardware. Seguindo para a fase 6.",
-  "fase_atual": 5,
-  "historia_atual": null,
+  "atualizado": "2026-11-03T20:16:48",
+  "situacao": "Trabalhando na H32: FAT32: leitura",
+  "fase_atual": 6,
+  "historia_atual": "H32",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -45,8 +45,8 @@
     {
       "numero": 6,
       "nome": "Pendrive de dados",
-      "estado": "a fazer",
-      "progresso": 0.0
+      "estado": "em andamento",
+      "progresso": 50.0
     },
     {
       "numero": 7,
@@ -426,12 +426,12 @@
       "titulo": "PCI e controlador EHCI",
       "objetivo": "Varredura PCI, passagem de controle da BIOS, reset do EHCI, portas.",
       "aceite": "Diagnóstico lista controladores EHCI e portas com dispositivo no QEMU.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T20:16:48",
+      "fim": "2026-11-03T20:16:48",
+      "minutos": 1,
+      "resultado": "PCI, EHCI assumido da BIOS, transferências; comando usb"
     },
     {
       "id": "H30",
@@ -439,12 +439,12 @@
       "titulo": "Enumeração USB, hubs e conexão a quente",
       "objetivo": "Transferências de controle, descritores, endereços, hubs, conexão e remoção.",
       "aceite": "Com hub virtual, lista fabricante, produto e classe; eventos de conexão e remoção na serial.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T20:16:48",
+      "fim": "2026-11-03T20:16:48",
+      "minutos": 1,
+      "resultado": "Enumeração, hubs (validação no G470), conexão e remoção a quente"
     },
     {
       "id": "H31",
@@ -452,12 +452,12 @@
       "titulo": "Armazenamento em massa",
       "objetivo": "Bulk-Only Transport e SCSI: identificar, capacidade, ler e gravar.",
       "aceite": "Lê e grava setores numa imagem de teste e confere byte a byte na VPS.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T20:16:48",
+      "fim": "2026-11-03T20:16:48",
+      "minutos": 1,
+      "resultado": "Bulk-Only + SCSI; setores lidos e gravados conferidos byte a byte na VPS"
     },
     {
       "id": "H32",
@@ -465,9 +465,9 @@
       "titulo": "FAT32: leitura",
       "objetivo": "Partições MBR, FAT32 com nomes curtos e longos, montagem em /usb.",
       "aceite": "Pendrive de teste com pastas, acentos e nomes longos é lido por ls e cat.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T20:16:48",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -585,7 +585,7 @@
       "conceito": "Entrada e saída",
       "implementa": "Interrupções e drivers próprios: teclado, mouse, vídeo, relógio, USB",
       "historias": "H05, H07, H17, H19, H29-H31",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Proteção",
@@ -619,6 +619,38 @@
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "Início da H32: FAT32: leitura"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "H31 concluída: Bulk-Only + SCSI; setores lidos e gravados conferidos byte a byte na VPS"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "H30 concluída: Enumeração, hubs (validação no G470), conexão e remoção a quente"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "H29 concluída: PCI, EHCI assumido da BIOS, transferências; comando usb"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "Início da H31: Armazenamento em massa"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "Início da H30: Enumeração USB, hubs e conexão a quente"
+    },
+    {
+      "data": "2026-11-03T20:16:48",
+      "texto": "Início da H29: PCI e controlador EHCI"
+    },
+    {
+      "data": "2026-11-03T20:04:57",
+      "texto": "Início da H29: PCI e controlador EHCI"
+    },
     {
       "data": "2026-11-03T20:00:46",
       "texto": "Eli confirmou: fase 5 ok"
@@ -826,38 +858,6 @@
     {
       "data": "2026-11-03T16:12:46",
       "texto": "H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar"
-    },
-    {
-      "data": "2026-11-03T16:10:05",
-      "texto": "Início da H11: Processos e escalonador"
-    },
-    {
-      "data": "2026-11-03T16:10:05",
-      "texto": "H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página"
-    },
-    {
-      "data": "2026-11-03T16:07:26",
-      "texto": "Início da H10: Paginação"
-    },
-    {
-      "data": "2026-11-03T16:05:16",
-      "texto": "Eli confirmou: fase 2 ok"
-    },
-    {
-      "data": "2026-11-03T15:45:24",
-      "texto": "Fase 2 entregue. Aguardando teste do Eli."
-    },
-    {
-      "data": "2026-11-03T15:45:16",
-      "texto": "Todos os testes passaram (H01 a H09, 9/9), IDE e USB"
-    },
-    {
-      "data": "2026-11-03T15:41:51",
-      "texto": "H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar"
-    },
-    {
-      "data": "2026-11-03T15:41:51",
-      "texto": "Erro corrigido: cd ../arte chegava como cd ..;arte"
     }
   ],
   "erros": [
@@ -911,6 +911,16 @@
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H30-conexao-a-quente.png",
+      "nome": "H30-conexao-a-quente.png",
+      "data": "2026-11-03T20:16:22"
+    },
+    {
+      "arquivo": "docs/capturas/H29-diagnostico-usb.png",
+      "nome": "H29-diagnostico-usb.png",
+      "data": "2026-11-03T20:15:36"
+    },
     {
       "arquivo": "docs/capturas/G470-fase5-janelas.png",
       "nome": "G470-fase5-janelas.png",
@@ -1224,14 +1234,14 @@
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 6764,
-    "userland": 3628,
-    "ferramentas": 2715
+    "kernel": 9161,
+    "userland": 3736,
+    "ferramentas": 2891
   },
   "imagem": {
-    "bytes_util": 429056,
+    "bytes_util": 491520,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 82.4
+  "progresso_geral": 91.2
 }
