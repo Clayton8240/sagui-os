@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:07:26",
-  "situacao": "Trabalhando na H26: Calculadora",
+  "atualizado": "2026-11-03T19:09:30",
+  "situacao": "Trabalhando na H27: Sagui Pega Banana",
   "fase_atual": 5,
-  "historia_atual": "H26",
+  "historia_atual": "H27",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 66.7
+      "progresso": 77.8
     },
     {
       "numero": 6,
@@ -387,12 +387,12 @@ window.SAGUI_STATUS = {
       "titulo": "Calculadora",
       "objetivo": "Botões e teclado, ponto fixo, avisos de divisão por zero e número grande.",
       "aceite": "12,5 × 4 = 50; 7 ÷ 2 = 3,5; 1 ÷ 0 mostra aviso; captura.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:07:26",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:09:30",
+      "minutos": 2,
+      "resultado": "Calculadora em ponto fixo com botões e teclado; avisos de divisão por zero e número grande"
     },
     {
       "id": "H27",
@@ -400,9 +400,9 @@ window.SAGUI_STATUS = {
       "titulo": "Sagui Pega Banana",
       "objetivo": "Jogo autoral: sagui pega bananas, 3 vidas, velocidade crescente, recorde.",
       "aceite": "Teste joga com setas pelo monitor; capturas do jogo e do fim de jogo.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T19:09:30",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -619,6 +619,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T19:09:30",
+      "texto": "Início da H27: Sagui Pega Banana"
+    },
+    {
+      "data": "2026-11-03T19:09:30",
+      "texto": "H26 concluída: Calculadora em ponto fixo com botões e teclado; avisos de divisão por zero e número grande"
+    },
     {
       "data": "2026-11-03T19:07:26",
       "texto": "Início da H26: Calculadora"
@@ -850,14 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:37:48",
       "texto": "H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte"
-    },
-    {
-      "data": "2026-11-03T15:32:06",
-      "texto": "Início da H07: Teclado PS/2 com ABNT2"
-    },
-    {
-      "data": "2026-11-03T15:32:06",
-      "texto": "H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção"
     }
   ],
   "erros": [
@@ -911,6 +911,21 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H26-calculadora-divisao-por-zero.png",
+      "nome": "H26-calculadora-divisao-por-zero.png",
+      "data": "2026-11-03T19:09:07"
+    },
+    {
+      "arquivo": "docs/capturas/H26-calculadora-3-5.png",
+      "nome": "H26-calculadora-3-5.png",
+      "data": "2026-11-03T19:08:59"
+    },
+    {
+      "arquivo": "docs/capturas/H26-calculadora-50.png",
+      "nome": "H26-calculadora-50.png",
+      "data": "2026-11-03T19:08:59"
+    },
     {
       "arquivo": "docs/capturas/H23-confirmar-apagar.png",
       "nome": "H23-confirmar-apagar.png",
@@ -1180,13 +1195,13 @@ window.SAGUI_STATUS = {
   "linhas": {
     "boot": 903,
     "kernel": 6740,
-    "userland": 2931,
-    "ferramentas": 2507
+    "userland": 3220,
+    "ferramentas": 2591
   },
   "imagem": {
-    "bytes_util": 372736,
+    "bytes_util": 392704,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 73.5
+  "progresso_geral": 76.5
 };

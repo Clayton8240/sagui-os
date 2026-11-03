@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T19:07:26_
+_Atualizado em 2026-11-03T19:09:30_
 
-- **Situação:** Trabalhando na H26: Calculadora
+- **Situação:** Trabalhando na H27: Sagui Pega Banana
 - **Fase atual:** 5
-- **História atual:** H26
-- **Progresso geral:** 73.5%
+- **História atual:** H27
+- **Progresso geral:** 76.5%
 - **Bloqueio:** nenhum
-- **Imagem:** 372736 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6740, userland 2931
+- **Imagem:** 392704 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6740, userland 3220
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T19:07:26_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 66.7% | em andamento |
+| 5 | Janelas e programas | 77.8% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -51,8 +51,8 @@ _Atualizado em 2026-11-03T19:07:26_
 | H23 | Arquivos | feito | 4 |
 | H24 | Terminal em janela | feito | 3 |
 | H25 | Editor de texto | feito | 3 |
-| H26 | Calculadora | em andamento |  |
-| H27 | Sagui Pega Banana | a fazer |  |
+| H26 | Calculadora | feito | 2 |
+| H27 | Sagui Pega Banana | em andamento |  |
 | H28 | Acabamento | a fazer |  |
 | H29 | PCI e controlador EHCI | a fazer |  |
 | H30 | Enumeração USB, hubs e conexão a quente | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T19:07:26_
 
 ## Últimas ações
 
+- 2026-11-03T19:09:30: Início da H27: Sagui Pega Banana
+- 2026-11-03T19:09:30: H26 concluída: Calculadora em ponto fixo com botões e teclado; avisos de divisão por zero e número grande
 - 2026-11-03T19:07:26: Início da H26: Calculadora
 - 2026-11-03T19:07:26: H23 concluída: Gerenciador de arquivos com ícones; abre no Editor, cria e apaga pastas
 - 2026-11-03T19:03:23: Início da H23: Arquivos
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T19:07:26_
 - 2026-11-03T18:53:30: Erro corrigido: Rastros ao arrastar janelas
 - 2026-11-03T18:46:46: Início da H21: Gerenciador de janelas
 - 2026-11-03T18:46:46: H20 concluída: Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones
-- 2026-11-03T18:46:46: Erro corrigido: Boot não terminava com a área de trabalho no ar
-- 2026-11-03T18:38:00: Início da H20: Área de trabalho

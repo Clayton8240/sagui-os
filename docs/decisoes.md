@@ -607,3 +607,15 @@ janela com foco. Duplo clique é detectado pelo kernel (dois cliques em
 para consumir as filas do mouse e do teclado. Para dormir ele bloqueia e cede
 a vez na hora, por uma interrupção de software só do kernel (0x81); sem isso
 o processo 0 nunca mais rodava (erro 11).
+
+## D023. Calculadora em ponto fixo (H26)
+
+Os números são inteiros de 64 bits que guardam o valor vezes 10.000 (quatro
+casas decimais). Soma e subtração são diretas; multiplicação divide o
+produto por 10.000; divisão multiplica o dividendo por 10.000 antes. Antes
+de multiplicar, o programa confere se o resultado cabe (dividindo o maior
+inteiro possível por um dos fatores) e avisa "Número grande demais". Num x86
+de 32 bits, `/` e `%` entre inteiros de 64 bits viram chamadas a rotinas da
+biblioteca do compilador, que não usamos; a calculadora faz a divisão longa
+bit a bit, como no papel. Efeito colateral bom: `0,1 + 0,2` dá exatamente
+`0,3`, sem o erro de arredondamento do ponto flutuante.
