@@ -1,9 +1,9 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T18:53:31",
-  "situacao": "Trabalhando na H22: Kit gráfico da libsagui",
+  "atualizado": "2026-11-03T18:56:46",
+  "situacao": "Trabalhando na H24: Terminal em janela",
   "fase_atual": 5,
-  "historia_atual": "H22",
+  "historia_atual": "H24",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -39,7 +39,7 @@
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 22.2
+      "progresso": 33.3
     },
     {
       "numero": 6,
@@ -334,12 +334,12 @@
       "titulo": "Kit gráfico da libsagui",
       "objetivo": "Texto, botão, rótulo, caixa de texto, área de texto, lista, confirmação.",
       "aceite": "Demonstração com todos os componentes funcionando; captura.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:53:31",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T18:56:46",
+      "minutos": 3,
+      "resultado": "Kit gráfico na libsagui: botão, caixa, área de texto com rolagem, lista, diálogos"
     },
     {
       "id": "H23",
@@ -360,9 +360,9 @@
       "titulo": "Terminal em janela",
       "objetivo": "Janela que roda o sagsh ligado por pipes; comandos que abrem os programas gráficos.",
       "aceite": "Captura do terminal em janela rodando ps e ls bin | conta.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T18:56:46",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -619,6 +619,14 @@
   ],
   "acoes": [
     {
+      "data": "2026-11-03T18:56:46",
+      "texto": "Início da H24: Terminal em janela"
+    },
+    {
+      "data": "2026-11-03T18:56:46",
+      "texto": "H22 concluída: Kit gráfico na libsagui: botão, caixa, área de texto com rolagem, lista, diálogos"
+    },
+    {
       "data": "2026-11-03T18:53:31",
       "texto": "Início da H22: Kit gráfico da libsagui"
     },
@@ -849,14 +857,6 @@
     {
       "data": "2026-11-03T15:22:25",
       "texto": "Eli confirmou: fase 1 ok"
-    },
-    {
-      "data": "2026-11-03T14:27:18",
-      "texto": "Fase 1 entregue. Aguardando teste do Eli."
-    },
-    {
-      "data": "2026-11-03T14:27:10",
-      "texto": "Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)"
     }
   ],
   "erros": [
@@ -910,6 +910,21 @@
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
+      "nome": "H22-dialogo-confirmar.png",
+      "data": "2026-11-03T18:56:23"
+    },
+    {
+      "arquivo": "docs/capturas/H22-componentes-em-uso.png",
+      "nome": "H22-componentes-em-uso.png",
+      "data": "2026-11-03T18:56:20"
+    },
+    {
+      "arquivo": "docs/capturas/H22-componentes.png",
+      "nome": "H22-componentes.png",
+      "data": "2026-11-03T18:56:11"
+    },
     {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
       "nome": "H19-cursor-movido.png",
@@ -1124,13 +1139,13 @@
   "linhas": {
     "boot": 903,
     "kernel": 6706,
-    "userland": 1652,
-    "ferramentas": 2201
+    "userland": 2362,
+    "ferramentas": 2275
   },
   "imagem": {
-    "bytes_util": 271360,
+    "bytes_util": 301568,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 61.8
+  "progresso_geral": 64.7
 }
