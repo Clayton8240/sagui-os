@@ -192,3 +192,30 @@ Outras opções pensadas: lista única de blocos com divisão e junção de
 vizinhos (gasta menos memória, mas cada `kfree` precisa percorrer a lista e
 um erro corrompe tudo) e alocador por "buddy" (mais complexo do que um
 kernel deste tamanho precisa).
+
+## D009. Teclado ABNT2: como foi pensado (H07)
+
+**Do byte à tecla.** O driver só lê a porta 0x60 na IRQ 1 e entrega bytes a
+uma máquina de estados pequena: prefixo 0xE0 (tecla estendida), soltar
+(bit 7), modificadores (Shift, Ctrl, Alt, AltGr = Alt da direita, Caps Lock,
+Num Lock) e, por último, a tradução pelo mapa. Bytes de resposta do teclado
+(0xFA, 0xFE) e bytes que o controlador marca como vindos do mouse são
+ignorados, porque na fase 4 os dois dividem o mesmo controlador.
+
+**Um código só para tudo.** O buffer guarda inteiros de 16 bits: 1-255 é um
+caractere Latin-1 já pronto (com acento), e de 0x100 em diante são teclas sem
+caractere (setas, Home, F1...). Ctrl+letra vira o código de controle (Ctrl+C
+= 3), como em terminais tradicionais. Assim o terminal, o editor e o jogo
+leem do mesmo jeito.
+
+**Mapa como tabela de pares.** `mapa[scan][0/1]` = sem e com Shift. As teclas
+mortas são o próprio acento marcado com um bit alto. Caps Lock inverte o
+Shift só nas letras e no ç. A tecla morta fica guardada; a próxima tecla
+procura numa tabela pequena de combinações (acento, letras base, resultados).
+Sem combinação, sai o acento e depois a letra, como pede o PRD; acento +
+espaço dá o próprio acento.
+
+**Teste.** O teste digita pelo monitor do QEMU, que nomeia teclas pela
+posição física (a tecla do ';' americano é o ç no ABNT2), cobrindo todas as
+linhas da tabela do PRD 4.4. Detalhe encontrado: o nome `altgr` do QEMU não
+gera o Alt da direita; o certo é `alt_r`.

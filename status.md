@@ -1,21 +1,21 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:32:06_
+_Atualizado em 2026-11-03T15:37:48_
 
-- **Situação:** Trabalhando na H07: Teclado PS/2 com ABNT2
+- **Situação:** Trabalhando na H08: Sistema de arquivos SGFS
 - **Fase atual:** 2
-- **História atual:** H07
-- **Progresso geral:** 17.6%
+- **História atual:** H08
+- **Progresso geral:** 20.6%
 - **Bloqueio:** nenhum
-- **Imagem:** 27648 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 1775, userland 0
+- **Imagem:** 30720 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 2075, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
-| 2 | Kernel e terminal | 40.0% | em andamento |
+| 2 | Kernel e terminal | 60.0% | em andamento |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
@@ -32,8 +32,8 @@ _Atualizado em 2026-11-03T15:32:06_
 | H04 | Imagem para pendrive e VirtualBox | feito | 4 |
 | H05 | Interrupções e relógio | feito | 4 |
 | H06 | Memória física | feito | 4 |
-| H07 | Teclado PS/2 com ABNT2 | em andamento |  |
-| H08 | Sistema de arquivos SGFS | a fazer |  |
+| H07 | Teclado PS/2 com ABNT2 | feito | 6 |
+| H08 | Sistema de arquivos SGFS | em andamento |  |
 | H09 | Terminal provisório do kernel | a fazer |  |
 | H10 | Paginação | a fazer |  |
 | H11 | Processos e escalonador | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T15:32:06_
 
 ## Últimas ações
 
+- 2026-11-03T15:37:48: Início da H08: Sistema de arquivos SGFS
+- 2026-11-03T15:37:48: H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte
 - 2026-11-03T15:32:06: Início da H07: Teclado PS/2 com ABNT2
 - 2026-11-03T15:32:06: H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção
 - 2026-11-03T15:28:28: Início da H06: Memória física
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T15:32:06_
 - 2026-11-03T14:27:10: H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md
 - 2026-11-03T14:22:52: Início da H04: Imagem para pendrive e VirtualBox
 - 2026-11-03T14:22:52: H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB
-- 2026-11-03T14:22:05: Início da H03: Estágio 2 e modo protegido
-- 2026-11-03T14:22:05: H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB

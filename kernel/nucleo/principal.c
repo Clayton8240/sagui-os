@@ -12,6 +12,7 @@
 #include "relogio.h"
 #include "autoteste.h"
 #include "memoria.h"
+#include "teclado.h"
 
 #define SAGUI_VERSAO "0.2 (fase 2)"
 
@@ -114,7 +115,7 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
 
     vga_cor(COR_AMARELO, COR_VERDE);
     kprintf("                                                                                ");
-    kprintf("  Ola! Eu sou o SaguiOS.                                       versao %-17s", SAGUI_VERSAO);
+    kprintf("  %-56s%20s  ", "Ola! Eu sou o SaguiOS.", "versão " SAGUI_VERSAO);   /* exatamente 80 colunas */
     kprintf("                                                                                ");
     vga_cor(COR_CINZA, COR_PRETO);
 
@@ -123,7 +124,7 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     vga_cor(COR_BRANCO, COR_PRETO);
     kprintf("Memoria detectada: %u MB livres", (uint32_t)(livre >> 20));
     vga_cor(COR_CINZA, COR_PRETO);
-    kprintf(" (utilizavel pelo SaguiOS, abaixo de 4 GB: %u MB)\n", (uint32_t)(usavel >> 20));
+    kprintf(" | usável (abaixo de 4 GB): %u MB\n", (uint32_t)(usavel >> 20));
     registrar_mapa();
     static const char *metodos_a20[] = { "ja ligada", "BIOS", "porta 0x92", "teclado" };
     kprintf("E820: %u regioes | A20: %s | disco 0x%x | VESA: ", info_boot.mapa_qtd,
@@ -150,6 +151,10 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
                    memfisica_livres() / 256);
         etapa(linha);
     }
+
+    /* H07: teclado. */
+    teclado_iniciar();
+    etapa("Teclado PS/2 com layout ABNT2 (acentos com teclas mortas, ç)");
 
     conferir_ramdisk();
     klog("[SAGUI] boot ok\n");

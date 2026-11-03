@@ -55,8 +55,9 @@ def main():
                 mb = int(achou.group(1))
                 # O QEMU reserva um pouco (BIOS, VGA, ACPI): aceitamos até 2 MB a menos.
                 verificar(mem_mb - 2 <= mb <= mem_mb, f"[{modo} {mem_mb}M] {mb} MB livres, coerente com {mem_mb} MB")
-                verificar("Ramdisk SGFS" in texto, f"[{modo} {mem_mb}M] ramdisk encontrado depois do kernel")
-                verificar("Fase 1 concluida" in texto, f"[{modo} {mem_mb}M] kernel chegou ao fim da inicialização")
+                # Desde a fase 2 o detalhe do ramdisk vai só para a serial.
+                verificar("Ramdisk SGFS" in m.serial(), f"[{modo} {mem_mb}M] ramdisk encontrado depois do kernel")
+                verificar("[SAGUI] boot ok" in m.serial(), f"[{modo} {mem_mb}M] kernel chegou ao fim da inicialização")
                 if mem_mb == 512:
                     m.captura(f"H03-kernel-{modo}")
     # H04-fix: com memória acima de 4 GB, a tela separa o total do que um

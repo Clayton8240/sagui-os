@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:32:06",
-  "situacao": "Trabalhando na H07: Teclado PS/2 com ABNT2",
+  "atualizado": "2026-11-03T15:37:48",
+  "situacao": "Trabalhando na H08: Sistema de arquivos SGFS",
   "fase_atual": 2,
-  "historia_atual": "H07",
+  "historia_atual": "H08",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -19,7 +19,7 @@ window.SAGUI_STATUS = {
       "numero": 2,
       "nome": "Kernel e terminal",
       "estado": "em andamento",
-      "progresso": 40.0
+      "progresso": 60.0
     },
     {
       "numero": 3,
@@ -137,12 +137,12 @@ window.SAGUI_STATUS = {
       "titulo": "Teclado PS/2 com ABNT2",
       "objetivo": "Driver no IRQ1, buffer, Shift, Caps Lock, Ctrl, teclas mortas e o mapa ABNT2.",
       "aceite": "Teclas enviadas pelo monitor do QEMU aparecem corretas, incluindo ç.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T15:32:06",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T15:37:48",
+      "minutos": 6,
+      "resultado": "Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte"
     },
     {
       "id": "H08",
@@ -150,9 +150,9 @@ window.SAGUI_STATUS = {
       "titulo": "Sistema de arquivos SGFS",
       "objetivo": "tools/mksgfs.py e leitor no kernel: listar pasta, abrir e ler arquivo.",
       "aceite": "Teste interno lista as entradas do rootfs/ e lê o leia-me.txt inteiro.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T15:37:48",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T15:37:48",
+      "texto": "Início da H08: Sistema de arquivos SGFS"
+    },
+    {
+      "data": "2026-11-03T15:37:48",
+      "texto": "H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte"
+    },
+    {
       "data": "2026-11-03T15:32:06",
       "texto": "Início da H07: Teclado PS/2 com ABNT2"
     },
@@ -692,6 +700,36 @@ window.SAGUI_STATUS = {
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H07-teclado-abnt2.png",
+      "nome": "H07-teclado-abnt2.png",
+      "data": "2026-11-03T15:37:28"
+    },
+    {
+      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
+      "nome": "H04-fix-memoria-6g.png",
+      "data": "2026-11-03T15:37:19"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T15:37:07"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T15:36:56"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T15:36:51"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T15:36:45"
+    },
+    {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
       "data": "2026-11-03T15:31:45"
@@ -700,31 +738,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
       "data": "2026-11-03T15:27:54"
-    },
-    {
-      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
-      "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T15:24:29"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-usb.png",
-      "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T15:24:18"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-ide.png",
-      "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T15:24:07"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-usb.png",
-      "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T15:24:01"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-ide.png",
-      "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T15:23:55"
     },
     {
       "arquivo": "docs/capturas/G470-fase1-tela-final.png",
@@ -749,14 +762,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 1775,
+    "kernel": 2075,
     "userland": 0,
-    "ferramentas": 1044
+    "ferramentas": 1117
   },
   "imagem": {
-    "bytes_util": 27648,
+    "bytes_util": 30720,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 17.6
+  "progresso_geral": 20.6
 };

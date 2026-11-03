@@ -11,6 +11,7 @@
 #include "cpu.h"
 #include "relogio.h"
 #include "texto.h"
+#include "teclado.h"
 #include "memoria.h"
 
 static int falhas;
@@ -163,6 +164,26 @@ static void teste_memoria(void)
     kprintf("Autoteste de memória: %u blocos de 1 B a 42 KB alocados, conferidos e liberados.\n", BLOCOS * 3 / 2);
 }
 
+/* H07: ecoa o que for digitado até o Enter e registra os códigos na serial,
+ * para o teste comparar com o que deveria sair do mapa ABNT2. */
+static void teste_teclado(void)
+{
+    char hex[400];
+    int n = 0;
+    kprintf("Autoteste do teclado: digite e aperte Enter.\n> ");
+    klog("[TESTE] teclado pronto\n");
+    for (;;) {
+        int t = teclado_ler();
+        if (t == '\n') break;
+        klog("[TECLA] %x\n", t);
+        if (t >= 0x20 && t < 0x100 && t != 0x7F) kprintf("%c", t);
+        else if (t < 0x20) kprintf("^%c", t + '@');
+        if (n < (int)sizeof hex - 5) n += snformatar(hex + n, sizeof hex - n, "%02x", t & 0xFF);
+    }
+    kprintf("\n");
+    klog("[TESTE] teclado linha=%s\n", hex);
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -172,6 +193,7 @@ static const autoteste_t testes[] = {
     { "divisao", teste_divisao },
     { "relogio", teste_relogio },
     { "memoria", teste_memoria },
+    { "teclado", teste_teclado },
 };
 
 void autoteste_executar(const char *nome)
