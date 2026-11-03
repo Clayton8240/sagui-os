@@ -353,7 +353,8 @@ static int esperar_zumbi(processo_t *p)
 
 static void teste_anel3(void)
 {
-    uint32_t livres0 = memfisica_livres();
+    estat_memoria_t m0, m1;
+    memoria_estatisticas(&m0);
     processo_t *a = rodar_no_anel3("ola-anel3", anel3_ola, anel3_ola_fim);
     confere(a != NULL, "processo criado");
     if (!a) return;
@@ -368,7 +369,10 @@ static void teste_anel3(void)
     c = esperar_zumbi(d);
     confere(c == SAIDA_ENCERRADO_PELO_KERNEL, "ler a memória do kernel encerrou o processo");
 
-    confere(memfisica_livres() == livres0, "a memória dos três processos foi toda devolvida");
+    /* Páginas que o kmalloc pegou para blocos pequenos ficam com ele (D008). */
+    memoria_estatisticas(&m1);
+    confere(m1.paginas_livres + (m1.heap_paginas - m0.heap_paginas) == m0.paginas_livres,
+            "a memória dos três processos foi toda devolvida");
     kprintf("O kernel continua de pé depois dos dois programas com erro.\n");
 }
 
