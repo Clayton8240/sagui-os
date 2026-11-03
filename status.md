@@ -1,11 +1,11 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T20:18:39_
+_Atualizado em 2026-11-03T20:20:50_
 
-- **Situação:** Trabalhando na H33: FAT32: gravação
+- **Situação:** Trabalhando na H34: Integração do pendrive
 - **Fase atual:** 6
-- **História atual:** H33
-- **Progresso geral:** 94.1%
+- **História atual:** H34
+- **Progresso geral:** 97.1%
 - **Bloqueio:** nenhum
 - **Imagem:** 491520 bytes úteis (meta 1474560 bytes = 1,44 MB)
 - **Linhas de código:** boot 903, kernel 9161, userland 3769
@@ -19,7 +19,7 @@ _Atualizado em 2026-11-03T20:18:39_
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
-| 6 | Pendrive de dados | 66.7% | em andamento |
+| 6 | Pendrive de dados | 83.3% | em andamento |
 | 7 | Bônus | 0% | a fazer |
 
 ## Histórias
@@ -58,14 +58,16 @@ _Atualizado em 2026-11-03T20:18:39_
 | H30 | Enumeração USB, hubs e conexão a quente | feito | 1 |
 | H31 | Armazenamento em massa | feito | 1 |
 | H32 | FAT32: leitura | feito | 2 |
-| H33 | FAT32: gravação | em andamento |  |
-| H34 | Integração do pendrive | a fazer |  |
+| H33 | FAT32: gravação | feito | 2 |
+| H34 | Integração do pendrive | em andamento |  |
 | B1 | Bônus: enxergar o HD interno | a fazer |  |
 | B2 | Bônus: boot por UEFI | a fazer |  |
 | B3 | Bônus: bip | a fazer |  |
 
 ## Últimas ações
 
+- 2026-11-03T20:20:50: Início da H34: Integração do pendrive
+- 2026-11-03T20:20:50: H33 concluída: Gravação FAT32 conferida com mtools e fsck.vfat
 - 2026-11-03T20:18:39: Início da H33: FAT32: gravação
 - 2026-11-03T20:18:39: H32 concluída: FAT32 com nomes longos e acentos montado em /usb; ls e cat funcionando
 - 2026-11-03T20:16:48: Início da H32: FAT32: leitura
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T20:18:39_
 - 2026-11-03T20:00:46: Eli confirmou: fase 5 ok
 - 2026-11-03T19:24:19: Fase 5 entregue. Aguardando teste do Eli.
 - 2026-11-03T19:24:19: Todos os testes passaram (H01 a H28, 28/28)
-- 2026-11-03T19:14:10: H28 concluída: Ícones que abrem os programas, tela Sobre; imagem com 428 KB (29% da meta)
-- 2026-11-03T19:11:50: Início da H28: Acabamento

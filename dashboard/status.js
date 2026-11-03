@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T20:18:39",
-  "situacao": "Trabalhando na H33: FAT32: gravação",
+  "atualizado": "2026-11-03T20:20:50",
+  "situacao": "Trabalhando na H34: Integração do pendrive",
   "fase_atual": 6,
-  "historia_atual": "H33",
+  "historia_atual": "H34",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -47,7 +47,7 @@ window.SAGUI_STATUS = {
       "numero": 6,
       "nome": "Pendrive de dados",
       "estado": "em andamento",
-      "progresso": 66.7
+      "progresso": 83.3
     },
     {
       "numero": 7,
@@ -479,12 +479,12 @@ window.SAGUI_STATUS = {
       "titulo": "FAT32: gravação",
       "objetivo": "Criar, sobrescrever, aumentar, apagar; pastas; duas FATs; FSInfo; desmontar grava tudo.",
       "aceite": "Após desmontar, mtools e fsck.vfat confirmam integridade e conteúdo.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:18:39",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T20:20:50",
+      "minutos": 2,
+      "resultado": "Gravação FAT32 conferida com mtools e fsck.vfat"
     },
     {
       "id": "H34",
@@ -492,9 +492,9 @@ window.SAGUI_STATUS = {
       "titulo": "Integração do pendrive",
       "objetivo": "Notificação, ícone Pendrive, montar e remover com segurança, fluxo pelo terminal.",
       "aceite": "Roteiro completo pela interface e pelo terminal; VPS confere com mtools; capturas.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T20:20:50",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -580,7 +580,7 @@ window.SAGUI_STATUS = {
       "conceito": "Arquivos e diretórios",
       "implementa": "Abrir, ler, escrever, criar, apagar, na RAM e no pendrive FAT32",
       "historias": "H08, H14, H32, H33",
-      "estado": "parcial"
+      "estado": "feito"
     },
     {
       "conceito": "Entrada e saída",
@@ -620,6 +620,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T20:20:50",
+      "texto": "Início da H34: Integração do pendrive"
+    },
+    {
+      "data": "2026-11-03T20:20:50",
+      "texto": "H33 concluída: Gravação FAT32 conferida com mtools e fsck.vfat"
+    },
     {
       "data": "2026-11-03T20:18:39",
       "texto": "Início da H33: FAT32: gravação"
@@ -851,14 +859,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T16:21:08",
       "texto": "H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos"
-    },
-    {
-      "data": "2026-11-03T16:16:35",
-      "texto": "Início da H13: Carregador ELF e libsagui"
-    },
-    {
-      "data": "2026-11-03T16:16:35",
-      "texto": "H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo"
     }
   ],
   "erros": [
@@ -912,6 +912,11 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H33-pendrive-gravado.png",
+      "nome": "H33-pendrive-gravado.png",
+      "data": "2026-11-03T20:20:42"
+    },
     {
       "arquivo": "docs/capturas/H32-ls-pendrive.png",
       "nome": "H32-ls-pendrive.png",
@@ -1242,12 +1247,12 @@ window.SAGUI_STATUS = {
     "boot": 903,
     "kernel": 9161,
     "userland": 3769,
-    "ferramentas": 2965
+    "ferramentas": 3051
   },
   "imagem": {
     "bytes_util": 491520,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 94.1
+  "progresso_geral": 97.1
 };
