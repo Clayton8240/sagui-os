@@ -1,0 +1,101 @@
+# Makefile do SaguiOS
+#
+# Alvos principais:
+#   make            -> gera build/saguios.img (imagem para pendrive)
+#   make vdi        -> gera também build/saguios.vdi (VirtualBox)
+#   make test       -> roda todos os testes automáticos no QEMU
+#   make rodar      -> abre o sistema no QEMU (precisa de janela; na VPS use os testes)
+#   make entrega FASE=N -> copia .img, .vdi e SHA-256 para entrega/faseN/
+#   make vazio      -> alvo vazio (critério da H01)
+#   make limpar     -> apaga build/
+
+# O GCC do sistema em modo 32 bits e freestanding faz o papel do compilador
+# cruzado (ver docs/decisoes.md, D001).
+CC      := gcc
+AS      := nasm
+LD      := ld
+PY      := python3
+
+CFLAGS  := -m32 -march=i686 -std=gnu11 -O2 -g \
+           -ffreestanding -fno-builtin -nostdlib -fno-pic -fno-pie \
+           -fno-stack-protector -fno-asynchronous-unwind-tables \
+           -mgeneral-regs-only -fno-omit-frame-pointer \
+           -Wall -Wextra -Werror=implicit-function-declaration \
+           -Ikernel/inc
+LDFLAGS := -m elf_i386 -nostdlib --no-dynamic-linker -z noexecstack
+
+B       := build
+
+KERNEL_C   := $(shell find kernel -name '*.c' | sort)
+KERNEL_ASM := $(shell find kernel -name '*.asm' | sort)
+KERNEL_OBJ := $(patsubst %.c,$(B)/%.o,$(KERNEL_C)) $(patsubst %.asm,$(B)/%.asm.o,$(KERNEL_ASM))
+KERNEL_HDR := $(shell find kernel -name '*.h')
+ROOTFS     := $(shell find rootfs -type f | sort)
+
+.PHONY: all vazio vdi test rodar entrega limpar dashboard
+
+all: $(B)/saguios.img
+
+vazio:
+	@echo "SaguiOS: alvo vazio ok"
+
+# ---------- carregador de boot ----------
+$(B)/boot/mbr.bin: boot/mbr.asm boot/cabecalho.inc
+	@mkdir -p $(dir $@)
+	$(AS) -f bin -I boot/ -o $@ $<
+
+$(B)/boot/estagio2.bin: boot/estagio2.asm $(wildcard boot/*.inc)
+	@mkdir -p $(dir $@)
+	$(AS) -f bin -I boot/ -o $@ $<
+
+# ---------- kernel ----------
+$(B)/kernel/%.o: kernel/%.c $(KERNEL_HDR)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(B)/kernel/%.asm.o: kernel/%.asm
+	@mkdir -p $(dir $@)
+	$(AS) -f elf32 -I kernel/arch/ -o $@ $<
+
+$(B)/kernel.elf: $(KERNEL_OBJ) kernel/ligacao.ld
+	$(LD) $(LDFLAGS) -T kernel/ligacao.ld -o $@ $(KERNEL_OBJ)
+
+$(B)/kernel.bin: $(B)/kernel.elf
+	objcopy -O binary $< $@
+
+# ---------- ramdisk (SGFS) ----------
+$(B)/ramdisk.sgfs: $(ROOTFS) tools/mksgfs.py
+	$(PY) tools/mksgfs.py rootfs $@
+
+# ---------- imagem final ----------
+$(B)/saguios.img: $(B)/boot/mbr.bin $(B)/boot/estagio2.bin $(B)/kernel.bin $(B)/ramdisk.sgfs tools/mkimagem.py
+	$(PY) tools/mkimagem.py --mbr $(B)/boot/mbr.bin --estagio2 $(B)/boot/estagio2.bin \
+	    --kernel $(B)/kernel.bin --kernel-elf $(B)/kernel.elf --ramdisk $(B)/ramdisk.sgfs \
+	    --saida $@
+	cd $(B) && sha256sum saguios.img > saguios.img.sha256
+
+$(B)/saguios.vdi: $(B)/saguios.img
+	rm -f $@
+	qemu-img convert -f raw -O vdi $< $@
+	cd $(B) && sha256sum saguios.vdi > saguios.vdi.sha256
+
+vdi: $(B)/saguios.vdi
+
+test: $(B)/saguios.img
+	$(PY) tests/rodar_todos.py
+
+rodar: $(B)/saguios.img
+	qemu-system-i386 -m 512M -drive format=raw,file=$< -serial stdio
+
+entrega: $(B)/saguios.img $(B)/saguios.vdi
+	@test -n "$(FASE)" || (echo "use: make entrega FASE=N" && false)
+	mkdir -p entrega/fase$(FASE)
+	cp $(B)/saguios.img $(B)/saguios.vdi entrega/fase$(FASE)/
+	cd entrega/fase$(FASE) && sha256sum saguios.img saguios.vdi > SHA256SUMS.txt
+	@cat entrega/fase$(FASE)/SHA256SUMS.txt
+
+dashboard:
+	$(PY) tools/status.py atualizar
+
+limpar:
+	rm -rf $(B)
