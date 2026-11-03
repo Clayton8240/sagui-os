@@ -445,3 +445,29 @@ são usados, que é a demonstração de multitarefa pedida no PRD.
 **Um detalhe do compilador.** O primeiro `falha divisao` não dividia: o
 GCC troca `1 / x` por comparações (o resultado só pode ser -1, 0 ou 1) e a
 CPU nunca executa a divisão. O programa agora divide 12345 por zero.
+
+## D017. Vídeo VESA: como foi pensado (H17)
+
+**Buffer de trás sempre em 32 bits (0x00RRGGBB).** A placa pode usar 24 ou
+32 bits e qualquer ordem de cores (o VBE informa a posição de cada canal).
+Em vez de cada rotina de desenho conhecer o formato, tudo é desenhado num
+buffer na RAM com um formato só, e a conversão acontece na cópia para a
+placa. Quando o formato da placa já é igual (o caso do QEMU e o esperado no
+G470), a cópia é um `memcpy` por linha.
+
+**Copiar só o que mudou.** As rotinas de desenho aumentam um "retângulo
+sujo"; `video_mostrar` copia só ele. Um caractere digitado no terminal
+copia 8x16 pixels, e não a tela inteira de 3 MB.
+
+**O framebuffer entra pela janela do kernel** (0x38000000, D010): como as
+tabelas dessa faixa são compartilhadas, a tela fica acessível em qualquer
+processo sem trocar nada.
+
+**O cursor do mouse é desenhado na cópia**, por cima, direto na placa, e
+nunca no buffer de trás. Mover o cursor é só refazer, a partir do buffer de
+trás, os pixels de onde ele estava. Assim nada que é desenhado precisa saber
+que existe um cursor.
+
+**Sem gráfico, volta ao texto.** Se o estágio 2 não achou um modo aceitável,
+ou o `4F02` falhou, `vesa_ativo` fica 0 e o console continua no modo texto
+(aviso na tela a partir da H18).

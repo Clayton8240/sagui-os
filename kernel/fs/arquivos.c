@@ -7,6 +7,7 @@
  * duplicar ou de um executar; ele conta as referências e só é fechado de
  * verdade quando a última some. */
 #include "abi.h"
+#include "console.h"
 #include "caminho.h"
 #include "memoria.h"
 #include "pipe.h"
@@ -132,7 +133,11 @@ int32_t sis_ler(uint32_t fd, uint32_t buf, uint32_t n, uint32_t d, uint32_t e)
         a->pos += r;
         return (int32_t)r;
     }
-    case A_TERMINAL:  return terminal_ler((char *)buf, n);
+    case A_TERMINAL: {
+        int32_t r = terminal_ler((char *)buf, n);
+        console_mostrar();   /* o eco do que foi digitado aparece já */
+        return r;
+    }
     case A_PIPE_LER:  return pipe_ler(a->pipe, (char *)buf, n);
     default:          return ERRO_ACESSO;
     }

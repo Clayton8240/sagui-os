@@ -18,6 +18,7 @@
 #include "processo.h"
 #include "abi.h"
 #include "vfs.h"
+#include "video.h"
 #include "memoria.h"
 
 static int falhas;
@@ -297,7 +298,7 @@ static void tarefa_letra(void *arg)
     char letra = (char)(uint32_t)arg;
     for (int i = 0; i < 60; i++) {
         serial_char(letra);
-        vga_char(letra);
+        console_char(letra);
         /* Espera ativa até o próximo tique: gasta CPU sem chamar o escalonador. */
         uint32_t t = relogio_tiques();
         while (relogio_tiques() == t)
@@ -376,6 +377,26 @@ static void teste_anel3(void)
     kprintf("O kernel continua de pé depois dos dois programas com erro.\n");
 }
 
+/* H17: fundo colorido e formas na resolução detectada. */
+static void teste_grafico(void)
+{
+    confere(video_ativo() || video_iniciar(), "modo gráfico ligado pelo estágio 2");
+    if (!video_ativo()) return;
+    int l = (int)video_largura(), a = (int)video_altura();
+    klog("[TESTE] video %dx%d\n", l, a);
+    video_degrade_vertical(0, 0, l, a, RGB(0, 120, 60), RGB(10, 40, 120));   /* verde para azul */
+    video_retangulo(40, 40, 200, 120, RGB(255, 210, 0));                     /* amarelo cheio */
+    video_caixa(280, 40, 200, 120, RGB(255, 255, 255), RGB(200, 0, 0));      /* branco com borda vermelha */
+    video_moldura(520, 40, 200, 120, 6, RGB(0, 0, 0));                        /* só a borda, grossa */
+    for (int i = 0; i <= 10; i++)                                              /* leque de linhas */
+        video_linha(40, a - 40, 40 + i * (l / 2 - 40) / 10, a / 2, RGB(255, 255, 255));
+    video_linha(l / 2, a / 2, l - 40, a - 40, RGB(255, 80, 80));
+    video_linha(l - 40, a / 2, l / 2, a - 40, RGB(80, 255, 80));
+    for (int i = 0; i < 8; i++)                                                /* barras de cor */
+        video_retangulo(l / 2 + 20 + i * 30, 200, 26, 80, RGB((i & 1) * 255, ((i >> 1) & 1) * 255, ((i >> 2) & 1) * 255));
+    video_mostrar_tudo();
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -391,6 +412,7 @@ static const autoteste_t testes[] = {
     { "falta_pagina", teste_falta_pagina },
     { "tarefas", teste_tarefas },
     { "anel3", teste_anel3 },
+    { "grafico", teste_grafico },
 };
 
 void autoteste_executar(const char *nome)

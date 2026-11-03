@@ -10,10 +10,13 @@ enum {
     COR_MAGENTA_CLARO, COR_AMARELO, COR_BRANCO
 };
 
-void vga_iniciar(void);
-void vga_limpar(void);
-void vga_cor(uint8_t frente, uint8_t fundo);
-void vga_char(char c);
+void console_iniciar(void);     /* modo texto, logo no boot */
+bool console_grafico(void);     /* tenta passar para o terminal gráfico (fase 4) */
+bool console_em_grafico(void);
+void console_limpar(void);
+void console_cor(uint8_t frente, uint8_t fundo);
+void console_char(char c);
+void console_mostrar(void);
 
 void serial_iniciar(void);
 void serial_char(char c);

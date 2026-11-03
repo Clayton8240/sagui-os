@@ -30,7 +30,7 @@ static int pendente = -1;   /* segundo byte de uma tecla especial no modo bruto 
 
 static void eco(char c)
 {
-    vga_char(c);
+    console_char(c);
     serial_char(c);
 }
 
@@ -38,6 +38,7 @@ int32_t terminal_escrever(const char *origem, uint32_t n)
 {
     for (uint32_t i = 0; i < n; i++)
         eco(origem[i]);
+    console_mostrar();
     return (int32_t)n;
 }
 
@@ -51,7 +52,8 @@ void terminal_modo(int m)
 
 void terminal_limpar(void)
 {
-    vga_limpar();
+    console_limpar();
+    console_mostrar();
 }
 
 static char letra_especial(int t)

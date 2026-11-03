@@ -37,6 +37,20 @@ TECLAS = {" ": "spc", "\n": "ret", "\t": "tab", "-": "minus", "=": "equal", ".":
           "&": "shift-7", "*": "shift-8", "(": "shift-9", ")": "shift-0"}
 
 
+def cor_do_pixel(png, x, y):
+    """Lê a cor de um pixel de uma captura (via ImageMagick): (r, g, b)."""
+    saida = subprocess.run(["convert", png, "-crop", f"1x1+{x}+{y}", "-depth", "8", "txt:-"],
+                           capture_output=True, text=True, check=True).stdout
+    m = re.search(r"\((\d+),(\d+),(\d+)", saida.splitlines()[-1])
+    return tuple(int(v) for v in m.groups())
+
+
+def tamanho_png(png):
+    saida = subprocess.run(["identify", "-format", "%w %h", png], capture_output=True, text=True, check=True).stdout
+    l, a = saida.split()
+    return int(l), int(a)
+
+
 def imagem_de_teste(teste, extras=()):
     """Monta build/testes/teste-<nome>.img: a imagem normal com um autoteste
     do kernel ligado pelo cabeçalho de boot (campo CAB_TESTE)."""

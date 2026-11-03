@@ -37,12 +37,12 @@ SEM_RETORNO void excecao_fatal(quadro_t *q)
     uint32_t cr2 = le_cr2();
     klog("\n[SAGUI] EXCECAO %u (%s) erro=%x eip=%x\n", q->vetor, nome_excecao(q->vetor), q->erro, q->eip);
 
-    vga_cor(COR_BRANCO, COR_VERMELHO);
-    vga_limpar();
+    console_cor(COR_BRANCO, COR_VERMELHO);
+    console_limpar();
     kprintf("\n  O SaguiOS encontrou um erro e precisou parar.\n\n");
-    vga_cor(COR_AMARELO, COR_VERMELHO);
+    console_cor(COR_AMARELO, COR_VERMELHO);
     kprintf("  Exceção %u: %s\n", q->vetor, nome_excecao(q->vetor));
-    vga_cor(COR_BRANCO, COR_VERMELHO);
+    console_cor(COR_BRANCO, COR_VERMELHO);
     kprintf("  Código de erro: 0x%08x\n\n", q->erro);
     kprintf("  EIP=%08x  CS=%04x  EFLAGS=%08x\n", q->eip, q->cs, q->eflags);
     kprintf("  EAX=%08x  EBX=%08x  ECX=%08x  EDX=%08x\n", q->eax, q->ebx, q->ecx, q->edx);

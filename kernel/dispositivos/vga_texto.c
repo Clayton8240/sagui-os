@@ -39,12 +39,12 @@ static void mover_cursor(void)
     porta_escreve8(0x3D5, pos >> 8);
 }
 
-void vga_cor(uint8_t frente, uint8_t fundo)
+void textovga_cor(uint8_t frente, uint8_t fundo)
 {
     atributo = (uint8_t)((fundo << 4) | (frente & 0x0F));
 }
 
-void vga_limpar(void)
+void textovga_limpar(void)
 {
     for (int i = 0; i < COLUNAS * LINHAS; i++)
         tela[i] = (uint16_t)(atributo << 8) | ' ';
@@ -52,10 +52,10 @@ void vga_limpar(void)
     mover_cursor();
 }
 
-void vga_iniciar(void)
+void textovga_iniciar(void)
 {
-    vga_cor(COR_CINZA, COR_PRETO);
-    vga_limpar();
+    textovga_cor(COR_CINZA, COR_PRETO);
+    textovga_limpar();
 }
 
 /* Sobe tudo uma linha e limpa a última. */
@@ -68,7 +68,7 @@ static void rolar(void)
     lin = LINHAS - 1;
 }
 
-void vga_char(char c)
+void textovga_char(char c)
 {
     switch (c) {
     case '\n': col = 0; lin++; break;

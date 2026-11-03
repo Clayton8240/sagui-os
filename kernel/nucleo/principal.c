@@ -38,7 +38,7 @@ static const char *nome_tipo_e820(uint32_t t)
 
 static void parar_com_erro(const char *msg)
 {
-    vga_cor(COR_BRANCO, COR_VERMELHO);
+    console_cor(COR_BRANCO, COR_VERMELHO);
     kprintf("\n SaguiOS: %s \n", msg);
     for (;;)
         __asm__ volatile("cli; hlt");
@@ -116,16 +116,16 @@ static void rodar_programa_de_teste(char *linha)
 /* Uma linha de status da inicialização: "[ ok ] texto". */
 static void etapa(const char *texto)
 {
-    vga_cor(COR_VERDE_CLARO, COR_PRETO);
+    console_cor(COR_VERDE_CLARO, COR_PRETO);
     kprintf("[ ok ] ");
-    vga_cor(COR_CINZA, COR_PRETO);
+    console_cor(COR_CINZA, COR_PRETO);
     kprintf("%s\n", texto);
 }
 
 void inicio_kernel(uint32_t magico, info_boot_t *bi)
 {
     serial_iniciar();
-    vga_iniciar();
+    console_iniciar();
     klog("\n[SAGUI] kernel iniciado\n");
 
     if (magico != BOOT_MAGICO || bi->assinatura != BOOTINFO_ASSIN)
@@ -139,17 +139,17 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         info_boot.mapa_qtd = MAPA_MAX;
     memcpy(mapa_memoria, (const void *)info_boot.mapa_end, info_boot.mapa_qtd * sizeof(regiao_e820_t));
 
-    vga_cor(COR_AMARELO, COR_VERDE);
+    console_cor(COR_AMARELO, COR_VERDE);
     kprintf("                                                                                ");
     kprintf("  %-56s%20s  ", "Ola! Eu sou o SaguiOS.", "versão " SAGUI_VERSAO);   /* exatamente 80 colunas */
     kprintf("                                                                                ");
-    vga_cor(COR_CINZA, COR_PRETO);
+    console_cor(COR_CINZA, COR_PRETO);
 
     uint64_t livre = memoria_livre(false);
     uint64_t usavel = memoria_livre(true);
-    vga_cor(COR_BRANCO, COR_PRETO);
+    console_cor(COR_BRANCO, COR_PRETO);
     kprintf("Memoria detectada: %u MB livres", (uint32_t)(livre >> 20));
-    vga_cor(COR_CINZA, COR_PRETO);
+    console_cor(COR_CINZA, COR_PRETO);
     kprintf(" | usável (abaixo de 4 GB): %u MB\n", (uint32_t)(usavel >> 20));
     registrar_mapa();
     static const char *metodos_a20[] = { "ja ligada", "BIOS", "porta 0x92", "teclado" };
@@ -200,9 +200,9 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
                    sgfs_quantidade(), (info_boot.ramdisk_bytes + 1023) / 1024);
         etapa(linha);
     } else {
-        vga_cor(COR_VERMELHO_CLARO, COR_PRETO);
+        console_cor(COR_VERMELHO_CLARO, COR_PRETO);
         kprintf("[ERRO] ramdisk SGFS invalido: o sistema segue sem arquivos\n");
-        vga_cor(COR_CINZA, COR_PRETO);
+        console_cor(COR_CINZA, COR_PRETO);
     }
     klog("[SAGUI] boot ok\n");
 
@@ -218,9 +218,9 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         char *argv[] = { "sagsh", NULL };
         int pid = processo_executar("/bin/sagsh", 1, argv, NULL);
         if (pid < 0) {
-            vga_cor(COR_VERMELHO_CLARO, COR_PRETO);
+            console_cor(COR_VERMELHO_CLARO, COR_PRETO);
             kprintf("Não consegui iniciar /bin/sagsh (erro %d).\n", pid);
-            vga_cor(COR_CINZA, COR_PRETO);
+            console_cor(COR_CINZA, COR_PRETO);
             for (;;) cpu_espera();
         }
         klog("[SAGUI] shell iniciado: processo %d\n", pid);

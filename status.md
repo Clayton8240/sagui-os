@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T17:21:51_
+_Atualizado em 2026-11-03T17:24:26_
 
-- **Situação:** Fase 3 confirmada no hardware. Seguindo para a fase 4.
-- **Fase atual:** 3
-- **História atual:** -
-- **Progresso geral:** 47.1%
+- **Situação:** Trabalhando na H18: Fonte própria
+- **Fase atual:** 4
+- **História atual:** H18
+- **Progresso geral:** 50.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 224256 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 4659, userland 1552
+- **Imagem:** 228864 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 5010, userland 1552
 
 ## Fases
 
@@ -17,7 +17,7 @@ _Atualizado em 2026-11-03T17:21:51_
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
-| 4 | Gráfico e mouse | 0.0% | a fazer |
+| 4 | Gráfico e mouse | 33.3% | em andamento |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
@@ -42,8 +42,8 @@ _Atualizado em 2026-11-03T17:21:51_
 | H14 | Arquivos e pastas graváveis | feito | 4 |
 | H15 | Pipes | feito | 2 |
 | H16 | Shell e comandos como programas | feito | 14 |
-| H17 | Framebuffer VESA | a fazer |  |
-| H18 | Fonte própria | a fazer |  |
+| H17 | Framebuffer VESA | feito | 2 |
+| H18 | Fonte própria | em andamento |  |
 | H19 | Mouse / touchpad PS/2 | a fazer |  |
 | H20 | Área de trabalho | a fazer |  |
 | H21 | Gerenciador de janelas | a fazer |  |
@@ -66,6 +66,9 @@ _Atualizado em 2026-11-03T17:21:51_
 
 ## Últimas ações
 
+- 2026-11-03T17:24:26: Início da H18: Fonte própria
+- 2026-11-03T17:24:26: H17 concluída: Framebuffer VESA 1024x768x32 com buffer duplo e primitivas de desenho
+- 2026-11-03T17:22:03: Início da H17: Framebuffer VESA
 - 2026-11-03T17:21:51: Eli confirmou: fase 3 ok
 - 2026-11-03T16:45:51: Fase 3 entregue. Aguardando teste do Eli.
 - 2026-11-03T16:45:51: Todos os testes passaram (H01 a H16, 16/16)
@@ -78,6 +81,3 @@ _Atualizado em 2026-11-03T17:21:51_
 - 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3
 - 2026-11-03T16:21:08: Início da H14: Arquivos e pastas graváveis
 - 2026-11-03T16:21:08: H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos
-- 2026-11-03T16:16:35: Início da H13: Carregador ELF e libsagui
-- 2026-11-03T16:16:35: H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo
-- 2026-11-03T16:12:46: Início da H12: Ring 3 e chamadas de sistema
