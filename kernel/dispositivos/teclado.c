@@ -202,14 +202,13 @@ static void tratar_byte(uint8_t b)
 
 static quadro_t *ao_teclar(quadro_t *q)
 {
-    /* Lê tudo o que o controlador tiver, mas só bytes do teclado (o bit 5
-     * do estado indica byte do mouse, que é da fase 4). */
+    /* Lê tudo o que o controlador tiver, mas só bytes do teclado: o bit 5
+     * do estado indica byte do mouse, que é do driver do mouse (H19). */
     for (int i = 0; i < 16; i++) {
         uint8_t estado = porta_le8(PORTA_ESTADO);
         if (!(estado & 1)) break;
-        uint8_t b = porta_le8(PORTA_DADOS);
-        if (estado & 0x20) continue;
-        tratar_byte(b);
+        if (estado & 0x20) break;   /* byte do mouse: fica para a IRQ 12 (não pode ser lido aqui) */
+        tratar_byte(porta_le8(PORTA_DADOS));
     }
     return q;
 }

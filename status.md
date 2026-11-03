@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T17:32:50_
+_Atualizado em 2026-11-03T17:38:51_
 
 - **Situação:** Trabalhando na H19: Mouse / touchpad PS/2
 - **Fase atual:** 4
 - **História atual:** H19
-- **Progresso geral:** 52.9%
+- **Progresso geral:** 55.9%
 - **Bloqueio:** nenhum
-- **Imagem:** 237056 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 5212, userland 1591
+- **Imagem:** 238592 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 5399, userland 1591
 
 ## Fases
 
@@ -17,7 +17,7 @@ _Atualizado em 2026-11-03T17:32:50_
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
-| 4 | Gráfico e mouse | 66.7% | em andamento |
+| 4 | Gráfico e mouse | 100.0% | em andamento |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
@@ -44,7 +44,7 @@ _Atualizado em 2026-11-03T17:32:50_
 | H16 | Shell e comandos como programas | feito | 14 |
 | H17 | Framebuffer VESA | feito | 2 |
 | H18 | Fonte própria | feito | 8 |
-| H19 | Mouse / touchpad PS/2 | em andamento |  |
+| H19 | Mouse / touchpad PS/2 | feito | 6 |
 | H20 | Área de trabalho | a fazer |  |
 | H21 | Gerenciador de janelas | a fazer |  |
 | H22 | Kit gráfico da libsagui | a fazer |  |
@@ -66,6 +66,7 @@ _Atualizado em 2026-11-03T17:32:50_
 
 ## Últimas ações
 
+- 2026-11-03T17:38:51: H19 concluída: Mouse/touchpad PS/2 com IRQ 12, cursor próprio, cliques na serial
 - 2026-11-03T17:32:50: Início da H19: Mouse / touchpad PS/2
 - 2026-11-03T17:32:50: H18 concluída: Fonte 8x16 própria com acentos, terminal gráfico 128x48, edição com setas
 - 2026-11-03T17:24:26: Início da H18: Fonte própria
@@ -80,4 +81,3 @@ _Atualizado em 2026-11-03T17:32:50_
 - 2026-11-03T16:27:11: H15 concluída: Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos
 - 2026-11-03T16:25:45: Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12
 - 2026-11-03T16:25:17: Início da H15: Pipes
-- 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3

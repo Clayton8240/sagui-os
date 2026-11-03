@@ -18,6 +18,7 @@
 #include "processo.h"
 #include "sistema.h"
 #include "vfs.h"
+#include "mouse.h"
 
 #define SAGUI_VERSAO "0.4 (fase 4)"
 
@@ -205,6 +206,15 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     /* H07: teclado. */
     teclado_iniciar();
     etapa("Teclado PS/2 com layout ABNT2 (acentos com teclas mortas, ç)");
+
+    /* H19: mouse / touchpad na porta auxiliar do mesmo controlador. */
+    if (mouse_iniciar())
+        etapa("Mouse/touchpad PS/2: cursor desenhado pelo SaguiOS, IRQ 12");
+    else {
+        console_cor(COR_AMARELO, COR_PRETO);
+        kprintf("[aviso] Mouse/touchpad PS/2 não respondeu.\n");
+        console_cor(COR_CINZA, COR_PRETO);
+    }
 
     /* H08: sistema de arquivos do ramdisk. */
     conferir_ramdisk();

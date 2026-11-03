@@ -508,3 +508,25 @@ das fases anteriores continuam valendo no modo gráfico.
 **Boot reordenado.** Interrupções, memória e paginação são ligadas antes de
 qualquer texto, porque o terminal gráfico precisa do `kmalloc` e da janela do
 kernel. As mensagens são impressas depois, já no modo gráfico.
+
+## D019. Mouse PS/2: como foi pensado (H19)
+
+**Mesmo controlador do teclado, portas separadas na leitura.** O i8042
+avisa no bit 5 do estado se o byte que está esperando é do mouse. O driver
+do teclado passou a **parar sem ler** quando vê esse bit (antes ele lia e
+descartava, o que roubaria pacotes do mouse), e o do mouse só lê bytes com
+esse bit ligado. A inicialização do mouse é feita com as interrupções
+desligadas, para nenhum dos dois tratadores pegar as respostas (0xFA) que o
+próprio driver está esperando.
+
+**Pacotes de 3 bytes com ressincronização.** O bit 3 do primeiro byte é
+sempre 1; se um byte se perder, o driver descarta até achar um byte que
+possa ser o primeiro. Pacotes com os bits de estouro são ignorados (o valor
+do deslocamento não é confiável).
+
+**O cursor é do vídeo, não do mouse.** O driver só informa a posição; o
+desenho da seta é feito na cópia para a tela (D017), por cima de tudo.
+
+**Fila de eventos.** Cada pacote vira um evento (posição, deslocamento,
+botões e quais mudaram) numa fila, com um canal para quem quiser dormir
+esperando por ele. Na fase 5 o gerenciador de janelas consome essa fila.

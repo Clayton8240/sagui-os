@@ -1,0 +1,156 @@
+/* mouse.c - driver do mouse PS/2 (o touchpad do G470 fala o mesmo protocolo).
+ *
+ * O mouse fica na segunda porta ("auxiliar") do mesmo controlador i8042 do
+ * teclado. Para ligá-lo: habilitar a porta auxiliar, ligar a IRQ 12 no byte
+ * de configuração do controlador e mandar ao mouse "valores padrão" (0xF6) e
+ * "comece a enviar" (0xF4). Comandos para o mouse passam pelo controlador
+ * com o prefixo 0xD4.
+ *
+ * Depois disso, cada movimento ou clique chega como um pacote de 3 bytes:
+ *   byte 0: botões (bits 0-2), bit 3 sempre 1, sinais de X e Y (bits 4-5),
+ *           estouro de X e Y (bits 6-7);
+ *   byte 1: deslocamento X; byte 2: deslocamento Y (para cima é positivo).
+ * O bit 3 sempre ligado é o que permite reencontrar o começo de um pacote
+ * se um byte se perder. */
+#include "mouse.h"
+#include "console.h"
+#include "cpu.h"
+#include "portas.h"
+#include "processo.h"
+#include "video.h"
+
+#define DADOS  0x60
+#define ESTADO 0x64
+#define FILA   64
+
+static uint8_t pacote[3];
+static int pos_pacote;
+static int mx, my, larg = 1024, alt = 768;
+static uint8_t botoes;
+static evento_mouse_t fila[FILA];
+static uint32_t ini, fim;
+static const char canal = 0;
+
+const void *mouse_canal(void) { return &canal; }
+
+static bool esperar_escrita(void)
+{
+    for (int i = 0; i < 100000; i++)
+        if (!(porta_le8(ESTADO) & 2)) return true;
+    return false;
+}
+
+static bool esperar_leitura(void)
+{
+    for (int i = 0; i < 100000; i++)
+        if (porta_le8(ESTADO) & 1) return true;
+    return false;
+}
+
+static void comando_controlador(uint8_t c)
+{
+    esperar_escrita();
+    porta_escreve8(ESTADO, c);
+}
+
+/* Manda um comando ao mouse e espera a confirmação (0xFA). */
+static bool comando_mouse(uint8_t c)
+{
+    comando_controlador(0xD4);
+    esperar_escrita();
+    porta_escreve8(DADOS, c);
+    if (!esperar_leitura()) return false;
+    return porta_le8(DADOS) == 0xFA;
+}
+
+static void guardar(int16_t dx, int16_t dy, uint8_t mudaram)
+{
+    uint32_t prox = (fim + 1) % FILA;
+    if (prox == ini) ini = (ini + 1) % FILA;   /* fila cheia: esquece o mais antigo */
+    fila[fim] = (evento_mouse_t){ (int16_t)mx, (int16_t)my, dx, dy, botoes, mudaram };
+    fim = prox;
+    acordar(&canal);
+}
+
+static void tratar_pacote(void)
+{
+    uint8_t b0 = pacote[0];
+    if (b0 & 0xC0) return;                         /* estouro: o valor não é confiável */
+    int dx = pacote[1] - ((b0 & 0x10) ? 256 : 0);
+    int dy = pacote[2] - ((b0 & 0x20) ? 256 : 0);
+    mx += dx;
+    my -= dy;                                      /* na tela, y cresce para baixo */
+    if (mx < 0) mx = 0;
+    if (my < 0) my = 0;
+    if (mx >= larg) mx = larg - 1;
+    if (my >= alt) my = alt - 1;
+    uint8_t novos = b0 & 7, mudaram = novos ^ botoes;
+    botoes = novos;
+    if (mudaram & BOTAO_ESQUERDO)
+        klog("[MOUSE] botao esquerdo %s em (%d,%d)\n", novos & BOTAO_ESQUERDO ? "apertado" : "solto", mx, my);
+    if (mudaram & BOTAO_DIREITO)
+        klog("[MOUSE] botao direito %s em (%d,%d)\n", novos & BOTAO_DIREITO ? "apertado" : "solto", mx, my);
+    guardar((int16_t)dx, (int16_t)-dy, mudaram);
+    if (video_ativo()) {
+        video_cursor(mx, my, true);
+        video_mostrar();
+    }
+}
+
+static quadro_t *ao_mover(quadro_t *q)
+{
+    for (int i = 0; i < 16; i++) {
+        uint8_t estado = porta_le8(ESTADO);
+        if ((estado & 0x21) != 0x21) break;       /* só bytes do mouse */
+        uint8_t b = porta_le8(DADOS);
+        if (pos_pacote == 0 && !(b & 0x08)) continue;   /* fora de sincronia: espera um byte 0 válido */
+        pacote[pos_pacote++] = b;
+        if (pos_pacote == 3) {
+            pos_pacote = 0;
+            tratar_pacote();
+        }
+    }
+    return q;
+}
+
+bool mouse_iniciar(void)
+{
+    bool i = int_salva_desliga();
+    comando_controlador(0xA8);                     /* habilita a porta auxiliar */
+    comando_controlador(0x20);                     /* lê a configuração */
+    uint8_t cfg = esperar_leitura() ? porta_le8(DADOS) : 0;
+    cfg |= 0x02;                                   /* IRQ 12 ligada */
+    cfg &= (uint8_t)~0x20;                         /* relógio da porta auxiliar ligado */
+    comando_controlador(0x60);
+    esperar_escrita();
+    porta_escreve8(DADOS, cfg);
+    bool ok = comando_mouse(0xF6) && comando_mouse(0xF4);
+    /* Descarta o que sobrou (ex.: a identificação que alguns touchpads mandam). */
+    for (int k = 0; k < 16 && (porta_le8(ESTADO) & 1); k++) porta_le8(DADOS);
+    if (video_ativo()) {
+        larg = (int)video_largura();
+        alt = (int)video_altura();
+    }
+    mx = larg / 2;
+    my = alt / 2;
+    pos_pacote = 0;
+    irq_registrar(12, ao_mover);
+    int_restaura(i);
+    if (ok && video_ativo()) {
+        video_cursor(mx, my, true);
+        video_mostrar();
+    }
+    klog("[MOUSE] %s\n", ok ? "mouse PS/2 ligado" : "mouse PS/2 nao respondeu");
+    return ok;
+}
+
+bool mouse_tentar(evento_mouse_t *e)
+{
+    bool i = int_salva_desliga();
+    bool tem = ini != fim;
+    if (tem) { *e = fila[ini]; ini = (ini + 1) % FILA; }
+    int_restaura(i);
+    return tem;
+}
+
+void mouse_posicao(int *x, int *y) { *x = mx; *y = my; }
