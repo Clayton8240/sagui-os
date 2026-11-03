@@ -25,6 +25,7 @@
 #include "teclado.h"
 #include "texto.h"
 #include "video.h"
+#include "disco.h"
 
 #define MAX_JANELAS     32
 #define FILA_EVENTOS    64
@@ -62,6 +63,51 @@ static uint32_t ult_clique_tique;
 static int ult_clique_x, ult_clique_y, ult_clique_alvo = -999;
 
 bool gui_ativa(void) { return ativa; }
+
+/* ------------------------------------------------------------ notificação (H34) */
+#define AVISO_L 420
+#define AVISO_A 62
+#define AVISO_COLUNAS 49   /* letras por linha dentro da caixa */
+static char aviso_texto[96];
+static uint32_t aviso_ate;   /* tique em que some; 0 = sem aviso */
+
+static void aviso_retangulo(int *x, int *y) { *x = (int)video_largura() - AVISO_L - 12; *y = BARRA_SUPERIOR + 10; }
+
+void gui_aviso(const char *texto)
+{
+    txt_copia_n(aviso_texto, texto, sizeof aviso_texto);
+    aviso_ate = relogio_tiques() + 5 * TIQUES_POR_SEGUNDO;
+    int x, y;
+    aviso_retangulo(&x, &y);
+    gui_redesenhar(x - 2, y - 2, AVISO_L + 4, AVISO_A + 4);
+    klog("[GUI] notificacao: %s\n", texto);
+}
+
+static void desenhar_aviso(superficie_t *t)
+{
+    if (!aviso_ate) return;
+    int x, y;
+    aviso_retangulo(&x, &y);
+    sup_retangulo(t, x, y, AVISO_L, AVISO_A, 0x18202A);
+    sup_moldura(t, x, y, AVISO_L, AVISO_A, 0xFFDF4A);
+    sup_retangulo(t, x, y, 6, AVISO_A, 0xFFDF4A);
+    sup_texto(t, x + 16, y + 6, "SaguiOS", 0xFFDF4A);
+    /* Até duas linhas, quebrando no último espaço que couber. */
+    const char *p = aviso_texto;
+    for (int l = 0; l < 2 && *p; l++) {
+        int n = (int)txt_tamanho(p);
+        if (n > AVISO_COLUNAS) {
+            n = AVISO_COLUNAS;
+            while (n > 0 && p[n] != ' ') n--;
+            if (n == 0) n = AVISO_COLUNAS;
+        }
+        char linha[AVISO_COLUNAS + 1];
+        txt_copia_n(linha, p, (size_t)n + 1);
+        sup_texto(t, x + 16, y + 24 + l * 17, linha, 0xFFFFFF);
+        p += n;
+        while (*p == ' ') p++;
+    }
+}
 
 static int moldura_l(janela_t *j) { return j->larg + 2 * BORDA; }
 static int moldura_a(janela_t *j) { return j->alt + BARRA_TITULO + BORDA; }
@@ -121,6 +167,7 @@ void gui_mostrar(void)
         desenhar_moldura(j, k == qtd - 1);
         sup_copiar(&tela, j->x + BORDA, j->y + BARRA_TITULO, j->px, j->larg, j->alt, j->larg);
     }
+    desenhar_aviso(&tela);
     if (tela.cy0 < BARRA_SUPERIOR) area_barra(&tela);
     video_marcar(tela.cx0, tela.cy0, tela.cx1 - tela.cx0, tela.cy1 - tela.cy0);
     video_mostrar();
@@ -198,6 +245,7 @@ static void tratar_mouse(evento_mouse_t *m)
             ult_clique_alvo = ic >= 0 ? 1000 + ic : -999;
             ult_clique_tique = agora;
             if (duplo && (m->mudaram & BOTAO_ESQUERDO)) { area_icone_abrir(ic); ult_clique_alvo = -999; }
+            if (ic >= 0 && (m->mudaram & BOTAO_DIREITO)) area_icone_direito(ic);
             captura = -1;
             return;
         }
@@ -271,6 +319,21 @@ static void tarefa_gerenciador(void *arg)
         }
         if (area_relogio_mudou())
             gui_redesenhar(0, 0, (int)video_largura(), BARRA_SUPERIOR);
+        /* Pendrive: avisos do kernel viram notificações; o ícone acompanha. */
+        int tipo;
+        char texto[96];
+        while (disco_proximo_aviso(&tipo, texto, sizeof texto))
+            gui_aviso(texto);
+        disco_t *pd = NULL;
+        for (int k = 0; k < MAX_DISCOS && !pd; k++) { disco_t *d = disco_indice(k); if (d && d->presente) pd = d; }
+        if (area_pendrive(pd != NULL, pd ? (pd->rotulo[0] ? pd->rotulo : "Pendrive") : NULL))
+            gui_redesenhar(0, BARRA_SUPERIOR, 140, (int)video_altura() - BARRA_SUPERIOR);
+        if (aviso_ate && (int32_t)(relogio_tiques() - aviso_ate) >= 0) {
+            aviso_ate = 0;
+            int x, y;
+            aviso_retangulo(&x, &y);
+            gui_redesenhar(x - 2, y - 2, AVISO_L + 4, AVISO_A + 4);
+        }
         gui_mostrar();
         /* Dorme até o próximo tique (o escalonador acorda pelo despertador). */
         atual->acordar_em = relogio_tiques() + 1;

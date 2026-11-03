@@ -15,12 +15,15 @@ int  area_icone_em(int x, int y);          /* índice do ícone sob o ponto, ou 
 void area_icone_abrir(int i);
 int  area_qtd_icones(void);
 void area_icone_retangulo(int i, int *x, int *y, int *l, int *a);
+void area_icone_direito(int i);
+bool area_pendrive(bool presente, const char *rotulo);
 
 /* Gerenciador de janelas (janelas.c) */
 bool gui_iniciar(void);                    /* liga a área de trabalho e o gerenciador */
 bool gui_ativa(void);
 void gui_redesenhar(int x, int y, int l, int a);
 void gui_mostrar(void);
+void gui_aviso(const char *texto);   /* notificação no canto da tela por alguns segundos */
 struct processo;
 void janelas_do_processo_fechar(struct processo *p);
 

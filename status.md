@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T20:20:50_
+_Atualizado em 2026-11-03T20:25:28_
 
 - **Situação:** Trabalhando na H34: Integração do pendrive
 - **Fase atual:** 6
 - **História atual:** H34
-- **Progresso geral:** 97.1%
+- **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
-- **Imagem:** 491520 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9161, userland 3769
+- **Imagem:** 497664 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 9279, userland 3838
 
 ## Fases
 
@@ -19,7 +19,7 @@ _Atualizado em 2026-11-03T20:20:50_
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
-| 6 | Pendrive de dados | 83.3% | em andamento |
+| 6 | Pendrive de dados | 100.0% | em andamento |
 | 7 | Bônus | 0% | a fazer |
 
 ## Histórias
@@ -59,13 +59,15 @@ _Atualizado em 2026-11-03T20:20:50_
 | H31 | Armazenamento em massa | feito | 1 |
 | H32 | FAT32: leitura | feito | 2 |
 | H33 | FAT32: gravação | feito | 2 |
-| H34 | Integração do pendrive | em andamento |  |
+| H34 | Integração do pendrive | feito | 5 |
 | B1 | Bônus: enxergar o HD interno | a fazer |  |
 | B2 | Bônus: boot por UEFI | a fazer |  |
 | B3 | Bônus: bip | a fazer |  |
 
 ## Últimas ações
 
+- 2026-11-03T20:25:28: H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck
+- 2026-11-03T20:25:27: Erro corrigido: Acentos trocados em textos UTF-8 do pendrive
 - 2026-11-03T20:20:50: Início da H34: Integração do pendrive
 - 2026-11-03T20:20:50: H33 concluída: Gravação FAT32 conferida com mtools e fsck.vfat
 - 2026-11-03T20:18:39: Início da H33: FAT32: gravação
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T20:20:50_
 - 2026-11-03T20:16:48: Início da H29: PCI e controlador EHCI
 - 2026-11-03T20:04:57: Início da H29: PCI e controlador EHCI
 - 2026-11-03T20:00:46: Eli confirmou: fase 5 ok
-- 2026-11-03T19:24:19: Fase 5 entregue. Aguardando teste do Eli.
-- 2026-11-03T19:24:19: Todos os testes passaram (H01 a H28, 28/28)

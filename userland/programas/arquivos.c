@@ -6,7 +6,8 @@
 #include "sagui.h"
 #include "gui.h"
 
-#define LARG 620
+#define LARG 720
+#define LATERAL 140   /* lateral com "SaguiOS" e "Pendrive" (H34) */
 #define ALT  440
 #define MAX_ITENS 128
 
@@ -16,6 +17,11 @@ static char nomes[MAX_ITENS][64];
 static uint8_t tipos[MAX_ITENS];
 static uint32_t tamanhos[MAX_ITENS];
 static lista_t lista;
+static info_disco_t pendrive;
+static bool tem_pendrive;
+static botao_t bt_lado_raiz = { 8, 76, LATERAL - 16, 28, "SaguiOS", false };
+static botao_t bt_lado_pen = { 8, 112, LATERAL - 16, 28, "Pendrive", false };
+static botao_t bt_remover = { 8, 148, LATERAL - 16, 44, "", false };
 
 /* Ícones 16x16 em pixel art. */
 static const char *const ic_pasta[] = {
@@ -116,6 +122,40 @@ static void entrar(const char *nova)
     carregar();
 }
 
+/* A lateral mostra o pendrive (se houver) e, montado, o botão de remover. */
+static void desenhar_lateral(void)
+{
+    g_retangulo(j, 0, 66, LATERAL, ALT - 66 - 24, 0xEAEDF0);
+    g_retangulo(j, LATERAL - 1, 66, 1, ALT - 66 - 24, COR_BORDA);
+    botao_desenhar(j, &bt_lado_raiz);
+    if (tem_pendrive) {
+        static char rotulo[24];
+        copia_texto(rotulo, pendrive.rotulo[0] ? pendrive.rotulo : "Pendrive", sizeof rotulo);
+        bt_lado_pen.texto = rotulo;
+        botao_desenhar(j, &bt_lado_pen);
+        if (pendrive.montado) {
+            bt_remover.texto = "";
+            botao_desenhar(j, &bt_remover);
+            g_texto(j, 8 + 12, 148 + 6, "Remover com", COR_TEXTO);
+            g_texto(j, 8 + 20, 148 + 22, "segurança", COR_TEXTO);
+        }
+    }
+    jan_mostrar_area(j, 0, 66, LATERAL, ALT - 66 - 24);
+}
+
+/* Confere os pendrives; devolve true se algo mudou. */
+static bool atualizar_pendrive(void)
+{
+    info_disco_t d;
+    bool achou = false;
+    for (int i = 0; listar_discos(i, &d) == 1; i++)
+        if (d.suportado) { achou = true; break; }
+    bool mudou = achou != tem_pendrive || (achou && (d.montado != pendrive.montado || compara_texto(d.nome, pendrive.nome) != 0));
+    tem_pendrive = achou;
+    if (achou) pendrive = d;
+    return mudou;
+}
+
 static void voltar(void)
 {
     if (compara_texto(pasta, "/") == 0) return;
@@ -185,17 +225,46 @@ int principal(int argc, char **argv)
     g_retangulo(j, 0, 0, LARG, 40, 0xE6E9EC);
     g_retangulo(j, 0, 39, LARG, 1, COR_BORDA);
     for (int i = 0; i < 3; i++) botao_desenhar(j, &bt[i]);
-    lista = (lista_t){ 8, 70, LARG - 16, ALT - 70 - 30, nomes, 0, -1, 0, icone };
+    lista = (lista_t){ LATERAL + 6, 70, LARG - LATERAL - 14, ALT - 70 - 30, nomes, 0, -1, 0, icone };
+    atualizar_pendrive();
+    desenhar_lateral();
     carregar();
     jan_mostrar(j);
     registrar("arquivos: pronto");
 
     evento_t e;
+    unsigned ultimo = tempo_ms();
     for (;;) {
-        if (proximo_evento(j->id, &e, true) != 1) continue;
+        if (proximo_evento(j->id, &e, false) != 1) {
+            /* Sem evento: de vez em quando confere se um pendrive entrou ou saiu. */
+            if (tempo_ms() - ultimo > 700) {
+                ultimo = tempo_ms();
+                if (atualizar_pendrive()) {
+                    desenhar_lateral();
+                    info_arquivo_t inf;
+                    if (comeca_com(pasta, "/usb") && info_arquivo(pasta, &inf) < 0) { copia_texto(pasta, "/", sizeof pasta); carregar(); }
+                }
+            }
+            dormir(50);
+            continue;
+        }
         int c;
         while (recolher(&c) > 0) ;   /* programas abertos daqui que já terminaram */
         if (e.tipo == EV_FECHAR) break;
+        if (botao_tratar(j, &bt_lado_raiz, &e)) { copia_texto(pasta, "/", sizeof pasta); carregar(); }
+        if (tem_pendrive && botao_tratar(j, &bt_lado_pen, &e)) {
+            int r = pendrive.montado ? 0 : montar(pendrive.nome);
+            if (r < 0) { char m[120]; formatar_texto(m, sizeof m, "Não consegui montar o pendrive:\n%s", nome_erro(r)); mensagem("Arquivos", m); }
+            else { atualizar_pendrive(); desenhar_lateral(); copia_texto(pasta, "/usb", sizeof pasta); carregar(); registrar("arquivos: pendrive aberto"); }
+        }
+        if (tem_pendrive && pendrive.montado && botao_tratar(j, &bt_remover, &e)) {
+            int r = desmontar(pendrive.nome);
+            registrar("arquivos: remover com seguranca -> %d", r);
+            if (comeca_com(pasta, "/usb")) { copia_texto(pasta, "/", sizeof pasta); carregar(); }
+            atualizar_pendrive();
+            desenhar_lateral();
+            mensagem("Arquivos", r < 0 ? "Não consegui desmontar o pendrive." : "Pode remover o pendrive.");
+        }
         if (botao_tratar(j, &bt[0], &e)) voltar();
         if (botao_tratar(j, &bt[1], &e)) nova_pasta();
         if (botao_tratar(j, &bt[2], &e)) apagar_item();

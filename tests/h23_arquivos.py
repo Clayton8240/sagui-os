@@ -26,7 +26,7 @@ def fechar(m, j):
 
 
 def item(a, i):
-    return a["x"] + 8 + 120, a["y"] + 70 + 2 + i * 20 + 8
+    return a["x"] + 146 + 120, a["y"] + 70 + 2 + i * 20 + 8   # a lista começa depois da lateral (H34)
 
 
 def main():

@@ -12,6 +12,8 @@
 #include "relogio.h"
 #include "texto.h"
 #include "video.h"
+#include "disco.h"
+#include "sistema.h"
 
 static uint32_t *fundo;
 static int larg, alt;
@@ -30,8 +32,14 @@ static const icone_t icones[] = {
     { "Calculadora", "/bin/calculadora", &arte_icone_calculadora },
     { "Banana",      "/bin/banana",      &arte_icone_banana },
     { "Sobre",       "/bin/sobre-o-sistema",   &arte_icone_sobre },
+    { "Pendrive",    "/bin/arquivos",    &arte_icone_pendrive },   /* só aparece com um pendrive conectado (H34) */
 };
 #define QTD_ICONES (int)(sizeof icones / sizeof icones[0])
+#define ICONE_PENDRIVE (QTD_ICONES - 1)
+static bool pendrive_visivel;
+static char nome_pendrive[24] = "Pendrive";
+
+static bool icone_visivel(int i) { return i != ICONE_PENDRIVE || pendrive_visivel; }
 #define ICONE_X 20
 #define ICONE_Y0 (BARRA_SUPERIOR + 16)
 #define ICONE_PASSO 92
@@ -83,10 +91,12 @@ static void desenhar_fundo(void)
     texto_com_sombra(&s, mx + 16 * esc - texto_largura("SaguiOS") / 2, my + 32 * esc + 6, "SaguiOS", 0xFFFFFF);
     /* Ícones na coluna da esquerda, com o nome embaixo. */
     for (int i = 0; i < QTD_ICONES; i++) {
+        if (!icone_visivel(i)) continue;
         int x, y, l, a;
         area_icone_retangulo(i, &x, &y, &l, &a);
         sup_desenho(&s, x + (l - 64) / 2, y, icones[i].desenho, 2);
-        texto_com_sombra(&s, x + (l - texto_largura(icones[i].nome)) / 2, y + 68, icones[i].nome, 0xFFFFFF);
+        const char *nome = i == ICONE_PENDRIVE ? nome_pendrive : icones[i].nome;
+        texto_com_sombra(&s, x + (l - texto_largura(nome)) / 2, y + 68, nome, 0xFFFFFF);
     }
 }
 
@@ -135,6 +145,7 @@ void area_barra(superficie_t *s)
 int area_icone_em(int x, int y)
 {
     for (int i = 0; i < QTD_ICONES; i++) {
+        if (!icone_visivel(i)) continue;
         int ix, iy, l, a;
         area_icone_retangulo(i, &ix, &iy, &l, &a);
         if (x >= ix && x < ix + l && y >= iy && y < iy + a) return i;
@@ -142,10 +153,51 @@ int area_icone_em(int x, int y)
     return -1;
 }
 
+/* Mostra ou esconde o ícone do pendrive (H34). Devolve true se mudou. */
+bool area_pendrive(bool presente, const char *rotulo)
+{
+    char nome[24];
+    txt_copia_n(nome, rotulo && rotulo[0] ? rotulo : "Pendrive", sizeof nome);
+    if (presente == pendrive_visivel && txt_compara(nome, nome_pendrive) == 0) return false;
+    pendrive_visivel = presente;
+    txt_copia_n(nome_pendrive, nome, sizeof nome_pendrive);
+    desenhar_fundo();
+    return true;
+}
+
+static disco_t *primeiro_disco(void)
+{
+    for (int i = 0; i < MAX_DISCOS; i++) {
+        disco_t *d = disco_indice(i);
+        if (d && d->presente) return d;
+    }
+    return NULL;
+}
+
+/* Botão direito num ícone: no pendrive, "remover com segurança". */
+void area_icone_direito(int i)
+{
+    if (i != ICONE_PENDRIVE) return;
+    disco_t *d = disco_montado();
+    if (d) disco_desmontar(d);
+    else gui_aviso("O pendrive não está montado: pode remover.");
+}
+
 /* Abre o programa do ícone (H28). Ele não tem pai: ninguém espera por ele. */
 void area_icone_abrir(int i)
 {
     if (i < 0 || i >= QTD_ICONES) return;
+    if (i == ICONE_PENDRIVE) {
+        disco_t *d = primeiro_disco();
+        if (!d) return;
+        int r = disco_montar(d);
+        if (r == ERRO_FORMATO) { gui_aviso("Este pendrive não está em FAT32: formato não suportado."); return; }
+        if (r < 0 && r != ERRO_OCUPADO) { gui_aviso("Não consegui montar o pendrive."); return; }
+        char *argv[] = { "arquivos", "/usb", NULL };
+        int pid = processo_executar("/bin/arquivos", 2, argv, NULL);
+        klog("[GUI] icone Pendrive -> /bin/arquivos /usb (pid %d)\n", pid);
+        return;
+    }
     char *argv[] = { (char *)icones[i].programa + 5, NULL };
     int pid = processo_executar(icones[i].programa, 1, argv, NULL);
     klog("[GUI] icone %s -> %s (pid %d)\n", icones[i].nome, icones[i].programa, pid);

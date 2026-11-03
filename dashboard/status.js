@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T20:20:50",
+  "atualizado": "2026-11-03T20:25:28",
   "situacao": "Trabalhando na H34: Integração do pendrive",
   "fase_atual": 6,
   "historia_atual": "H34",
@@ -47,7 +47,7 @@ window.SAGUI_STATUS = {
       "numero": 6,
       "nome": "Pendrive de dados",
       "estado": "em andamento",
-      "progresso": 83.3
+      "progresso": 100.0
     },
     {
       "numero": 7,
@@ -492,12 +492,12 @@ window.SAGUI_STATUS = {
       "titulo": "Integração do pendrive",
       "objetivo": "Notificação, ícone Pendrive, montar e remover com segurança, fluxo pelo terminal.",
       "aceite": "Roteiro completo pela interface e pelo terminal; VPS confere com mtools; capturas.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T20:20:50",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T20:25:28",
+      "minutos": 5,
+      "resultado": "Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck"
     },
     {
       "id": "B1",
@@ -620,6 +620,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T20:25:28",
+      "texto": "H34 concluída: Notificação, ícone do pendrive, montar/remover pela interface e pelo terminal; conferido com mtools e fsck"
+    },
+    {
+      "data": "2026-11-03T20:25:27",
+      "texto": "Erro corrigido: Acentos trocados em textos UTF-8 do pendrive"
+    },
     {
       "data": "2026-11-03T20:20:50",
       "texto": "Início da H34: Integração do pendrive"
@@ -851,17 +859,15 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T16:25:17",
       "texto": "H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3"
-    },
-    {
-      "data": "2026-11-03T16:21:08",
-      "texto": "Início da H14: Arquivos e pastas graváveis"
-    },
-    {
-      "data": "2026-11-03T16:21:08",
-      "texto": "H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos"
     }
   ],
   "erros": [
+    {
+      "data": "2026-11-03T20:25:27",
+      "sintoma": "Acentos trocados em textos UTF-8 do pendrive",
+      "causa": "SaguiOS usa Latin-1; arquivos de fora vêm em UTF-8",
+      "correcao": "Conversão UTF-8 -> Latin-1 no cat e no Editor"
+    },
     {
       "data": "2026-11-03T18:53:30",
       "sintoma": "Rastros ao arrastar janelas",
@@ -912,6 +918,61 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H34-7-terminal.png",
+      "nome": "H34-7-terminal.png",
+      "data": "2026-11-03T20:25:07"
+    },
+    {
+      "arquivo": "docs/capturas/H34-6-removido-sem-desmontar.png",
+      "nome": "H34-6-removido-sem-desmontar.png",
+      "data": "2026-11-03T20:24:55"
+    },
+    {
+      "arquivo": "docs/capturas/H34-5-pendrive-removido.png",
+      "nome": "H34-5-pendrive-removido.png",
+      "data": "2026-11-03T20:24:50"
+    },
+    {
+      "arquivo": "docs/capturas/H34-4-pode-remover.png",
+      "nome": "H34-4-pode-remover.png",
+      "data": "2026-11-03T20:24:48"
+    },
+    {
+      "arquivo": "docs/capturas/H34-3-editor-salvou-no-pendrive.png",
+      "nome": "H34-3-editor-salvou-no-pendrive.png",
+      "data": "2026-11-03T20:24:44"
+    },
+    {
+      "arquivo": "docs/capturas/H34-2-arquivos-no-pendrive.png",
+      "nome": "H34-2-arquivos-no-pendrive.png",
+      "data": "2026-11-03T20:24:38"
+    },
+    {
+      "arquivo": "docs/capturas/H34-1-pendrive-conectado.png",
+      "nome": "H34-1-pendrive-conectado.png",
+      "data": "2026-11-03T20:24:35"
+    },
+    {
+      "arquivo": "docs/capturas/H23-confirmar-apagar.png",
+      "nome": "H23-confirmar-apagar.png",
+      "data": "2026-11-03T20:22:45"
+    },
+    {
+      "arquivo": "docs/capturas/H23-nota-reaberta.png",
+      "nome": "H23-nota-reaberta.png",
+      "data": "2026-11-03T20:22:37"
+    },
+    {
+      "arquivo": "docs/capturas/H23-linux-no-editor.png",
+      "nome": "H23-linux-no-editor.png",
+      "data": "2026-11-03T20:22:30"
+    },
+    {
+      "arquivo": "docs/capturas/H23-arquivos-raiz.png",
+      "nome": "H23-arquivos-raiz.png",
+      "data": "2026-11-03T20:22:25"
+    },
     {
       "arquivo": "docs/capturas/H33-pendrive-gravado.png",
       "nome": "H33-pendrive-gravado.png",
@@ -1031,26 +1092,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H24-terminal-ps-conta.png",
       "nome": "H24-terminal-ps-conta.png",
       "data": "2026-11-03T19:20:14"
-    },
-    {
-      "arquivo": "docs/capturas/H23-confirmar-apagar.png",
-      "nome": "H23-confirmar-apagar.png",
-      "data": "2026-11-03T19:20:02"
-    },
-    {
-      "arquivo": "docs/capturas/H23-nota-reaberta.png",
-      "nome": "H23-nota-reaberta.png",
-      "data": "2026-11-03T19:19:54"
-    },
-    {
-      "arquivo": "docs/capturas/H23-linux-no-editor.png",
-      "nome": "H23-linux-no-editor.png",
-      "data": "2026-11-03T19:19:46"
-    },
-    {
-      "arquivo": "docs/capturas/H23-arquivos-raiz.png",
-      "nome": "H23-arquivos-raiz.png",
-      "data": "2026-11-03T19:19:42"
     },
     {
       "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
@@ -1245,14 +1286,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 9161,
-    "userland": 3769,
-    "ferramentas": 3051
+    "kernel": 9279,
+    "userland": 3838,
+    "ferramentas": 3184
   },
   "imagem": {
-    "bytes_util": 491520,
+    "bytes_util": 497664,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 97.1
+  "progresso_geral": 100.0
 };
