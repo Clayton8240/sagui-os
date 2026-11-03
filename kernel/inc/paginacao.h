@@ -6,6 +6,7 @@
 #define PG_PRESENTE  0x001
 #define PG_ESCRITA   0x002
 #define PG_USUARIO   0x004
+#define PG_EMPRESTADA 0x200   /* bit livre para o sistema: página que não é do processo (ex.: pixels de janela) */
 
 #define KERNEL_JANELAS   0x38000000u   /* janelas para dispositivos (fases 4-6) */
 #define USUARIO_INICIO   0x40000000u
@@ -24,6 +25,7 @@ espaco_t espaco_atual(void);
 bool     espaco_mapear(espaco_t e, uint32_t virt, uint32_t fis, uint32_t flags);
 uint32_t espaco_traduzir(espaco_t e, uint32_t virt, uint32_t *flags);   /* 0 se não mapeado */
 uint32_t espaco_paginas_usuario(espaco_t e);
+void     espaco_desmapear(espaco_t e, uint32_t virt);
 
 /* Aloca páginas novas e zeradas para [virt, virt+bytes) no espaço do usuário. */
 bool     espaco_alocar(espaco_t e, uint32_t virt, uint32_t bytes, uint32_t flags);

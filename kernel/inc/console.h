@@ -17,6 +17,7 @@ void console_limpar(void);
 void console_cor(uint8_t frente, uint8_t fundo);
 void console_char(char c);
 void console_mostrar(void);
+void console_esconder(bool sim);
 int  console_colunas(void);
 int  console_coluna(void);   /* coluna do cursor */
 

@@ -34,6 +34,7 @@ SEM_RETORNO void parar_maquina(void)
 SEM_RETORNO void excecao_fatal(quadro_t *q)
 {
     int_desliga();
+    console_esconder(false);   /* a tela de erro aparece mesmo com a área de trabalho no ar */
     uint32_t cr2 = le_cr2();
     klog("\n[SAGUI] EXCECAO %u (%s) erro=%x eip=%x\n", q->vetor, nome_excecao(q->vetor), q->erro, q->eip);
 

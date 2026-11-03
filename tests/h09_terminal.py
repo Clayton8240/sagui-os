@@ -17,12 +17,12 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, RAIZ  # noqa: E402
+from qemu import Maquina, verificar, RAIZ, imagem_console  # noqa: E402
 
 
 def main():
     for modo in ("ide", "usb"):
-        with Maquina("h09", modo) as m:
+        with Maquina("h09", modo, imagem=imagem_console()) as m:
             m.esperar_serial("sagui:/$", 120)
             tela = m.tela_texto()
             verificar("sagui:/$" in "\n".join(tela), f"[{modo}] prompt sagui:/$ na tela")

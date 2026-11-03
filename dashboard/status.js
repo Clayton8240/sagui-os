@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T18:37:28",
-  "situacao": "Fase 4 confirmada no hardware. Seguindo para a fase 5.",
-  "fase_atual": 4,
-  "historia_atual": null,
+  "atualizado": "2026-11-03T18:46:46",
+  "situacao": "Trabalhando na H21: Gerenciador de janelas",
+  "fase_atual": 5,
+  "historia_atual": "H21",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -39,8 +39,8 @@ window.SAGUI_STATUS = {
     {
       "numero": 5,
       "nome": "Janelas e programas",
-      "estado": "a fazer",
-      "progresso": 0.0
+      "estado": "em andamento",
+      "progresso": 11.1
     },
     {
       "numero": 6,
@@ -309,12 +309,12 @@ window.SAGUI_STATUS = {
       "titulo": "Área de trabalho",
       "objetivo": "Degradê nas cores do Brasil, mascote sagui em pixel art, barra superior com relógio.",
       "aceite": "Captura da área de trabalho em docs/capturas/.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T18:38:00",
+      "fim": "2026-11-03T18:46:46",
+      "minutos": 9,
+      "resultado": "Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones"
     },
     {
       "id": "H21",
@@ -322,9 +322,9 @@ window.SAGUI_STATUS = {
       "titulo": "Gerenciador de janelas",
       "objetivo": "Janelas com moldura, arrastar, foco; chamadas de janela para programas em ring 3.",
       "aceite": "Dois programas abrem janelas; o teste arrasta uma, fecha a outra e o programa termina.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T18:46:46",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -620,6 +620,22 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T18:46:46",
+      "texto": "Início da H21: Gerenciador de janelas"
+    },
+    {
+      "data": "2026-11-03T18:46:46",
+      "texto": "H20 concluída: Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones"
+    },
+    {
+      "data": "2026-11-03T18:46:46",
+      "texto": "Erro corrigido: Boot não terminava com a área de trabalho no ar"
+    },
+    {
+      "data": "2026-11-03T18:38:00",
+      "texto": "Início da H20: Área de trabalho"
+    },
+    {
       "data": "2026-11-03T18:37:28",
       "texto": "Eli confirmou: fase 4 ok"
     },
@@ -842,25 +858,15 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T14:22:52",
       "texto": "H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB"
-    },
-    {
-      "data": "2026-11-03T14:22:05",
-      "texto": "Início da H03: Estágio 2 e modo protegido"
-    },
-    {
-      "data": "2026-11-03T14:22:05",
-      "texto": "H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB"
-    },
-    {
-      "data": "2026-11-03T14:14:29",
-      "texto": "Início da H02: Estágio 1 (MBR)"
-    },
-    {
-      "data": "2026-11-03T14:14:17",
-      "texto": "H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados"
     }
   ],
   "erros": [
+    {
+      "data": "2026-11-03T18:46:46",
+      "sintoma": "Boot não terminava com a área de trabalho no ar",
+      "causa": "Tarefa do gerenciador sempre pronta; processo 0 sem CPU",
+      "correcao": "Interrupção 0x81 para tarefa do kernel ceder a vez"
+    },
     {
       "data": "2026-11-03T18:12:39",
       "sintoma": "G470: teclado parou e o touchpad não respondeu (fase 4)",
@@ -899,6 +905,11 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H20-area-de-trabalho.png",
+      "nome": "H20-area-de-trabalho.png",
+      "data": "2026-11-03T18:46:22"
+    },
     {
       "arquivo": "docs/capturas/G470-fase4-grafico-touchpad.png",
       "nome": "G470-fase4-grafico-touchpad.png",
@@ -1091,15 +1102,15 @@ window.SAGUI_STATUS = {
     }
   ],
   "linhas": {
-    "boot": 899,
-    "kernel": 5539,
+    "boot": 903,
+    "kernel": 6695,
     "userland": 1591,
-    "ferramentas": 2048
+    "ferramentas": 2093
   },
   "imagem": {
-    "bytes_util": 240128,
+    "bytes_util": 257024,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 55.9
+  "progresso_geral": 58.8
 };

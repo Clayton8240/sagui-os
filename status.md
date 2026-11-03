@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T18:37:28_
+_Atualizado em 2026-11-03T18:46:46_
 
-- **Situação:** Fase 4 confirmada no hardware. Seguindo para a fase 5.
-- **Fase atual:** 4
-- **História atual:** -
-- **Progresso geral:** 55.9%
+- **Situação:** Trabalhando na H21: Gerenciador de janelas
+- **Fase atual:** 5
+- **História atual:** H21
+- **Progresso geral:** 58.8%
 - **Bloqueio:** nenhum
-- **Imagem:** 240128 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 5539, userland 1591
+- **Imagem:** 257024 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6695, userland 1591
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T18:37:28_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 0.0% | a fazer |
+| 5 | Janelas e programas | 11.1% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -45,8 +45,8 @@ _Atualizado em 2026-11-03T18:37:28_
 | H17 | Framebuffer VESA | feito | 2 |
 | H18 | Fonte própria | feito | 8 |
 | H19 | Mouse / touchpad PS/2 | feito | 54 |
-| H20 | Área de trabalho | a fazer |  |
-| H21 | Gerenciador de janelas | a fazer |  |
+| H20 | Área de trabalho | feito | 9 |
+| H21 | Gerenciador de janelas | em andamento |  |
 | H22 | Kit gráfico da libsagui | a fazer |  |
 | H23 | Arquivos | a fazer |  |
 | H24 | Terminal em janela | a fazer |  |
@@ -66,6 +66,10 @@ _Atualizado em 2026-11-03T18:37:28_
 
 ## Últimas ações
 
+- 2026-11-03T18:46:46: Início da H21: Gerenciador de janelas
+- 2026-11-03T18:46:46: H20 concluída: Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones
+- 2026-11-03T18:46:46: Erro corrigido: Boot não terminava com a área de trabalho no ar
+- 2026-11-03T18:38:00: Início da H20: Área de trabalho
 - 2026-11-03T18:37:28: Eli confirmou: fase 4 ok
 - 2026-11-03T18:27:00: Fase 4 entregue. Aguardando teste do Eli.
 - 2026-11-03T18:27:00: H19 concluída: Mouse/touchpad PS/2; H19-fix: módulo i8042 único, teclado independente do touchpad
@@ -77,7 +81,3 @@ _Atualizado em 2026-11-03T18:37:28_
 - 2026-11-03T17:32:50: Início da H19: Mouse / touchpad PS/2
 - 2026-11-03T17:32:50: H18 concluída: Fonte 8x16 própria com acentos, terminal gráfico 128x48, edição com setas
 - 2026-11-03T17:24:26: Início da H18: Fonte própria
-- 2026-11-03T17:24:26: H17 concluída: Framebuffer VESA 1024x768x32 com buffer duplo e primitivas de desenho
-- 2026-11-03T17:22:03: Início da H17: Framebuffer VESA
-- 2026-11-03T17:21:51: Eli confirmou: fase 3 ok
-- 2026-11-03T16:45:51: Fase 3 entregue. Aguardando teste do Eli.

@@ -45,6 +45,7 @@ processo_t *processo_indice(int i);
 quadro_t *escalonador_tique(quadro_t *q);     /* chamado pelo relógio */
 quadro_t *escalonar(quadro_t *q);             /* passa a vez agora */
 void      bloquear(const void *canal);
+void      ceder(void);   /* tarefa do kernel: passa a vez agora (ex.: depois de bloquear) */
 void      acordar(const void *canal);
 void      processo_encerrar(processo_t *p, int codigo, const char *motivo);
 void      processo_liberar(processo_t *p);

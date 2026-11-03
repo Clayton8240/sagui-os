@@ -47,5 +47,10 @@ int32_t sis_pipe(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_duplicar(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_modo_terminal(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 int32_t sis_limpar_tela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_criar_janela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_fechar_janela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_atualizar_janela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_proximo_evento(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sis_titulo_janela(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 
 #endif

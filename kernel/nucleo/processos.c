@@ -17,6 +17,7 @@
 #include "relogio.h"
 #include "texto.h"
 #include "vfs.h"
+#include "gui.h"
 
 void tss_definir_pilha(uint32_t esp0);
 
@@ -25,6 +26,7 @@ static processo_t tabela[MAX_PROCESSOS];
 processo_t *atual;
 static int proximo_pid = 1;
 static int fatia;
+quadro_t *ao_ceder(quadro_t *q);
 
 const char *nome_estado(estado_t e)
 {
@@ -46,6 +48,7 @@ void processos_iniciar(void)
     txt_copia_n(p->pasta, "/", sizeof p->pasta);
     atual = p;
     fatia = QUANTUM_TIQUES;
+    idt_registrar(VETOR_CEDER, ao_ceder);
 }
 
 processo_t *processo_indice(int i) { return (i >= 0 && i < MAX_PROCESSOS) ? &tabela[i] : NULL; }
@@ -127,6 +130,7 @@ void processo_encerrar(processo_t *p, int codigo, const char *motivo)
     p->codigo_saida = codigo;
     if (motivo) txt_copia_n(p->motivo, motivo, sizeof p->motivo);
     arquivos_fechar_todos(p);
+    janelas_do_processo_fechar(p);   /* antes de destruir o espaço: as páginas das janelas são do gerenciador */
     if (p->usuario && p->espaco != espaco_kernel()) {
         espaco_destruir(p->espaco);   /* troca o CR3 para o do kernel se for o atual */
         p->espaco = espaco_kernel();
@@ -140,6 +144,20 @@ void processo_encerrar(processo_t *p, int codigo, const char *motivo)
     acordar(processo_por_pid(p->pai));   /* o pai pode estar em "esperar" */
     klog("[SAGUI] processo %u (%s) terminou com codigo %d%s%s\n", p->pid, p->nome, codigo,
          motivo ? ": " : "", motivo ? motivo : "");
+}
+
+/* Uma tarefa do kernel não passa por "int 0x80"; para dormir de verdade ela
+ * bloqueia e cede a vez por esta interrupção de software, que vai direto ao
+ * escalonador. Sem isso, uma tarefa que acorda a cada tique ficaria sempre
+ * pronta e o processo 0 nunca mais rodaria. */
+quadro_t *ao_ceder(quadro_t *q)
+{
+    return escalonar(q);
+}
+
+void ceder(void)
+{
+    __asm__ volatile("int %0" : : "i"(VETOR_CEDER) : "memory");
 }
 
 void bloquear(const void *canal)
@@ -201,8 +219,8 @@ quadro_t *escalonador_tique(quadro_t *q)
     }
     /* Troca quando a fatia acaba, ou na hora se o ocioso está rodando e
      * alguém ficou pronto. */
-    if (--fatia <= 0 || atual->pid == 0)
-        return escalonar(q);
+    if (atual->estado != P_EXECUTANDO || --fatia <= 0 || atual->pid == 0)
+        return escalonar(q);   /* bloqueado (ex.: tarefa do kernel dormindo), fim da fatia, ou ocioso */
     return q;
 }
 

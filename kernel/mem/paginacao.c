@@ -79,7 +79,7 @@ void espaco_destruir(espaco_t e)
         if (!(dir[i] & PG_PRESENTE)) continue;
         uint32_t *tab = tabela_de(dir[i]);
         for (uint32_t k = 0; k < ENTRADAS; k++)
-            if (tab[k] & PG_PRESENTE)
+            if ((tab[k] & PG_PRESENTE) && !(tab[k] & PG_EMPRESTADA))   /* emprestadas têm outro dono */
                 memfisica_liberar(tab[k] & MASCARA_END);
         memfisica_liberar((uint32_t)tab);
     }
@@ -133,6 +133,15 @@ bool espaco_alocar(espaco_t e, uint32_t virt, uint32_t bytes, uint32_t flags)
         }
     }
     return true;
+}
+
+void espaco_desmapear(espaco_t e, uint32_t virt)
+{
+    uint32_t *dir = (uint32_t *)e;
+    uint32_t pde = dir[virt >> 22];
+    if (!(pde & PG_PRESENTE)) return;
+    tabela_de(pde)[(virt >> 12) & 0x3FF] = 0;
+    if (espaco_atual() == e) invalidar(virt);
 }
 
 uint32_t espaco_paginas_usuario(espaco_t e)

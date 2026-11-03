@@ -10,7 +10,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, cor_do_pixel, imagem_de_teste  # noqa: E402
+from qemu import Maquina, verificar, cor_do_pixel, imagem_de_teste, imagem_console  # noqa: E402
 
 
 def cliques(serial, botao):
@@ -18,7 +18,7 @@ def cliques(serial, botao):
 
 
 def main():
-    with Maquina("h19", "ide") as m:
+    with Maquina("h19", "ide", imagem=imagem_console()) as m:
         m.esperar_serial("sagui:/$", 120)
         verificar("[MOUSE] mouse PS/2 ligado" in m.serial(), "mouse PS/2 respondeu e foi ligado (IRQ 12)")
         verificar(any("Mouse/touchpad PS/2" in l for l in m.tela_texto()), "etapa do mouse na tela de inicialização")
@@ -66,7 +66,7 @@ def main():
     # H19-fix: no G470 a fila do controlador travou o teclado. Aqui a IRQ 12
     # fica bloqueada, os bytes do mouse ficam parados na fila, e o teclado
     # tem que continuar funcionando.
-    with Maquina("h19-sem-irq12", "ide", imagem=imagem_de_teste("sem_irq12", ["--vesa"])) as m:
+    with Maquina("h19-sem-irq12", "ide", imagem=imagem_de_teste("sem_irq12", ["--vesa", "--console"])) as m:
         m.esperar_serial("sagui:/$", 120)
         for _ in range(20):
             m.monitor("mouse_move 10 5")

@@ -20,6 +20,9 @@ int  termgraf_coluna(void);
 int  textovga_coluna(void);
 
 static bool grafico;
+static bool escondido;   /* com a área de trabalho no ar, o texto do kernel vai só para a serial */
+
+void console_esconder(bool sim) { escondido = sim; }
 
 void console_iniciar(void)
 {
@@ -40,6 +43,7 @@ int  console_coluna(void)      { return grafico ? termgraf_coluna() : textovga_c
 
 void console_limpar(void)
 {
+    if (escondido) return;
     if (grafico) termgraf_limpar(); else textovga_limpar();
 }
 
@@ -50,13 +54,14 @@ void console_cor(uint8_t frente, uint8_t fundo)
 
 void console_char(char c)
 {
+    if (escondido) return;
     if (grafico) termgraf_char(c); else textovga_char(c);
 }
 
 /* No modo gráfico o desenho fica no buffer de trás até isto ser chamado. */
 void console_mostrar(void)
 {
-    if (grafico) termgraf_mostrar();
+    if (grafico && !escondido) termgraf_mostrar();
 }
 
 void kprintf(const char *fmt, ...)

@@ -40,6 +40,12 @@
 #define SIS_REINICIAR      45   /* () */
 #define SIS_MODO_TERMINAL  46   /* (TERM_LINHA ou TERM_BRUTO) */
 #define SIS_LIMPAR_TELA    47   /* () */
+/* Janelas (fase 5) */
+#define SIS_CRIAR_JANELA   50   /* (titulo, largura | altura << 16, &pixels) -> id */
+#define SIS_FECHAR_JANELA  51   /* (id) */
+#define SIS_ATUALIZAR_JANELA 52 /* (id, &retangulo ou 0 = tudo) */
+#define SIS_PROXIMO_EVENTO 53   /* (id ou 0 = qualquer janela minha, &evento, esperar) -> 1 se houve */
+#define SIS_TITULO_JANELA  54   /* (id, titulo) */
 #define SIS_MAX            64
 
 /* Erros (sempre negativos) */
@@ -136,6 +142,44 @@ typedef struct {
 
 /* Sequências que o terminal entende na saída: ESC [ D (cursor à esquerda),
  * ESC [ C (à direita), ESC [ K (apaga até o fim da linha). */
+
+/* Eventos de janela */
+#define EV_CLIQUE    1   /* botão apertado; "cliques" = 2 no duplo clique */
+#define EV_SOLTOU    2
+#define EV_MOVER     3   /* movimento sobre a janela */
+#define EV_TECLA     4   /* "tecla": caractere Latin-1, ou 0x100+ para setas etc. */
+#define EV_FECHAR    5   /* clicaram no X da moldura */
+
+/* Teclas especiais nos eventos de janela. São os mesmos valores do enum do
+ * kernel (teclado.h), que por isso não precisa destas definições. */
+#ifndef SAGUI_KERNEL
+#define TECLA_CIMA      0x100
+#define TECLA_BAIXO     0x101
+#define TECLA_ESQUERDA  0x102
+#define TECLA_DIREITA   0x103
+#define TECLA_HOME      0x104
+#define TECLA_END       0x105
+#define TECLA_PGUP      0x106
+#define TECLA_PGDN      0x107
+#define TECLA_INSERT    0x108
+#define TECLA_DELETE    0x109
+#define TECLA_ESC       0x116
+#endif
+
+#define JANELA_LARG_MAX 1000
+#define JANELA_ALT_MAX  700
+
+typedef struct {
+    unsigned int tipo;
+    int          janela;
+    int          x, y;        /* relativo à área de conteúdo da janela */
+    unsigned int botoes;     /* 1 esquerdo, 2 direito */
+    unsigned int cliques;
+    unsigned int tecla;
+    unsigned int modificadores;   /* 1 Shift, 2 Ctrl */
+} evento_t;
+
+typedef struct { int x, y, largura, altura; } retangulo_t;
 
 /* Código de saída de um processo encerrado pelo kernel (erro do programa). */
 #define SAIDA_ENCERRADO_PELO_KERNEL -1000

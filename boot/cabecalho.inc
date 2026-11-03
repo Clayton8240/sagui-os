@@ -26,6 +26,7 @@ CAB_IMG_SETORES     equ 48         ; u32 tamanho total útil
 CAB_K_ENTRADA       equ 52         ; u32 endereço de entrada do kernel
 
 OPC_VESA            equ 1
+OPC_CONSOLE         equ 2      ; sem área de trabalho: terminal de tela cheia (testes)
 
 ; Endereços de trabalho em modo real (todos abaixo de 0x7C00 ou entre o
 ; estágio 2 e 0x9F000, longe da EBDA).

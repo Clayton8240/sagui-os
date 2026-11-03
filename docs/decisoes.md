@@ -553,3 +553,36 @@ ligadas; a IRQ 12 só é ligada se o touchpad responder; se ele não responder
 (nem depois de um reset), a porta do mouse é desligada. O aviso na tela
 mostra os números (configuração lida e gravada, respostas do touchpad) para
 que uma foto diga o que o hardware respondeu.
+
+## D021. Plano da fase 5: janelas e programas gráficos (H20 a H28)
+
+**O kernel desenha a área de trabalho e as molduras; os programas desenham
+o conteúdo.** Isso é o que o PRD pede (seção 4) e mantém os programas
+gráficos como programas comuns no anel 3.
+
+**Memória compartilhada para o conteúdo da janela.** `criar_janela` aloca
+páginas físicas contíguas para os pixels da janela e as mapeia no espaço do
+programa (a partir de 0xA0000000). O programa desenha direto nelas, sem
+chamada de sistema por pixel, e chama `atualizar_janela` para pedir ao
+kernel que mostre. O kernel lê as mesmas páginas pelo mapeamento 1:1 (D008).
+Essas páginas levam uma marca na tabela de páginas (um bit livre para o
+sistema) para que destruir o espaço do processo não as libere: quem as
+devolve é o gerenciador de janelas, ao fechar a janela.
+
+**Eventos por janela.** Cada janela tem uma fila: clique (com contagem de
+cliques, para o duplo clique), botão solto, movimento, tecla e "fechar". O
+kernel só entrega a cada programa os eventos das janelas dele.
+`proximo_evento` pode esperar (dorme no canal da janela) ou não (o jogo
+precisa continuar se não houver tecla).
+
+**Gerenciador como tarefa do kernel.** Uma tarefa do kernel acorda a cada
+tique, consome a fila do mouse e a do teclado, cuida de arrastar, focar e
+fechar janelas, entrega os eventos e redesenha. A composição é feita só no
+retângulo que mudou: fundo (de uma cópia pronta da área de trabalho), as
+janelas de baixo para cima, a barra superior por último.
+
+**Modo gráfico x terminal de tela cheia.** Com a área de trabalho no ar, o
+console de tela cheia deixa de desenhar (o texto do kernel vai só para a
+serial), e o shell passa a rodar dentro do programa Terminal. Os testes das
+fases 2 a 4 continuam rodando com uma opção de build (`--console`) que
+mantém o terminal de tela cheia.

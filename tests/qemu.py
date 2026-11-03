@@ -131,6 +131,12 @@ for _letra, _mortas in (("aeiou", [("´", "bracket_left"), ("`", "shift-bracket_
             ACENTOS_ABNT2[_ud.normalize("NFC", _l.upper() + _comb)] = [_tecla, "shift-" + _l]
 
 
+def imagem_console():
+    """A imagem normal, mas com o terminal de tela cheia em vez da área de
+    trabalho (opção --console). Usada pelos testes das fases 2 a 4."""
+    return imagem_de_teste("", ["--vesa", "--console"])
+
+
 class FalhaTeste(Exception):
     pass
 

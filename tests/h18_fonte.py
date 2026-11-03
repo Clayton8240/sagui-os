@@ -12,13 +12,13 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, imagem_de_teste  # noqa: E402
+from qemu import Maquina, verificar, imagem_de_teste, imagem_console  # noqa: E402
 
 FRASE = "Ação, vovô, pão, ÇÃO, à é í ó ú"
 
 
 def main():
-    with Maquina("h18", "ide") as m:
+    with Maquina("h18", "ide", imagem=imagem_console()) as m:
         m.esperar_serial("sagui:/$", 120)
         tela = m.tela_texto()
         verificar(len(tela) == 48 and len(tela[1]) > 100, "terminal gráfico de 128x48 caracteres (1024x768)")

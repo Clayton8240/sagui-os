@@ -60,6 +60,8 @@ inicio:
         mov di, BOOTINFO + BI_TESTE
         mov cx, 64
         rep movsb
+        movzx eax, word [CAB_ENDERECO + CAB_OPCOES]
+        mov [BOOTINFO + BI_OPCOES], eax
 
         mov si, msg_titulo
         call escrever

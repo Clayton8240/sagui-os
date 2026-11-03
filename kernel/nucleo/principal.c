@@ -20,8 +20,9 @@
 #include "vfs.h"
 #include "mouse.h"
 #include "i8042.h"
+#include "gui.h"
 
-#define SAGUI_VERSAO "0.4 (fase 4)"
+#define SAGUI_VERSAO "0.5 (fase 5)"
 
 info_boot_t info_boot;
 regiao_e820_t mapa_memoria[MAPA_MAX];
@@ -241,6 +242,18 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         rodar_programa_de_teste(info_boot.teste);
     else if (info_boot.teste[0])
         autoteste_executar(info_boot.teste);
+
+    /* H20: com vídeo e sem a opção --console, a área de trabalho assume a
+     * tela; o shell passa a rodar dentro do programa Terminal (H24). */
+    if (grafico && !(info_boot.opcoes & 2) && gui_iniciar()) {
+        console_esconder(true);
+        klog("[SAGUI] area de trabalho no ar\n");
+        char *argv_t[] = { "terminal", NULL };
+        int pid = processo_executar("/bin/terminal", 1, argv_t, NULL);
+        klog("[SAGUI] terminal: %d\n", pid);
+        for (;;)
+            cpu_espera();   /* o processo 0 só descansa; o resto são processos e a tarefa das janelas */
+    }
 
     /* H16: o primeiro processo é o shell, um programa comum no anel 3. O
      * terminal provisório da H09 foi removido. Daqui em diante este código

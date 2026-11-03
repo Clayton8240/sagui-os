@@ -13,13 +13,13 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, RAIZ  # noqa: E402
+from qemu import Maquina, verificar, RAIZ, imagem_console  # noqa: E402
 
 PROGRAMAS = sorted(f[:-2] for f in os.listdir(os.path.join(RAIZ, "userland", "programas")) if f.endswith(".c"))
 
 
 def main():
-    with Maquina("h16", "ide") as m:
+    with Maquina("h16", "ide", imagem=imagem_console()) as m:
         m.esperar_serial("[SAGUI] shell iniciado: processo", 120)
         m.esperar_serial("sagui:/$", 30)
         s = m.serial()

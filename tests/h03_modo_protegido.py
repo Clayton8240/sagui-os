@@ -12,7 +12,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qemu import Maquina, verificar, RAIZ, SAIDA  # noqa: E402
+from qemu import Maquina, verificar, RAIZ, SAIDA, imagem_console  # noqa: E402
 
 
 def imagem_estagio2_visivel():
@@ -45,7 +45,7 @@ def main():
 
     for modo in ("ide", "usb"):
         for mem_mb in (512, 128):
-            with Maquina("h03", modo, memoria=f"{mem_mb}M") as m:
+            with Maquina("h03", modo, imagem=imagem_console(), memoria=f"{mem_mb}M") as m:
                 m.esperar_serial("[SAGUI] boot ok", 120)
                 tela = m.tela_texto()
                 texto = "\n".join(tela)
@@ -62,7 +62,7 @@ def main():
                     m.captura(f"H03-kernel-{modo}")
     # H04-fix: com memória acima de 4 GB, a tela separa o total do que um
     # kernel de 32 bits consegue usar, e a saudação continua no topo.
-    with Maquina("h03-6g", "ide", memoria="6G") as m:
+    with Maquina("h03-6g", "ide", imagem=imagem_console(), memoria="6G") as m:
         m.esperar_serial("[SAGUI] boot ok", 120)
         tela = m.tela_texto()
         texto = "\n".join(tela)

@@ -33,4 +33,5 @@ BI_VESA_FB          equ 64         ; endereço físico do framebuffer linear
 BI_VESA_ATIVO       equ 68         ; 1 se o estágio 2 trocou de modo
 BI_VESA_CORES       equ 72         ; 6 bytes: tam/pos do vermelho, verde, azul
 BI_SETORES_LIDOS    equ 80
+BI_OPCOES           equ 148        ; u32 cópia de CAB_OPCOES
 BI_TESTE            equ 84         ; char[64] copiado de CAB_TESTE (até o byte 148)

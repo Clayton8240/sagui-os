@@ -17,7 +17,7 @@ def perto(c, alvo, tol=30):
 
 def main():
     for modo in ("ide", "usb"):
-        with Maquina("h17", modo, imagem=imagem_de_teste("grafico", ["--vesa"])) as m:
+        with Maquina("h17", modo, imagem=imagem_de_teste("grafico", ["--vesa", "--console"])) as m:
             m.esperar_serial("[TESTE] grafico ", 60)
             verificar("[TESTE] grafico ok" in m.serial(), f"[{modo}] autoteste gráfico passou")
             verificar("[VIDEO] 1024x768, 32 bits" in m.serial(), f"[{modo}] modo 1024x768x32 escolhido e ligado")

@@ -12,6 +12,7 @@
 
 #define VETOR_IRQ0   0x20   /* o PIC é remapeado para 0x20-0x2F */
 #define VETOR_SISTEMA 0x80  /* chamadas de sistema (fase 3) */
+#define VETOR_CEDER   0x81  /* tarefa do kernel cede a vez (só anel 0) */
 
 /* Tudo que o código de entrada (kernel/arch/vetores.asm) deixa na pilha, do
  * endereço mais baixo para o mais alto. O C recebe um ponteiro para isto e
