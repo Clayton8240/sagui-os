@@ -1,7 +1,7 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:11:50",
+  "atualizado": "2026-11-03T19:14:10",
   "situacao": "Trabalhando na H28: Acabamento",
   "fase_atual": 5,
   "historia_atual": "H28",
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 88.9
+      "progresso": 100.0
     },
     {
       "numero": 6,
@@ -413,12 +413,12 @@ window.SAGUI_STATUS = {
       "titulo": "Acabamento",
       "objetivo": "Ícones na área de trabalho e tela Sobre o SaguiOS.",
       "aceite": "Captura com três programas abertos; tamanho da imagem medido.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:11:50",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:14:10",
+      "minutos": 2,
+      "resultado": "Ícones que abrem os programas, tela Sobre; imagem com 428 KB (29% da meta)"
     },
     {
       "id": "H29",
@@ -615,10 +615,14 @@ window.SAGUI_STATUS = {
       "conceito": "Interface gráfica (extra)",
       "implementa": "Gerenciador de janelas no kernel; programas gráficos em ring 3",
       "historias": "H20-H28",
-      "estado": "parcial"
+      "estado": "feito"
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T19:14:10",
+      "texto": "H28 concluída: Ícones que abrem os programas, tela Sobre; imagem com 428 KB (29% da meta)"
+    },
     {
       "data": "2026-11-03T19:11:50",
       "texto": "Início da H28: Acabamento"
@@ -854,10 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:39:25",
       "texto": "Erro corrigido: Saudação e memória quebravam linha"
-    },
-    {
-      "data": "2026-11-03T15:39:25",
-      "texto": "Erro corrigido: Árvore do SGFS saiu como %*s na tela"
     }
   ],
   "erros": [
@@ -911,6 +911,16 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H28-tres-programas.png",
+      "nome": "H28-tres-programas.png",
+      "data": "2026-11-03T19:13:52"
+    },
+    {
+      "arquivo": "docs/capturas/H28-programas-abertos.png",
+      "nome": "H28-programas-abertos.png",
+      "data": "2026-11-03T19:13:45"
+    },
     {
       "arquivo": "docs/capturas/H27-banana-fim-de-jogo.png",
       "nome": "H27-banana-fim-de-jogo.png",
@@ -1209,14 +1219,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 6740,
-    "userland": 3531,
-    "ferramentas": 2647
+    "kernel": 6764,
+    "userland": 3628,
+    "ferramentas": 2715
   },
   "imagem": {
-    "bytes_util": 411136,
+    "bytes_util": 428544,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 79.4
+  "progresso_geral": 82.4
 };

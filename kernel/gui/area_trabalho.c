@@ -29,7 +29,7 @@ static const icone_t icones[] = {
     { "Editor",      "/bin/editor",      &arte_icone_editor },
     { "Calculadora", "/bin/calculadora", &arte_icone_calculadora },
     { "Banana",      "/bin/banana",      &arte_icone_banana },
-    { "Sobre",       "/bin/sobre-gui",   &arte_icone_sobre },
+    { "Sobre",       "/bin/sobre-o-sistema",   &arte_icone_sobre },
 };
 #define QTD_ICONES (int)(sizeof icones / sizeof icones[0])
 #define ICONE_X 20

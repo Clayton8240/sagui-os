@@ -25,6 +25,8 @@
 #define SAGUI_VERSAO "0.5 (fase 5)"
 
 info_boot_t info_boot;
+const char *sagui_versao = SAGUI_VERSAO;
+uint32_t imagem_bytes;   /* tamanho útil da imagem, lido do cabeçalho de boot (setores x 512) */
 regiao_e820_t mapa_memoria[MAPA_MAX];
 
 static const char *nome_tipo_e820(uint32_t t)
@@ -137,6 +139,7 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     /* A boot_info e o mapa estão na memória baixa, que mais tarde vira área
      * livre. Copiamos para dentro do kernel antes de qualquer outra coisa. */
     info_boot = *bi;
+    imagem_bytes = *(const uint32_t *)(0x7E00 + 48) * 512;   /* CAB_IMG_SETORES, ainda na memória baixa */
     info_boot.teste[63] = 0;
     if (info_boot.mapa_qtd > MAPA_MAX)
         info_boot.mapa_qtd = MAPA_MAX;

@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T19:11:50_
+_Atualizado em 2026-11-03T19:14:10_
 
 - **Situação:** Trabalhando na H28: Acabamento
 - **Fase atual:** 5
 - **História atual:** H28
-- **Progresso geral:** 79.4%
+- **Progresso geral:** 82.4%
 - **Bloqueio:** nenhum
-- **Imagem:** 411136 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6740, userland 3531
+- **Imagem:** 428544 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6764, userland 3628
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T19:11:50_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 88.9% | em andamento |
+| 5 | Janelas e programas | 100.0% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -53,7 +53,7 @@ _Atualizado em 2026-11-03T19:11:50_
 | H25 | Editor de texto | feito | 3 |
 | H26 | Calculadora | feito | 2 |
 | H27 | Sagui Pega Banana | feito | 2 |
-| H28 | Acabamento | em andamento |  |
+| H28 | Acabamento | feito | 2 |
 | H29 | PCI e controlador EHCI | a fazer |  |
 | H30 | Enumeração USB, hubs e conexão a quente | a fazer |  |
 | H31 | Armazenamento em massa | a fazer |  |
@@ -66,6 +66,7 @@ _Atualizado em 2026-11-03T19:11:50_
 
 ## Últimas ações
 
+- 2026-11-03T19:14:10: H28 concluída: Ícones que abrem os programas, tela Sobre; imagem com 428 KB (29% da meta)
 - 2026-11-03T19:11:50: Início da H28: Acabamento
 - 2026-11-03T19:11:50: H27 concluída: Jogo Sagui Pega Banana com pixel art, vidas, velocidade crescente e recorde
 - 2026-11-03T19:09:30: Início da H27: Sagui Pega Banana
@@ -80,4 +81,3 @@ _Atualizado em 2026-11-03T19:11:50_
 - 2026-11-03T18:56:46: H22 concluída: Kit gráfico na libsagui: botão, caixa, área de texto com rolagem, lista, diálogos
 - 2026-11-03T18:53:31: Início da H22: Kit gráfico da libsagui
 - 2026-11-03T18:53:31: H21 concluída: Gerenciador de janelas no kernel, memória compartilhada, eventos por janela; arrastar e fechar testados
-- 2026-11-03T18:53:30: Erro corrigido: Rastros ao arrastar janelas

@@ -107,6 +107,7 @@ typedef struct {
 /* SIS_INFO_SISTEMA */
 #define INFO_MEMORIA   1
 #define INFO_PROCESSOS 2
+#define INFO_VERSAO    3
 
 typedef struct {
     unsigned int ram_total_kb;
@@ -124,6 +125,13 @@ typedef struct {
     unsigned int usuario;    /* 1 = programa no anel 3 */
     char         nome[32];
 } info_processo_t;
+
+typedef struct {
+    char         versao[32];
+    unsigned int imagem_bytes;   /* tamanho útil da imagem de boot */
+    unsigned int segundos_ligado;
+    unsigned int largura, altura;
+} info_versao_t;
 
 /* Modos do terminal */
 #define TERM_LINHA 0

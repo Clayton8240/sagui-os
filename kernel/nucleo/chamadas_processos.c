@@ -5,6 +5,7 @@
 #include "processo.h"
 #include "relogio.h"
 #include "texto.h"
+#include "bootinfo.h"
 
 SEM_RETORNO void maquina_reiniciar(void);
 
@@ -122,6 +123,18 @@ int32_t sis_info_sistema(uint32_t tipo, uint32_t ptr, uint32_t n, uint32_t d, ui
             k++;
         }
         return (int32_t)k;
+    }
+    if (tipo == INFO_VERSAO) {
+        info_versao_t *v = (info_versao_t *)ptr;
+        if (!usuario_ok(v, sizeof *v, true)) return ERRO_ENDERECO;
+        extern const char *sagui_versao;
+        extern uint32_t imagem_bytes;
+        txt_copia_n(v->versao, sagui_versao, sizeof v->versao);
+        v->imagem_bytes = imagem_bytes;
+        v->segundos_ligado = relogio_segundos();
+        v->largura = info_boot.vesa_ativo ? info_boot.vesa_largura : 80;
+        v->altura = info_boot.vesa_ativo ? info_boot.vesa_altura : 25;
+        return 0;
     }
     return ERRO_INVALIDO;
 }
