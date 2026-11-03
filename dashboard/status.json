@@ -1,6 +1,6 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:39:25",
+  "atualizado": "2026-11-03T15:41:51",
   "situacao": "Trabalhando na H09: Terminal provisório do kernel",
   "fase_atual": 2,
   "historia_atual": "H09",
@@ -18,7 +18,7 @@
       "numero": 2,
       "nome": "Kernel e terminal",
       "estado": "em andamento",
-      "progresso": 80.0
+      "progresso": 100.0
     },
     {
       "numero": 3,
@@ -162,12 +162,12 @@
       "titulo": "Terminal provisório do kernel",
       "objetivo": "Prompt sagui:/$ com ajuda, ls, cd, cat, limpar, mem, data, reiniciar.",
       "aceite": "Roteiro digita cada comando no QEMU e confere pela captura e pela serial.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T15:39:25",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T15:41:51",
+      "minutos": 2,
+      "resultado": "Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar"
     },
     {
       "id": "H10",
@@ -575,7 +575,7 @@
       "conceito": "Arquivos e diretórios",
       "implementa": "Abrir, ler, escrever, criar, apagar, na RAM e no pendrive FAT32",
       "historias": "H08, H14, H32, H33",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Entrada e saída",
@@ -615,6 +615,14 @@
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T15:41:51",
+      "texto": "H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar"
+    },
+    {
+      "data": "2026-11-03T15:41:51",
+      "texto": "Erro corrigido: cd ../arte chegava como cd ..;arte"
+    },
     {
       "data": "2026-11-03T15:39:25",
       "texto": "Início da H09: Terminal provisório do kernel"
@@ -714,6 +722,12 @@
   ],
   "erros": [
     {
+      "data": "2026-11-03T15:41:51",
+      "sintoma": "cd ../arte chegava como cd ..;arte",
+      "causa": "Harness digitava / pela tecla americana (no ABNT2 é ;)",
+      "correcao": "Harness usa posições ABNT2"
+    },
+    {
       "data": "2026-11-03T15:39:25",
       "sintoma": "Saudação e memória quebravam linha",
       "causa": "Textos com mais de 80 colunas",
@@ -727,6 +741,26 @@
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H09-mem-data.png",
+      "nome": "H09-mem-data.png",
+      "data": "2026-11-03T15:41:27"
+    },
+    {
+      "arquivo": "docs/capturas/H09-cat-sagui.png",
+      "nome": "H09-cat-sagui.png",
+      "data": "2026-11-03T15:41:24"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ls-cd.png",
+      "nome": "H09-ls-cd.png",
+      "data": "2026-11-03T15:41:21"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ajuda.png",
+      "nome": "H09-ajuda.png",
+      "data": "2026-11-03T15:41:20"
+    },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
       "nome": "H08-sgfs-lista.png",
@@ -795,14 +829,14 @@
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 2371,
+    "kernel": 2686,
     "userland": 0,
-    "ferramentas": 1164
+    "ferramentas": 1298
   },
   "imagem": {
-    "bytes_util": 34816,
+    "bytes_util": 40448,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 23.5
+  "progresso_geral": 26.5
 }

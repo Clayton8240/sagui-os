@@ -14,6 +14,7 @@
 #include "memoria.h"
 #include "teclado.h"
 #include "sgfs.h"
+#include "terminal.h"
 
 #define SAGUI_VERSAO "0.2 (fase 2)"
 
@@ -174,6 +175,6 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     if (info_boot.teste[0])
         autoteste_executar(info_boot.teste);
 
-    for (;;)
-        cpu_espera();
+    /* H09: terminal provisório (vira o programa sagsh na H16). */
+    terminal_executar();
 }

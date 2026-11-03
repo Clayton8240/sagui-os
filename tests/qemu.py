@@ -25,13 +25,14 @@ SAIDA = os.path.join(RAIZ, "build", "testes")
 CAPTURAS = os.path.join(RAIZ, "docs", "capturas")
 TEMPO_MAX = 180
 
-# Nomes de tecla do QEMU para cada caractere digitável (teclado americano do
-# QEMU; o mapa ABNT2 do kernel traduz os scan codes, ver tecla_abnt2).
+# Como digitar cada caractere num teclado ABNT2 pelo QEMU. O QEMU nomeia as
+# teclas pela posição do teclado americano; o kernel aplica o mapa ABNT2. Por
+# isso o "/" é a tecla "ro" (0x73), o ";" é a tecla "slash" etc.
 TECLAS = {" ": "spc", "\n": "ret", "\t": "tab", "-": "minus", "=": "equal", ".": "dot",
-          ",": "comma", "/": "slash", ";": "semicolon", "'": "apostrophe", "\\": "backslash",
-          "[": "bracket_left", "]": "bracket_right", "`": "grave_accent",
+          ",": "comma", "/": "ro", "?": "shift-ro", ";": "slash", ":": "shift-slash",
+          "'": "grave_accent", '"': "shift-grave_accent", "[": "bracket_right", "{": "shift-bracket_right",
+          "]": "backslash", "}": "shift-backslash", "\\": "less", "|": "shift-less",
           "_": "shift-minus", "+": "shift-equal", ">": "shift-dot", "<": "shift-comma",
-          "?": "shift-slash", ":": "shift-semicolon", '"': "shift-apostrophe", "|": "shift-backslash",
           "!": "shift-1", "@": "shift-2", "#": "shift-3", "$": "shift-4", "%": "shift-5",
           "&": "shift-7", "*": "shift-8", "(": "shift-9", ")": "shift-0"}
 
@@ -48,6 +49,19 @@ def imagem_de_teste(teste, extras=()):
                     "--ramdisk", os.path.join(b, "ramdisk.sgfs"), "--saida", destino, "--teste", teste, *extras],
                    check=True, stdout=subprocess.DEVNULL)
     return destino
+
+
+# Como digitar letras acentuadas num teclado ABNT2 pelo QEMU (que nomeia as
+# teclas pela posição americana): tecla morta + letra, ou a tecla do ç.
+ACENTOS_ABNT2 = {"ç": ["semicolon"], "Ç": ["shift-semicolon"]}
+for _letra, _mortas in (("aeiou", [("´", "bracket_left"), ("`", "shift-bracket_left"),
+                                   ("^", "shift-apostrophe")]), ("ao", [("~", "apostrophe")])):
+    for _acento, _tecla in _mortas:
+        for _l in _letra:
+            _comb = {"´": "\u0301", "`": "\u0300", "^": "\u0302", "~": "\u0303"}[_acento]
+            import unicodedata as _ud
+            ACENTOS_ABNT2[_ud.normalize("NFC", _l + _comb)] = [_tecla, _l]
+            ACENTOS_ABNT2[_ud.normalize("NFC", _l.upper() + _comb)] = [_tecla, "shift-" + _l]
 
 
 class FalhaTeste(Exception):
@@ -193,7 +207,10 @@ class Maquina:
 
     def digitar(self, texto, espera=0.08):
         for c in texto:
-            if c in TECLAS:
+            if c in ACENTOS_ABNT2:
+                for t in ACENTOS_ABNT2[c]:
+                    self.tecla(t, espera)
+            elif c in TECLAS:
                 self.tecla(TECLAS[c], espera)
             elif c.isupper():
                 self.tecla("shift-" + c.lower(), espera)

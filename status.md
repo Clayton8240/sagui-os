@@ -1,21 +1,21 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:39:25_
+_Atualizado em 2026-11-03T15:41:51_
 
 - **Situação:** Trabalhando na H09: Terminal provisório do kernel
 - **Fase atual:** 2
 - **História atual:** H09
-- **Progresso geral:** 23.5%
+- **Progresso geral:** 26.5%
 - **Bloqueio:** nenhum
-- **Imagem:** 34816 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 2371, userland 0
+- **Imagem:** 40448 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 2686, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
-| 2 | Kernel e terminal | 80.0% | em andamento |
+| 2 | Kernel e terminal | 100.0% | em andamento |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
@@ -34,7 +34,7 @@ _Atualizado em 2026-11-03T15:39:25_
 | H06 | Memória física | feito | 4 |
 | H07 | Teclado PS/2 com ABNT2 | feito | 6 |
 | H08 | Sistema de arquivos SGFS | feito | 2 |
-| H09 | Terminal provisório do kernel | em andamento |  |
+| H09 | Terminal provisório do kernel | feito | 2 |
 | H10 | Paginação | a fazer |  |
 | H11 | Processos e escalonador | a fazer |  |
 | H12 | Ring 3 e chamadas de sistema | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T15:39:25_
 
 ## Últimas ações
 
+- 2026-11-03T15:41:51: H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar
+- 2026-11-03T15:41:51: Erro corrigido: cd ../arte chegava como cd ..;arte
 - 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel
 - 2026-11-03T15:39:25: H08 concluída: mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico
 - 2026-11-03T15:39:25: Erro corrigido: Saudação e memória quebravam linha
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T15:39:25_
 - 2026-11-03T15:24:57: Início da H05: Interrupções e relógio
 - 2026-11-03T15:24:42: H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte
 - 2026-11-03T15:23:28: Início da H04-fix: saudação some no G470 por causa do mapa E820 grande
-- 2026-11-03T15:22:25: Eli confirmou: fase 1 ok
-- 2026-11-03T14:27:18: Fase 1 entregue. Aguardando teste do Eli.
