@@ -390,3 +390,25 @@ edita no kernel; o modo bruto entrega tecla a tecla (D010).
 
 **Proteções.** Não se remove pasta com conteúdo, nem a raiz, nem a pasta em
 que algum processo está. Mover uma pasta para dentro dela mesma é recusado.
+
+## D015. Pipes: como foi pensado (H15)
+
+**Buffer circular de 512 bytes por pipe**, pequeno de propósito: qualquer
+transferência real cruza a borda muitas vezes, e o teste de 20.000 bytes
+exercita o bloqueio dezenas de vezes.
+
+**Um canal só para leitores e escritores.** Os dois lados dormem no próprio
+pipe. Ler ou escrever acorda todos, e cada um repete a chamada (D010) e
+confere a condição de novo. Acordar alguém que ainda não pode continuar
+custa uma volta a mais, mas dispensa duas filas e a lógica de quem acorda
+quem.
+
+**Escrita parcial.** Com espaço para só parte dos dados, o kernel escreve o
+que cabe e devolve quanto foi; não bloqueia no meio. A `escrever_tudo` da
+libsagui insiste no resto. Assim nenhuma chamada fica "pela metade" dentro
+do kernel, o que combina com as chamadas reiniciáveis.
+
+**Fim de arquivo** = pipe vazio e nenhum escritor. **Pipe quebrado** =
+escrever sem nenhum leitor. Os dois dependem de contar as pontas abertas,
+por isso o filho herda só 0, 1 e 2 (D010) e o shell fecha suas cópias das
+pontas logo depois de criar os processos.

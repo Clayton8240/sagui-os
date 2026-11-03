@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:25:45",
-  "situacao": "Trabalhando na H15: Pipes",
+  "atualizado": "2026-11-03T16:27:11",
+  "situacao": "Trabalhando na H16: Shell e comandos como programas",
   "fase_atual": 3,
-  "historia_atual": "H15",
+  "historia_atual": "H16",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 71.4
+      "progresso": 85.7
     },
     {
       "numero": 4,
@@ -242,12 +242,12 @@ window.SAGUI_STATUS = {
       "titulo": "Pipes",
       "objetivo": "pipe e duplicar, buffer no kernel, bloqueio de leitor e escritor, EOF.",
       "aceite": "Dois processos transferem por pipe um texto maior que o buffer sem perda nem duplicação.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:25:17",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:27:11",
+      "minutos": 2,
+      "resultado": "Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos"
     },
     {
       "id": "H16",
@@ -255,9 +255,9 @@ window.SAGUI_STATUS = {
       "titulo": "Shell e comandos como programas",
       "objetivo": "bin/sagsh como primeiro processo, redirecionamento, pipe, histórico, Tab, comandos e apelidos.",
       "aceite": "Roteiro executa todos os comandos e apelidos; falha derruba só o processo; capturas em docs/capturas/.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:27:11",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -559,7 +559,7 @@ window.SAGUI_STATUS = {
       "conceito": "Comunicação entre processos",
       "implementa": "Pipes entre programas (ls | conta)",
       "historias": "H15",
-      "estado": "a fazer"
+      "estado": "feito"
     },
     {
       "conceito": "Espaços de endereço",
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:27:11",
+      "texto": "Início da H16: Shell e comandos como programas"
+    },
+    {
+      "data": "2026-11-03T16:27:11",
+      "texto": "H15 concluída: Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos"
+    },
     {
       "data": "2026-11-03T16:25:45",
       "texto": "Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12"
@@ -810,6 +818,16 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H15-pipes.png",
+      "nome": "H15-pipes.png",
+      "data": "2026-11-03T16:26:52"
+    },
+    {
+      "arquivo": "docs/capturas/H12-anel3-protecao.png",
+      "nome": "H12-anel3-protecao.png",
+      "data": "2026-11-03T16:26:07"
+    },
+    {
       "arquivo": "docs/capturas/H13-ola-argumentos.png",
       "nome": "H13-ola-argumentos.png",
       "data": "2026-11-03T16:25:06"
@@ -818,11 +836,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
       "nome": "H14-arquivos-gravaveis.png",
       "data": "2026-11-03T16:24:39"
-    },
-    {
-      "arquivo": "docs/capturas/H12-anel3-protecao.png",
-      "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T16:21:03"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
@@ -942,14 +955,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 4932,
-    "userland": 658,
-    "ferramentas": 1470
+    "kernel": 4936,
+    "userland": 770,
+    "ferramentas": 1500
   },
   "imagem": {
-    "bytes_util": 79872,
+    "bytes_util": 100352,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 41.2
+  "progresso_geral": 44.1
 };

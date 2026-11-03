@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:25:45_
+_Atualizado em 2026-11-03T16:27:11_
 
-- **Situação:** Trabalhando na H15: Pipes
+- **Situação:** Trabalhando na H16: Shell e comandos como programas
 - **Fase atual:** 3
-- **História atual:** H15
-- **Progresso geral:** 41.2%
+- **História atual:** H16
+- **Progresso geral:** 44.1%
 - **Bloqueio:** nenhum
-- **Imagem:** 79872 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 4932, userland 658
+- **Imagem:** 100352 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 4936, userland 770
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:25:45_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 71.4% | em andamento |
+| 3 | Processos e programas | 85.7% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -40,8 +40,8 @@ _Atualizado em 2026-11-03T16:25:45_
 | H12 | Ring 3 e chamadas de sistema | feito | 4 |
 | H13 | Carregador ELF e libsagui | feito | 5 |
 | H14 | Arquivos e pastas graváveis | feito | 4 |
-| H15 | Pipes | em andamento |  |
-| H16 | Shell e comandos como programas | a fazer |  |
+| H15 | Pipes | feito | 2 |
+| H16 | Shell e comandos como programas | em andamento |  |
 | H17 | Framebuffer VESA | a fazer |  |
 | H18 | Fonte própria | a fazer |  |
 | H19 | Mouse / touchpad PS/2 | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:25:45_
 
 ## Últimas ações
 
+- 2026-11-03T16:27:11: Início da H16: Shell e comandos como programas
+- 2026-11-03T16:27:11: H15 concluída: Pipes com bloqueio e fim de arquivo; 20.000 bytes num pipe de 512, nos dois sentidos
 - 2026-11-03T16:25:45: Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12
 - 2026-11-03T16:25:17: Início da H15: Pipes
 - 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:25:45_
 - 2026-11-03T16:10:05: H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página
 - 2026-11-03T16:07:26: Início da H10: Paginação
 - 2026-11-03T16:05:16: Eli confirmou: fase 2 ok
-- 2026-11-03T15:45:24: Fase 2 entregue. Aguardando teste do Eli.
-- 2026-11-03T15:45:16: Todos os testes passaram (H01 a H09, 9/9), IDE e USB
