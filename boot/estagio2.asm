@@ -56,6 +56,10 @@ inicio:
         mov dword [BOOTINFO + BI_VERSAO], 1
         movzx eax, byte [disco]
         mov [BOOTINFO + BI_DISCO], eax
+        mov si, CAB_ENDERECO + CAB_TESTE        ; repassa o nome do autoteste (se houver)
+        mov di, BOOTINFO + BI_TESTE
+        mov cx, 16
+        rep movsb
 
         mov si, msg_titulo
         call escrever

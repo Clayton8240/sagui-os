@@ -69,6 +69,7 @@ def main():
     ap.add_argument("--ramdisk", required=True)
     ap.add_argument("--saida", required=True)
     ap.add_argument("--vesa", action="store_true", help="estágio 2 troca para o modo gráfico VESA")
+    ap.add_argument("--teste", default="", help="nome de um autoteste do kernel (só para os testes automáticos)")
     a = ap.parse_args()
 
     mbr = bytearray(open(a.mbr, "rb").read())
@@ -99,6 +100,7 @@ def main():
                       k_lba, setores(len(kern)), len(kern), KERNEL_ENDERECO,
                       r_lba, setores(len(rd)), len(rd), rd_endereco,
                       total, entrada, soma(kern), soma(rd))
+    cab += a.teste.encode("ascii")[:15].ljust(16, b"\0")
 
     # Tamanho do arquivo: arredondado para múltiplo de 32 KB. A partição cobre
     # do LBA 1 até o fim do arquivo e é a única, marcada como ativa (0x80),

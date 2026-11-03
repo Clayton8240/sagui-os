@@ -34,3 +34,4 @@ ESTAGIO2_MAX_SET    equ 64
 
 CAB_K_SOMA          equ 56         ; u32 soma simples dos bytes do kernel (detecta leitura corrompida)
 CAB_R_SOMA          equ 60         ; u32 soma simples dos bytes do ramdisk
+CAB_TESTE           equ 64         ; char[16] nome de um autoteste do kernel (vazio = boot normal)

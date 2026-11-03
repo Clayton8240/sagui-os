@@ -1,13 +1,18 @@
 /* principal.c - ponto de entrada em C do kernel do SaguiOS.
  *
- * Fase 1: provar que o carregador fez o trabalho dele. O kernel confere a
- * assinatura deixada pelo estágio 2, guarda a boot_info, mostra a saudação e
- * a memória detectada, e confere que o ramdisk chegou inteiro. */
+ * Confere que o carregador fez o trabalho dele (assinatura e boot_info),
+ * mostra a saudação e a memória, e liga as partes do kernel em ordem:
+ * interrupções e relógio, memória física e alocador, teclado, sistema de
+ * arquivos e, por fim, o terminal. Tudo cabe em poucas linhas na tela: no
+ * G470 o mapa de memória grande empurrava a saudação para fora (erro 1). */
 #include "bootinfo.h"
 #include "console.h"
 #include "texto.h"
+#include "cpu.h"
+#include "relogio.h"
+#include "autoteste.h"
 
-#define SAGUI_VERSAO "0.1 (fase 1)"
+#define SAGUI_VERSAO "0.2 (fase 2)"
 
 info_boot_t info_boot;
 regiao_e820_t mapa_memoria[MAPA_MAX];
@@ -77,7 +82,16 @@ static void conferir_ramdisk(void)
         return;
     }
     uint32_t entradas = *(const uint32_t *)(rd + 8);
-    kprintf("Ramdisk SGFS: %u bytes em %p, %u entradas\n", info_boot.ramdisk_bytes, rd, entradas);
+    klog("Ramdisk SGFS: %u bytes em %p, %u entradas\n", info_boot.ramdisk_bytes, rd, entradas);
+}
+
+/* Uma linha de status da inicialização: "[ ok ] texto". */
+static void etapa(const char *texto)
+{
+    vga_cor(COR_VERDE_CLARO, COR_PRETO);
+    kprintf("[ ok ] ");
+    vga_cor(COR_CINZA, COR_PRETO);
+    kprintf("%s\n", texto);
 }
 
 void inicio_kernel(uint32_t magico, info_boot_t *bi)
@@ -92,43 +106,47 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     /* A boot_info e o mapa estão na memória baixa, que mais tarde vira área
      * livre. Copiamos para dentro do kernel antes de qualquer outra coisa. */
     info_boot = *bi;
+    info_boot.teste[15] = 0;
     if (info_boot.mapa_qtd > MAPA_MAX)
         info_boot.mapa_qtd = MAPA_MAX;
     memcpy(mapa_memoria, (const void *)info_boot.mapa_end, info_boot.mapa_qtd * sizeof(regiao_e820_t));
 
     vga_cor(COR_AMARELO, COR_VERDE);
     kprintf("                                                                                ");
-    kprintf("  Ola! Eu sou o SaguiOS.                                                        ");
+    kprintf("  Ola! Eu sou o SaguiOS.                                       versao %-17s", SAGUI_VERSAO);
     kprintf("                                                                                ");
     vga_cor(COR_CINZA, COR_PRETO);
-    kprintf("\nVersao %s - kernel em %p (%u bytes)\n", SAGUI_VERSAO,
-            (void *)info_boot.kernel_inicio, info_boot.kernel_bytes);
 
     uint64_t livre = memoria_livre(false);
     uint64_t usavel = memoria_livre(true);
     vga_cor(COR_BRANCO, COR_PRETO);
-    kprintf("Memoria detectada: %u MB livres\n", (uint32_t)(livre >> 20));
+    kprintf("Memoria detectada: %u MB livres", (uint32_t)(livre >> 20));
     vga_cor(COR_CINZA, COR_PRETO);
-    kprintf("  utilizavel pelo SaguiOS (32 bits, abaixo de 4 GB): %u MB\n", (uint32_t)(usavel >> 20));
-    kprintf("  mapa E820 com %u regioes (lista completa no log serial)\n", info_boot.mapa_qtd);
+    kprintf(" (utilizavel pelo SaguiOS, abaixo de 4 GB: %u MB)\n", (uint32_t)(usavel >> 20));
     registrar_mapa();
-
-    static const char *metodos_a20[] = { "ja estava ligada", "BIOS", "porta 0x92", "controlador de teclado" };
-    kprintf("Linha A20: %s\n", info_boot.a20_metodo < 4 ? metodos_a20[info_boot.a20_metodo] : "?");
-    kprintf("Disco de boot: 0x%x, %u setores lidos\n", info_boot.disco, info_boot.setores_lidos);
+    static const char *metodos_a20[] = { "ja ligada", "BIOS", "porta 0x92", "teclado" };
+    kprintf("E820: %u regioes | A20: %s | disco 0x%x | VESA: ", info_boot.mapa_qtd,
+            info_boot.a20_metodo < 4 ? metodos_a20[info_boot.a20_metodo] : "?", info_boot.disco);
     if (info_boot.vesa_ok)
-        kprintf("Video VESA disponivel: %ux%u, %u bits (modo 0x%x, ainda em modo texto)\n",
-                info_boot.vesa_largura, info_boot.vesa_altura, info_boot.vesa_bpp, info_boot.vesa_modo);
+        kprintf("%ux%ux%u\n", info_boot.vesa_largura, info_boot.vesa_altura, info_boot.vesa_bpp);
     else
-        kprintf("Video VESA: nenhum modo aceitavel encontrado\n");
-    conferir_ramdisk();
-
-    vga_cor(COR_VERDE_CLARO, COR_PRETO);
-    kprintf("\nFase 1 concluida: o kernel esta no controle da maquina.\n");
-    vga_cor(COR_CINZA, COR_PRETO);
+        kprintf("nenhum\n");
     klog("[SAGUI] memoria_mb=%u usavel_mb=%u\n", (uint32_t)(livre >> 20), (uint32_t)(usavel >> 20));
+
+    /* H05: segmentos próprios, interrupções e relógio. */
+    gdt_iniciar();
+    idt_iniciar();
+    pic_iniciar();
+    relogio_iniciar();
+    int_liga();
+    etapa("Interrupções: GDT e IDT próprias, PIC remapeado, relógio a 100 Hz");
+
+    conferir_ramdisk();
     klog("[SAGUI] boot ok\n");
 
+    if (info_boot.teste[0])
+        autoteste_executar(info_boot.teste);
+
     for (;;)
-        __asm__ volatile("hlt");
+        cpu_espera();
 }

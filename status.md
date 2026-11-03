@@ -1,21 +1,21 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T15:24:42_
+_Atualizado em 2026-11-03T15:28:28_
 
-- **Situação:** Fase 1 confirmada no hardware. Seguindo para a fase 2.
-- **Fase atual:** 1
-- **História atual:** -
-- **Progresso geral:** 11.8%
+- **Situação:** Trabalhando na H06: Memória física
+- **Fase atual:** 2
+- **História atual:** H06
+- **Progresso geral:** 14.7%
 - **Bloqueio:** nenhum
-- **Imagem:** 14848 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 893, kernel 728, userland 0
+- **Imagem:** 23040 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 1369, userland 0
 
 ## Fases
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
-| 2 | Kernel e terminal | 0.0% | a fazer |
+| 2 | Kernel e terminal | 20.0% | em andamento |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
@@ -30,8 +30,8 @@ _Atualizado em 2026-11-03T15:24:42_
 | H02 | Estágio 1 (MBR) | feito | 8 |
 | H03 | Estágio 2 e modo protegido | feito | 1 |
 | H04 | Imagem para pendrive e VirtualBox | feito | 4 |
-| H05 | Interrupções e relógio | a fazer |  |
-| H06 | Memória física | a fazer |  |
+| H05 | Interrupções e relógio | feito | 4 |
+| H06 | Memória física | em andamento |  |
 | H07 | Teclado PS/2 com ABNT2 | a fazer |  |
 | H08 | Sistema de arquivos SGFS | a fazer |  |
 | H09 | Terminal provisório do kernel | a fazer |  |
@@ -66,6 +66,9 @@ _Atualizado em 2026-11-03T15:24:42_
 
 ## Últimas ações
 
+- 2026-11-03T15:28:28: Início da H06: Memória física
+- 2026-11-03T15:28:28: H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS
+- 2026-11-03T15:24:57: Início da H05: Interrupções e relógio
 - 2026-11-03T15:24:42: H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte
 - 2026-11-03T15:23:28: Início da H04-fix: saudação some no G470 por causa do mapa E820 grande
 - 2026-11-03T15:22:25: Eli confirmou: fase 1 ok
@@ -78,4 +81,3 @@ _Atualizado em 2026-11-03T15:24:42_
 - 2026-11-03T14:22:05: H02 concluída: MBR de 512 bytes com BPB reservado e partição ativa; mensagem aparece em IDE e USB
 - 2026-11-03T14:14:29: Início da H02: Estágio 1 (MBR)
 - 2026-11-03T14:14:17: H01 concluída: Ambiente pronto: NASM, GCC -m32, QEMU, ImageMagick; estrutura, git e painel criados
-- 2026-11-03T14:12:34: Início da H01: Preparar o ambiente

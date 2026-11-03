@@ -37,6 +37,7 @@ typedef struct EMPACOTADO {
     uint8_t  verm_tam, verm_pos, verde_tam, verde_pos, azul_tam, azul_pos;
     uint8_t  reservado[2];
     uint32_t setores_lidos;
+    char     teste[16];   /* autoteste pedido pelo build de teste; vazio no uso normal */
 } info_boot_t;
 
 /* Cópia feita no início do kernel; vale durante toda a execução. */

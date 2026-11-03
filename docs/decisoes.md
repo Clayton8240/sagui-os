@@ -105,3 +105,48 @@ pede o PRD, e o teste da H04 dá boot no próprio `.vdi` pelo QEMU
 **Motivo:** a VPS não tem virtualização aninhada, então não há VirtualBox
 para testar aqui. Dar boot no `.vdi` prova que a conversão preservou a
 imagem byte a byte; o teste no VirtualBox de verdade fica no roteiro do Eli.
+
+## D006. Autotestes ligados pelo cabeçalho de boot (fase 2)
+
+**Decisão:** o cabeçalho de boot tem um campo de 16 bytes (`CAB_TESTE`) com o
+nome de um autoteste. O estágio 2 copia para a boot_info e o kernel, se o
+campo não estiver vazio, roda `autoteste_executar(nome)` depois de iniciar.
+Os testes geram imagens próprias com `mkimagem.py --teste NOME`.
+
+**Motivo:** critérios como "dividir por zero mostra a tela de erro" ou
+"alocar e liberar sem corromper" precisam de código que nunca deve rodar na
+imagem do Eli. Recompilar o kernel para cada teste seria lento e testaria um
+binário diferente do entregue. Assim o kernel testado é exatamente o mesmo;
+só muda um campo do cabeçalho.
+
+## D007. Interrupções: como foi pensado (H05)
+
+**Um trecho por vetor, gerado por repetição.** A CPU não informa qual vetor
+disparou, e só algumas exceções empilham código de erro. Cada um dos 256
+vetores tem um trecho de 2-3 instruções, gerado por `%rep` no NASM, que iguala
+o formato (empilha 0 quando não há código de erro) e empilha o número do
+vetor. Um único trecho comum salva o resto. A tabela com o endereço de cada
+trecho é exportada para o C, que monta a IDT num laço.
+
+**O despachante devolve o quadro a retomar.** `tratar_interrupcao(quadro)`
+retorna um ponteiro de quadro, e o assembly faz `mov esp, eax` antes de
+restaurar os registradores. Hoje sempre devolve o mesmo quadro. Na fase 3, a
+troca de processo vai ser só o escalonador devolver o quadro de outro
+processo: não precisa de uma rotina separada de troca de contexto.
+
+**Portas de interrupção, não de "trap".** IF é desligada na entrada, então o
+kernel não é interrompido no meio de outra interrupção. É mais simples de
+raciocinar e o kernel é pequeno o bastante para isso não atrasar nada.
+
+**PIC.** Remapeado para 0x20-0x2F (os vetores 8-15 originais colidem com
+exceções da CPU), tudo mascarado, cada driver habilita a sua linha. IRQ 7 e 15
+espúrias são reconhecidas pelo registrador de serviço e não recebem EOI.
+
+**Tela de erro.** Nome da exceção em português, código de erro, todos os
+registradores e CR0/CR2/CR3, e um pedido para fotografar: no G470 a foto é a
+única ferramenta de depuração.
+
+**Texto em Latin-1 também no modo texto.** O kernel é compilado com
+`-fexec-charset=ISO-8859-1`, então as mensagens podem ter acentos. A fonte
+da placa VGA segue a página de código 437; o driver traduz o que existe nela
+(ç, é, á, ó, ...) e troca pela letra sem acento o que não existe (ã, õ).

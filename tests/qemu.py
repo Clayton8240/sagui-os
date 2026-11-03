@@ -36,6 +36,20 @@ TECLAS = {" ": "spc", "\n": "ret", "\t": "tab", "-": "minus", "=": "equal", ".":
           "&": "shift-7", "*": "shift-8", "(": "shift-9", ")": "shift-0"}
 
 
+def imagem_de_teste(teste, extras=()):
+    """Monta build/testes/teste-<nome>.img: a imagem normal com um autoteste
+    do kernel ligado pelo cabeçalho de boot (campo CAB_TESTE)."""
+    b = os.path.join(RAIZ, "build")
+    os.makedirs(SAIDA, exist_ok=True)
+    destino = os.path.join(SAIDA, f"teste-{teste}.img")
+    subprocess.run(["python3", os.path.join(RAIZ, "tools", "mkimagem.py"),
+                    "--mbr", os.path.join(b, "boot", "mbr.bin"), "--estagio2", os.path.join(b, "boot", "estagio2.bin"),
+                    "--kernel", os.path.join(b, "kernel.bin"), "--kernel-elf", os.path.join(b, "kernel.elf"),
+                    "--ramdisk", os.path.join(b, "ramdisk.sgfs"), "--saida", destino, "--teste", teste, *extras],
+                   check=True, stdout=subprocess.DEVNULL)
+    return destino
+
+
 class FalhaTeste(Exception):
     pass
 

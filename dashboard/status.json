@@ -1,9 +1,9 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T15:24:42",
-  "situacao": "Fase 1 confirmada no hardware. Seguindo para a fase 2.",
-  "fase_atual": 1,
-  "historia_atual": null,
+  "atualizado": "2026-11-03T15:28:28",
+  "situacao": "Trabalhando na H06: Memória física",
+  "fase_atual": 2,
+  "historia_atual": "H06",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -17,8 +17,8 @@
     {
       "numero": 2,
       "nome": "Kernel e terminal",
-      "estado": "a fazer",
-      "progresso": 0.0
+      "estado": "em andamento",
+      "progresso": 20.0
     },
     {
       "numero": 3,
@@ -110,12 +110,12 @@
       "titulo": "Interrupções e relógio",
       "objetivo": "IDT, exceções da CPU com nome e registradores, remapeamento do PIC, PIT a 100 Hz, contador de tempo.",
       "aceite": "Divisão por zero mostra a tela de erro do SaguiOS; o contador de segundos avança.",
-      "estado": "a fazer",
+      "estado": "feito",
       "bonus": false,
-      "inicio": null,
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "inicio": "2026-11-03T15:24:57",
+      "fim": "2026-11-03T15:28:28",
+      "minutos": 4,
+      "resultado": "IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS"
     },
     {
       "id": "H06",
@@ -123,9 +123,9 @@
       "titulo": "Memória física",
       "objetivo": "Bitmap de páginas de 4 KB a partir do E820 e alocador kmalloc/kfree.",
       "aceite": "Teste aloca e libera blocos de vários tamanhos sem corromper; diagnóstico mostra memória total e livre.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T15:28:28",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -581,7 +581,7 @@
       "conceito": "Entrada e saída",
       "implementa": "Interrupções e drivers próprios: teclado, mouse, vídeo, relógio, USB",
       "historias": "H05, H07, H17, H19, H29-H31",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Proteção",
@@ -615,6 +615,18 @@
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T15:28:28",
+      "texto": "Início da H06: Memória física"
+    },
+    {
+      "data": "2026-11-03T15:28:28",
+      "texto": "H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS"
+    },
+    {
+      "data": "2026-11-03T15:24:57",
+      "texto": "Início da H05: Interrupções e relógio"
+    },
     {
       "data": "2026-11-03T15:24:42",
       "texto": "H04-fix concluída: mapa E820 só na serial, saudação fica no topo; memória abaixo de 4 GB mostrada à parte"
@@ -671,6 +683,11 @@
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
+      "nome": "H05-tela-de-erro-divisao.png",
+      "data": "2026-11-03T15:27:54"
+    },
+    {
       "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
       "nome": "H04-fix-memoria-6g.png",
       "data": "2026-11-03T15:24:29"
@@ -717,15 +734,15 @@
     }
   ],
   "linhas": {
-    "boot": 893,
-    "kernel": 728,
+    "boot": 899,
+    "kernel": 1369,
     "userland": 0,
-    "ferramentas": 951
+    "ferramentas": 1006
   },
   "imagem": {
-    "bytes_util": 14848,
+    "bytes_util": 23040,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 11.8
+  "progresso_geral": 14.7
 }

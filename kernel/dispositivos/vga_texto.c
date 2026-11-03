@@ -11,6 +11,21 @@
 #define COLUNAS 80
 #define LINHAS  25
 
+/* O texto do SaguiOS é Latin-1, mas a fonte gravada na placa VGA segue a
+ * página de código 437, que tem outra numeração e não tem todas as letras
+ * (faltam ã, õ e as maiúsculas acentuadas, exceto Ç, É e poucas outras).
+ * Esta tabela leva cada caractere Latin-1 de 0xA0 a 0xFF ao equivalente da
+ * placa ou, se não houver, à letra sem acento. Na fase 4 a fonte própria
+ * resolve isso de vez. */
+static const uint8_t latin1_para_placa[96] = {
+    0xFF, 0xAD, 0x9B, 0x9C, '*',  0x9D, '|',  0x15, '"',  'c',  0xA6, 0xAE, 0xAA, '-',  'r',  '-',
+    0xF8, 0xF1, 0xFD, '3',  '\'', 0xE6, 0x14, 0xFA, ',',  '1',  0xA7, 0xAF, 0xAC, 0xAB, '3',  0xA8,
+    'A',  'A',  'A',  'A',  0x8E, 0x8F, 0x92, 0x80, 'E',  0x90, 'E',  'E',  'I',  'I',  'I',  'I',
+    'D',  0xA5, 'O',  'O',  'O',  'O',  0x99, 'x',  'O',  'U',  'U',  'U',  0x9A, 'Y',  'P',  0xE1,
+    0x85, 0xA0, 0x83, 'a',  0x84, 0x86, 0x91, 0x87, 0x8A, 0x82, 0x88, 0x89, 0x8D, 0xA1, 0x8C, 0x8B,
+    'd',  0xA4, 0x95, 0xA2, 0x93, 'o',  0x94, 0xF6, 'o',  0x97, 0xA3, 0x96, 0x81, 'y',  'p',  0x98,
+};
+
 static volatile uint16_t *const tela = (volatile uint16_t *)0xB8000;
 static int col, lin;
 static uint8_t atributo = (COR_PRETO << 4) | COR_CINZA;
@@ -60,8 +75,12 @@ void vga_char(char c)
     case '\r': col = 0; break;
     case '\t': col = (col + 8) & ~7; break;
     case '\b': if (col > 0) { col--; tela[lin * COLUNAS + col] = (uint16_t)(atributo << 8) | ' '; } break;
-    default:
-        tela[lin * COLUNAS + col] = (uint16_t)(atributo << 8) | (uint8_t)c;
+    default: {
+        uint8_t b = (uint8_t)c;
+        if (b >= 0xA0)
+            b = latin1_para_placa[b - 0xA0];
+        tela[lin * COLUNAS + col] = (uint16_t)(atributo << 8) | b;
+    }
         col++;
     }
     if (col >= COLUNAS) { col = 0; lin++; }
