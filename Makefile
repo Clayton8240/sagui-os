@@ -29,7 +29,8 @@ B       := build
 
 KERNEL_C   := $(shell find kernel -name '*.c' | sort)
 KERNEL_ASM := $(shell find kernel -name '*.asm' | sort)
-KERNEL_OBJ := $(patsubst %.c,$(B)/%.o,$(KERNEL_C)) $(patsubst %.asm,$(B)/%.asm.o,$(KERNEL_ASM))
+KERNEL_OBJ := $(patsubst %.c,$(B)/%.o,$(KERNEL_C)) $(patsubst %.asm,$(B)/%.asm.o,$(KERNEL_ASM)) \
+              $(B)/gerado/fonte8x16.o
 KERNEL_HDR := $(shell find kernel -name '*.h')
 ROOTFS     := $(shell find rootfs -type f | sort)
 
@@ -75,6 +76,14 @@ $(B)/kernel/%.asm.o: kernel/%.asm
 	@mkdir -p $(dir $@)
 	$(AS) -f elf32 -I kernel/arch/ -o $@ $<
 
+# A fonte é desenhada em texto (tools/fonte/) e vira C no build.
+$(B)/gerado/fonte8x16.c: tools/fonte/sagui8x16.txt tools/mkfonte.py
+	@mkdir -p $(dir $@)
+	$(PY) tools/mkfonte.py $< $@
+
+$(B)/gerado/fonte8x16.o: $(B)/gerado/fonte8x16.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 $(B)/kernel.elf: $(KERNEL_OBJ) kernel/ligacao.ld
 	$(LD) $(LDFLAGS) -T kernel/ligacao.ld -o $@ $(KERNEL_OBJ)
 
@@ -114,7 +123,7 @@ $(B)/ramdisk.sgfs: $(ROOTFS) $(PROGRAMAS) $(PROG_TESTE) tools/mksgfs.py
 $(B)/saguios.img: $(B)/boot/mbr.bin $(B)/boot/estagio2.bin $(B)/kernel.bin $(B)/ramdisk.sgfs tools/mkimagem.py
 	$(PY) tools/mkimagem.py --mbr $(B)/boot/mbr.bin --estagio2 $(B)/boot/estagio2.bin \
 	    --kernel $(B)/kernel.bin --kernel-elf $(B)/kernel.elf --ramdisk $(B)/ramdisk.sgfs \
-	    --saida $@
+	    --saida $@ --vesa
 	cd $(B) && sha256sum saguios.img > saguios.img.sha256
 
 $(B)/saguios.vdi: $(B)/saguios.img

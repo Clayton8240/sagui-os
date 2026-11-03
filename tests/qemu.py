@@ -37,6 +37,58 @@ TECLAS = {" ": "spc", "\n": "ret", "\t": "tab", "-": "minus", "=": "equal", ".":
           "&": "shift-7", "*": "shift-8", "(": "shift-9", ")": "shift-0"}
 
 
+def ler_ppm(caminho):
+    with open(caminho, "rb") as f:
+        dados = f.read()
+    partes = dados.split(None, 4)   # P6, largura, altura, máximo, pixels
+    l, a = int(partes[1]), int(partes[2])
+    return l, a, dados[len(dados) - l * a * 3:]   # os pixels são os últimos l*a*3 bytes
+
+
+_FONTE = None
+
+
+def _fonte():
+    """bitmap de 16 bytes -> caractere, lido do C gerado da fonte."""
+    global _FONTE
+    if _FONTE is None:
+        _FONTE = {}
+        src = open(os.path.join(RAIZ, "build", "gerado", "fonte8x16.c")).read()
+        linhas = [l for l in src.splitlines() if l.strip().startswith("{")]
+        for codigo, l in enumerate(linhas):
+            bits = bytes(int(v, 16) for v in re.findall(r"0x([0-9A-F]{2})", l.split("/*")[0]))
+            if codigo >= 0x20 and bits not in _FONTE:
+                _FONTE[bits] = chr(codigo)
+    return _FONTE
+
+
+def reconhecer_texto(larg, alt, pixels):
+    fonte = _fonte()
+    colunas, linhas = larg // 8, alt // 16
+    tela = []
+    for cy in range(linhas):
+        linha = []
+        for cx in range(colunas):
+            cores = []
+            for j in range(16):
+                ini = ((cy * 16 + j) * larg + cx * 8) * 3
+                cores.append([pixels[ini + 3 * i: ini + 3 * i + 3] for i in range(8)])
+            fundo = cores[0][7]   # a coluna 8 de cima é sempre fundo na fonte
+            frente = next((c for fila in cores for c in fila if c != fundo), None)
+            if frente is None:
+                linha.append(" ")
+                continue
+            achou = " "
+            for f, b in ((frente, fundo), (fundo, frente)):   # cursor = cores trocadas
+                bits = bytes(sum(0x80 >> i for i in range(8) if fila[i] == f) for fila in cores)
+                if bits in fonte:
+                    achou = fonte[bits]
+                    break
+            linha.append(achou)
+        tela.append("".join(linha).rstrip())
+    return tela
+
+
 def cor_do_pixel(png, x, y):
     """Lê a cor de um pixel de uma captura (via ImageMagick): (r, g, b)."""
     saida = subprocess.run(["convert", png, "-crop", f"1x1+{x}+{y}", "-depth", "8", "txt:-"],
@@ -70,10 +122,10 @@ def imagem_de_teste(teste, extras=()):
 # teclas pela posição americana): tecla morta + letra, ou a tecla do ç.
 ACENTOS_ABNT2 = {"ç": ["semicolon"], "Ç": ["shift-semicolon"]}
 for _letra, _mortas in (("aeiou", [("´", "bracket_left"), ("`", "shift-bracket_left"),
-                                   ("^", "shift-apostrophe")]), ("ao", [("~", "apostrophe")])):
+                                   ("^", "shift-apostrophe"), ("¨", "shift-6")]), ("ao", [("~", "apostrophe")])):
     for _acento, _tecla in _mortas:
         for _l in _letra:
-            _comb = {"´": "\u0301", "`": "\u0300", "^": "\u0302", "~": "\u0303"}[_acento]
+            _comb = {"´": "\u0301", "`": "\u0300", "^": "\u0302", "~": "\u0303", "¨": "\u0308"}[_acento]
             import unicodedata as _ud
             ACENTOS_ABNT2[_ud.normalize("NFC", _l + _comb)] = [_tecla, _l]
             ACENTOS_ABNT2[_ud.normalize("NFC", _l.upper() + _comb)] = [_tecla, "shift-" + _l]
@@ -182,7 +234,19 @@ class Maquina:
 
     # ------------------------------------------------------------ tela
     def tela_texto(self):
-        """Lê as 25 linhas do modo texto VGA direto da memória (0xB8000)."""
+        """Lê o texto da tela. No modo texto VGA, direto da memória (0xB8000).
+        No modo gráfico (fase 4 em diante), reconhecendo cada célula de 8x16
+        da captura pelo bitmap da fonte do próprio SaguiOS."""
+        ppm = os.path.join(SAIDA, self.nome + "-tela.ppm")
+        self.monitor(f"screendump {ppm}")
+        for _ in range(50):
+            if os.path.exists(ppm) and os.path.getsize(ppm) > 0:
+                break
+            time.sleep(0.1)
+        time.sleep(0.1)
+        l, a, pixels = ler_ppm(ppm)
+        if (l, a) != (720, 400):
+            return reconhecer_texto(l, a, pixels)
         saida = self.monitor("xp /2000hx 0xb8000")
         celulas = []
         for linha in saida.splitlines():

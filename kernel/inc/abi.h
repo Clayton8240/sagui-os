@@ -132,6 +132,10 @@ typedef struct {
 #define TECLA_B_DELETE   'X'
 #define TECLA_B_PGUP     'P'
 #define TECLA_B_PGDN     'N'
+#define TECLA_B_REDESENHAR 'R'   /* não é tecla: outro processo escreveu na tela */
+
+/* Sequências que o terminal entende na saída: ESC [ D (cursor à esquerda),
+ * ESC [ C (à direita), ESC [ K (apaga até o fim da linha). */
 
 /* Código de saída de um processo encerrado pelo kernel (erro do programa). */
 #define SAIDA_ENCERRADO_PELO_KERNEL -1000

@@ -471,3 +471,40 @@ que existe um cursor.
 **Sem gráfico, volta ao texto.** Se o estágio 2 não achou um modo aceitável,
 ou o `4F02` falhou, `vesa_ativo` fica 0 e o console continua no modo texto
 (aviso na tela a partir da H18).
+
+## D018. Fonte e terminal gráfico: como foi pensado (H18)
+
+**A fonte é desenhada em texto.** `tools/fonte/sagui8x16.txt` tem cada
+caractere como uma grade de `#` e `.`, legível e editável por qualquer
+pessoa. O `tools/mkfonte.py` converte para C no build. Estilo: traços de 2
+pixels, letras em 7 colunas (a 8ª separa), maiúsculas com 10 linhas,
+minúsculas com 7, descendentes de 2.
+
+**As acentuadas são compostas, não desenhadas uma a uma.** O gerador junta
+a letra base com um acento de 2 linhas: nas maiúsculas, nas linhas 0 e 1 da
+célula (que a fonte deixa livres); nas minúsculas, logo acima da altura do
+"x"; no i, sobre um "ı" sem ponto; a cedilha embaixo. São 60 letras do
+Latin-1 a partir de 7 peças, e todas ficam coerentes entre si.
+
+**Terminal = grade de células.** Cada célula guarda caractere e cores, para
+o cursor poder ser desenhado (cores trocadas) e apagado sem perder o que
+estava embaixo. Rolar = mover os pixels uma linha de texto no buffer de trás.
+
+**Sequências de controle próprias e mínimas:** `ESC [ D` (esquerda),
+`ESC [ C` (direita) e `ESC [ K` (apagar até o fim da linha), nos dois motores
+(texto e gráfico). É o mínimo para o shell editar no meio da linha, pedido
+do Eli no teste da fase 3.
+
+**Programa em segundo plano escrevendo enquanto o shell edita.** O terminal
+sabe quem o pôs em modo bruto. Se outro processo escreve nesse meio-tempo,
+o texto começa numa linha nova e o shell recebe `ESC R`, que o faz
+redesenhar o prompt e o que já estava digitado (também pedido do Eli).
+
+**Testes leem a tela gráfica pela própria fonte.** Como a grade é exata e a
+fonte é nossa, o harness reconhece cada célula de 8x16 da captura comparando
+com os bitmaps da fonte: é uma leitura exata, sem OCR, e por isso os testes
+das fases anteriores continuam valendo no modo gráfico.
+
+**Boot reordenado.** Interrupções, memória e paginação são ligadas antes de
+qualquer texto, porque o terminal gráfico precisa do `kmalloc` e da janela do
+kernel. As mensagens são impressas depois, já no modo gráfico.

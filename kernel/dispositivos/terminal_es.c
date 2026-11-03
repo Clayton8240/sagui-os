@@ -28,6 +28,13 @@ static uint32_t tam_linha, entregue;
 static bool linha_pronta;
 static int pendente = -1;   /* segundo byte de uma tecla especial no modo bruto */
 
+/* Quem pôs o terminal em modo bruto (o shell editando uma linha). Se outro
+ * processo escrever nesse meio-tempo (um "contador &", por exemplo), o texto
+ * começa numa linha nova e o shell recebe ESC 'R' para redesenhar o prompt e
+ * o que já estava digitado, em vez de as duas coisas se misturarem. */
+static int dono_bruto = -1;
+static bool redesenhar;
+
 static void eco(char c)
 {
     console_char(c);
@@ -36,6 +43,12 @@ static void eco(char c)
 
 int32_t terminal_escrever(const char *origem, uint32_t n)
 {
+    if (modo == TERM_BRUTO && atual && atual->pid != dono_bruto && n > 0) {
+        if (!redesenhar && console_coluna() != 0)
+            eco('\n');
+        redesenhar = true;
+        acordar(teclado_canal());
+    }
     for (uint32_t i = 0; i < n; i++)
         eco(origem[i]);
     console_mostrar();
@@ -45,6 +58,8 @@ int32_t terminal_escrever(const char *origem, uint32_t n)
 void terminal_modo(int m)
 {
     modo = m;
+    dono_bruto = (m == TERM_BRUTO && atual) ? atual->pid : -1;
+    redesenhar = false;
     tam_linha = entregue = 0;
     linha_pronta = false;
     pendente = -1;
@@ -71,6 +86,11 @@ static char letra_especial(int t)
 static int32_t ler_bruto(char *destino, uint32_t n)
 {
     uint32_t k = 0;
+    if (redesenhar && pendente < 0) {
+        redesenhar = false;
+        destino[k++] = 27;
+        pendente = TECLA_B_REDESENHAR;
+    }
     while (k < n) {
         if (pendente >= 0) { destino[k++] = (char)pendente; pendente = -1; continue; }
         int t = teclado_tentar();

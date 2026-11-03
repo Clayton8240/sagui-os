@@ -91,17 +91,27 @@ static int ler_tecla(void)
     return 0x100 | d;
 }
 
-static void apagar_na_tela(int n)
+/* Edição da linha com o cursor em qualquer posição. A tela entende
+ * ESC [ D (cursor à esquerda), ESC [ C (à direita) e ESC [ K (apaga até o fim
+ * da linha); ver kernel/dispositivos/terminal_grafico.c. */
+static void cursor_esquerda(int n) { while (n-- > 0) mostrar("\x1b[D"); }
+static void cursor_direita(int n)  { while (n-- > 0) mostrar("\x1b[C"); }
+
+/* Reescreve da posição "de" até o fim, apaga o resto da linha antiga e
+ * devolve o cursor para "cur". */
+static void reescrever_de(const char *linha, int n, int de, int cur)
 {
-    while (n-- > 0) escrever(SAIDA, "\b", 1);
+    escrever(SAIDA, linha + de, (unsigned)(n - de));
+    mostrar("\x1b[K");
+    cursor_esquerda(n - cur);
 }
 
-static void trocar_linha(char *linha, int *n, const char *nova)
+static void trocar_linha(char *linha, int *n, int *cur, const char *nova)
 {
-    apagar_na_tela(*n);
+    cursor_esquerda(*cur);
     copia_texto(linha, nova, MAX_LINHA);
-    *n = (int)tam_texto(linha);
-    mostrar(linha);
+    *n = *cur = (int)tam_texto(linha);
+    reescrever_de(linha, *n, 0, *cur);
 }
 
 /* Junta numa lista os candidatos para completar "prefixo". */
@@ -191,36 +201,65 @@ static void completar(char *linha, int *n)
 /* Lê uma linha com edição. Devolve o tamanho, ou -1 no fim da entrada. */
 static int ler_comando(char *linha)
 {
-    int n = 0, pos_hist = qtd_hist;
+    int n = 0, cur = 0, pos_hist = qtd_hist;
     linha[0] = 0;
     modo_terminal(TERM_BRUTO);
     for (;;) {
         int t = ler_tecla();
         if (t < 0) { modo_terminal(TERM_LINHA); return -1; }
         if (t == '\n' || t == '\r') break;
-        if (t == '\b' || t == 0x7F) {
-            if (n > 0) { n--; linha[n] = 0; escrever(SAIDA, "\b", 1); }
+        if (t == '\b' || t == 0x7F) {                    /* apaga antes do cursor */
+            if (cur > 0) {
+                bool no_fim = cur == n;
+                memmove(linha + cur - 1, linha + cur, (size_t)(n - cur + 1));
+                n--; cur--;
+                if (no_fim) { mostrar("\b"); continue; }   /* caso comum: só apaga o último */
+                cursor_esquerda(1);
+                reescrever_de(linha, n, cur, cur);
+            }
+        } else if (t == (0x100 | TECLA_B_DELETE)) {      /* apaga sob o cursor */
+            if (cur < n) {
+                memmove(linha + cur, linha + cur + 1, (size_t)(n - cur));
+                n--;
+                reescrever_de(linha, n, cur, cur);
+            }
+        } else if (t == (0x100 | TECLA_B_ESQUERDA)) {
+            if (cur > 0) { cur--; cursor_esquerda(1); }
+        } else if (t == (0x100 | TECLA_B_DIREITA)) {
+            if (cur < n) { cur++; cursor_direita(1); }
+        } else if (t == (0x100 | TECLA_B_HOME)) {
+            cursor_esquerda(cur); cur = 0;
+        } else if (t == (0x100 | TECLA_B_END)) {
+            cursor_direita(n - cur); cur = n;
+        } else if (t == (0x100 | TECLA_B_REDESENHAR)) {  /* outro programa escreveu na tela */
+            prompt();
+            reescrever_de(linha, n, 0, cur);
         } else if (t == '\t') {
+            cursor_direita(n - cur); cur = n;              /* completa sempre no fim */
             completar(linha, &n);
-        } else if (t == 3) {                      /* Ctrl+C: descarta a linha */
+            cur = n;
+        } else if (t == 3) {                              /* Ctrl+C: descarta a linha */
+            cursor_direita(n - cur);
             mostrar("^C\n");
-            n = 0;
+            n = cur = 0;
             linha[0] = 0;
             prompt();
-        } else if (t == 12) {                     /* Ctrl+L: limpa a tela */
+        } else if (t == 12) {                             /* Ctrl+L: limpa a tela */
             limpar_tela();
             prompt();
-            mostrar(linha);
+            reescrever_de(linha, n, 0, cur);
         } else if (t == (0x100 | TECLA_B_CIMA)) {
-            if (pos_hist > 0) trocar_linha(linha, &n, historico[--pos_hist]);
+            if (pos_hist > 0) trocar_linha(linha, &n, &cur, historico[--pos_hist]);
         } else if (t == (0x100 | TECLA_B_BAIXO)) {
-            if (pos_hist < qtd_hist - 1) trocar_linha(linha, &n, historico[++pos_hist]);
-            else if (pos_hist < qtd_hist) { pos_hist = qtd_hist; trocar_linha(linha, &n, ""); }
-        } else if (t >= 0x20 && t < 0x100 && n < MAX_LINHA - 1) {
-            linha[n++] = (char)t;
-            linha[n] = 0;
-            char c = (char)t;
-            escrever(SAIDA, &c, 1);
+            if (pos_hist < qtd_hist - 1) trocar_linha(linha, &n, &cur, historico[++pos_hist]);
+            else if (pos_hist < qtd_hist) { pos_hist = qtd_hist; trocar_linha(linha, &n, &cur, ""); }
+        } else if (t >= 0x20 && t < 0x100 && n < MAX_LINHA - 1) {   /* insere no cursor */
+            memmove(linha + cur + 1, linha + cur, (size_t)(n - cur + 1));
+            linha[cur] = (char)t;
+            n++;
+            if (cur == n - 1) escrever(SAIDA, &linha[cur], 1);   /* caso comum: digitando no fim */
+            else reescrever_de(linha, n, cur, cur + 1);
+            cur++;
         }
     }
     mostrar("\n");

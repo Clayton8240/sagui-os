@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T17:24:26_
+_Atualizado em 2026-11-03T17:32:50_
 
-- **Situação:** Trabalhando na H18: Fonte própria
+- **Situação:** Trabalhando na H19: Mouse / touchpad PS/2
 - **Fase atual:** 4
-- **História atual:** H18
-- **Progresso geral:** 50.0%
+- **História atual:** H19
+- **Progresso geral:** 52.9%
 - **Bloqueio:** nenhum
-- **Imagem:** 228864 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 5010, userland 1552
+- **Imagem:** 237056 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 5212, userland 1591
 
 ## Fases
 
@@ -17,7 +17,7 @@ _Atualizado em 2026-11-03T17:24:26_
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
-| 4 | Gráfico e mouse | 33.3% | em andamento |
+| 4 | Gráfico e mouse | 66.7% | em andamento |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
@@ -43,8 +43,8 @@ _Atualizado em 2026-11-03T17:24:26_
 | H15 | Pipes | feito | 2 |
 | H16 | Shell e comandos como programas | feito | 14 |
 | H17 | Framebuffer VESA | feito | 2 |
-| H18 | Fonte própria | em andamento |  |
-| H19 | Mouse / touchpad PS/2 | a fazer |  |
+| H18 | Fonte própria | feito | 8 |
+| H19 | Mouse / touchpad PS/2 | em andamento |  |
 | H20 | Área de trabalho | a fazer |  |
 | H21 | Gerenciador de janelas | a fazer |  |
 | H22 | Kit gráfico da libsagui | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T17:24:26_
 
 ## Últimas ações
 
+- 2026-11-03T17:32:50: Início da H19: Mouse / touchpad PS/2
+- 2026-11-03T17:32:50: H18 concluída: Fonte 8x16 própria com acentos, terminal gráfico 128x48, edição com setas
 - 2026-11-03T17:24:26: Início da H18: Fonte própria
 - 2026-11-03T17:24:26: H17 concluída: Framebuffer VESA 1024x768x32 com buffer duplo e primitivas de desenho
 - 2026-11-03T17:22:03: Início da H17: Framebuffer VESA
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T17:24:26_
 - 2026-11-03T16:25:45: Erro corrigido: Regressão: 'Ola do ring 3!' sumiu no teste da H12
 - 2026-11-03T16:25:17: Início da H15: Pipes
 - 2026-11-03T16:25:17: H14 concluída: Árvore na RAM com cópia na escrita, descritores por processo, terminal como 0/1; 28 verificações no anel 3
-- 2026-11-03T16:21:08: Início da H14: Arquivos e pastas graváveis
-- 2026-11-03T16:21:08: H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos

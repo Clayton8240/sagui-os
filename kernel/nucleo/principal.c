@@ -19,7 +19,7 @@
 #include "sistema.h"
 #include "vfs.h"
 
-#define SAGUI_VERSAO "0.3 (fase 3)"
+#define SAGUI_VERSAO "0.4 (fase 4)"
 
 info_boot_t info_boot;
 regiao_e820_t mapa_memoria[MAPA_MAX];
@@ -139,10 +139,26 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         info_boot.mapa_qtd = MAPA_MAX;
     memcpy(mapa_memoria, (const void *)info_boot.mapa_end, info_boot.mapa_qtd * sizeof(regiao_e820_t));
 
+    /* H05, H06, H10: interrupções, relógio, memória e paginação. Vêm antes
+     * de qualquer texto porque o terminal gráfico (H18) precisa do kmalloc e
+     * da janela do kernel para o framebuffer. Até lá, só a serial registra. */
+    gdt_iniciar();
+    idt_iniciar();
+    pic_iniciar();
+    relogio_iniciar();
+    int_liga();
+    memfisica_iniciar();
+    paginacao_iniciar();
+
+    /* H17/H18: terminal gráfico com a fonte própria. Se não houver modo
+     * gráfico, o console continua no modo texto e avisa. */
+    bool grafico = console_grafico();
+
+    int largura = console_colunas();
     console_cor(COR_AMARELO, COR_VERDE);
-    kprintf("                                                                                ");
-    kprintf("  %-56s%20s  ", "Ola! Eu sou o SaguiOS.", "versão " SAGUI_VERSAO);   /* exatamente 80 colunas */
-    kprintf("                                                                                ");
+    kprintf("%*s", largura, "");
+    kprintf("  %-*s%20s  ", largura - 24, "Ola! Eu sou o SaguiOS.", "versão " SAGUI_VERSAO);
+    kprintf("%*s", largura, "");
     console_cor(COR_CINZA, COR_PRETO);
 
     uint64_t livre = memoria_livre(false);
@@ -161,26 +177,25 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
         kprintf("nenhum\n");
     klog("[SAGUI] memoria_mb=%u usavel_mb=%u\n", (uint32_t)(livre >> 20), (uint32_t)(usavel >> 20));
 
-    /* H05: segmentos próprios, interrupções e relógio. */
-    gdt_iniciar();
-    idt_iniciar();
-    pic_iniciar();
-    relogio_iniciar();
-    int_liga();
     etapa("Interrupções: GDT e IDT próprias, PIC remapeado, relógio a 100 Hz");
-
-    /* H06: páginas físicas e alocador do kernel. */
-    memfisica_iniciar();
     {
         char linha[96];
         snformatar(linha, sizeof linha, "Memória física: %u MB gerenciados em páginas de 4 KB, kmalloc pronto",
                    memfisica_livres() / 256);
         etapa(linha);
     }
-
-    /* H10: paginação. Daqui em diante todo acesso passa pelas tabelas. */
-    paginacao_iniciar();
     etapa("Paginação: páginas de 4 KB, um espaço de endereço por processo");
+    if (grafico) {
+        char linha[96];
+        snformatar(linha, sizeof linha, "Vídeo: %ux%u, %u bits, fonte própria 8x16 com acentos",
+                   info_boot.vesa_largura, info_boot.vesa_altura, info_boot.vesa_bpp);
+        etapa(linha);
+    } else {
+        console_cor(COR_AMARELO, COR_PRETO);
+        kprintf("[aviso] Modo gráfico indisponível: o sistema continua em modo texto.\n");
+        console_cor(COR_CINZA, COR_PRETO);
+        klog("[SAGUI] sem modo grafico, modo texto\n");
+    }
 
     /* H11: a partir daqui o relógio troca de processo (round-robin). */
     processos_iniciar();

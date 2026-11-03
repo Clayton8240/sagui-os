@@ -68,8 +68,23 @@ static void rolar(void)
     lin = LINHAS - 1;
 }
 
+static int estado_esc;   /* sequências ESC [ D / C / K, como no terminal gráfico */
+
+int textovga_coluna(void) { return col; }
+
 void textovga_char(char c)
 {
+    if (estado_esc == 1) { estado_esc = c == '[' ? 2 : 0; return; }
+    if (estado_esc == 2) {
+        estado_esc = 0;
+        if (c == 'D' && col > 0) col--;
+        else if (c == 'C' && col < COLUNAS - 1) col++;
+        else if (c == 'K')
+            for (int i = col; i < COLUNAS; i++) tela[lin * COLUNAS + i] = (uint16_t)(atributo << 8) | ' ';
+        mover_cursor();
+        return;
+    }
+    if (c == 27) { estado_esc = 1; return; }
     switch (c) {
     case '\n': col = 0; lin++; break;
     case '\r': col = 0; break;

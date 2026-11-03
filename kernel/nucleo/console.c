@@ -15,6 +15,9 @@ void termgraf_limpar(void);
 void termgraf_cor(uint8_t frente, uint8_t fundo);
 void termgraf_char(char c);
 void termgraf_mostrar(void);
+int  termgraf_colunas(void);
+int  termgraf_coluna(void);
+int  textovga_coluna(void);
 
 static bool grafico;
 
@@ -32,6 +35,8 @@ bool console_grafico(void)
 }
 
 bool console_em_grafico(void) { return grafico; }
+int  console_colunas(void)     { return grafico ? termgraf_colunas() : 80; }
+int  console_coluna(void)      { return grafico ? termgraf_coluna() : textovga_coluna(); }
 
 void console_limpar(void)
 {

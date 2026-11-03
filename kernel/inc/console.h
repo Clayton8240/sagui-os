@@ -17,6 +17,8 @@ void console_limpar(void);
 void console_cor(uint8_t frente, uint8_t fundo);
 void console_char(char c);
 void console_mostrar(void);
+int  console_colunas(void);
+int  console_coluna(void);   /* coluna do cursor */
 
 void serial_iniciar(void);
 void serial_char(char c);
