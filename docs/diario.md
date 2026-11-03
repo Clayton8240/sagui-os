@@ -54,3 +54,13 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   tecla americana (erro 4, do teste, não do kernel).
 - **Fim da fase 2.** 9/9 testes passando (H01 a H09). Imagens em
   `entrega/fase2/`. Parada obrigatória: aguardando o teste do Eli.
+
+## 2026-11-03 16:05
+
+- **Confirmação do Eli no hardware:** "fase 2 ok". Fase 2 validada no VirtualBox e no G470.
+- Foto do Eli no G470: `testes_eli/fase_2_no_notebook.jpg` (cópia em
+  `docs/capturas/G470-fase2-tela-inicial.png`). Saudação no topo (correção
+  confirmada), 8135 MB no total, 3017 MB abaixo de 4 GB, 892 MB gerenciados,
+  21 regiões no E820. Todos os comandos funcionaram, sem tela vermelha; `/`,
+  `?` e `ç` conferidos. Acentos com teclas mortas ainda não testados
+  isoladamente no notebook (o Eli avisa se der erro).
