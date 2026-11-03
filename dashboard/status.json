@@ -1,6 +1,6 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T14:22:52",
+  "atualizado": "2026-11-03T14:27:10",
   "situacao": "Trabalhando na H04: Imagem para pendrive e VirtualBox",
   "fase_atual": 1,
   "historia_atual": "H04",
@@ -11,7 +11,7 @@
       "numero": 1,
       "nome": "Boot",
       "estado": "em andamento",
-      "progresso": 75.0
+      "progresso": 100.0
     },
     {
       "numero": 2,
@@ -96,12 +96,12 @@
       "titulo": "Imagem para pendrive e VirtualBox",
       "objetivo": "Build gera build/saguios.img com SHA-256 e build/saguios.vdi; docs/como-gravar.md.",
       "aceite": "Boot nos dois modos do QEMU; .vdi gerado; arquivos em entrega/fase1/; como-gravar.md com Rufus (DD) e balenaEtcher.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:22:52",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T14:27:10",
+      "minutos": 4,
+      "resultado": "Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md"
     },
     {
       "id": "H05",
@@ -615,6 +615,14 @@
   ],
   "acoes": [
     {
+      "data": "2026-11-03T14:27:10",
+      "texto": "Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)"
+    },
+    {
+      "data": "2026-11-03T14:27:10",
+      "texto": "H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md"
+    },
+    {
       "data": "2026-11-03T14:22:52",
       "texto": "Início da H04: Imagem para pendrive e VirtualBox"
     },
@@ -646,36 +654,51 @@
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H04-boot-vdi.png",
+      "nome": "H04-boot-vdi.png",
+      "data": "2026-11-03T14:26:38"
+    },
+    {
       "arquivo": "docs/capturas/H03-kernel-usb.png",
       "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T14:22:27"
+      "data": "2026-11-03T14:26:16"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-ide.png",
       "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T14:22:16"
+      "data": "2026-11-03T14:26:05"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T14:26:00"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T14:25:54"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
       "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T14:21:34"
+      "data": "2026-11-03T14:25:48"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-ide.png",
       "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T14:21:28"
+      "data": "2026-11-03T14:25:42"
     }
   ],
   "linhas": {
     "boot": 893,
     "kernel": 714,
     "userland": 0,
-    "ferramentas": 792
+    "ferramentas": 939
   },
   "imagem": {
     "bytes_util": 14336,
-    "bytes_arquivo": 32768,
+    "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 8.8
+  "progresso_geral": 11.8
 }

@@ -1,11 +1,11 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T14:22:52_
+_Atualizado em 2026-11-03T14:27:10_
 
 - **Situação:** Trabalhando na H04: Imagem para pendrive e VirtualBox
 - **Fase atual:** 1
 - **História atual:** H04
-- **Progresso geral:** 8.8%
+- **Progresso geral:** 11.8%
 - **Bloqueio:** nenhum
 - **Imagem:** 14336 bytes úteis (meta 1474560 bytes = 1,44 MB)
 - **Linhas de código:** boot 893, kernel 714, userland 0
@@ -14,7 +14,7 @@ _Atualizado em 2026-11-03T14:22:52_
 
 | Fase | Nome | Progresso | Estado |
 | --- | --- | --- | --- |
-| 1 | Boot | 75.0% | em andamento |
+| 1 | Boot | 100.0% | em andamento |
 | 2 | Kernel e terminal | 0.0% | a fazer |
 | 3 | Processos e programas | 0.0% | a fazer |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
@@ -29,7 +29,7 @@ _Atualizado em 2026-11-03T14:22:52_
 | H01 | Preparar o ambiente | feito | 2 |
 | H02 | Estágio 1 (MBR) | feito | 8 |
 | H03 | Estágio 2 e modo protegido | feito | 1 |
-| H04 | Imagem para pendrive e VirtualBox | em andamento |  |
+| H04 | Imagem para pendrive e VirtualBox | feito | 4 |
 | H05 | Interrupções e relógio | a fazer |  |
 | H06 | Memória física | a fazer |  |
 | H07 | Teclado PS/2 com ABNT2 | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T14:22:52_
 
 ## Últimas ações
 
+- 2026-11-03T14:27:10: Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)
+- 2026-11-03T14:27:10: H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md
 - 2026-11-03T14:22:52: Início da H04: Imagem para pendrive e VirtualBox
 - 2026-11-03T14:22:52: H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB
 - 2026-11-03T14:22:05: Início da H03: Estágio 2 e modo protegido

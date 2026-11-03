@@ -24,7 +24,8 @@ KERNEL_ENDERECO = 0x100000
 OPC_VESA = 1
 TIPO_PARTICAO = 0xDA  # "dados sem sistema de arquivos": nenhum sistema tenta montar
 GEOM_CABECAS, GEOM_SETORES = 255, 63
-ALINHAMENTO_ARQUIVO = 64 * SETOR  # arquivo final múltiplo de 32 KB
+ALINHAMENTO_ARQUIVO = 64 * SETOR  # arquivo final múltiplo de 32 KB...
+TAMANHO_MINIMO = 1024 * 1024      # ...e com pelo menos 1 MB (ver D004)
 
 
 def setores(n):
@@ -103,7 +104,8 @@ def main():
     # do LBA 1 até o fim do arquivo e é a única, marcada como ativa (0x80),
     # porque algumas BIOS só tratam um pendrive como disco rígido se houver
     # uma partição ativa válida.
-    setores_arquivo = setores(((total * SETOR) + ALINHAMENTO_ARQUIVO - 1) // ALINHAMENTO_ARQUIVO * ALINHAMENTO_ARQUIVO)
+    tam_arquivo = ((total * SETOR) + ALINHAMENTO_ARQUIVO - 1) // ALINHAMENTO_ARQUIVO * ALINHAMENTO_ARQUIVO
+    setores_arquivo = setores(max(tam_arquivo, TAMANHO_MINIMO))
     p_inicio, p_qtd = 1, setores_arquivo - 1
     entrada_part = (bytes([0x80]) + chs(p_inicio) + bytes([TIPO_PARTICAO]) + chs(p_inicio + p_qtd - 1)
                     + struct.pack("<II", p_inicio, p_qtd))

@@ -41,12 +41,13 @@ class FalhaTeste(Exception):
 
 
 class Maquina:
-    def __init__(self, nome, modo="ide", imagem=IMAGEM, memoria="512M", extras=None):
+    def __init__(self, nome, modo="ide", imagem=IMAGEM, memoria="512M", extras=None, formato="raw"):
         self.nome = f"{nome}-{modo}"
         self.modo = modo
         self.imagem = imagem
         self.memoria = memoria
         self.extras = extras or []
+        self.formato = formato
         os.makedirs(SAIDA, exist_ok=True)
         self.arq_serial = os.path.join(SAIDA, self.nome + ".serial")
         self.sock_monitor = os.path.join(SAIDA, self.nome + ".mon")
@@ -63,10 +64,10 @@ class Maquina:
                "-monitor", f"unix:{self.sock_monitor},server,nowait",
                "-no-reboot"]
         if self.modo == "ide":
-            cmd += ["-drive", f"format=raw,file={self.imagem},if=ide,index=0,snapshot=on"]
+            cmd += ["-drive", f"format={self.formato},file={self.imagem},if=ide,index=0,snapshot=on"]
         elif self.modo == "usb":
             cmd += ["-device", "usb-ehci,id=ehci",
-                    "-drive", f"if=none,id=pendrive,format=raw,file={self.imagem},snapshot=on",
+                    "-drive", f"if=none,id=pendrive,format={self.formato},file={self.imagem},snapshot=on",
                     "-device", "usb-storage,bus=ehci.0,drive=pendrive,bootindex=0"]
         else:
             raise ValueError(self.modo)

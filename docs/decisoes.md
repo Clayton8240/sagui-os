@@ -83,3 +83,25 @@ boot_info e aparece na tela do kernel, para sabermos qual funcionou no G470.
 cor direta), mas só troca de modo se o bit `OPC_VESA` do cabeçalho estiver
 ligado, o que o build fará a partir da fase 4. A troca é a última coisa antes
 do modo protegido, porque depois dela o texto da BIOS some.
+
+## D004. Tamanho dos arquivos de imagem (H04)
+
+**Decisão:** o `saguios.img` tem no mínimo 1 MB (e depois cresce em múltiplos
+de 32 KB); o disco do `saguios.vdi` é arredondado para múltiplos de 1 MB.
+
+**Motivo:** a primeira imagem tinha 32 KB. BIOS e VirtualBox inventam uma
+geometria (cilindros, cabeças, setores) a partir do tamanho do disco, e um
+disco menor que um cilindro é um caso pouco testado neles. 1 MB evita isso e
+continua abaixo da meta de 1,44 MB. A meta do PRD é medida pelos **bytes
+úteis** (MBR + cabeçalho + estágio 2 + kernel + ramdisk), que o build grava em
+`build/tamanho.txt` e o painel mostra.
+
+## D005. `.vdi` gerado pelo `qemu-img`, testado no QEMU (H04)
+
+**Decisão:** o `.vdi` é convertido com `qemu-img convert -f raw -O vdi`, como
+pede o PRD, e o teste da H04 dá boot no próprio `.vdi` pelo QEMU
+(`-drive format=vdi`).
+
+**Motivo:** a VPS não tem virtualização aninhada, então não há VirtualBox
+para testar aqui. Dar boot no `.vdi` prova que a conversão preservou a
+imagem byte a byte; o teste no VirtualBox de verdade fica no roteiro do Eli.

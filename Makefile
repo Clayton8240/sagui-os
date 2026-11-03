@@ -75,8 +75,12 @@ $(B)/saguios.img: $(B)/boot/mbr.bin $(B)/boot/estagio2.bin $(B)/kernel.bin $(B)/
 	cd $(B) && sha256sum saguios.img > saguios.img.sha256
 
 $(B)/saguios.vdi: $(B)/saguios.img
-	rm -f $@
-	qemu-img convert -f raw -O vdi $< $@
+	rm -f $@ $(B)/vdi.raw
+	cp $< $(B)/vdi.raw
+	# disco virtual com tamanho múltiplo de 1 MB (ver D004)
+	truncate -s %1M $(B)/vdi.raw
+	qemu-img convert -f raw -O vdi $(B)/vdi.raw $@
+	rm -f $(B)/vdi.raw
 	cd $(B) && sha256sum saguios.vdi > saguios.vdi.sha256
 
 vdi: $(B)/saguios.vdi
