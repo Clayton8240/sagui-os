@@ -186,3 +186,8 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   validar no QEMU: o teste real é no G470. O `usb` ganhou diagnóstico por porta.
 - **Causa 2 (erro 18):** só a primeira partição era examinada. Corrigido e
   testado no QEMU com o mesmo arranjo do pendrive do Eli.
+- **Segundo teste (erro 19):** o diagnóstico novo do `usb` mostrou que a
+  correção de 64 bits funcionou (o segundo controlador enumerou o hub e o
+  leitor de cartão), mas o primeiro falhava no hub. Causa: os dois
+  controladores compartilhavam o mesmo anel de transferências. Reproduzido no
+  QEMU com dois EHCI (`h29_dois_controladores`) e corrigido.

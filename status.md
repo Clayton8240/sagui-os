@@ -1,10 +1,10 @@
 ```
-Correção da fase 6 entregue (erros 17 e 18): EHCI de 64 bits do G470 e FAT32 em qualquer partição. Aguardando novo teste no G470.
+Segunda correção da fase 6 (erro 19): um anel de transferências por controlador EHCI. Aguardando novo teste no G470.
 ```
 
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T21:36:41_
+_Atualizado em 2026-11-03T21:56:30_
 
 - **Situação:** Aguardando teste do Eli: fase 6
 - **Fase atual:** 6
@@ -12,7 +12,7 @@ _Atualizado em 2026-11-03T21:36:41_
 - **Progresso geral:** 100.0%
 - **Bloqueio:** nenhum
 - **Imagem:** 499712 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 9342, userland 3838
+- **Linhas de código:** boot 903, kernel 9365, userland 3838
 
 ## Fases
 
@@ -70,6 +70,8 @@ _Atualizado em 2026-11-03T21:36:41_
 
 ## Últimas ações
 
+- 2026-11-03T21:56:30: Fase 6 entregue. Aguardando teste do Eli.
+- 2026-11-03T21:55:57: Erro corrigido: G470: com dois pendrives, o de dados não aparece; usb mostra hub do EHCI 0 parado na configuração
 - 2026-11-03T21:36:41: Fase 6 entregue. Aguardando teste do Eli.
 - 2026-11-03T21:26:31: Erro corrigido: FAT32 criada depois da partição do SaguiOS não é vista
 - 2026-11-03T21:26:31: Erro corrigido: G470: pendrive não aparece; usb mostra porta ocupada sem pendrive
@@ -83,5 +85,3 @@ _Atualizado em 2026-11-03T21:36:41_
 - 2026-11-03T20:18:39: Início da H33: FAT32: gravação
 - 2026-11-03T20:18:39: H32 concluída: FAT32 com nomes longos e acentos montado em /usb; ls e cat funcionando
 - 2026-11-03T20:16:48: Início da H32: FAT32: leitura
-- 2026-11-03T20:16:48: H31 concluída: Bulk-Only + SCSI; setores lidos e gravados conferidos byte a byte na VPS
-- 2026-11-03T20:16:48: H30 concluída: Enumeração, hubs (validação no G470), conexão e remoção a quente

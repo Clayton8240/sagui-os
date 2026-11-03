@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T21:36:41",
+  "atualizado": "2026-11-03T21:56:30",
   "situacao": "Aguardando teste do Eli: fase 6",
   "fase_atual": 6,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Correção da fase 6 entregue (erros 17 e 18): EHCI de 64 bits do G470 e FAT32 em qualquer partição. Aguardando novo teste no G470.",
+  "mensagem_fase": "Segunda correção da fase 6 (erro 19): um anel de transferências por controlador EHCI. Aguardando novo teste no G470.",
   "fases": [
     {
       "numero": 1,
@@ -621,6 +621,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T21:56:30",
+      "texto": "Fase 6 entregue. Aguardando teste do Eli."
+    },
+    {
+      "data": "2026-11-03T21:55:57",
+      "texto": "Erro corrigido: G470: com dois pendrives, o de dados não aparece; usb mostra hub do EHCI 0 parado na configuração"
+    },
+    {
       "data": "2026-11-03T21:36:41",
       "texto": "Fase 6 entregue. Aguardando teste do Eli."
     },
@@ -851,17 +859,15 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T16:45:51",
       "texto": "Fase 3 entregue. Aguardando teste do Eli."
-    },
-    {
-      "data": "2026-11-03T16:45:51",
-      "texto": "Todos os testes passaram (H01 a H16, 16/16)"
-    },
-    {
-      "data": "2026-11-03T16:41:25",
-      "texto": "H16 concluída: sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido"
     }
   ],
   "erros": [
+    {
+      "data": "2026-11-03T21:55:57",
+      "sintoma": "G470: com dois pendrives, o de dados não aparece; usb mostra hub do EHCI 0 parado na configuração",
+      "causa": "os dois controladores EHCI compartilhavam o mesmo anel de transferências",
+      "correcao": "uma página de estruturas por controlador; teste com dois EHCI no QEMU"
+    },
     {
       "data": "2026-11-03T21:26:31",
       "sintoma": "FAT32 criada depois da partição do SaguiOS não é vista",
@@ -933,347 +939,352 @@ window.SAGUI_STATUS = {
     {
       "arquivo": "docs/capturas/H34-8-um-pendrive-so.png",
       "nome": "H34-8-um-pendrive-so.png",
-      "data": "2026-11-03T21:36:23"
+      "data": "2026-11-03T21:56:16"
     },
     {
       "arquivo": "docs/capturas/H34-7-terminal.png",
       "nome": "H34-7-terminal.png",
-      "data": "2026-11-03T21:36:14"
+      "data": "2026-11-03T21:56:06"
     },
     {
       "arquivo": "docs/capturas/H34-6-removido-sem-desmontar.png",
       "nome": "H34-6-removido-sem-desmontar.png",
-      "data": "2026-11-03T21:36:03"
+      "data": "2026-11-03T21:55:55"
     },
     {
       "arquivo": "docs/capturas/H34-5-pendrive-removido.png",
       "nome": "H34-5-pendrive-removido.png",
-      "data": "2026-11-03T21:35:57"
+      "data": "2026-11-03T21:55:50"
     },
     {
       "arquivo": "docs/capturas/H34-4-pode-remover.png",
       "nome": "H34-4-pode-remover.png",
-      "data": "2026-11-03T21:35:56"
+      "data": "2026-11-03T21:55:48"
     },
     {
       "arquivo": "docs/capturas/H34-3-editor-salvou-no-pendrive.png",
       "nome": "H34-3-editor-salvou-no-pendrive.png",
-      "data": "2026-11-03T21:35:51"
+      "data": "2026-11-03T21:55:44"
     },
     {
       "arquivo": "docs/capturas/H34-2-arquivos-no-pendrive.png",
       "nome": "H34-2-arquivos-no-pendrive.png",
-      "data": "2026-11-03T21:35:45"
+      "data": "2026-11-03T21:55:38"
     },
     {
       "arquivo": "docs/capturas/H34-1-pendrive-conectado.png",
       "nome": "H34-1-pendrive-conectado.png",
-      "data": "2026-11-03T21:35:42"
+      "data": "2026-11-03T21:55:35"
     },
     {
       "arquivo": "docs/capturas/H33-pendrive-gravado.png",
       "nome": "H33-pendrive-gravado.png",
-      "data": "2026-11-03T21:35:31"
+      "data": "2026-11-03T21:55:23"
     },
     {
       "arquivo": "docs/capturas/H32-ls-pendrive.png",
       "nome": "H32-ls-pendrive.png",
-      "data": "2026-11-03T21:34:42"
+      "data": "2026-11-03T21:54:34"
     },
     {
       "arquivo": "docs/capturas/H30-conexao-a-quente.png",
       "nome": "H30-conexao-a-quente.png",
-      "data": "2026-11-03T21:34:16"
+      "data": "2026-11-03T21:54:07"
     },
     {
       "arquivo": "docs/capturas/H29-diagnostico-usb.png",
       "nome": "H29-diagnostico-usb.png",
-      "data": "2026-11-03T21:34:00"
+      "data": "2026-11-03T21:53:52"
+    },
+    {
+      "arquivo": "docs/capturas/H29-dois-controladores.png",
+      "nome": "H29-dois-controladores.png",
+      "data": "2026-11-03T21:53:45"
     },
     {
       "arquivo": "docs/capturas/H28-tres-programas.png",
       "nome": "H28-tres-programas.png",
-      "data": "2026-11-03T21:33:53"
+      "data": "2026-11-03T21:53:36"
     },
     {
       "arquivo": "docs/capturas/H28-programas-abertos.png",
       "nome": "H28-programas-abertos.png",
-      "data": "2026-11-03T21:33:46"
+      "data": "2026-11-03T21:53:29"
     },
     {
       "arquivo": "docs/capturas/H27-banana-fim-de-jogo.png",
       "nome": "H27-banana-fim-de-jogo.png",
-      "data": "2026-11-03T21:33:29"
+      "data": "2026-11-03T21:53:12"
     },
     {
       "arquivo": "docs/capturas/H27-banana-jogando.png",
       "nome": "H27-banana-jogando.png",
-      "data": "2026-11-03T21:33:20"
+      "data": "2026-11-03T21:53:01"
     },
     {
       "arquivo": "docs/capturas/H27-banana-inicio.png",
       "nome": "H27-banana-inicio.png",
-      "data": "2026-11-03T21:33:17"
+      "data": "2026-11-03T21:52:59"
     },
     {
       "arquivo": "docs/capturas/H26-calculadora-divisao-por-zero.png",
       "nome": "H26-calculadora-divisao-por-zero.png",
-      "data": "2026-11-03T21:33:06"
+      "data": "2026-11-03T21:52:48"
     },
     {
       "arquivo": "docs/capturas/H26-calculadora-3-5.png",
       "nome": "H26-calculadora-3-5.png",
-      "data": "2026-11-03T21:32:59"
+      "data": "2026-11-03T21:52:41"
     },
     {
       "arquivo": "docs/capturas/H26-calculadora-50.png",
       "nome": "H26-calculadora-50.png",
-      "data": "2026-11-03T21:32:58"
+      "data": "2026-11-03T21:52:40"
     },
     {
       "arquivo": "docs/capturas/H25-aviso-ao-fechar.png",
       "nome": "H25-aviso-ao-fechar.png",
-      "data": "2026-11-03T21:32:37"
+      "data": "2026-11-03T21:52:19"
     },
     {
       "arquivo": "docs/capturas/H25-editor-reaberto.png",
       "nome": "H25-editor-reaberto.png",
-      "data": "2026-11-03T21:32:35"
+      "data": "2026-11-03T21:52:16"
     },
     {
       "arquivo": "docs/capturas/H25-editor-digitando.png",
       "nome": "H25-editor-digitando.png",
-      "data": "2026-11-03T21:32:29"
+      "data": "2026-11-03T21:52:11"
     },
     {
       "arquivo": "docs/capturas/H24-terminal-ps-conta.png",
       "nome": "H24-terminal-ps-conta.png",
-      "data": "2026-11-03T21:32:17"
+      "data": "2026-11-03T21:51:59"
     },
     {
       "arquivo": "docs/capturas/H23-confirmar-apagar.png",
       "nome": "H23-confirmar-apagar.png",
-      "data": "2026-11-03T21:32:05"
+      "data": "2026-11-03T21:51:47"
     },
     {
       "arquivo": "docs/capturas/H23-nota-reaberta.png",
       "nome": "H23-nota-reaberta.png",
-      "data": "2026-11-03T21:31:57"
+      "data": "2026-11-03T21:51:39"
     },
     {
       "arquivo": "docs/capturas/H23-linux-no-editor.png",
       "nome": "H23-linux-no-editor.png",
-      "data": "2026-11-03T21:31:49"
+      "data": "2026-11-03T21:51:31"
     },
     {
       "arquivo": "docs/capturas/H23-arquivos-raiz.png",
       "nome": "H23-arquivos-raiz.png",
-      "data": "2026-11-03T21:31:45"
+      "data": "2026-11-03T21:51:27"
     },
     {
       "arquivo": "docs/capturas/H22-dialogo-confirmar.png",
       "nome": "H22-dialogo-confirmar.png",
-      "data": "2026-11-03T21:31:28"
+      "data": "2026-11-03T21:51:10"
     },
     {
       "arquivo": "docs/capturas/H22-componentes-em-uso.png",
       "nome": "H22-componentes-em-uso.png",
-      "data": "2026-11-03T21:31:26"
+      "data": "2026-11-03T21:51:07"
     },
     {
       "arquivo": "docs/capturas/H22-componentes.png",
       "nome": "H22-componentes.png",
-      "data": "2026-11-03T21:31:16"
+      "data": "2026-11-03T21:50:57"
     },
     {
       "arquivo": "docs/capturas/H21-janela-fechada.png",
       "nome": "H21-janela-fechada.png",
-      "data": "2026-11-03T21:31:09"
+      "data": "2026-11-03T21:50:51"
     },
     {
       "arquivo": "docs/capturas/H21-janela-arrastada.png",
       "nome": "H21-janela-arrastada.png",
-      "data": "2026-11-03T21:31:05"
+      "data": "2026-11-03T21:50:47"
     },
     {
       "arquivo": "docs/capturas/H21-duas-janelas.png",
       "nome": "H21-duas-janelas.png",
-      "data": "2026-11-03T21:31:03"
+      "data": "2026-11-03T21:50:45"
     },
     {
       "arquivo": "docs/capturas/H20-area-de-trabalho.png",
       "nome": "H20-area-de-trabalho.png",
-      "data": "2026-11-03T21:30:49"
+      "data": "2026-11-03T21:50:31"
     },
     {
       "arquivo": "docs/capturas/H19-cursor-movido.png",
       "nome": "H19-cursor-movido.png",
-      "data": "2026-11-03T21:30:31"
+      "data": "2026-11-03T21:50:13"
     },
     {
       "arquivo": "docs/capturas/H18-edicao-e-segundo-plano.png",
       "nome": "H18-edicao-e-segundo-plano.png",
-      "data": "2026-11-03T21:30:16"
+      "data": "2026-11-03T21:49:57"
     },
     {
       "arquivo": "docs/capturas/H18-fonte-acentos.png",
       "nome": "H18-fonte-acentos.png",
-      "data": "2026-11-03T21:30:11"
+      "data": "2026-11-03T21:49:51"
     },
     {
       "arquivo": "docs/capturas/H17-formas-ide.png",
       "nome": "H17-formas-ide.png",
-      "data": "2026-11-03T21:29:45"
+      "data": "2026-11-03T21:49:28"
     },
     {
       "arquivo": "docs/capturas/H16-tab-historico.png",
       "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T21:29:42"
+      "data": "2026-11-03T21:49:25"
     },
     {
       "arquivo": "docs/capturas/H16-falha-protecao.png",
       "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T21:29:36"
+      "data": "2026-11-03T21:49:19"
     },
     {
       "arquivo": "docs/capturas/H16-contador-e-ps.png",
       "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T21:29:25"
+      "data": "2026-11-03T21:49:07"
     },
     {
       "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
       "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T21:29:22"
+      "data": "2026-11-03T21:49:04"
     },
     {
       "arquivo": "docs/capturas/H16-ajuda.png",
       "nome": "H16-ajuda.png",
-      "data": "2026-11-03T21:29:05"
+      "data": "2026-11-03T21:48:47"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
       "nome": "H15-pipes.png",
-      "data": "2026-11-03T21:28:58"
+      "data": "2026-11-03T21:48:40"
     },
     {
       "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
       "nome": "H14-arquivos-gravaveis.png",
-      "data": "2026-11-03T21:28:52"
+      "data": "2026-11-03T21:48:34"
     },
     {
       "arquivo": "docs/capturas/H13-ola-argumentos.png",
       "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T21:28:41"
+      "data": "2026-11-03T21:48:22"
     },
     {
       "arquivo": "docs/capturas/H12-anel3-protecao.png",
       "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T21:28:35"
+      "data": "2026-11-03T21:48:16"
     },
     {
       "arquivo": "docs/capturas/H11-tarefas-A-B.png",
       "nome": "H11-tarefas-A-B.png",
-      "data": "2026-11-03T21:28:29"
+      "data": "2026-11-03T21:48:10"
     },
     {
       "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
       "nome": "H10-tela-falta-de-pagina.png",
-      "data": "2026-11-03T21:28:21"
+      "data": "2026-11-03T21:48:03"
     },
     {
       "arquivo": "docs/capturas/H10-dois-espacos.png",
       "nome": "H10-dois-espacos.png",
-      "data": "2026-11-03T21:28:15"
+      "data": "2026-11-03T21:47:56"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T21:28:09"
+      "data": "2026-11-03T21:47:50"
     },
     {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T21:28:06"
+      "data": "2026-11-03T21:47:47"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T21:28:04"
+      "data": "2026-11-03T21:47:45"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T21:28:02"
+      "data": "2026-11-03T21:47:43"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T21:28:01"
+      "data": "2026-11-03T21:47:41"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T21:28:00"
+      "data": "2026-11-03T21:47:41"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
       "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T21:27:54"
+      "data": "2026-11-03T21:47:34"
     },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
-      "data": "2026-11-03T21:27:47"
+      "data": "2026-11-03T21:47:28"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T21:27:38"
+      "data": "2026-11-03T21:47:18"
     },
     {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T21:27:18"
+      "data": "2026-11-03T21:46:58"
     },
     {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
       "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T21:27:12"
+      "data": "2026-11-03T21:46:51"
     },
     {
       "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
       "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T21:26:59"
+      "data": "2026-11-03T21:46:34"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-usb.png",
       "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T21:26:46"
+      "data": "2026-11-03T21:46:20"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-ide.png",
       "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T21:26:34"
+      "data": "2026-11-03T21:46:08"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-usb.png",
       "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T21:26:28"
+      "data": "2026-11-03T21:46:01"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-ide.png",
       "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T21:26:22"
+      "data": "2026-11-03T21:45:55"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
       "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T21:26:15"
+      "data": "2026-11-03T21:45:49"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-ide.png",
       "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T21:26:09"
+      "data": "2026-11-03T21:45:43"
     },
     {
       "arquivo": "docs/capturas/G470-fase5-janelas.png",
@@ -1303,9 +1314,9 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 9342,
+    "kernel": 9365,
     "userland": 3838,
-    "ferramentas": 3204
+    "ferramentas": 3247
   },
   "imagem": {
     "bytes_util": 499712,

@@ -102,11 +102,26 @@ _Static_assert(sizeof(qh_t) == 96, "QH no formato de 64 bits ocupa 96 bytes");
 static ehci_t ctls[USB_MAX_CONTROLADORES];
 static int qtd_ctls;
 
-/* Memória de trabalho (compartilhada: uma transferência por vez). */
+/* Memória de trabalho. Cada controlador tem a SUA página de estruturas
+ * (cabeça do anel, fila de trabalho, setup e qTDs): se dois controladores
+ * apontassem para o mesmo anel, os dois executariam a mesma transferência,
+ * cada um no seu barramento, e uma estragaria a outra (erro 19, G470).
+ * O buffer de dados é um só: só o controlador da transferência em curso o
+ * toca, e as transferências são uma por vez (interrupções desligadas).
+ * Os ponteiros abaixo apontam para a página do controlador em uso. */
 static qh_t *cabeca, *fila;
 static qtd_t *qtds;
 static uint8_t *setup_pacote;
 static uint8_t *buffer;
+
+static void usar(ehci_t *c)
+{
+    uint32_t p = c->estruturas;
+    cabeca = (qh_t *)p;
+    fila = (qh_t *)(p + 128);
+    setup_pacote = (uint8_t *)(p + 256);
+    qtds = (qtd_t *)(p + 512);
+}
 
 int ehci_quantidade(void) { return qtd_ctls; }
 ehci_t *ehci_controlador(int i) { return i < qtd_ctls ? &ctls[i] : NULL; }
@@ -155,20 +170,24 @@ static void tomar_da_bios(ehci_t *c)
     }
 }
 
-static bool alocar_memoria(void)
+static bool alocar_buffer(void)
 {
-    if (cabeca) return true;
-    uint32_t p = memfisica_alocar();
+    if (buffer) return true;
     uint32_t b = memfisica_alocar_seguidas(BUFFER_BYTES / PAGINA);
-    if (!p || !b) return false;
-    memset((void *)p, 0, PAGINA);
-    /* Uma página: cabeça (96), fila de trabalho (96), pacote de setup e 8
-     * qTDs de 64 bytes, sem nenhuma estrutura encostada em outra. */
-    cabeca = (qh_t *)p;
-    fila = (qh_t *)(p + 128);
-    setup_pacote = (uint8_t *)(p + 256);
-    qtds = (qtd_t *)(p + 512);
+    if (!b) return false;
     buffer = (uint8_t *)b;
+    return true;
+}
+
+/* Uma página por controlador: cabeça (96), fila de trabalho (96), pacote de
+ * setup e 8 qTDs de 64 bytes, sem nenhuma estrutura encostada em outra. */
+static bool alocar_estruturas(ehci_t *c)
+{
+    uint32_t p = memfisica_alocar();
+    if (!p) return false;
+    memset((void *)p, 0, PAGINA);
+    c->estruturas = p;
+    usar(c);
     /* A cabeça do anel assíncrono: aponta para si mesma, marcada como "H". */
     cabeca->ligacao = (uint32_t)cabeca | T_QH;
     cabeca->caracteristicas = (1u << 15) | (2u << 12);
@@ -194,6 +213,7 @@ static bool iniciar(ehci_t *c)
     for (int p = 0; p < USB_MAX_PORTAS; p++) c->resultado[p] = -1;   /* ainda não tentado */
     c->enderecos64 = *(volatile uint32_t *)(c->cap + 8) & 1;
     if (c->portas > USB_MAX_PORTAS) c->portas = USB_MAX_PORTAS;
+    if (!alocar_estruturas(c)) return false;
     tomar_da_bios(c);
 
     /* Para e reinicia o controlador. */
@@ -227,7 +247,7 @@ int ehci_iniciar_todos(void)
 {
     pci_disp_t achados[USB_MAX_CONTROLADORES];
     int n = pci_procurar(0x0C, 0x03, 0x20, achados, USB_MAX_CONTROLADORES);   /* serial bus, USB, EHCI */
-    if (n == 0 || !alocar_memoria()) return 0;
+    if (n == 0 || !alocar_buffer()) return 0;
     bool i0 = int_salva_desliga();
     for (int i = 0; i < n; i++) {
         ehci_t *c = &ctls[qtd_ctls];
@@ -329,6 +349,7 @@ int ehci_controle(ehci_t *c, uint8_t endereco, uint8_t mps0, const void *setup, 
 {
     if (tam > QTD_MAX_BYTES) return USB_ERRO;
     bool i0 = int_salva_desliga();
+    usar(c);
     memcpy(setup_pacote, setup, 8);
     if (!entrada && tam) memcpy(buffer, dados, tam);
     int n = 0;
@@ -350,6 +371,7 @@ int ehci_bulk(ehci_t *c, uint8_t endereco, uint8_t ep, uint16_t mps, bool entrad
 {
     if (tam > BUFFER_BYTES || tam > (uint32_t)MAX_QTD * QTD_MAX_BYTES) return USB_ERRO;
     bool i0 = int_salva_desliga();
+    usar(c);
     if (!entrada) memcpy(buffer, dados, tam);
     /* Cada qTD (menos o último) leva um múltiplo do tamanho do pacote, então
      * a alternância de cada um é a inicial trocada uma vez por pacote. */

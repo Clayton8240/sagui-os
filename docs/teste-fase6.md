@@ -14,6 +14,8 @@ O pendrive não aparecia por dois motivos (erros 17 e 18):
 1. O controlador USB do G470 trabalha com **endereços de 64 bits** e exige estruturas maiores que as que o driver usava. O QEMU usa um controlador de 32 bits, por isso os testes daqui passavam. **Esta correção só pode ser confirmada no G470.**
 2. Só a **primeira partição** do pendrive era examinada. Agora a FAT32 é achada em qualquer uma das quatro, então o pendrive com a partição do SaguiOS + a FAT32 de 3 GB que você criou funciona (testado no QEMU com esse mesmo arranjo).
 
+**Segunda correção:** a foto do `usb` mostrou que a primeira correção funcionou (o segundo controlador já reconhecia o hub e o leitor de cartão), mas os dois controladores do G470 compartilhavam a mesma fila de transferências e um atrapalhava o outro (erro 19). Agora cada um tem a sua. Isso foi reproduzido e testado no QEMU com dois controladores.
+
 Se ainda não aparecer, rode **`usb`** no Terminal e fotografe: a saída agora diz se o controlador é de 64 bits, se a BIOS o soltou e **em que passo** a conversa com o pendrive parou em cada porta.
 
 ## O que mudou desde a fase 5

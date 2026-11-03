@@ -46,6 +46,7 @@ struct ehci {
     bool      enderecos64;             /* usa as estruturas no formato de 64 bits */
     int       bios;                    /* 0 = não usava, 1 = soltou, -1 = não soltou */
     int       resultado[USB_MAX_PORTAS];   /* da última tentativa de enumerar a porta (0 = ok) */
+    uint32_t  estruturas;              /* página com o anel assíncrono só deste controlador */
 };
 
 int  ehci_iniciar_todos(void);                 /* devolve quantos controladores ligou */

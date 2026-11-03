@@ -20,10 +20,10 @@ Um sistema operacional para PCs x86 de 32 bits, escrito do zero por uma IA (Clau
 | Imagem (bytes úteis) | **498.688 bytes = 487 KB (33,8% de 1,44 MB)**: carregador 2,3 KB, kernel 111 KB, ramdisk com os programas e textos 372 KB. O arquivo `.img` tem 1 MB porque é completado com zeros (D004). |
 | Linhas de código | boot 903, kernel 9.281, userland 3.838 (total 14.022), mais 3.184 de scripts de build e testes |
 | Programas | 29 em `/bin` (shell, 22 comandos e 6 programas gráficos) e 6 de teste em `/testes` |
-| Testes automáticos | 34, um por história, todos no QEMU (IDE e pendrive USB quando a história mexe no boot) |
+| Testes automáticos | 35, um por história (mais um de dois controladores USB), todos no QEMU (IDE e pendrive USB quando a história mexe no boot) |
 | Commits | ~50, um por história, mais as entregas e confirmações de cada fase |
 | Decisões registradas | 28, em `docs/decisoes.md` (o raciocínio de cada parte central) |
-| Erros registrados | 18, em `docs/erros.md` (sintoma, causa, correção) |
+| Erros registrados | 19, em `docs/erros.md` (sintoma, causa, correção) |
 | Capturas de tela | mais de 70, em `docs/capturas/` |
 
 ## Tempo de cada fase (trabalho do agente)
@@ -37,7 +37,7 @@ Do início da fase até a entrega para teste, pelos horários dos commits em 03/
 | 3. Processos e programas | ~40 min | 0 (dois pedidos do Eli, as setas para os lados e o texto em segundo plano, entraram na fase 4) |
 | 4. Gráfico e mouse | ~20 min + ~45 min da correção | 1: a inicialização do touchpad travava o teclado (H19-fix) |
 | 5. Janelas e programas | ~47 min | 0 (um detalhe visual no jogo, corrigido no começo da fase 6) |
-| 6. Pendrive de dados | ~40 min | 1 (em teste): o EHCI do G470 é de 64 bits e pede estruturas maiores; e a FAT32 depois da partição do SaguiOS não era vista (erros 17 e 18) |
+| 6. Pendrive de dados | ~40 min | 2 (em teste): o EHCI do G470 é de 64 bits e pede estruturas maiores; a FAT32 depois da partição do SaguiOS não era vista; os dois controladores do G470 compartilhavam o mesmo anel de transferências (erros 17 a 19) |
 
 ## O que funcionou no G470
 
@@ -48,7 +48,7 @@ Confirmado pelo Eli, com fotos em `testes_eli/`:
 - **Fase 3:** shell no anel 3, multitarefa (`contador &` com `ps`), histórico, acentos com teclas mortas.
 - **Fase 4:** modo gráfico, fonte própria com acentos, touchpad, depois da correção H19-fix.
 - **Fase 5:** área de trabalho com cinco programas abertos ao mesmo tempo.
-- **Fase 6:** primeiro teste: o pendrive não aparecia (erros 17 e 18, corrigidos). Aguardando o novo teste. Pontos que só o hardware real exercita: o EHCI de 64 bits, o hub interno do chipset (D024) e a passagem do controlador USB da BIOS para o sistema.
+- **Fase 6:** os dois primeiros testes: o pendrive não aparecia (erros 17 a 19, corrigidos). Aguardando o novo teste. Pontos que só o hardware real exercita: o EHCI de 64 bits, o hub interno do chipset (D024) e a passagem do controlador USB da BIOS para o sistema.
 
 ## O que ficou de fora
 

@@ -729,3 +729,9 @@ hardware real exercitaria.
 Partições: um pendrive pode ter o SaguiOS no começo (0xDA) e uma FAT32 depois,
 que foi o que o Eli fez. As quatro entradas do MBR são examinadas; vale a
 primeira FAT32 com BPB válido.
+
+Também (erro 19): **um anel assíncrono por controlador.** Com dois EHCI (o
+G470 tem dois), um anel compartilhado é percorrido pelos dois e a mesma
+transferência sai nos dois barramentos. Cada controlador ganhou a sua página
+de estruturas; o buffer de dados segue compartilhado, porque só uma
+transferência acontece por vez.
