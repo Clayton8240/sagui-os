@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T14:22:05",
-  "situacao": "Trabalhando na H03: Estágio 2 e modo protegido",
+  "atualizado": "2026-11-03T14:22:52",
+  "situacao": "Trabalhando na H04: Imagem para pendrive e VirtualBox",
   "fase_atual": 1,
-  "historia_atual": "H03",
+  "historia_atual": "H04",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -12,7 +12,7 @@ window.SAGUI_STATUS = {
       "numero": 1,
       "nome": "Boot",
       "estado": "em andamento",
-      "progresso": 50.0
+      "progresso": 75.0
     },
     {
       "numero": 2,
@@ -84,12 +84,12 @@ window.SAGUI_STATUS = {
       "titulo": "Estágio 2 e modo protegido",
       "objetivo": "A20, mapa E820, leitura do kernel e do ramdisk, GDT, modo protegido, salto para o kernel com boot_info.",
       "aceite": "O kernel em C escreve em modo texto VGA `Ola! Eu sou o SaguiOS.` e a memória detectada.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T14:22:05",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T14:22:52",
+      "minutos": 1,
+      "resultado": "Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB"
     },
     {
       "id": "H04",
@@ -97,9 +97,9 @@ window.SAGUI_STATUS = {
       "titulo": "Imagem para pendrive e VirtualBox",
       "objetivo": "Build gera build/saguios.img com SHA-256 e build/saguios.vdi; docs/como-gravar.md.",
       "aceite": "Boot nos dois modos do QEMU; .vdi gerado; arquivos em entrega/fase1/; como-gravar.md com Rufus (DD) e balenaEtcher.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T14:22:52",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -539,7 +539,7 @@ window.SAGUI_STATUS = {
       "conceito": "Modo kernel e modo usuário",
       "implementa": "Kernel em ring 0, programas em ring 3",
       "historias": "H03, H12",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Processos",
@@ -616,6 +616,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T14:22:52",
+      "texto": "Início da H04: Imagem para pendrive e VirtualBox"
+    },
+    {
+      "data": "2026-11-03T14:22:52",
+      "texto": "H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB"
+    },
+    {
       "data": "2026-11-03T14:22:05",
       "texto": "Início da H03: Estágio 2 e modo protegido"
     },
@@ -639,6 +647,16 @@ window.SAGUI_STATUS = {
   "erros": [],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T14:22:27"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T14:22:16"
+    },
+    {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
       "nome": "H02-mbr-usb.png",
       "data": "2026-11-03T14:21:34"
@@ -653,12 +671,12 @@ window.SAGUI_STATUS = {
     "boot": 893,
     "kernel": 714,
     "userland": 0,
-    "ferramentas": 754
+    "ferramentas": 792
   },
   "imagem": {
     "bytes_util": 14336,
     "bytes_arquivo": 32768,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 5.9
+  "progresso_geral": 8.8
 };
