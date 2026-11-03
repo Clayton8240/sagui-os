@@ -16,9 +16,10 @@
 #include "memoria.h"
 #include "relogio.h"
 #include "texto.h"
+#include "vfs.h"
 
 void tss_definir_pilha(uint32_t esp0);
-void arquivos_fechar_todos(processo_t *p);
+
 
 static processo_t tabela[MAX_PROCESSOS];
 processo_t *atual;

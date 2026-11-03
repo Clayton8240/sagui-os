@@ -331,3 +331,33 @@ o do próprio processo.
 programas de teste são três trechos de assembly independentes de posição,
 dentro do kernel, que o autoteste copia para a página 0x40000000 de um
 espaço novo.
+
+## D013. Carregador ELF e libsagui: como foi pensado (H13)
+
+**O carregador só precisa dos segmentos.** Dos cabeçalhos ELF, o kernel lê
+apenas a lista de segmentos PT_LOAD: endereço, bytes do arquivo, bytes na
+memória e se é gravável. Cada segmento ganha páginas novas no espaço do
+processo (somente leitura se o ELF não pedir escrita) e os bytes são
+copiados pelo endereço físico, aproveitando o mapeamento 1:1 do kernel.
+Seções, símbolos e relocação são ignorados: os programas são estáticos e
+ligados em 0x40000000. Tudo é conferido contra o tamanho do arquivo e contra
+os limites da área dos programas antes de qualquer cópia; um arquivo
+estranho é recusado com `ERRO_FORMATO`.
+
+**Argumentos na pilha.** Os textos são copiados para o kernel antes de
+criar o processo (o espaço do pai pode mudar), e depois gravados no topo da
+pilha do filho, seguidos do vetor de ponteiros, de argv e de argc. A
+`_inicio` da libsagui lê `[esp]` e `[esp+4]`.
+
+**libsagui.** Uma função por chamada de sistema; texto e memória; `aloca`
+com blocos contíguos numa área que cresce com `aumentar_memoria` (busca do
+primeiro que couber, juntando vizinhos livres durante a busca, um desenho
+diferente do `kmalloc` do kernel de propósito: os dois têm necessidades
+diferentes); `imprimir` com o mesmo método do formatador do kernel;
+`ler_linha` byte a byte, para não consumir dados de um pipe que pertencem
+ao próximo leitor.
+
+**Build.** Cada `userland/programas/X.c` vira `/bin/X` e cada
+`userland/testes/X.c` vira `/testes/X`. O ramdisk é montado a partir de uma
+cópia de `rootfs/` com esses programas, então a pasta `rootfs/` do
+repositório só tem os arquivos escritos à mão.

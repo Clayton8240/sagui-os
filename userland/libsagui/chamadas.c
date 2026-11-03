@@ -1,0 +1,38 @@
+/* chamadas.c - uma função por chamada de sistema (convenção em abi.h). */
+#include "sagui.h"
+
+static inline int chamar(unsigned n, unsigned a, unsigned b, unsigned c)
+{
+    int r;
+    __asm__ volatile("int $0x80" : "=a"(r) : "a"(n), "b"(a), "c"(b), "d"(c) : "memory");
+    return r;
+}
+
+int  executar(const char *c, char *const argv[]) { return chamar(SIS_EXECUTAR, (unsigned)c, (unsigned)argv, 0); }
+int  esperar(int pid, int *codigo)    { return chamar(SIS_ESPERAR, (unsigned)pid, (unsigned)codigo, 0); }
+void sair(int codigo)                 { chamar(SIS_SAIR, (unsigned)codigo, 0, 0); for (;;) ; }
+int  meu_pid(void)                    { return chamar(SIS_PID, 0, 0, 0); }
+int  matar(int pid)                   { return chamar(SIS_MATAR, (unsigned)pid, 0, 0); }
+int  abrir(const char *c, int modo)   { return chamar(SIS_ABRIR, (unsigned)c, (unsigned)modo, 0); }
+int  ler(int fd, void *b, unsigned n) { return chamar(SIS_LER, (unsigned)fd, (unsigned)b, n); }
+int  escrever(int fd, const void *b, unsigned n) { return chamar(SIS_ESCREVER, (unsigned)fd, (unsigned)b, n); }
+int  fechar(int fd)                   { return chamar(SIS_FECHAR, (unsigned)fd, 0, 0); }
+int  posicionar(int fd, int d, int o) { return chamar(SIS_POSICIONAR, (unsigned)fd, (unsigned)d, (unsigned)o); }
+int  info_arquivo(const char *c, info_arquivo_t *i) { return chamar(SIS_INFO_ARQUIVO, (unsigned)c, (unsigned)i, 0); }
+int  criar_pasta(const char *c)       { return chamar(SIS_CRIAR_PASTA, (unsigned)c, 0, 0); }
+int  remover_pasta(const char *c)     { return chamar(SIS_REMOVER_PASTA, (unsigned)c, 0, 0); }
+int  apagar(const char *c)            { return chamar(SIS_APAGAR, (unsigned)c, 0, 0); }
+int  listar(const char *c, int i, entrada_pasta_t *e) { return chamar(SIS_LISTAR, (unsigned)c, (unsigned)i, (unsigned)e); }
+int  mudar_pasta(const char *c)       { return chamar(SIS_MUDAR_PASTA, (unsigned)c, 0, 0); }
+int  pasta_atual(char *b, unsigned n) { return chamar(SIS_PASTA_ATUAL, (unsigned)b, n, 0); }
+int  renomear(const char *o, const char *d) { return chamar(SIS_RENOMEAR, (unsigned)o, (unsigned)d, 0); }
+int  criar_pipe(int fds[2])           { return chamar(SIS_PIPE, (unsigned)fds, 0, 0); }
+int  duplicar(int a, int n)           { return chamar(SIS_DUPLICAR, (unsigned)a, (unsigned)n, 0); }
+int  dormir(unsigned ms)              { return chamar(SIS_DORMIR, ms, 0, 0); }
+unsigned tempo_ms(void)               { return (unsigned)chamar(SIS_TEMPO, 0, 0, 0); }
+int  ler_data(data_t *d)              { return chamar(SIS_DATA, (unsigned)d, 0, 0); }
+int  info_sistema(int t, void *b, unsigned n) { return chamar(SIS_INFO_SISTEMA, (unsigned)t, (unsigned)b, n); }
+void *aumentar_memoria(unsigned n)    { int r = chamar(SIS_AUMENTAR_MEM, n, 0, 0); return (r < 0 && r > -100) ? NULL : (void *)r; }
+void reiniciar(void)                  { chamar(SIS_REINICIAR, 0, 0, 0); }
+int  modo_terminal(int m)             { return chamar(SIS_MODO_TERMINAL, (unsigned)m, 0, 0); }
+int  limpar_tela(void)                { return chamar(SIS_LIMPAR_TELA, 0, 0, 0); }

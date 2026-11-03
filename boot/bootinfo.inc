@@ -9,7 +9,7 @@ MAPA_E820           equ 0x5100     ; até 64 entradas de 24 bytes (até 0x5700)
 MAPA_MAX            equ 64
 VBE_INFO            equ 0x6000     ; 512 bytes (bloco de informação do VBE)
 VBE_MODO            equ 0x6200     ; 256 bytes (informação de um modo)
-BOOTINFO_TAM        equ 128
+BOOTINFO_TAM        equ 192
 
 BOOT_MAGICO         equ 0x53414755 ; 'UGAS' - "fui carregado pelo estágio 2 do SaguiOS"
 
@@ -33,4 +33,4 @@ BI_VESA_FB          equ 64         ; endereço físico do framebuffer linear
 BI_VESA_ATIVO       equ 68         ; 1 se o estágio 2 trocou de modo
 BI_VESA_CORES       equ 72         ; 6 bytes: tam/pos do vermelho, verde, azul
 BI_SETORES_LIDOS    equ 80
-BI_TESTE            equ 84         ; char[16] copiado de CAB_TESTE
+BI_TESTE            equ 84         ; char[64] copiado de CAB_TESTE (até o byte 148)

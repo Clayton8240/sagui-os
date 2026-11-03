@@ -5,6 +5,7 @@
 #include "console.h"
 
 void arquivos_fechar_todos(processo_t *p) { (void)p; }
+void arquivos_herdar(processo_t *f, processo_t *p) { (void)f; (void)p; }
 
 #define SEM_USO(...) (void)a; (void)b; (void)c; (void)d; (void)e; return ERRO_INVALIDO
 int32_t sis_abrir(uint32_t a, uint32_t b, uint32_t c, uint32_t d, uint32_t e) { SEM_USO(); }

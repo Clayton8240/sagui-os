@@ -33,6 +33,23 @@ KERNEL_OBJ := $(patsubst %.c,$(B)/%.o,$(KERNEL_C)) $(patsubst %.asm,$(B)/%.asm.o
 KERNEL_HDR := $(shell find kernel -name '*.h')
 ROOTFS     := $(shell find rootfs -type f | sort)
 
+# Programas de usuário: libsagui + um .c por programa em userland/programas/
+# (vão para /bin) e em userland/testes/ (vão para /testes).
+UCFLAGS := -m32 -march=i686 -std=gnu11 -O2 \
+           -ffreestanding -fno-builtin -nostdlib -fno-pic -fno-pie \
+           -fno-stack-protector -fno-asynchronous-unwind-tables -mgeneral-regs-only \
+           -ffunction-sections -fdata-sections \
+           -Wall -Wextra -Werror=implicit-function-declaration \
+           -finput-charset=UTF-8 -fexec-charset=ISO-8859-1 \
+           -Iuserland/inc -idirafter kernel/inc
+ULDFLAGS := -m elf_i386 -nostdlib -T userland/programa.ld --gc-sections -z max-page-size=4096 \
+            -z noexecstack --no-warn-rwx-segments
+LIBSAGUI_OBJ := $(patsubst userland/libsagui/%.c,$(B)/userland/libsagui/%.o,$(wildcard userland/libsagui/*.c)) \
+                $(patsubst userland/libsagui/%.asm,$(B)/userland/libsagui/%.asm.o,$(wildcard userland/libsagui/*.asm))
+USER_HDR  := $(wildcard userland/inc/*.h) kernel/inc/abi.h
+PROGRAMAS := $(patsubst userland/programas/%.c,$(B)/userland/bin/%,$(wildcard userland/programas/*.c))
+PROG_TESTE := $(patsubst userland/testes/%.c,$(B)/userland/testes/%,$(wildcard userland/testes/*.c))
+
 .PHONY: all vazio vdi test rodar entrega limpar dashboard
 
 all: $(B)/saguios.img
@@ -64,9 +81,34 @@ $(B)/kernel.elf: $(KERNEL_OBJ) kernel/ligacao.ld
 $(B)/kernel.bin: $(B)/kernel.elf
 	objcopy -O binary $< $@
 
+# ---------- programas de usuário ----------
+$(B)/userland/%.o: userland/%.c $(USER_HDR)
+	@mkdir -p $(dir $@)
+	$(CC) $(UCFLAGS) -c -o $@ $<
+
+$(B)/userland/libsagui/%.asm.o: userland/libsagui/%.asm
+	@mkdir -p $(dir $@)
+	$(AS) -f elf32 -o $@ $<
+
+$(B)/userland/bin/%: $(B)/userland/programas/%.o $(LIBSAGUI_OBJ) userland/programa.ld
+	@mkdir -p $(dir $@)
+	$(LD) $(ULDFLAGS) -o $@.elf $< $(LIBSAGUI_OBJ)
+	objcopy --strip-all $@.elf $@
+
+$(B)/userland/testes/%: $(B)/userland/testes/%.o $(LIBSAGUI_OBJ) userland/programa.ld
+	@mkdir -p $(dir $@)
+	$(LD) $(ULDFLAGS) -o $@.elf $< $(LIBSAGUI_OBJ)
+	objcopy --strip-all $@.elf $@
+
 # ---------- ramdisk (SGFS) ----------
-$(B)/ramdisk.sgfs: $(ROOTFS) tools/mksgfs.py
-	$(PY) tools/mksgfs.py rootfs $@
+# O ramdisk é montado a partir de uma cópia do rootfs/ com os programas em
+# /bin e os programas de teste em /testes.
+$(B)/ramdisk.sgfs: $(ROOTFS) $(PROGRAMAS) $(PROG_TESTE) tools/mksgfs.py
+	rm -rf $(B)/rootfs
+	cp -r rootfs $(B)/rootfs
+	$(if $(PROGRAMAS),cp $(PROGRAMAS) $(B)/rootfs/bin/)
+	$(if $(PROG_TESTE),mkdir -p $(B)/rootfs/testes && cp $(PROG_TESTE) $(B)/rootfs/testes/)
+	$(PY) tools/mksgfs.py $(B)/rootfs $@
 
 # ---------- imagem final ----------
 $(B)/saguios.img: $(B)/boot/mbr.bin $(B)/boot/estagio2.bin $(B)/kernel.bin $(B)/ramdisk.sgfs tools/mkimagem.py

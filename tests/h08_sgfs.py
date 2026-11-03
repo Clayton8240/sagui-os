@@ -10,7 +10,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qemu import Maquina, verificar, imagem_de_teste, RAIZ  # noqa: E402
 
-ROOTFS = os.path.join(RAIZ, "rootfs")
+ROOTFS = os.path.join(RAIZ, "build", "rootfs")   # rootfs/ + programas compilados
 
 
 def esperado_rootfs():
@@ -35,7 +35,7 @@ def main():
         verificar("[TESTE] sgfs ok" in serial, "autoteste do SGFS passou")
         listados = {l.split()[-1] for l in serial.splitlines() if l.startswith("[SGFS] ") and "/" in l}
         esperado = esperado_rootfs()
-        verificar(listados == esperado, f"lista do kernel = conteúdo do rootfs/ ({len(esperado)} entradas)")
+        verificar(listados == esperado, f"lista do kernel = conteúdo do rootfs montado ({len(esperado)} entradas)")
         conteudo = serial.split("[ARQ-INICIO]\n")[1].split("[ARQ-FIM]")[0]
         original = open(os.path.join(ROOTFS, "leia-me.txt"), encoding="utf-8").read()
         verificar(conteudo == original, f"leia-me.txt lido inteiro e idêntico ({len(original)} caracteres, acentos em Latin-1)")

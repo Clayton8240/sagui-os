@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:16:35_
+_Atualizado em 2026-11-03T16:21:08_
 
-- **Situação:** Trabalhando na H13: Carregador ELF e libsagui
+- **Situação:** Trabalhando na H14: Arquivos e pastas graváveis
 - **Fase atual:** 3
-- **História atual:** H13
-- **Progresso geral:** 35.3%
+- **História atual:** H14
+- **Progresso geral:** 38.2%
 - **Bloqueio:** nenhum
-- **Imagem:** 51712 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 3880, userland 0
+- **Imagem:** 60416 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 4103, userland 552
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:16:35_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 42.9% | em andamento |
+| 3 | Processos e programas | 57.1% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -38,8 +38,8 @@ _Atualizado em 2026-11-03T16:16:35_
 | H10 | Paginação | feito | 3 |
 | H11 | Processos e escalonador | feito | 3 |
 | H12 | Ring 3 e chamadas de sistema | feito | 4 |
-| H13 | Carregador ELF e libsagui | em andamento |  |
-| H14 | Arquivos e pastas graváveis | a fazer |  |
+| H13 | Carregador ELF e libsagui | feito | 5 |
+| H14 | Arquivos e pastas graváveis | em andamento |  |
 | H15 | Pipes | a fazer |  |
 | H16 | Shell e comandos como programas | a fazer |  |
 | H17 | Framebuffer VESA | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:16:35_
 
 ## Últimas ações
 
+- 2026-11-03T16:21:08: Início da H14: Arquivos e pastas graváveis
+- 2026-11-03T16:21:08: H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos
 - 2026-11-03T16:16:35: Início da H13: Carregador ELF e libsagui
 - 2026-11-03T16:16:35: H12 concluída: Programas no anel 3, int 0x80 com validação de ponteiros; cli e acesso ao kernel encerram só o processo
 - 2026-11-03T16:12:46: Início da H12: Ring 3 e chamadas de sistema
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:16:35_
 - 2026-11-03T15:41:51: H09 concluída: Terminal provisório com ajuda, ls, cd, cat (paginado), limpar, mem, data, tempo, reiniciar
 - 2026-11-03T15:41:51: Erro corrigido: cd ../arte chegava como cd ..;arte
 - 2026-11-03T15:39:25: Início da H09: Terminal provisório do kernel
-- 2026-11-03T15:39:25: H08 concluída: mksgfs.py + leitor no kernel; lista igual ao rootfs/ e leia-me.txt idêntico
-- 2026-11-03T15:39:25: Erro corrigido: Saudação e memória quebravam linha

@@ -100,7 +100,7 @@ def main():
                       k_lba, setores(len(kern)), len(kern), KERNEL_ENDERECO,
                       r_lba, setores(len(rd)), len(rd), rd_endereco,
                       total, entrada, soma(kern), soma(rd))
-    cab += a.teste.encode("ascii")[:15].ljust(16, b"\0")
+    cab += a.teste.encode("latin-1")[:63].ljust(64, b"\0")
 
     # Tamanho do arquivo: arredondado para múltiplo de 32 KB. A partição cobre
     # do LBA 1 até o fim do arquivo e é a única, marcada como ativa (0x80),

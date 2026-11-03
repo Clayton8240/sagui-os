@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:16:35",
-  "situacao": "Trabalhando na H13: Carregador ELF e libsagui",
+  "atualizado": "2026-11-03T16:21:08",
+  "situacao": "Trabalhando na H14: Arquivos e pastas graváveis",
   "fase_atual": 3,
-  "historia_atual": "H13",
+  "historia_atual": "H14",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -26,7 +26,7 @@ window.SAGUI_STATUS = {
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 42.9
+      "progresso": 57.1
     },
     {
       "numero": 4,
@@ -216,12 +216,12 @@ window.SAGUI_STATUS = {
       "titulo": "Carregador ELF e libsagui",
       "objetivo": "Leitor de ELF32 estático, pilha do usuário com argumentos, libsagui com printf.",
       "aceite": "O kernel carrega bin/ola do SGFS e ele imprime os argumentos.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:16:35",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:21:08",
+      "minutos": 5,
+      "resultado": "Carregador ELF32 e libsagui; /bin/ola imprime os argumentos"
     },
     {
       "id": "H14",
@@ -229,9 +229,9 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos e pastas graváveis",
       "objetivo": "Camada gravável na RAM sobre o SGFS, tabela de arquivos por processo, terminal como 0 e 1.",
       "aceite": "Teste em ring 3 cria, escreve, relê e apaga tmp/teste.txt; o mesmo com uma pasta.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:21:08",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -607,7 +607,7 @@ window.SAGUI_STATUS = {
       "conceito": "Carregamento de programas",
       "implementa": "Executáveis ELF lidos do sistema de arquivos",
       "historias": "H13",
-      "estado": "a fazer"
+      "estado": "feito"
     },
     {
       "conceito": "Interface gráfica (extra)",
@@ -617,6 +617,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:21:08",
+      "texto": "Início da H14: Arquivos e pastas graváveis"
+    },
+    {
+      "data": "2026-11-03T16:21:08",
+      "texto": "H13 concluída: Carregador ELF32 e libsagui; /bin/ola imprime os argumentos"
+    },
     {
       "data": "2026-11-03T16:16:35",
       "texto": "Início da H13: Carregador ELF e libsagui"
@@ -786,7 +794,17 @@ window.SAGUI_STATUS = {
     {
       "arquivo": "docs/capturas/H12-anel3-protecao.png",
       "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T16:16:14"
+      "data": "2026-11-03T16:21:03"
+    },
+    {
+      "arquivo": "docs/capturas/H08-sgfs-lista.png",
+      "nome": "H08-sgfs-lista.png",
+      "data": "2026-11-03T16:20:57"
+    },
+    {
+      "arquivo": "docs/capturas/H13-ola-argumentos.png",
+      "nome": "H13-ola-argumentos.png",
+      "data": "2026-11-03T16:20:25"
     },
     {
       "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
@@ -849,11 +867,6 @@ window.SAGUI_STATUS = {
       "data": "2026-11-03T16:05:16"
     },
     {
-      "arquivo": "docs/capturas/H08-sgfs-lista.png",
-      "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T15:43:46"
-    },
-    {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
       "data": "2026-11-03T15:43:40"
@@ -906,14 +919,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 3880,
-    "userland": 0,
-    "ferramentas": 1408
+    "kernel": 4103,
+    "userland": 552,
+    "ferramentas": 1441
   },
   "imagem": {
-    "bytes_util": 51712,
+    "bytes_util": 60416,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 35.3
+  "progresso_geral": 38.2
 };

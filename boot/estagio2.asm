@@ -58,7 +58,7 @@ inicio:
         mov [BOOTINFO + BI_DISCO], eax
         mov si, CAB_ENDERECO + CAB_TESTE        ; repassa o nome do autoteste (se houver)
         mov di, BOOTINFO + BI_TESTE
-        mov cx, 16
+        mov cx, 64
         rep movsb
 
         mov si, msg_titulo

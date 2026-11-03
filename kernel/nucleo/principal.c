@@ -92,6 +92,27 @@ static void conferir_ramdisk(void)
     klog("Ramdisk SGFS: %u bytes em %p, %u entradas\n", info_boot.ramdisk_bytes, rd, entradas);
 }
 
+/* Imagens de teste podem pedir um programa inicial com argumentos, ex.:
+ * "/bin/ola um dois". O kernel o executa e espera ele terminar. */
+static void rodar_programa_de_teste(char *linha)
+{
+    char *argv[16];
+    int argc = 0;
+    for (char *p = linha; *p && argc < 15;) {
+        while (*p == ' ') *p++ = 0;
+        if (!*p) break;
+        argv[argc++] = p;
+        while (*p && *p != ' ') p++;
+    }
+    argv[argc] = NULL;
+    int pid = processo_executar(argv[0], argc, argv, NULL);
+    klog("[TESTE] programa %s iniciado: %d\n", argv[0], pid);
+    if (pid < 0) return;
+    while (processo_por_pid(pid))
+        cpu_espera();
+    klog("[TESTE] programa terminou\n");
+}
+
 /* Uma linha de status da inicialização: "[ ok ] texto". */
 static void etapa(const char *texto)
 {
@@ -113,7 +134,7 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     /* A boot_info e o mapa estão na memória baixa, que mais tarde vira área
      * livre. Copiamos para dentro do kernel antes de qualquer outra coisa. */
     info_boot = *bi;
-    info_boot.teste[15] = 0;
+    info_boot.teste[63] = 0;
     if (info_boot.mapa_qtd > MAPA_MAX)
         info_boot.mapa_qtd = MAPA_MAX;
     memcpy(mapa_memoria, (const void *)info_boot.mapa_end, info_boot.mapa_qtd * sizeof(regiao_e820_t));
@@ -184,7 +205,9 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     }
     klog("[SAGUI] boot ok\n");
 
-    if (info_boot.teste[0])
+    if (info_boot.teste[0] == '/')
+        rodar_programa_de_teste(info_boot.teste);
+    else if (info_boot.teste[0])
         autoteste_executar(info_boot.teste);
 
     /* H09: terminal provisório (vira o programa sagsh na H16). */

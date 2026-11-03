@@ -42,7 +42,8 @@ def imagem_de_teste(teste, extras=()):
     do kernel ligado pelo cabeçalho de boot (campo CAB_TESTE)."""
     b = os.path.join(RAIZ, "build")
     os.makedirs(SAIDA, exist_ok=True)
-    destino = os.path.join(SAIDA, f"teste-{teste}.img")
+    seguro = re.sub(r"[^A-Za-z0-9_.-]+", "_", teste).strip("_")[:40]
+    destino = os.path.join(SAIDA, f"teste-{seguro}.img")
     subprocess.run(["python3", os.path.join(RAIZ, "tools", "mkimagem.py"),
                     "--mbr", os.path.join(b, "boot", "mbr.bin"), "--estagio2", os.path.join(b, "boot", "estagio2.bin"),
                     "--kernel", os.path.join(b, "kernel.bin"), "--kernel-elf", os.path.join(b, "kernel.elf"),
