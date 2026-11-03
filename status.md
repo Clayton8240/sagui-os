@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T19:03:23_
+_Atualizado em 2026-11-03T19:07:26_
 
-- **Situação:** Trabalhando na H23: Arquivos
+- **Situação:** Trabalhando na H26: Calculadora
 - **Fase atual:** 5
-- **História atual:** H23
-- **Progresso geral:** 70.6%
+- **História atual:** H26
+- **Progresso geral:** 73.5%
 - **Bloqueio:** nenhum
-- **Imagem:** 347648 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 903, kernel 6740, userland 2715
+- **Imagem:** 372736 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 903, kernel 6740, userland 2931
 
 ## Fases
 
@@ -18,7 +18,7 @@ _Atualizado em 2026-11-03T19:03:23_
 | 2 | Kernel e terminal | 100.0% | feito |
 | 3 | Processos e programas | 100.0% | feito |
 | 4 | Gráfico e mouse | 100.0% | feito |
-| 5 | Janelas e programas | 55.6% | em andamento |
+| 5 | Janelas e programas | 66.7% | em andamento |
 | 6 | Pendrive de dados | 0.0% | a fazer |
 | 7 | Bônus | 0% | a fazer |
 
@@ -48,10 +48,10 @@ _Atualizado em 2026-11-03T19:03:23_
 | H20 | Área de trabalho | feito | 9 |
 | H21 | Gerenciador de janelas | feito | 7 |
 | H22 | Kit gráfico da libsagui | feito | 3 |
-| H23 | Arquivos | em andamento |  |
+| H23 | Arquivos | feito | 4 |
 | H24 | Terminal em janela | feito | 3 |
 | H25 | Editor de texto | feito | 3 |
-| H26 | Calculadora | a fazer |  |
+| H26 | Calculadora | em andamento |  |
 | H27 | Sagui Pega Banana | a fazer |  |
 | H28 | Acabamento | a fazer |  |
 | H29 | PCI e controlador EHCI | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T19:03:23_
 
 ## Últimas ações
 
+- 2026-11-03T19:07:26: Início da H26: Calculadora
+- 2026-11-03T19:07:26: H23 concluída: Gerenciador de arquivos com ícones; abre no Editor, cria e apaga pastas
 - 2026-11-03T19:03:23: Início da H23: Arquivos
 - 2026-11-03T19:03:23: H25 concluída: Editor com Novo/Abrir/Salvar, Ctrl+S, título com *, aviso ao fechar
 - 2026-11-03T19:00:05: Início da H25: Editor de texto
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T19:03:23_
 - 2026-11-03T18:46:46: H20 concluída: Área de trabalho com degradê do Brasil, mascote em pixel art, barra com relógio e ícones
 - 2026-11-03T18:46:46: Erro corrigido: Boot não terminava com a área de trabalho no ar
 - 2026-11-03T18:38:00: Início da H20: Área de trabalho
-- 2026-11-03T18:37:28: Eli confirmou: fase 4 ok
-- 2026-11-03T18:27:00: Fase 4 entregue. Aguardando teste do Eli.

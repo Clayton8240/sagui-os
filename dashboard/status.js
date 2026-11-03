@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T19:03:23",
-  "situacao": "Trabalhando na H23: Arquivos",
+  "atualizado": "2026-11-03T19:07:26",
+  "situacao": "Trabalhando na H26: Calculadora",
   "fase_atual": 5,
-  "historia_atual": "H23",
+  "historia_atual": "H26",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 55.6
+      "progresso": 66.7
     },
     {
       "numero": 6,
@@ -348,12 +348,12 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos",
       "objetivo": "Gerenciador de arquivos em ring 3 com ícones, duplo clique, voltar, criar e apagar pasta.",
       "aceite": "Navega até historia/, abre linux.txt no Editor, cria e apaga pasta em tmp/.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T19:03:23",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T19:07:26",
+      "minutos": 4,
+      "resultado": "Gerenciador de arquivos com ícones; abre no Editor, cria e apaga pastas"
     },
     {
       "id": "H24",
@@ -387,9 +387,9 @@ window.SAGUI_STATUS = {
       "titulo": "Calculadora",
       "objetivo": "Botões e teclado, ponto fixo, avisos de divisão por zero e número grande.",
       "aceite": "12,5 × 4 = 50; 7 ÷ 2 = 3,5; 1 ÷ 0 mostra aviso; captura.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T19:07:26",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -619,6 +619,14 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T19:07:26",
+      "texto": "Início da H26: Calculadora"
+    },
+    {
+      "data": "2026-11-03T19:07:26",
+      "texto": "H23 concluída: Gerenciador de arquivos com ícones; abre no Editor, cria e apaga pastas"
+    },
     {
       "data": "2026-11-03T19:03:23",
       "texto": "Início da H23: Arquivos"
@@ -850,14 +858,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T15:32:06",
       "texto": "H06 concluída: Bitmap de páginas a partir do E820 e kmalloc por classes; autoteste de 450 blocos sem corrupção"
-    },
-    {
-      "data": "2026-11-03T15:28:28",
-      "texto": "Início da H06: Memória física"
-    },
-    {
-      "data": "2026-11-03T15:28:28",
-      "texto": "H05 concluída: IDT com 256 vetores, tela de erro, PIC remapeado, PIT a 100 Hz, CMOS"
     }
   ],
   "erros": [
@@ -911,6 +911,26 @@ window.SAGUI_STATUS = {
     }
   ],
   "capturas": [
+    {
+      "arquivo": "docs/capturas/H23-confirmar-apagar.png",
+      "nome": "H23-confirmar-apagar.png",
+      "data": "2026-11-03T19:07:06"
+    },
+    {
+      "arquivo": "docs/capturas/H23-nota-reaberta.png",
+      "nome": "H23-nota-reaberta.png",
+      "data": "2026-11-03T19:06:58"
+    },
+    {
+      "arquivo": "docs/capturas/H23-linux-no-editor.png",
+      "nome": "H23-linux-no-editor.png",
+      "data": "2026-11-03T19:06:50"
+    },
+    {
+      "arquivo": "docs/capturas/H23-arquivos-raiz.png",
+      "nome": "H23-arquivos-raiz.png",
+      "data": "2026-11-03T19:06:46"
+    },
     {
       "arquivo": "docs/capturas/H25-aviso-ao-fechar.png",
       "nome": "H25-aviso-ao-fechar.png",
@@ -1160,13 +1180,13 @@ window.SAGUI_STATUS = {
   "linhas": {
     "boot": 903,
     "kernel": 6740,
-    "userland": 2715,
-    "ferramentas": 2401
+    "userland": 2931,
+    "ferramentas": 2507
   },
   "imagem": {
-    "bytes_util": 347648,
+    "bytes_util": 372736,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 70.6
+  "progresso_geral": 73.5
 };
