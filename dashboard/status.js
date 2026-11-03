@@ -1,10 +1,10 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T18:46:46",
-  "situacao": "Trabalhando na H21: Gerenciador de janelas",
+  "atualizado": "2026-11-03T18:53:31",
+  "situacao": "Trabalhando na H22: Kit gráfico da libsagui",
   "fase_atual": 5,
-  "historia_atual": "H21",
+  "historia_atual": "H22",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -40,7 +40,7 @@ window.SAGUI_STATUS = {
       "numero": 5,
       "nome": "Janelas e programas",
       "estado": "em andamento",
-      "progresso": 11.1
+      "progresso": 22.2
     },
     {
       "numero": 6,
@@ -322,12 +322,12 @@ window.SAGUI_STATUS = {
       "titulo": "Gerenciador de janelas",
       "objetivo": "Janelas com moldura, arrastar, foco; chamadas de janela para programas em ring 3.",
       "aceite": "Dois programas abrem janelas; o teste arrasta uma, fecha a outra e o programa termina.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T18:46:46",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T18:53:31",
+      "minutos": 7,
+      "resultado": "Gerenciador de janelas no kernel, memória compartilhada, eventos por janela; arrastar e fechar testados"
     },
     {
       "id": "H22",
@@ -335,9 +335,9 @@ window.SAGUI_STATUS = {
       "titulo": "Kit gráfico da libsagui",
       "objetivo": "Texto, botão, rótulo, caixa de texto, área de texto, lista, confirmação.",
       "aceite": "Demonstração com todos os componentes funcionando; captura.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T18:53:31",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -615,10 +615,22 @@ window.SAGUI_STATUS = {
       "conceito": "Interface gráfica (extra)",
       "implementa": "Gerenciador de janelas no kernel; programas gráficos em ring 3",
       "historias": "H20-H28",
-      "estado": "a fazer"
+      "estado": "parcial"
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T18:53:31",
+      "texto": "Início da H22: Kit gráfico da libsagui"
+    },
+    {
+      "data": "2026-11-03T18:53:31",
+      "texto": "H21 concluída: Gerenciador de janelas no kernel, memória compartilhada, eventos por janela; arrastar e fechar testados"
+    },
+    {
+      "data": "2026-11-03T18:53:30",
+      "texto": "Erro corrigido: Rastros ao arrastar janelas"
+    },
     {
       "data": "2026-11-03T18:46:46",
       "texto": "Início da H21: Gerenciador de janelas"
@@ -846,21 +858,15 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T14:27:10",
       "texto": "Todos os testes da fase 1 passaram (H01 a H04, IDE e USB)"
-    },
-    {
-      "data": "2026-11-03T14:27:10",
-      "texto": "H04 concluída: Imagem .img e .vdi com SHA-256; boot do .img (IDE e USB) e do .vdi no QEMU; como-gravar.md"
-    },
-    {
-      "data": "2026-11-03T14:22:52",
-      "texto": "Início da H04: Imagem para pendrive e VirtualBox"
-    },
-    {
-      "data": "2026-11-03T14:22:52",
-      "texto": "H03 concluída: Estágio 2 completo e kernel em C em modo protegido; testado em IDE e USB com 512 e 128 MB"
     }
   ],
   "erros": [
+    {
+      "data": "2026-11-03T18:53:30",
+      "sintoma": "Rastros ao arrastar janelas",
+      "causa": "Contorno de 1 px fora da área redesenhada",
+      "correcao": "Área redesenhada inclui o contorno"
+    },
     {
       "data": "2026-11-03T18:46:46",
       "sintoma": "Boot não terminava com a área de trabalho no ar",
@@ -906,6 +912,146 @@ window.SAGUI_STATUS = {
   ],
   "capturas": [
     {
+      "arquivo": "docs/capturas/H19-cursor-movido.png",
+      "nome": "H19-cursor-movido.png",
+      "data": "2026-11-03T18:52:56"
+    },
+    {
+      "arquivo": "docs/capturas/H18-edicao-e-segundo-plano.png",
+      "nome": "H18-edicao-e-segundo-plano.png",
+      "data": "2026-11-03T18:52:41"
+    },
+    {
+      "arquivo": "docs/capturas/H18-fonte-acentos.png",
+      "nome": "H18-fonte-acentos.png",
+      "data": "2026-11-03T18:52:36"
+    },
+    {
+      "arquivo": "docs/capturas/H17-formas-ide.png",
+      "nome": "H17-formas-ide.png",
+      "data": "2026-11-03T18:52:14"
+    },
+    {
+      "arquivo": "docs/capturas/H16-tab-historico.png",
+      "nome": "H16-tab-historico.png",
+      "data": "2026-11-03T18:52:11"
+    },
+    {
+      "arquivo": "docs/capturas/H16-falha-protecao.png",
+      "nome": "H16-falha-protecao.png",
+      "data": "2026-11-03T18:52:05"
+    },
+    {
+      "arquivo": "docs/capturas/H16-contador-e-ps.png",
+      "nome": "H16-contador-e-ps.png",
+      "data": "2026-11-03T18:51:52"
+    },
+    {
+      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
+      "nome": "H16-arquivos-redirecionamento-pipe.png",
+      "data": "2026-11-03T18:51:49"
+    },
+    {
+      "arquivo": "docs/capturas/H16-ajuda.png",
+      "nome": "H16-ajuda.png",
+      "data": "2026-11-03T18:51:32"
+    },
+    {
+      "arquivo": "docs/capturas/H15-pipes.png",
+      "nome": "H15-pipes.png",
+      "data": "2026-11-03T18:51:26"
+    },
+    {
+      "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
+      "nome": "H14-arquivos-gravaveis.png",
+      "data": "2026-11-03T18:51:20"
+    },
+    {
+      "arquivo": "docs/capturas/H13-ola-argumentos.png",
+      "nome": "H13-ola-argumentos.png",
+      "data": "2026-11-03T18:51:08"
+    },
+    {
+      "arquivo": "docs/capturas/H12-anel3-protecao.png",
+      "nome": "H12-anel3-protecao.png",
+      "data": "2026-11-03T18:51:02"
+    },
+    {
+      "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
+      "nome": "H09-tela-inicial-usb.png",
+      "data": "2026-11-03T18:50:56"
+    },
+    {
+      "arquivo": "docs/capturas/H09-mem-data.png",
+      "nome": "H09-mem-data.png",
+      "data": "2026-11-03T18:50:53"
+    },
+    {
+      "arquivo": "docs/capturas/H09-cat-sagui.png",
+      "nome": "H09-cat-sagui.png",
+      "data": "2026-11-03T18:50:52"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ls-cd.png",
+      "nome": "H09-ls-cd.png",
+      "data": "2026-11-03T18:50:49"
+    },
+    {
+      "arquivo": "docs/capturas/H09-ajuda.png",
+      "nome": "H09-ajuda.png",
+      "data": "2026-11-03T18:50:48"
+    },
+    {
+      "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
+      "nome": "H09-tela-inicial-ide.png",
+      "data": "2026-11-03T18:50:47"
+    },
+    {
+      "arquivo": "docs/capturas/H04-boot-vdi.png",
+      "nome": "H04-boot-vdi.png",
+      "data": "2026-11-03T18:50:41"
+    },
+    {
+      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
+      "nome": "H04-fix-memoria-6g.png",
+      "data": "2026-11-03T18:50:23"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-usb.png",
+      "nome": "H03-kernel-usb.png",
+      "data": "2026-11-03T18:50:11"
+    },
+    {
+      "arquivo": "docs/capturas/H03-kernel-ide.png",
+      "nome": "H03-kernel-ide.png",
+      "data": "2026-11-03T18:49:59"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-usb.png",
+      "nome": "H03-estagio2-usb.png",
+      "data": "2026-11-03T18:49:52"
+    },
+    {
+      "arquivo": "docs/capturas/H03-estagio2-ide.png",
+      "nome": "H03-estagio2-ide.png",
+      "data": "2026-11-03T18:49:46"
+    },
+    {
+      "arquivo": "docs/capturas/H21-janela-fechada.png",
+      "nome": "H21-janela-fechada.png",
+      "data": "2026-11-03T18:49:32"
+    },
+    {
+      "arquivo": "docs/capturas/H21-janela-arrastada.png",
+      "nome": "H21-janela-arrastada.png",
+      "data": "2026-11-03T18:49:28"
+    },
+    {
+      "arquivo": "docs/capturas/H21-duas-janelas.png",
+      "nome": "H21-duas-janelas.png",
+      "data": "2026-11-03T18:49:26"
+    },
+    {
       "arquivo": "docs/capturas/H20-area-de-trabalho.png",
       "nome": "H20-area-de-trabalho.png",
       "data": "2026-11-03T18:46:22"
@@ -914,71 +1060,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/G470-fase4-grafico-touchpad.png",
       "nome": "G470-fase4-grafico-touchpad.png",
       "data": "2026-11-03T18:37:28"
-    },
-    {
-      "arquivo": "docs/capturas/H19-cursor-movido.png",
-      "nome": "H19-cursor-movido.png",
-      "data": "2026-11-03T18:26:22"
-    },
-    {
-      "arquivo": "docs/capturas/H18-edicao-e-segundo-plano.png",
-      "nome": "H18-edicao-e-segundo-plano.png",
-      "data": "2026-11-03T18:26:06"
-    },
-    {
-      "arquivo": "docs/capturas/H18-fonte-acentos.png",
-      "nome": "H18-fonte-acentos.png",
-      "data": "2026-11-03T18:26:00"
-    },
-    {
-      "arquivo": "docs/capturas/H17-formas-ide.png",
-      "nome": "H17-formas-ide.png",
-      "data": "2026-11-03T18:25:38"
-    },
-    {
-      "arquivo": "docs/capturas/H16-tab-historico.png",
-      "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T18:25:35"
-    },
-    {
-      "arquivo": "docs/capturas/H16-falha-protecao.png",
-      "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T18:25:29"
-    },
-    {
-      "arquivo": "docs/capturas/H16-contador-e-ps.png",
-      "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T18:25:18"
-    },
-    {
-      "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
-      "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T18:25:15"
-    },
-    {
-      "arquivo": "docs/capturas/H16-ajuda.png",
-      "nome": "H16-ajuda.png",
-      "data": "2026-11-03T18:24:57"
-    },
-    {
-      "arquivo": "docs/capturas/H15-pipes.png",
-      "nome": "H15-pipes.png",
-      "data": "2026-11-03T18:24:51"
-    },
-    {
-      "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
-      "nome": "H14-arquivos-gravaveis.png",
-      "data": "2026-11-03T18:24:45"
-    },
-    {
-      "arquivo": "docs/capturas/H13-ola-argumentos.png",
-      "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T18:24:33"
-    },
-    {
-      "arquivo": "docs/capturas/H12-anel3-protecao.png",
-      "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T18:24:27"
     },
     {
       "arquivo": "docs/capturas/H11-tarefas-A-B.png",
@@ -994,36 +1075,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H10-dois-espacos.png",
       "nome": "H10-dois-espacos.png",
       "data": "2026-11-03T18:24:07"
-    },
-    {
-      "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
-      "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T18:24:01"
-    },
-    {
-      "arquivo": "docs/capturas/H09-mem-data.png",
-      "nome": "H09-mem-data.png",
-      "data": "2026-11-03T18:23:58"
-    },
-    {
-      "arquivo": "docs/capturas/H09-cat-sagui.png",
-      "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T18:23:56"
-    },
-    {
-      "arquivo": "docs/capturas/H09-ls-cd.png",
-      "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T18:23:54"
-    },
-    {
-      "arquivo": "docs/capturas/H09-ajuda.png",
-      "nome": "H09-ajuda.png",
-      "data": "2026-11-03T18:23:52"
-    },
-    {
-      "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
-      "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T18:23:52"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
@@ -1044,36 +1095,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
       "data": "2026-11-03T18:23:10"
-    },
-    {
-      "arquivo": "docs/capturas/H04-boot-vdi.png",
-      "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T18:23:04"
-    },
-    {
-      "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
-      "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T18:22:47"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-usb.png",
-      "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T18:22:35"
-    },
-    {
-      "arquivo": "docs/capturas/H03-kernel-ide.png",
-      "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T18:22:23"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-usb.png",
-      "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T18:22:17"
-    },
-    {
-      "arquivo": "docs/capturas/H03-estagio2-ide.png",
-      "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T18:22:11"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
@@ -1103,14 +1124,14 @@ window.SAGUI_STATUS = {
   ],
   "linhas": {
     "boot": 903,
-    "kernel": 6695,
-    "userland": 1591,
-    "ferramentas": 2093
+    "kernel": 6706,
+    "userland": 1652,
+    "ferramentas": 2201
   },
   "imagem": {
-    "bytes_util": 257024,
+    "bytes_util": 271360,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 58.8
+  "progresso_geral": 61.8
 };

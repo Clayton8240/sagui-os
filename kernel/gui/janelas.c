@@ -76,9 +76,11 @@ void gui_redesenhar(int x, int y, int l, int a)
     if (y + a > suj_y1) suj_y1 = y + a;
 }
 
+/* Inclui o contorno escuro de 1 pixel, desenhado por fora da moldura (sem
+ * isso, arrastar deixava rastros). */
 static void redesenhar_janela(janela_t *j)
 {
-    gui_redesenhar(j->x, j->y, moldura_l(j), moldura_a(j));
+    gui_redesenhar(j->x - 1, j->y - 1, moldura_l(j) + 2, moldura_a(j) + 2);
 }
 
 static janela_t *focada(void)
@@ -168,7 +170,11 @@ static void tratar_mouse(evento_mouse_t *m)
 
     if (arrastando >= 0) {
         janela_t *j = &janelas[arrastando];
-        if (!j->usada || !(m->botoes & BOTAO_ESQUERDO)) { arrastando = -1; return; }
+        if (!j->usada || !(m->botoes & BOTAO_ESQUERDO)) {
+            if (j->usada) klog("[GUI] janela %d movida para (%d,%d)\n", j->id, j->x, j->y);
+            arrastando = -1;
+            return;
+        }
         int nx = m->x - arr_dx, ny = m->y - arr_dy;
         if (ny < BARRA_SUPERIOR) ny = BARRA_SUPERIOR;
         if (ny > (int)video_altura() - BARRA_TITULO) ny = (int)video_altura() - BARRA_TITULO;

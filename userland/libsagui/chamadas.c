@@ -37,3 +37,9 @@ void *aumentar_memoria(unsigned n)    { int r = chamar(SIS_AUMENTAR_MEM, n, 0, 0
 void reiniciar(void)                  { chamar(SIS_REINICIAR, 0, 0, 0); }
 int  modo_terminal(int m)             { return chamar(SIS_MODO_TERMINAL, (unsigned)m, 0, 0); }
 int  limpar_tela(void)                { return chamar(SIS_LIMPAR_TELA, 0, 0, 0); }
+int  criar_janela(const char *t, int l, int a, uint32_t **px)
+                                      { return chamar(SIS_CRIAR_JANELA, (unsigned)t, (unsigned)(l | (a << 16)), (unsigned)px); }
+int  fechar_janela(int id)            { return chamar(SIS_FECHAR_JANELA, (unsigned)id, 0, 0); }
+int  atualizar_janela(int id, const retangulo_t *r) { return chamar(SIS_ATUALIZAR_JANELA, (unsigned)id, (unsigned)r, 0); }
+int  proximo_evento(int id, evento_t *e, bool esperar) { return chamar(SIS_PROXIMO_EVENTO, (unsigned)id, (unsigned)e, esperar); }
+int  titulo_janela(int id, const char *t) { return chamar(SIS_TITULO_JANELA, (unsigned)id, (unsigned)t, 0); }

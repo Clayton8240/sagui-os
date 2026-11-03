@@ -66,6 +66,13 @@ void     reiniciar(void);
 int      modo_terminal(int modo);
 int      limpar_tela(void);
 
+/* ---- janelas (as funções de desenho e os componentes estão em gui.h) ---- */
+int  criar_janela(const char *titulo, int largura, int altura, uint32_t **pixels);
+int  fechar_janela(int id);
+int  atualizar_janela(int id, const retangulo_t *r);   /* r = NULL: a janela toda */
+int  proximo_evento(int id, evento_t *e, bool esperar); /* 1 = veio um evento */
+int  titulo_janela(int id, const char *titulo);
+
 /* ---- memória e texto ---- */
 void  *memcpy(void *d, const void *s, size_t n);
 void  *memmove(void *d, const void *s, size_t n);

@@ -586,3 +586,24 @@ console de tela cheia deixa de desenhar (o texto do kernel vai só para a
 serial), e o shell passa a rodar dentro do programa Terminal. Os testes das
 fases 2 a 4 continuam rodando com uma opção de build (`--console`) que
 mantém o terminal de tela cheia.
+
+## D022. Gerenciador de janelas: detalhes (H21)
+
+**Arrastar, focar, fechar ficam no kernel.** Clique na barra de título
+começa a arrastar; clique em qualquer lugar traz a janela para cima e dá o
+foco; clique no X manda "fechar" ao programa, que decide terminar. O kernel
+não mata o programa: assim um editor pode perguntar "salvar antes de
+fechar?" (H25).
+
+**Quem recebe o quê.** Clique na área de conteúdo vai para a janela, com
+coordenadas relativas a ela; o soltar e os movimentos com botão apertado vão
+para a mesma janela que recebeu o clique (mesmo que o mouse saia dela), o
+que permite arrastar coisas dentro de um programa; movimento sem botão vai
+para a janela com foco, se o mouse estiver sobre ela; teclas vão para a
+janela com foco. Duplo clique é detectado pelo kernel (dois cliques em
+450 ms no mesmo lugar) e chega como `cliques = 2`.
+
+**Tarefa do kernel que dorme de verdade.** O gerenciador acorda a cada tique
+para consumir as filas do mouse e do teclado. Para dormir ele bloqueia e cede
+a vez na hora, por uma interrupção de software só do kernel (0x81); sem isso
+o processo 0 nunca mais rodava (erro 11).

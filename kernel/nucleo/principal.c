@@ -238,9 +238,10 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     }
     klog("[SAGUI] boot ok\n");
 
-    if (info_boot.teste[0] == '/')
+    bool vai_ter_gui = grafico && !(info_boot.opcoes & 2);
+    if (info_boot.teste[0] == '/' && !vai_ter_gui)
         rodar_programa_de_teste(info_boot.teste);
-    else if (info_boot.teste[0])
+    else if (info_boot.teste[0] && info_boot.teste[0] != '/')
         autoteste_executar(info_boot.teste);
 
     /* H20: com vídeo e sem a opção --console, a área de trabalho assume a
@@ -248,9 +249,13 @@ void inicio_kernel(uint32_t magico, info_boot_t *bi)
     if (grafico && !(info_boot.opcoes & 2) && gui_iniciar()) {
         console_esconder(true);
         klog("[SAGUI] area de trabalho no ar\n");
-        char *argv_t[] = { "terminal", NULL };
-        int pid = processo_executar("/bin/terminal", 1, argv_t, NULL);
-        klog("[SAGUI] terminal: %d\n", pid);
+        if (info_boot.teste[0] == '/') {
+            rodar_programa_de_teste(info_boot.teste);   /* testes da fase 5: programa gráfico */
+        } else {
+            char *argv_t[] = { "terminal", NULL };
+            int pid = processo_executar("/bin/terminal", 1, argv_t, NULL);
+            klog("[SAGUI] terminal: %d\n", pid);
+        }
         for (;;)
             cpu_espera();   /* o processo 0 só descansa; o resto são processos e a tarefa das janelas */
     }

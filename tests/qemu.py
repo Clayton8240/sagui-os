@@ -303,6 +303,45 @@ class Maquina:
             time.sleep(0.2)
         return self.serial()[len(antes):].replace("\r", "")
 
+    # ------------------------------------------------------------ mouse
+    def mouse_para(self, x, y):
+        """Leva o cursor a (x, y): primeiro ao canto (0,0), depois em passos."""
+        # Passos pequenos e com pausa: o QEMU junta movimentos seguidos, e um
+        # pacote que estoura o limite do PS/2 é descartado pelo driver.
+        for _ in range(14):
+            self.monitor("mouse_move -80 -80")
+            time.sleep(0.02)
+        self._mx = self._my = 0
+        self.mouse_mover(x, y)
+
+    def mouse_mover(self, x, y, botao_apertado=False):
+        """Move em passos pequenos até (x, y) a partir da posição conhecida."""
+        while (self._mx, self._my) != (x, y):
+            dx = max(-40, min(40, x - self._mx))
+            dy = max(-40, min(40, y - self._my))
+            self.monitor(f"mouse_move {dx} {dy}")
+            self._mx += dx
+            self._my += dy
+            time.sleep(0.03)
+        time.sleep(0.2)
+
+    def clique(self, x, y, botao=1, duplo=False):
+        self.mouse_para(x, y)
+        for _ in range(2 if duplo else 1):
+            self.monitor(f"mouse_button {botao}")
+            time.sleep(0.05)
+            self.monitor("mouse_button 0")
+            time.sleep(0.1)
+        time.sleep(0.4)
+
+    def arrastar(self, x0, y0, x1, y1):
+        self.mouse_para(x0, y0)
+        self.monitor("mouse_button 1")
+        time.sleep(0.2)
+        self.mouse_mover(x1, y1)
+        self.monitor("mouse_button 0")
+        time.sleep(0.5)
+
     # ------------------------------------------------------------ teclado
     def tecla(self, nome, espera=0.08):
         self.monitor(f"sendkey {nome}")
