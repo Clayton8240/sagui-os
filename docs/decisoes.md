@@ -271,3 +271,34 @@ o shell usa para ter histórico e completar com Tab.
 mínimo): `aumentar_memoria` (a memória dos programas, usada pelo `malloc`
 da libsagui), `pasta_atual` (para o `pwd`), `renomear` (para o `mv`),
 `modo_terminal` (linha/bruto, para o shell) e `limpar_tela`.
+
+## D011. Processos e escalonador: como foi pensado (H11)
+
+**Troca de contexto sem rotina própria.** Graças ao despachante que devolve o
+quadro a retomar (D007), trocar de processo é: guardar o ponteiro do quadro
+atual no processo, escolher outro, trocar o CR3 se o espaço for diferente,
+ajustar o `esp0` da TSS (pilha do kernel do próximo programa no anel 3) e
+devolver o quadro dele. O `iret` no fim do trecho comum faz o resto.
+
+**O processo 0 é o próprio boot.** Em vez de criar uma tarefa ociosa, o
+código que terminou a inicialização vira o processo 0. Ele só é escolhido
+quando ninguém mais está pronto, e fica em `hlt`.
+
+**Tarefas do kernel começam por um quadro montado à mão.** O `iret` para o
+anel 0 desempilha só EIP, CS e EFLAGS; os dois campos seguintes do quadro
+(`esp_usuario`, `ss_usuario`), que só existem para o anel 3, ficam no topo
+da pilha quando a função começa. Usamos isso de propósito: um vira o
+endereço de retorno (para uma rotina que encerra a tarefa) e o outro, o
+argumento da função.
+
+**Round-robin com fatia de 2 tiques (20 ms)**, procurando o próximo pronto
+na tabela a partir do atual, dando a volta. Se o ocioso está rodando e alguém
+fica pronto (ex.: uma tecla chegou), a troca acontece no tique seguinte, sem
+esperar a fatia.
+
+**Fim de processo em duas etapas.** Ao terminar, a memória do programa e os
+arquivos são liberados na hora, mas a pilha do kernel e a entrada na tabela
+ficam (estado zumbi) até o pai recolher o código de saída com `esperar`. Não
+dá para liberar a pilha do kernel na hora: estamos rodando nela até o
+escalonador devolver o quadro de outro processo. Órfãos passam para o
+processo 0 e são recolhidos pelo próprio escalonador.

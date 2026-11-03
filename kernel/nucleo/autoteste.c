@@ -15,6 +15,7 @@
 #include "sgfs.h"
 #include "caminho.h"
 #include "paginacao.h"
+#include "processo.h"
 #include "memoria.h"
 
 static int falhas;
@@ -285,6 +286,41 @@ static void teste_falta_pagina(void)
     klog("[TESTE] falta_pagina FALHOU: a leitura passou\n");
 }
 
+/* H11: duas tarefas que só escrevem, sem nunca ceder a vez. Se a saída
+ * alternar entre A e B, quem alternou foi o escalonador, no tique do relógio. */
+static volatile int tarefas_vivas;
+
+static void tarefa_letra(void *arg)
+{
+    char letra = (char)(uint32_t)arg;
+    for (int i = 0; i < 60; i++) {
+        serial_char(letra);
+        vga_char(letra);
+        /* Espera ativa até o próximo tique: gasta CPU sem chamar o escalonador. */
+        uint32_t t = relogio_tiques();
+        while (relogio_tiques() == t)
+            ;
+    }
+    tarefas_vivas--;
+}
+
+static void teste_tarefas(void)
+{
+    kprintf("Duas tarefas imprimindo A e B, sem cooperar:\n");
+    tarefas_vivas = 2;
+    klog("[TESTE] saida=");
+    processo_t *a = tarefa_kernel("tarefa-A", tarefa_letra, (void *)'A');
+    processo_t *b = tarefa_kernel("tarefa-B", tarefa_letra, (void *)'B');
+    confere(a && b && a->pid != b->pid, "duas tarefas com PIDs diferentes");
+    while (tarefas_vivas > 0)
+        cpu_espera();   /* este é o processo 0: só roda quando A e B não estão prontos */
+    klog("\n");
+    kprintf("\n");
+    relogio_dormir_ms(100);
+    confere(processo_por_pid(a->pid) == NULL && processo_por_pid(b->pid) == NULL,
+            "tarefas terminadas foram recolhidas");
+}
+
 typedef struct {
     const char *nome;
     void (*funcao)(void);
@@ -298,6 +334,7 @@ static const autoteste_t testes[] = {
     { "sgfs", teste_sgfs },
     { "paginacao", teste_paginacao },
     { "falta_pagina", teste_falta_pagina },
+    { "tarefas", teste_tarefas },
 };
 
 void autoteste_executar(const char *nome)

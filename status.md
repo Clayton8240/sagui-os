@@ -1,14 +1,14 @@
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T16:10:05_
+_Atualizado em 2026-11-03T16:12:46_
 
-- **Situação:** Trabalhando na H11: Processos e escalonador
+- **Situação:** Trabalhando na H12: Ring 3 e chamadas de sistema
 - **Fase atual:** 3
-- **História atual:** H11
-- **Progresso geral:** 29.4%
+- **História atual:** H12
+- **Progresso geral:** 32.4%
 - **Bloqueio:** nenhum
-- **Imagem:** 44544 bytes úteis (meta 1474560 bytes = 1,44 MB)
-- **Linhas de código:** boot 899, kernel 2938, userland 0
+- **Imagem:** 47104 bytes úteis (meta 1474560 bytes = 1,44 MB)
+- **Linhas de código:** boot 899, kernel 3252, userland 0
 
 ## Fases
 
@@ -16,7 +16,7 @@ _Atualizado em 2026-11-03T16:10:05_
 | --- | --- | --- | --- |
 | 1 | Boot | 100.0% | feito |
 | 2 | Kernel e terminal | 100.0% | feito |
-| 3 | Processos e programas | 14.3% | em andamento |
+| 3 | Processos e programas | 28.6% | em andamento |
 | 4 | Gráfico e mouse | 0.0% | a fazer |
 | 5 | Janelas e programas | 0.0% | a fazer |
 | 6 | Pendrive de dados | 0.0% | a fazer |
@@ -36,8 +36,8 @@ _Atualizado em 2026-11-03T16:10:05_
 | H08 | Sistema de arquivos SGFS | feito | 2 |
 | H09 | Terminal provisório do kernel | feito | 2 |
 | H10 | Paginação | feito | 3 |
-| H11 | Processos e escalonador | em andamento |  |
-| H12 | Ring 3 e chamadas de sistema | a fazer |  |
+| H11 | Processos e escalonador | feito | 3 |
+| H12 | Ring 3 e chamadas de sistema | em andamento |  |
 | H13 | Carregador ELF e libsagui | a fazer |  |
 | H14 | Arquivos e pastas graváveis | a fazer |  |
 | H15 | Pipes | a fazer |  |
@@ -66,6 +66,8 @@ _Atualizado em 2026-11-03T16:10:05_
 
 ## Últimas ações
 
+- 2026-11-03T16:12:46: Início da H12: Ring 3 e chamadas de sistema
+- 2026-11-03T16:12:46: H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar
 - 2026-11-03T16:10:05: Início da H11: Processos e escalonador
 - 2026-11-03T16:10:05: H10 concluída: Paginação de 2 níveis, espaços por processo, tela de falta de página
 - 2026-11-03T16:07:26: Início da H10: Paginação
@@ -79,5 +81,3 @@ _Atualizado em 2026-11-03T16:10:05_
 - 2026-11-03T15:39:25: Erro corrigido: Saudação e memória quebravam linha
 - 2026-11-03T15:39:25: Erro corrigido: Árvore do SGFS saiu como %*s na tela
 - 2026-11-03T15:37:48: Início da H08: Sistema de arquivos SGFS
-- 2026-11-03T15:37:48: H07 concluída: Driver PS/2 com ABNT2 completo, teclas mortas, AltGr, Caps Lock; 25 grupos de teclas conferidos byte a byte
-- 2026-11-03T15:32:06: Início da H07: Teclado PS/2 com ABNT2

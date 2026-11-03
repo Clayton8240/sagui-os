@@ -1,9 +1,9 @@
 {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:10:05",
-  "situacao": "Trabalhando na H11: Processos e escalonador",
+  "atualizado": "2026-11-03T16:12:46",
+  "situacao": "Trabalhando na H12: Ring 3 e chamadas de sistema",
   "fase_atual": 3,
-  "historia_atual": "H11",
+  "historia_atual": "H12",
   "bloqueio": "",
   "mensagem_fase": "",
   "fases": [
@@ -25,7 +25,7 @@
       "numero": 3,
       "nome": "Processos e programas",
       "estado": "em andamento",
-      "progresso": 14.3
+      "progresso": 28.6
     },
     {
       "numero": 4,
@@ -189,12 +189,12 @@
       "titulo": "Processos e escalonador",
       "objetivo": "PCB, troca de contexto em assembly, round-robin preemptivo no PIT, processo ocioso.",
       "aceite": "Duas tarefas imprimem A e B alternados na serial sem cooperar.",
-      "estado": "em andamento",
+      "estado": "feito",
       "bonus": false,
       "inicio": "2026-11-03T16:10:05",
-      "fim": null,
-      "minutos": null,
-      "resultado": ""
+      "fim": "2026-11-03T16:12:46",
+      "minutos": 3,
+      "resultado": "Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar"
     },
     {
       "id": "H12",
@@ -202,9 +202,9 @@
       "titulo": "Ring 3 e chamadas de sistema",
       "objetivo": "TSS, segmentos de usuário, ring 3, int 0x80, validação de ponteiros.",
       "aceite": "Programa em ring 3 escreve `Ola do ring 3!` e sai; `cli` no ring 3 encerra só aquele processo.",
-      "estado": "a fazer",
+      "estado": "em andamento",
       "bonus": false,
-      "inicio": null,
+      "inicio": "2026-11-03T16:12:46",
       "fim": null,
       "minutos": null,
       "resultado": ""
@@ -546,13 +546,13 @@
       "conceito": "Processos",
       "implementa": "Criação, término, estados, PID, pai e filho",
       "historias": "H11, H13",
-      "estado": "a fazer"
+      "estado": "parcial"
     },
     {
       "conceito": "Escalonamento",
       "implementa": "Round-robin preemptivo no relógio",
       "historias": "H11",
-      "estado": "a fazer"
+      "estado": "feito"
     },
     {
       "conceito": "Comunicação entre processos",
@@ -616,6 +616,14 @@
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-03T16:12:46",
+      "texto": "Início da H12: Ring 3 e chamadas de sistema"
+    },
+    {
+      "data": "2026-11-03T16:12:46",
+      "texto": "H11 concluída: Escalonador round-robin preemptivo; tarefas A e B alternam a cada 20 ms sem cooperar"
+    },
     {
       "data": "2026-11-03T16:10:05",
       "texto": "Início da H11: Processos e escalonador"
@@ -769,32 +777,42 @@
     {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T16:10:00"
+      "data": "2026-11-03T16:12:40"
     },
     {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T16:09:58"
+      "data": "2026-11-03T16:12:38"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T16:09:55"
+      "data": "2026-11-03T16:12:35"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T16:09:52"
+      "data": "2026-11-03T16:12:33"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T16:09:50"
+      "data": "2026-11-03T16:12:31"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T16:09:50"
+      "data": "2026-11-03T16:12:30"
+    },
+    {
+      "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
+      "nome": "H05-tela-de-erro-divisao.png",
+      "data": "2026-11-03T16:12:17"
+    },
+    {
+      "arquivo": "docs/capturas/H11-tarefas-A-B.png",
+      "nome": "H11-tarefas-A-B.png",
+      "data": "2026-11-03T16:11:55"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
@@ -825,11 +843,6 @@
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
       "data": "2026-11-03T15:43:40"
-    },
-    {
-      "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
-      "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T15:43:11"
     },
     {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
@@ -879,14 +892,14 @@
   ],
   "linhas": {
     "boot": 899,
-    "kernel": 2938,
+    "kernel": 3252,
     "userland": 0,
-    "ferramentas": 1340
+    "ferramentas": 1374
   },
   "imagem": {
-    "bytes_util": 44544,
+    "bytes_util": 47104,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },
-  "progresso_geral": 29.4
+  "progresso_geral": 32.4
 }

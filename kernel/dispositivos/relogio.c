@@ -10,6 +10,7 @@
 #include "relogio.h"
 #include "cpu.h"
 #include "portas.h"
+#include "processo.h"
 
 #define PIT_FREQ   1193182u
 #define PIT_CANAL0 0x40
@@ -17,10 +18,15 @@
 
 static volatile uint32_t tiques;
 
+/* A cada tique: conta o tempo e deixa o escalonador decidir se troca de
+ * processo. É isto que torna a multitarefa preemptiva: nenhum programa
+ * precisa "ceder a vez". */
 static quadro_t *ao_tique(quadro_t *q)
 {
     tiques++;
-    return q;
+    if (!atual)
+        return q;   /* antes dos processos existirem */
+    return escalonador_tique(q);
 }
 
 void relogio_iniciar(void)
