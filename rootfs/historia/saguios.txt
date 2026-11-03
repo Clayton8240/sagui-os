@@ -20,4 +20,14 @@ Fase 2 - Kernel e terminal
   tem 8 GB e um mapa de memória com 20 regiões, que empurrou o texto para
   cima. Agora o mapa vai para o log e a tela mostra só o resumo.
 
+Fase 3 - Processos e programas
+  A fase que transforma o kernel num sistema operacional de verdade.
+  Cada programa ganhou o próprio espaço de memória (paginação) e roda no
+  anel 3, sem privilégios: se tentar mexer no kernel ou usar uma instrução
+  proibida, só ele é encerrado. Um escalonador troca de programa 50 vezes
+  por segundo. Os programas pedem tudo ao kernel por chamadas de sistema,
+  são carregados de arquivos ELF, gravam arquivos e pastas na memória e
+  conversam por pipes. O terminal virou o sagsh, um programa comum, e cada
+  comando (ls, cat, cp, ps...) é um programa separado em /bin.
+
 (Este arquivo é atualizado ao fim de cada fase.)

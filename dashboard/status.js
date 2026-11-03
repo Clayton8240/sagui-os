@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T16:41:25",
-  "situacao": "Trabalhando na H16: Shell e comandos como programas",
+  "atualizado": "2026-11-03T16:45:51",
+  "situacao": "Aguardando teste do Eli: fase 3",
   "fase_atual": 3,
-  "historia_atual": "H16",
+  "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "",
+  "mensagem_fase": "Eli, terminei a fase 3: Processos e programas. Pode testar!\n\nO que foi feito: o SaguiOS virou um sistema operacional no sentido do\nTanenbaum. Cada programa tem a própria memória (paginação) e roda sem\nprivilégios (anel 3), pedindo tudo ao kernel por chamadas de sistema. Vários\nprogramas rodam ao mesmo tempo, trocados pelo relógio. O terminal agora é o\nshell sagsh, um programa comum, e cada comando (ls, cat, cp, ps...) é um\nprograma ELF separado em /bin. Dá para gravar arquivos e pastas na memória,\nredirecionar (> >> <) e ligar programas com pipes (ls bin | conta).\nHistórias concluídas: H10 a H16\nImagem: entrega/fase3/saguios.vdi (VirtualBox, testar primeiro) e saguios.img (pendrive, G470)\nRoteiro de teste: docs/teste-fase3.md\nO que você deve ver no G470: seis linhas [ ok ] e o prompt do sagsh; \"contador\n10 &\" contando enquanto você usa ps e outros comandos; \"falha\" encerrando só\no programa, sem tela vermelha.\nProblemas conhecidos: no modo texto, ã e õ continuam sem til (fonte própria na\nfase 4). Os arquivos criados somem ao desligar (o pendrive de dados é a fase 6).\n\nQuando testar, me diga \"fase 3 ok\" ou descreva o que aconteceu.",
   "fases": [
     {
       "numero": 1,
@@ -25,7 +25,7 @@ window.SAGUI_STATUS = {
     {
       "numero": 3,
       "nome": "Processos e programas",
-      "estado": "em andamento",
+      "estado": "aguardando teste",
       "progresso": 100.0
     },
     {
@@ -177,7 +177,7 @@ window.SAGUI_STATUS = {
       "titulo": "Paginação",
       "objetivo": "Diretório e tabelas de páginas, kernel em todos os espaços, page fault com mensagem clara.",
       "aceite": "Dois espaços de endereço com valores diferentes no mesmo endereço virtual; acesso inválido gera a tela de page fault.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:07:26",
       "fim": "2026-11-03T16:10:05",
@@ -190,7 +190,7 @@ window.SAGUI_STATUS = {
       "titulo": "Processos e escalonador",
       "objetivo": "PCB, troca de contexto em assembly, round-robin preemptivo no PIT, processo ocioso.",
       "aceite": "Duas tarefas imprimem A e B alternados na serial sem cooperar.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:10:05",
       "fim": "2026-11-03T16:12:46",
@@ -203,7 +203,7 @@ window.SAGUI_STATUS = {
       "titulo": "Ring 3 e chamadas de sistema",
       "objetivo": "TSS, segmentos de usuário, ring 3, int 0x80, validação de ponteiros.",
       "aceite": "Programa em ring 3 escreve `Ola do ring 3!` e sai; `cli` no ring 3 encerra só aquele processo.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:12:46",
       "fim": "2026-11-03T16:16:35",
@@ -216,7 +216,7 @@ window.SAGUI_STATUS = {
       "titulo": "Carregador ELF e libsagui",
       "objetivo": "Leitor de ELF32 estático, pilha do usuário com argumentos, libsagui com printf.",
       "aceite": "O kernel carrega bin/ola do SGFS e ele imprime os argumentos.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:16:35",
       "fim": "2026-11-03T16:21:08",
@@ -229,7 +229,7 @@ window.SAGUI_STATUS = {
       "titulo": "Arquivos e pastas graváveis",
       "objetivo": "Camada gravável na RAM sobre o SGFS, tabela de arquivos por processo, terminal como 0 e 1.",
       "aceite": "Teste em ring 3 cria, escreve, relê e apaga tmp/teste.txt; o mesmo com uma pasta.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:21:08",
       "fim": "2026-11-03T16:25:17",
@@ -242,7 +242,7 @@ window.SAGUI_STATUS = {
       "titulo": "Pipes",
       "objetivo": "pipe e duplicar, buffer no kernel, bloqueio de leitor e escritor, EOF.",
       "aceite": "Dois processos transferem por pipe um texto maior que o buffer sem perda nem duplicação.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:25:17",
       "fim": "2026-11-03T16:27:11",
@@ -255,7 +255,7 @@ window.SAGUI_STATUS = {
       "titulo": "Shell e comandos como programas",
       "objetivo": "bin/sagsh como primeiro processo, redirecionamento, pipe, histórico, Tab, comandos e apelidos.",
       "aceite": "Roteiro executa todos os comandos e apelidos; falha derruba só o processo; capturas em docs/capturas/.",
-      "estado": "feito",
+      "estado": "aguardando teste",
       "bonus": false,
       "inicio": "2026-11-03T16:27:11",
       "fim": "2026-11-03T16:41:25",
@@ -618,6 +618,14 @@ window.SAGUI_STATUS = {
   ],
   "acoes": [
     {
+      "data": "2026-11-03T16:45:51",
+      "texto": "Fase 3 entregue. Aguardando teste do Eli."
+    },
+    {
+      "data": "2026-11-03T16:45:51",
+      "texto": "Todos os testes passaram (H01 a H16, 16/16)"
+    },
+    {
       "data": "2026-11-03T16:41:25",
       "texto": "H16 concluída: sagsh no anel 3 com redirecionamento, pipes, histórico e Tab; 18 programas com apelidos; terminal provisório removido"
     },
@@ -834,152 +842,152 @@ window.SAGUI_STATUS = {
     {
       "arquivo": "docs/capturas/H16-tab-historico.png",
       "nome": "H16-tab-historico.png",
-      "data": "2026-11-03T16:40:59"
+      "data": "2026-11-03T16:45:07"
     },
     {
       "arquivo": "docs/capturas/H16-falha-protecao.png",
       "nome": "H16-falha-protecao.png",
-      "data": "2026-11-03T16:40:54"
+      "data": "2026-11-03T16:45:02"
     },
     {
       "arquivo": "docs/capturas/H16-contador-e-ps.png",
       "nome": "H16-contador-e-ps.png",
-      "data": "2026-11-03T16:40:45"
+      "data": "2026-11-03T16:44:52"
     },
     {
       "arquivo": "docs/capturas/H16-arquivos-redirecionamento-pipe.png",
       "nome": "H16-arquivos-redirecionamento-pipe.png",
-      "data": "2026-11-03T16:40:42"
+      "data": "2026-11-03T16:44:49"
     },
     {
       "arquivo": "docs/capturas/H16-ajuda.png",
       "nome": "H16-ajuda.png",
-      "data": "2026-11-03T16:40:25"
+      "data": "2026-11-03T16:44:32"
     },
     {
       "arquivo": "docs/capturas/H15-pipes.png",
       "nome": "H15-pipes.png",
-      "data": "2026-11-03T16:40:18"
+      "data": "2026-11-03T16:44:26"
     },
     {
       "arquivo": "docs/capturas/H14-arquivos-gravaveis.png",
       "nome": "H14-arquivos-gravaveis.png",
-      "data": "2026-11-03T16:40:12"
+      "data": "2026-11-03T16:44:20"
     },
     {
       "arquivo": "docs/capturas/H13-ola-argumentos.png",
       "nome": "H13-ola-argumentos.png",
-      "data": "2026-11-03T16:40:01"
+      "data": "2026-11-03T16:44:09"
     },
     {
       "arquivo": "docs/capturas/H12-anel3-protecao.png",
       "nome": "H12-anel3-protecao.png",
-      "data": "2026-11-03T16:39:54"
+      "data": "2026-11-03T16:44:03"
     },
     {
       "arquivo": "docs/capturas/H11-tarefas-A-B.png",
       "nome": "H11-tarefas-A-B.png",
-      "data": "2026-11-03T16:39:48"
+      "data": "2026-11-03T16:43:57"
     },
     {
       "arquivo": "docs/capturas/H10-tela-falta-de-pagina.png",
       "nome": "H10-tela-falta-de-pagina.png",
-      "data": "2026-11-03T16:39:41"
+      "data": "2026-11-03T16:43:50"
     },
     {
       "arquivo": "docs/capturas/H10-dois-espacos.png",
       "nome": "H10-dois-espacos.png",
-      "data": "2026-11-03T16:39:35"
+      "data": "2026-11-03T16:43:44"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-usb.png",
       "nome": "H09-tela-inicial-usb.png",
-      "data": "2026-11-03T16:39:29"
+      "data": "2026-11-03T16:43:38"
     },
     {
       "arquivo": "docs/capturas/H09-mem-data.png",
       "nome": "H09-mem-data.png",
-      "data": "2026-11-03T16:39:27"
+      "data": "2026-11-03T16:43:36"
     },
     {
       "arquivo": "docs/capturas/H09-cat-sagui.png",
       "nome": "H09-cat-sagui.png",
-      "data": "2026-11-03T16:39:26"
+      "data": "2026-11-03T16:43:34"
     },
     {
       "arquivo": "docs/capturas/H09-ls-cd.png",
       "nome": "H09-ls-cd.png",
-      "data": "2026-11-03T16:39:24"
+      "data": "2026-11-03T16:43:32"
     },
     {
       "arquivo": "docs/capturas/H09-ajuda.png",
       "nome": "H09-ajuda.png",
-      "data": "2026-11-03T16:39:22"
+      "data": "2026-11-03T16:43:31"
     },
     {
       "arquivo": "docs/capturas/H09-tela-inicial-ide.png",
       "nome": "H09-tela-inicial-ide.png",
-      "data": "2026-11-03T16:39:22"
+      "data": "2026-11-03T16:43:30"
     },
     {
       "arquivo": "docs/capturas/H08-sgfs-lista.png",
       "nome": "H08-sgfs-lista.png",
-      "data": "2026-11-03T16:39:16"
+      "data": "2026-11-03T16:43:25"
     },
     {
       "arquivo": "docs/capturas/H07-teclado-abnt2.png",
       "nome": "H07-teclado-abnt2.png",
-      "data": "2026-11-03T16:39:10"
+      "data": "2026-11-03T16:43:19"
     },
     {
       "arquivo": "docs/capturas/H06-autoteste-memoria.png",
       "nome": "H06-autoteste-memoria.png",
-      "data": "2026-11-03T16:39:01"
+      "data": "2026-11-03T16:43:09"
     },
     {
       "arquivo": "docs/capturas/H05-tela-de-erro-divisao.png",
       "nome": "H05-tela-de-erro-divisao.png",
-      "data": "2026-11-03T16:38:41"
+      "data": "2026-11-03T16:42:49"
     },
     {
       "arquivo": "docs/capturas/H04-boot-vdi.png",
       "nome": "H04-boot-vdi.png",
-      "data": "2026-11-03T16:38:35"
+      "data": "2026-11-03T16:42:43"
     },
     {
       "arquivo": "docs/capturas/H04-fix-memoria-6g.png",
       "nome": "H04-fix-memoria-6g.png",
-      "data": "2026-11-03T16:38:18"
+      "data": "2026-11-03T16:42:26"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-usb.png",
       "nome": "H03-kernel-usb.png",
-      "data": "2026-11-03T16:38:06"
+      "data": "2026-11-03T16:42:15"
     },
     {
       "arquivo": "docs/capturas/H03-kernel-ide.png",
       "nome": "H03-kernel-ide.png",
-      "data": "2026-11-03T16:37:55"
+      "data": "2026-11-03T16:42:04"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-usb.png",
       "nome": "H03-estagio2-usb.png",
-      "data": "2026-11-03T16:37:49"
+      "data": "2026-11-03T16:41:58"
     },
     {
       "arquivo": "docs/capturas/H03-estagio2-ide.png",
       "nome": "H03-estagio2-ide.png",
-      "data": "2026-11-03T16:37:44"
+      "data": "2026-11-03T16:41:52"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-usb.png",
       "nome": "H02-mbr-usb.png",
-      "data": "2026-11-03T16:37:38"
+      "data": "2026-11-03T16:41:47"
     },
     {
       "arquivo": "docs/capturas/H02-mbr-ide.png",
       "nome": "H02-mbr-ide.png",
-      "data": "2026-11-03T16:37:32"
+      "data": "2026-11-03T16:41:41"
     },
     {
       "arquivo": "docs/capturas/G470-fase2-tela-inicial.png",
@@ -999,7 +1007,7 @@ window.SAGUI_STATUS = {
     "ferramentas": 1652
   },
   "imagem": {
-    "bytes_util": 223232,
+    "bytes_util": 224256,
     "bytes_arquivo": 1048576,
     "meta_bytes": 1474560
   },

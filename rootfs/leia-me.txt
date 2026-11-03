@@ -8,16 +8,27 @@ só é lido uma vez, quando o computador liga.
 Como usar o terminal
 --------------------
 
-Digite um comando e aperte Enter. Alguns comandos:
+O terminal é o sagsh, um programa comum. Digite um comando e aperte Enter.
+Cada comando tem também um apelido em português:
 
-  ajuda          lista todos os comandos
-  ls             mostra os arquivos da pasta atual
-  cd <pasta>     entra numa pasta (cd .. volta)
-  cat <arquivo>  mostra o conteúdo de um arquivo
-  mem            mostra a memória total e livre
-  data           mostra a data e a hora
-  limpar         limpa a tela
-  reiniciar      reinicia o computador
+  ajuda              lista todos os comandos (ajuda <comando> explica um)
+  ls / listar        mostra os arquivos da pasta atual
+  cd / entrar        entra numa pasta (cd .. volta)
+  cat / ver          mostra o conteúdo de um arquivo
+  echo / eco         escreve um texto (echo oi > tmp/a.txt grava num arquivo)
+  cp, mv, rm         copia, move e apaga arquivos
+  mkdir, rmdir       cria e remove pastas
+  wc / conta         conta linhas, palavras e letras
+  ps / processos     mostra os programas rodando
+  kill / matar       encerra um programa
+  mem, data, sobre   memória, data e hora, e sobre o sistema
+  contador 10 &      conta 10 segundos em segundo plano
+  falha              faz um erro de propósito (só o programa morre)
+  limpar, reiniciar, sair
+
+Truques: comando > arquivo, comando >> arquivo, comando < arquivo,
+comando1 | comando2 (ex.: ls bin | conta), seta para cima repete
+comandos, Tab completa nomes.
 
 Arquivos para ler
 -----------------

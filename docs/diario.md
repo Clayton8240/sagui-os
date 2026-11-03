@@ -64,3 +64,23 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   21 regiões no E820. Todos os comandos funcionaram, sem tela vermelha; `/`,
   `?` e `ç` conferidos. Acentos com teclas mortas ainda não testados
   isoladamente no notebook (o Eli avisa se der erro).
+- **Fase 3 iniciada** (tag `pre-fase3`). Plano de arquitetura em D010: mapa de
+  endereços, chamadas reiniciáveis, herança só de 0-2.
+- **H10.** Paginação de 2 níveis, tabelas do kernel compartilhadas, janelas
+  para dispositivos, tela de falta de página explicada.
+- **H11.** Escalonador round-robin: `AABBAABB...` com duas tarefas que nunca
+  cedem a vez. Truque usado: o quadro inicial de uma tarefa do kernel guarda
+  o endereço de retorno e o argumento nos campos que o `iret` do anel 0 não lê.
+- **H12.** Anel 3, TSS e `int 0x80` com validação de ponteiros; `cli` e
+  leitura do kernel no anel 3 encerram só o processo.
+- **H13.** Carregador ELF, libsagui, build da userland; `/bin/ola um dois três`.
+- **H14.** Árvore de arquivos na RAM com cópia na escrita, descritores,
+  terminal como arquivo (modos linha e bruto). Regressão encontrada na H12 e
+  corrigida (erro 5); o commit tinha passado porque o script encadeava o
+  commit depois de um `grep` (passei a conferir PASSOU explicitamente).
+- **H15.** Pipes: 20.000 bytes num buffer de 512, nos dois sentidos.
+- **H16.** sagsh com redirecionamento, pipes, `&`, histórico e Tab; 18
+  programas com os apelidos; terminal provisório removido; teste da H09
+  adaptado ao shell. Achado: o GCC não divide em `1 / x` (erro 6).
+- **Fim da fase 3.** 16/16 testes passando. Imagem com 223 KB úteis. Imagens
+  em `entrega/fase3/`. Parada obrigatória: aguardando o teste do Eli.
