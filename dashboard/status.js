@@ -1,12 +1,12 @@
 // Gerado por tools/status.py a partir de status.json. Não editar.
 window.SAGUI_STATUS = {
   "titulo": "SaguiOS: um sistema operacional escrito do zero por IA",
-  "atualizado": "2026-11-03T23:46:02",
-  "situacao": "Aguardando teste do Eli: fase 7",
+  "atualizado": "2026-11-04T00:20:45",
+  "situacao": "Fase 7 confirmada no hardware. Seguindo para a fase 8.",
   "fase_atual": 7,
   "historia_atual": null,
   "bloqueio": "",
-  "mensagem_fase": "Fase bônus pronta para teste: B3 (bip) e B4 (Sagui 3D). Imagens em entrega/bonus/ (e entrega/final/). Roteiro: docs/teste-bonus.md. B1 e B2 cancelados pelo Eli.",
+  "mensagem_fase": "",
   "fases": [
     {
       "numero": 1,
@@ -53,8 +53,9 @@ window.SAGUI_STATUS = {
     {
       "numero": 7,
       "nome": "Bônus (B3 bip, B4 Sagui 3D)",
-      "estado": "aguardando teste",
-      "progresso": 100.0
+      "estado": "feito",
+      "progresso": 100.0,
+      "confirmado": "2026-11-04T00:19:30"
     }
   ],
   "historias": [
@@ -532,7 +533,7 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: bip",
       "objetivo": "Alto-falante do PC pelo canal 2 do PIT.",
       "aceite": "Bip no jogo e comando bip.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": true,
       "inicio": "2026-11-03T22:57:35",
       "fim": "2026-11-03T23:02:23",
@@ -545,7 +546,7 @@ window.SAGUI_STATUS = {
       "titulo": "Bônus: Sagui 3D",
       "objetivo": "Jogo autoral em primeira pessoa, visual 2,5D (salas com alturas próprias de chão e teto, paredes em qualquer ângulo), macacos-prego guardas, estilingue de jabuticaba, bananas, cascas, porteira da banana e cacho dourado, sons com o bip.",
       "aceite": "O jogo abre, o mapa carrega, o sagui anda, a semente atinge o inimigo, o macaco escorrega na casca, a saída só abre com o mínimo de bananas, a fase termina na saída; capturas; três fases em arquivos de texto.",
-      "estado": "aguardando teste",
+      "estado": "feito",
       "bonus": true,
       "inicio": "2026-11-03T23:02:29",
       "fim": "2026-11-03T23:45:56",
@@ -634,6 +635,10 @@ window.SAGUI_STATUS = {
     }
   ],
   "acoes": [
+    {
+      "data": "2026-11-04T00:19:30",
+      "texto": "Eli confirmou: funcionou tudo perfeitamente (bônus)"
+    },
     {
       "data": "2026-11-03T23:45:56",
       "texto": "Fase 7 entregue. Aguardando teste do Eli."
@@ -869,10 +874,6 @@ window.SAGUI_STATUS = {
     {
       "data": "2026-11-03T17:40:18",
       "texto": "Fase 4 entregue. Aguardando teste do Eli."
-    },
-    {
-      "data": "2026-11-03T17:40:18",
-      "texto": "Todos os testes passaram (H01 a H19, 19/19)"
     }
   ],
   "erros": [
@@ -1339,26 +1340,6 @@ window.SAGUI_STATUS = {
       "arquivo": "docs/capturas/H02-mbr-ide.png",
       "nome": "H02-mbr-ide.png",
       "data": "2026-11-03T23:32:03"
-    },
-    {
-      "arquivo": "docs/capturas/explorar-jogo3.png",
-      "nome": "explorar-jogo3.png",
-      "data": "2026-11-03T23:25:06"
-    },
-    {
-      "arquivo": "docs/capturas/explorar-jogo2.png",
-      "nome": "explorar-jogo2.png",
-      "data": "2026-11-03T23:25:04"
-    },
-    {
-      "arquivo": "docs/capturas/explorar-jogo1.png",
-      "nome": "explorar-jogo1.png",
-      "data": "2026-11-03T23:25:02"
-    },
-    {
-      "arquivo": "docs/capturas/explorar-inicio.png",
-      "nome": "explorar-inicio.png",
-      "data": "2026-11-03T23:25:00"
     },
     {
       "arquivo": "docs/capturas/G470-fase5-janelas.png",

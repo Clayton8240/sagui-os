@@ -1,12 +1,8 @@
-```
-Fase bônus pronta para teste: B3 (bip) e B4 (Sagui 3D). Imagens em entrega/bonus/ (e entrega/final/). Roteiro: docs/teste-bonus.md. B1 e B2 cancelados pelo Eli.
-```
-
 # Status do SaguiOS
 
-_Atualizado em 2026-11-03T23:46:02_
+_Atualizado em 2026-11-04T00:20:45_
 
-- **Situação:** Aguardando teste do Eli: fase 7
+- **Situação:** Fase 7 confirmada no hardware. Seguindo para a fase 8.
 - **Fase atual:** 7
 - **História atual:** -
 - **Progresso geral:** 100.0%
@@ -24,7 +20,7 @@ _Atualizado em 2026-11-03T23:46:02_
 | 4 | Gráfico e mouse | 100.0% | feito |
 | 5 | Janelas e programas | 100.0% | feito |
 | 6 | Pendrive de dados | 100.0% | feito |
-| 7 | Bônus (B3 bip, B4 Sagui 3D) | 100.0% | aguardando teste |
+| 7 | Bônus (B3 bip, B4 Sagui 3D) | 100.0% | feito |
 
 ## Histórias
 
@@ -66,11 +62,12 @@ _Atualizado em 2026-11-03T23:46:02_
 | H34 | Integração do pendrive | feito | 5 |
 | B1 | Bônus: enxergar o HD interno | Cancelado pelo Eli: o SaguiOS nunca grava no HD, então listar as partições não acrescenta nada ao projeto. |  |
 | B2 | Bônus: boot por UEFI | Cancelado pelo Eli: o objetivo do SaguiOS é rodar em computadores antigos, com BIOS tradicional. |  |
-| B3 | Bônus: bip | aguardando teste | 5 |
-| B4 | Bônus: Sagui 3D | aguardando teste | 43 |
+| B3 | Bônus: bip | feito | 5 |
+| B4 | Bônus: Sagui 3D | feito | 43 |
 
 ## Últimas ações
 
+- 2026-11-04T00:19:30: Eli confirmou: funcionou tudo perfeitamente (bônus)
 - 2026-11-03T23:45:56: Fase 7 entregue. Aguardando teste do Eli.
 - 2026-11-03T23:45:56: B4 concluída: Sagui 3D: motor 2,5D próprio, três fases em texto, macacos-prego, sementes, cascas, porteira da banana, cacho dourado, sons com o bip; teste automático e capturas
 - 2026-11-03T23:32:48: B4 Sagui 3D: motor 2,5D, três fases, macacos-prego, bananas, cascas, porteira e cacho dourado; teste automático passando
@@ -85,4 +82,3 @@ _Atualizado em 2026-11-03T23:46:02_
 - 2026-11-03T21:26:31: Erro corrigido: FAT32 criada depois da partição do SaguiOS não é vista
 - 2026-11-03T21:26:31: Erro corrigido: G470: pendrive não aparece; usb mostra porta ocupada sem pendrive
 - 2026-11-03T21:21:11: Bloqueio: G470: o pendrive não aparece (fase 6). Correção em andamento: H30-fix
-- 2026-11-03T20:50:19: Fase 6 entregue. Aguardando teste do Eli.

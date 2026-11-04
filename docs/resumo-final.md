@@ -18,12 +18,12 @@ Um sistema operacional para PCs x86 de 32 bits, escrito do zero por uma IA (Clau
 
 | Item | Valor |
 | --- | --- |
-| Imagem (bytes úteis) | **498.688 bytes = 487 KB (33,8% de 1,44 MB)**: carregador 2,3 KB, kernel 111 KB, ramdisk com os programas e textos 372 KB. O arquivo `.img` tem 1 MB porque é completado com zeros (D004). |
-| Linhas de código | boot 903, kernel 9.281, userland 3.838 (total 14.022), mais 3.184 de scripts de build e testes |
-| Programas | 29 em `/bin` (shell, 22 comandos e 6 programas gráficos) e 6 de teste em `/testes` |
-| Testes automáticos | 35, um por história (mais um de dois controladores USB), todos no QEMU (IDE e pendrive USB quando a história mexe no boot) |
-| Commits | ~50, um por história, mais as entregas e confirmações de cada fase |
-| Decisões registradas | 28, em `docs/decisoes.md` (o raciocínio de cada parte central) |
+| Imagem (bytes úteis) | **575.488 bytes = 562 KB (39% de 1,44 MB)**, com o Sagui 3D e as três fases incluídos. O arquivo `.img` tem 1 MB porque é completado com zeros (D004). |
+| Linhas de código | boot 903, kernel 9.614, userland 6.317 (total 16.834), mais 3.591 de scripts de build e testes |
+| Programas | 31 em `/bin` (shell, 22 comandos e 8 programas gráficos) e 6 de teste em `/testes` |
+| Testes automáticos | 37, um por história (mais um de dois controladores USB), todos no QEMU (IDE e pendrive USB quando a história mexe no boot) |
+| Commits | ~55, um por história, mais as entregas e confirmações de cada fase |
+| Decisões registradas | 30, em `docs/decisoes.md` (o raciocínio de cada parte central) |
 | Erros registrados | 19, em `docs/erros.md` (sintoma, causa, correção) |
 | Capturas de tela | mais de 70, em `docs/capturas/` |
 

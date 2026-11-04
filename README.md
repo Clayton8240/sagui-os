@@ -1,50 +1,99 @@
-# SaguiOS
+<div align="center">
 
-**Um sistema operacional escrito do zero por IA**, para PCs x86 de 32 bits,
-feito por Claude (Anthropic) para o projeto do Eli Rigobeli.
-Alvo real: um notebook **Lenovo G470** (2011), além de VirtualBox e QEMU.
+# 🐒 SaguiOS
 
-![Área de trabalho do SaguiOS](docs/capturas/H28-tres-programas.png)
+**Um sistema operacional escrito do zero por IA**
+para PCs x86 de 32 bits, rodando de verdade num notebook de 2011.
 
-O sistema inteiro (carregador de boot, kernel, drivers de teclado, touchpad,
-vídeo e USB, sistema de arquivos FAT32, gerenciador de janelas, shell, editor,
-calculadora e um jogo) ocupa **487 KB**. O resumo do projeto está em
-[`docs/resumo-final.md`](docs/resumo-final.md).
+Feito por Claude (Anthropic) para o projeto do **Eli Rigobeli**.
 
-Tudo dentro da imagem é escrito neste projeto: carregador de boot, kernel,
-drivers, biblioteca dos programas (`libsagui`), shell, fonte e desenhos. Sem
-GRUB, sem libc, sem código de outros sistemas. A especificação completa está
-em [`prd.md`](prd.md) e cada decisão de projeto, com o raciocínio, está em
-[`docs/decisoes.md`](docs/decisoes.md).
+`562 KB` · `sem GRUB` · `sem libc` · `sem código de outros sistemas` · `37 testes automáticos`
 
-## Situação
+<img src="docs/capturas/B4-3-fase1-corredor.png" width="49%" alt="Sagui 3D, o jogo em primeira pessoa do SaguiOS">
+<img src="docs/capturas/H28-tres-programas.png" width="49%" alt="Área de trabalho do SaguiOS com três programas abertos">
 
-Veja [`status.md`](status.md) ou abra [`dashboard/index.html`](dashboard/index.html)
-no navegador (funciona direto do disco, sem servidor).
+</div>
 
-| Fase | Conteúdo |
+---
+
+## O que é
+
+O SaguiOS é um sistema operacional completo, do carregador de boot ao jogo em 3D, escrito
+inteiro neste projeto, seguindo a especificação em [`prd.md`](prd.md). Ele dá boot por um
+pendrive num **Lenovo G470** (2011), no VirtualBox e no QEMU, e cabe em **575.488 bytes**
+(39% de um disquete de 1,44 MB).
+
+Tudo o que vai dentro da imagem foi escrito aqui: carregador de boot em dois estágios, kernel,
+drivers (teclado ABNT2, touchpad, vídeo VESA, USB 2.0, pendrive), sistema de arquivos FAT32,
+gerenciador de janelas, a biblioteca dos programas (`libsagui`), o shell, os programas, a fonte
+de letras e todos os desenhos. Cada decisão de projeto está explicada em
+[`docs/decisoes.md`](docs/decisoes.md) e cada erro encontrado, com causa e correção, em
+[`docs/erros.md`](docs/erros.md).
+
+## Rodando no hardware real
+
+Fotos do Eli a cada fase, no Lenovo G470:
+
+| Fase 1: boot | Fase 2: kernel e terminal | Fase 3: processos e shell |
+| :---: | :---: | :---: |
+| <img src="testes_eli/fase_1_no_notebook.jpg" width="260"> | <img src="testes_eli/fase_2_no_notebook.jpg" width="260"> | <img src="testes_eli/fase_3_no_notebook.jpg" width="260"> |
+| **Fase 4: gráfico e mouse** | **Fase 5: janelas e programas** | **Bônus: Sagui 3D (VM)** |
+| <img src="testes_eli/fase_4_no_notebook.jpg" width="260"> | <img src="testes_eli/fase_5_no_notebook.jpg" width="260"> | <img src="testes_eli/fase_bonus_vm.png" width="260"> |
+
+## As fases
+
+| Fase | O que foi construído | Na tela |
+| --- | --- | :---: |
+| **1. Boot** | Carregador próprio em dois estágios (MBR + estágio 2), linha A20, mapa de memória E820, cópia para acima de 1 MB em *unreal mode*, soma de verificação, modo protegido, kernel em C | <img src="docs/capturas/H04-boot-vdi.png" width="200"> |
+| **2. Kernel e terminal** | GDT, IDT, TSS, tela de erro, PIC, relógio a 100 Hz, memória física, `kmalloc`, teclado ABNT2 com acentos, sistema de arquivos SGFS | <img src="docs/capturas/H09-ls-cd.png" width="200"> |
+| **3. Processos e programas** | Paginação com um espaço por processo, escalonador preemptivo, anel 3, chamadas de sistema, carregador ELF, pipes, shell `sagsh` | <img src="docs/capturas/H18-edicao-e-segundo-plano.png" width="200"> |
+| **4. Gráfico e mouse** | VESA 1024x768x32 com buffer duplo, fonte 8x16 própria com acentos, terminal gráfico, touchpad PS/2 | <img src="docs/capturas/H18-fonte-acentos.png" width="200"> |
+| **5. Janelas e programas** | Área de trabalho, gerenciador de janelas, Arquivos, Terminal, Editor, Calculadora, Sagui Pega Banana | <img src="docs/capturas/H28-programas-abertos.png" width="200"> |
+| **6. Pendrive de dados** | PCI, driver USB 2.0 (EHCI) com hubs e conexão a quente, armazenamento USB, FAT32 com leitura e gravação | <img src="docs/capturas/H34-2-arquivos-no-pendrive.png" width="200"> |
+| **Bônus** | B3: bip pelo alto-falante do PC. B4: **Sagui 3D**. (B1 e B2 cancelados pelo Eli.) | <img src="docs/capturas/B4-6-macaco-tonto.png" width="200"> |
+
+## Sagui 3D
+
+O sagui foi preso num labirinto de pedra no meio da Mata Atlântica. Ele precisa juntar bananas
+para abrir a porteira de cada fase, enquanto macacos-prego guardas tentam pegar as bananas do
+bolso dele. O estilingue atira sementes de jabuticaba (três deixam o macaco tonto, e ele foge),
+cada banana comida deixa uma casca que faz o macaco escorregar, e cada fase esconde um cacho
+dourado atrás de uma parede de cipó.
+
+<div align="center">
+<img src="docs/capturas/B4-1-tela-de-inicio.png" width="32%">
+<img src="docs/capturas/B4-7-macaco-escorregou.png" width="32%">
+<img src="docs/capturas/B4-5-vitoria.png" width="32%">
+</div>
+
+O motor 2,5D foi pensado a partir da geometria, sem consultar nenhum código, tutorial ou
+repositório de jogo: salas convexas com altura própria de chão e de teto, desenho coluna por
+coluna com uma "fresta" que estreita a cada passagem, perspectiva sem olho de peixe, ponto fixo
+(os programas não usam a FPU), chão e teto texturizados e luz por sala. São três fases em
+arquivos de texto, com texturas e personagens desenhados no próprio código. Explicação completa
+na seção "Sagui 3D" de [`docs/decisoes.md`](docs/decisoes.md).
+
+## Números
+
+| | |
 | --- | --- |
-| 1. Boot | Carregador próprio (MBR + estágio 2), modo protegido, kernel em C |
-| 2. Kernel e terminal | Interrupções, relógio, memória física, teclado ABNT2, SGFS, terminal provisório |
-| 3. Processos e programas | Paginação, escalonador, ring 3, chamadas de sistema, ELF, pipes, shell `sagsh` |
-| 4. Gráfico e mouse | VESA, fonte própria com acentos, touchpad PS/2 |
-| 5. Janelas e programas | Área de trabalho, janelas, Arquivos, Terminal, Editor, Calculadora, Sagui Pega Banana |
-| 6. Pendrive de dados | Driver USB EHCI próprio e FAT32 com leitura e gravação |
-| Bônus | B3: bip pelo alto-falante do PC. B4: **Sagui 3D**, jogo autoral em primeira pessoa (2,5D). B1 e B2 cancelados pelo Eli. |
+| Imagem de boot | **575.488 bytes** úteis (39% de 1,44 MB) |
+| Linhas de código | boot 903, kernel 9.614, programas 6.317 (mais 3.591 de ferramentas e testes) |
+| Programas | 31 em `/bin`: shell, comandos e 8 programas gráficos |
+| Testes automáticos | 37, um por história, todos no QEMU |
+| Decisões registradas | 30, com o raciocínio de cada uma |
+| Erros registrados | 19, com sintoma, causa e correção |
+| Commits | ~55, um por história |
 
-## Estrutura
+## Experimentar
 
-```
-boot/        estágio 1 (MBR) e estágio 2 do carregador, em NASM
-kernel/      kernel em C freestanding + NASM
-userland/    libsagui e programas de usuário (a partir da fase 3); sagui3d/ é o jogo do B4
-rootfs/      arquivos que vão para o ramdisk SGFS
-tools/       scripts de build (mksgfs.py, mkimagem.py), status.py
-tests/       testes automáticos no QEMU, um por história
-docs/        histórias, decisões, diário, erros, capturas, roteiros de teste
-dashboard/   painel do projeto (HTML puro + status.json)
-entrega/     imagens .img e .vdi de cada fase, com SHA-256
-```
+As imagens prontas estão em [`entrega/final/`](entrega/final/):
+
+- **VirtualBox:** `saguios.vdi` (máquina "Other/Unknown", 32 bits, EFI desligado).
+- **PC de verdade:** grave `saguios.img` num pendrive em modo DD (Rufus, balenaEtcher ou `dd`)
+  e dê boot pela BIOS tradicional.
+
+O passo a passo está em [`docs/como-gravar.md`](docs/como-gravar.md).
 
 ## Compilar e testar
 
@@ -57,5 +106,35 @@ make test       # todos os testes no QEMU (sem janela)
 make rodar      # abre no QEMU com janela
 ```
 
-Para gravar num pendrive e dar boot num PC real, veja [`docs/como-gravar.md`](docs/como-gravar.md).
-As imagens prontas estão em [`entrega/final/`](entrega/final/).
+## Estrutura
+
+```
+boot/        estágio 1 (MBR) e estágio 2 do carregador, em NASM
+kernel/      kernel em C freestanding + NASM: núcleo, memória, drivers, USB, arquivos, janelas
+userland/    libsagui e os programas; userland/sagui3d/ é o jogo do bônus B4
+rootfs/      arquivos que vão para o disco na RAM (textos, fases do Sagui 3D)
+tools/       build (mksgfs.py, mkimagem.py), painel (status.py), verificador de fases
+tests/       testes automáticos no QEMU, um por história
+docs/        histórias, decisões, diário, erros, roteiros de teste e capturas de tela
+dashboard/   painel do projeto (abra dashboard/index.html no navegador)
+entrega/     imagens .img e .vdi de cada fase, com SHA-256
+testes_eli/  fotos dos testes do Eli no G470
+```
+
+## Documentação
+
+| Documento | O que tem |
+| --- | --- |
+| [`docs/resumo-final.md`](docs/resumo-final.md) | Resumo do projeto, tempo de cada fase e a tabela de conceitos do livro do Tanenbaum preenchida |
+| [`docs/decisoes.md`](docs/decisoes.md) | As 30 decisões de projeto e a seção do Sagui 3D |
+| [`docs/erros.md`](docs/erros.md) | Os 19 erros encontrados, inclusive os achados no G470 |
+| [`docs/diario.md`](docs/diario.md) | O diário do projeto, fase a fase |
+| [`docs/historias/`](docs/historias/) | Uma página por história (H01 a H34, B1 a B4) |
+| [`status.md`](status.md) e [`dashboard/`](dashboard/index.html) | Situação de cada fase e história |
+
+## As regras do projeto
+
+Do [`prd.md`](prd.md): nada de código de outros sistemas operacionais, nada de GRUB ou outro
+carregador pronto, nada de libc ou bibliotecas prontas dentro do sistema, fontes e imagens
+criadas no projeto, nomes e comentários em português explicando o porquê, um teste automático
+por história e cada fase validada pelo Eli no hardware real antes da próxima.

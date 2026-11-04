@@ -210,3 +210,7 @@ Log cronológico do que foi feito. Uma entrada por bloco de trabalho.
   escorregava deslizava para trás do sagui. Na jogabilidade, o macaco que
   pegava uma banana voltava na hora e tirava as três vidas em segundos: agora
   ele sai correndo com a banana.
+
+## 2026-11-04 00:19
+
+- **Confirmação do Eli:** "Funcionou tudo perfeitamente". Fase bônus (B3 bip e B4 Sagui 3D) aprovada; a foto enviada é da VM (`testes_eli/fase_bonus_vm.png`).
